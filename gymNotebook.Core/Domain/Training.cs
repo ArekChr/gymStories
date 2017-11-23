@@ -21,18 +21,25 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public Training(User user, string name, string description)
+        public Training(User user, Guid id, string name, string description, int difficulty)
         {
-            Id = user.Id;
+            Id = id;
+            UserId = user.Id;
             Name = name;
             Description = description;
+            Difficulty = difficulty;
+        }
+
+        public void AddRoutine(string name)
+        {
+            _routines.Add(new Routine(this, name));
         }
 
         public void SetName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new Exception($"Training with id: '{Id}' can not have an empty name.");
+                throw new Exception($"Routine with id: '{Id}' can not have an empty name.");
             }
         }
 
@@ -40,7 +47,5 @@ namespace gymNotebook.Core.Domain
         {
             Description = description;
         }
-
-        public void AddRoutine()
     }
 }

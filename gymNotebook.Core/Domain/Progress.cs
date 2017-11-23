@@ -27,8 +27,5 @@ namespace gymNotebook.Core.Domain
 
         public float Neck { get; set; }
 
-        public int UserDataID { get; set; }
-
-        public virtual UserData UserData { get; set; }
     }
 }

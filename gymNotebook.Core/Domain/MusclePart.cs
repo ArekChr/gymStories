@@ -7,7 +7,7 @@ namespace gymNotebook.Core.Domain
 {
     public class MusclePart
     {
-        public int MusclePartID { get; set; }
+        public int Id { get; set; }
 
         public string MuscleName { get; set; }
 

@@ -19,12 +19,12 @@ namespace gymNotebook.Core.Domain
 
         public Routine(Training training, string name)
         {
-
+            
         }
 
         public void AddExercise(string name, string description)
         {
-            _exercises(new Exercise(this, name, description));
+            _exercises.Add(new Exercise(this, name, description));
         }
     }
 }
