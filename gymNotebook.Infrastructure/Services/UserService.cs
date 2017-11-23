@@ -3,28 +3,26 @@ using gymNotebook.Core.Repositories;
 using System;
 using System.Threading.Tasks;
 using gymNotebook.Infrastructure.DTO;
+using AutoMapper;
 
 namespace gymNotebook.Infrastructure.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
             _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         public async Task<UserDto> GetAsync(string email)
         {
             var user = await _userRepository.GetAsync(email);
 
-            return new UserDto
-            {
-                Id = user.Id,
-                Username = user.Username,
-                Email = user.Email
-            };
+            return _mapper.Map<User, UserDto>(user);
         }
 
         public async Task Register(string username, string email, string password)

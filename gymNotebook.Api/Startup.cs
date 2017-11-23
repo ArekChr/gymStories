@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using gymNotebook.Infrastructure.Services;
 using gymNotebook.Core.Repositories;
 using gymNotebook.Infrastructure.Repositories;
+using gymNotebook.Infrastructure.Mappers;
 
 namespace gymNotebook.Api
 {
@@ -26,10 +27,11 @@ namespace gymNotebook.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddMvc();
-        }
+        } 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

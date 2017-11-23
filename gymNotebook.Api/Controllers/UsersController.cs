@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using gymNotebook.Infrastructure.Services;
 using gymNotebook.Infrastructure.DTO;
+using gymNotebook.Infrastructure.Commands.Users;
 
 namespace gymNotebook.Api.Controllers
 {
@@ -31,9 +32,10 @@ namespace gymNotebook.Api.Controllers
         }
 
         // POST api/values
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpPost("")]
+        public void Post([FromBody]CreateUser command)
         {
+            _userService.Register(command.Email, command.Username, command.Password);
         }
 
         // PUT api/values/5

@@ -28,6 +28,9 @@ namespace gymNotebook.Core.Domain
 
         public IEnumerable<Training> Trainings => _trainings;
 
+        private static readonly Regex EmailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+        private static readonly Regex NameRegex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
+
         protected User()
         {
         }
@@ -49,7 +52,7 @@ namespace gymNotebook.Core.Domain
 
         public void SetUsername(string username)
         {
-            if (string.IsNullOrWhiteSpace(username))
+            if (!NameRegex.IsMatch(username))
             {
                 throw new Exception($"User can not have an empty username.");
             }
@@ -58,8 +61,8 @@ namespace gymNotebook.Core.Domain
 
         public void SetEmail(string email)
         {
-            var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            if (!regex.Match(email).Success)
+            
+            if (!EmailRegex.Match(email).Success)
             {
                 throw new Exception($"User can not have an empty email.");
             }

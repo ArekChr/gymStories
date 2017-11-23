@@ -10,10 +10,10 @@ namespace gymNotebook.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private static ISet<User> _users = new HashSet<User>
+        private static readonly ISet<User> _users = new HashSet<User>
         {
-            new User("user1","user1@gmail.com","secret","salt123"),
-            new User("user2","user2@gmail.com","secret","salt123")
+            new User("user1","user1@gmail.com","secret11","salt123"),
+            new User("user2","user2@gmail.com","secret11","salt123")
         };
 
         public async Task AddAsync(User user)
@@ -23,13 +23,17 @@ namespace gymNotebook.Infrastructure.Repositories
         }
 
         public async Task<User> GetAsync(Guid id)
-            => await Task.FromResult(_users.Single(x => x.Id == id));
+            => await Task.FromResult(_users.SingleOrDefault(x => x.Id == id));
 
         public async Task<User> GetAsync(string email)
-            => await Task.FromResult(_users.Single(x => x.Email.ToLowerInvariant() == email.ToLowerInvariant()));
+            => await Task.FromResult(_users.SingleOrDefault(x => x.Email.ToLowerInvariant() == email.ToLowerInvariant()));
 
         public async Task<IEnumerable<User>> GetAllAsync()
-            => await Task.FromResult(_users);
+        {
+            var users = _users.AsEnumerable();
+
+            return await Task.FromResult(users);
+        }
 
         public async Task DeleteAsync(Guid id)
         {
@@ -37,7 +41,7 @@ namespace gymNotebook.Infrastructure.Repositories
             _users.Remove(user);
             await Task.CompletedTask;
         }
-
+        
         public async Task UpdateAsync(User user)
         {
             await Task.CompletedTask;
