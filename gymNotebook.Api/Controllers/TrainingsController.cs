@@ -9,16 +9,14 @@ using gymNotebook.Infrastructure.Commands;
 
 namespace gymNotebook.Api.Controllers
 {
-    [Route("[controller]")]
-    public class TrainingsController : Controller
+    public class TrainingsController : ApiControllerBase
     {
         private readonly ITrainingService _trainingService;
-        private readonly ICommandDispatcher _commandDispatcher;
 
-        public TrainingsController(ITrainingService trainingService, ICommandDispatcher commandDispatcher)
+        public TrainingsController(ITrainingService trainingService, 
+            ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
             _trainingService = trainingService;
-            _commandDispatcher = commandDispatcher;
         }
 
         // GET trainings
@@ -46,7 +44,7 @@ namespace gymNotebook.Api.Controllers
         public async Task<IActionResult> Post([FromBody]CreateTraining command)
         {
             command.TrainingId = Guid.NewGuid();
-            await _commandDispatcher.DispatchAsync(command);
+            await CommandDispatcher.DispatchAsync(command);
 
             return Created($"/trainings/{command.TrainingId}", null);
         }
@@ -55,7 +53,7 @@ namespace gymNotebook.Api.Controllers
         [HttpPut("{trainingId}")]
         public async Task<IActionResult> Put([FromBody]UpdateTraining command)
         {
-            await _commandDispatcher.DispatchAsync(command);
+            await CommandDispatcher.DispatchAsync(command);
             return NoContent();
         }
 
