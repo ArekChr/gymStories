@@ -30,9 +30,9 @@ namespace gymNotebook.Core.Domain
             MusclePart = musclePart;
         }
 
-        public void AddResult(int numberSeries, int repetitions, float weight, string comments)
+        public void AddResult(Guid exerciseId, int numberSeries, int repetitions, float weight, string comments)
         {
-            _results.Add(new Result(this, numberSeries, repetitions, weight, comments));
+            _results.Add(new Result(exerciseId, numberSeries, repetitions, weight, comments));
         }
     }
 }

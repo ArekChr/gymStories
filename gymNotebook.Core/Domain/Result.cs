@@ -4,7 +4,7 @@ namespace gymNotebook.Core.Domain
 {
     public class Result : Entity
     {
-        public Guid ExerciseID { get; protected set; }
+        public Guid ExerciseId { get; protected set; }
 
         public int NumberSeries { get; protected set; }
 
@@ -20,9 +20,9 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public Result(Exercise exercise, int numberSeries, int repetitions, float weight, string comments)
+        public Result(Guid exerciseId, int numberSeries, int repetitions, float weight, string comments)
         {
-            ExerciseID = exercise.Id;
+            ExerciseId = exerciseId;
             SetNumberSeries(numberSeries);
             Repetitions = repetitions;
             SetWeigth(weight);

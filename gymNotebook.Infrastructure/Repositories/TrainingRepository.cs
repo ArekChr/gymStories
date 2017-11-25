@@ -33,6 +33,7 @@ namespace gymNotebook.Infrastructure.Repositories
 
         public async Task UpdateAsync(Training training)
         {
+           // _trainings.Update(training);
             await Task.CompletedTask;
         }
 
