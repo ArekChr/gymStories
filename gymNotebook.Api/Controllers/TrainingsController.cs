@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using gymNotebook.Infrastructure.Services;
 using gymNotebook.Infrastructure.Commands.Training;
+using gymNotebook.Infrastructure.Commands;
 
 namespace gymNotebook.Api.Controllers
 {
@@ -12,10 +13,12 @@ namespace gymNotebook.Api.Controllers
     public class TrainingsController : Controller
     {
         private readonly ITrainingService _trainingService;
+        private readonly ICommandDispatcher _commandDispatcher;
 
-        public TrainingsController(ITrainingService trainingService)
+        public TrainingsController(ITrainingService trainingService, ICommandDispatcher commandDispatcher)
         {
             _trainingService = trainingService;
+            _commandDispatcher = commandDispatcher;
         }
 
         // GET trainings
@@ -43,17 +46,16 @@ namespace gymNotebook.Api.Controllers
         public async Task<IActionResult> Post([FromBody]CreateTraining command)
         {
             command.TrainingId = Guid.NewGuid();
-            await _trainingService.CreateAsync(command.UserId, command.TrainingId, command.Name, command.Description, command.Difficulty);
+            await _commandDispatcher.DispatchAsync(command);
 
             return Created($"/trainings/{command.TrainingId}", null);
         }
 
         // PUT trainings/5
         [HttpPut("{trainingId}")]
-        public async Task<IActionResult> Put(Guid trainingId, [FromBody]UpdateTraining command)
+        public async Task<IActionResult> Put([FromBody]UpdateTraining command)
         {
-            await _trainingService.UpdateAsync(trainingId, command.Name, command.Description, command.Difficulty);
-
+            await _commandDispatcher.DispatchAsync(command);
             return NoContent();
         }
 

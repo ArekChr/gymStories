@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gymNotebook.Core", "gymNote
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "gymNotebook.Infrastructure", "gymNotebook.Infrastructure\gymNotebook.Infrastructure.csproj", "{18B17D52-E9C6-4BC7-8EC0-1698E2E9C853}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gymNotebook.Tests", "gymNotebook.Tests\gymNotebook.Tests.csproj", "{763574E4-3E07-4802-A426-CA2A680F2889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gymNotebook.Tests.EndToEnd", "gymNotebook.Tests.EndToEnd\gymNotebook.Tests.EndToEnd.csproj", "{4E5AF588-3D09-417A-BA34-D15B5FD49C0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{18B17D52-E9C6-4BC7-8EC0-1698E2E9C853}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18B17D52-E9C6-4BC7-8EC0-1698E2E9C853}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18B17D52-E9C6-4BC7-8EC0-1698E2E9C853}.Release|Any CPU.Build.0 = Release|Any CPU
+		{763574E4-3E07-4802-A426-CA2A680F2889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{763574E4-3E07-4802-A426-CA2A680F2889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{763574E4-3E07-4802-A426-CA2A680F2889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{763574E4-3E07-4802-A426-CA2A680F2889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5AF588-3D09-417A-BA34-D15B5FD49C0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5AF588-3D09-417A-BA34-D15B5FD49C0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5AF588-3D09-417A-BA34-D15B5FD49C0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5AF588-3D09-417A-BA34-D15B5FD49C0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

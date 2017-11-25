@@ -30,9 +30,9 @@ namespace gymNotebook.Core.Domain
             SetDifficulty(difficulty);
         }
 
-        public void AddRoutine(string name)
+        public void AddRoutine(Guid trainingId, string name)
         {
-            _routines.Add(new Routine(this, name));
+            _routines.Add(new Routine(trainingId, name));
         }
 
         public void SetName(string name)

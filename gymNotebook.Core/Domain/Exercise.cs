@@ -22,9 +22,9 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public Exercise(Routine routine, string name, string description, string musclePart)
+        public Exercise(Guid routineId, string name, string description, string musclePart)
         {
-            RoutineId = routine.Id;
+            RoutineId = routineId;
             Name = name;
             Description = description;
             MusclePart = musclePart;

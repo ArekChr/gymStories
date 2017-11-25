@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -12,11 +9,16 @@ using gymNotebook.Infrastructure.Services;
 using gymNotebook.Core.Repositories;
 using gymNotebook.Infrastructure.Repositories;
 using gymNotebook.Infrastructure.Mappers;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using gymNotebook.Infrastructure.IoC.Modules;
 
 namespace gymNotebook.Api
 {
     public class Startup
     {
+        public IContainer ApplicationContainer { get; private set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,7 +27,7 @@ namespace gymNotebook.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddScoped<IUserService, UserService>();
@@ -33,10 +35,17 @@ namespace gymNotebook.Api
             services.AddScoped<ITrainingRepository, TrainingRepository>();
             services.AddScoped<ITrainingService, TrainingService>();
             services.AddMvc();
+
+            var builder = new ContainerBuilder();
+            builder.Populate(services);
+            builder.RegisterModule<CommandModule>();
+            ApplicationContainer = builder.Build();
+
+            return new AutofacServiceProvider(ApplicationContainer);
         } 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
         {
             if (env.IsDevelopment())
             {
@@ -44,6 +53,7 @@ namespace gymNotebook.Api
             }
 
             app.UseMvc();
+            appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
         }
     }
 }

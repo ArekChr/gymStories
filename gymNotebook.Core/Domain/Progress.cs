@@ -5,12 +5,8 @@ using System.Web;
 
 namespace gymNotebook.Core.Domain
 {
-    public class Progress
+    public class Progress : Entity
     {
-        public int ID { get; set; }
-
-        public DateTime Date { get; protected set; }
-
         public float Weight { get; protected set; }
 
         public float Biceps { get; protected set; }
@@ -27,5 +23,23 @@ namespace gymNotebook.Core.Domain
 
         public float Neck { get; protected set; }
 
+        public DateTime CreatedAt { get; protected set; }
+
+        protected Progress()
+        {
+        }
+
+        public Progress(float weight, float biceps, float chest, float thigh, float calf, float waist, float shoulders, float neck)
+        {
+            Weight = weight;
+            Biceps = biceps;
+            Chest = chest;
+            Thigh = thigh;
+            Calf = calf;
+            Waist = waist;
+            Shoulders = shoulders;
+            Neck = neck;
+            CreatedAt = DateTime.UtcNow;
+        }
     }
 }

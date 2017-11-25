@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using gymNotebook.Infrastructure.Services;
 using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Infrastructure.Commands.Users;
+using gymNotebook.Infrastructure.Commands;
 
 namespace gymNotebook.Api.Controllers
 {
@@ -13,10 +14,12 @@ namespace gymNotebook.Api.Controllers
     public class UsersController : Controller
     {
         private readonly IUserService _userService;
+        private readonly ICommandDispatcher _commandDispatcher;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, ICommandDispatcher commandDispatcher)
         {
             _userService = userService;
+            _commandDispatcher = commandDispatcher;
         }
 
         // GET users/5
@@ -41,7 +44,7 @@ namespace gymNotebook.Api.Controllers
         [HttpPost("")]
         public async Task<IActionResult> Post([FromBody]CreateUser command)
         {
-            await _userService.Register(command.Email, command.Username, command.Password);
+            await _commandDispatcher.DispatchAsync(command);
 
             return Created($"users/{command.Email}", new object());
         }

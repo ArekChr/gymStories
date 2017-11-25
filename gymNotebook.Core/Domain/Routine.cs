@@ -17,14 +17,24 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public Routine(Training training, string name)
+        public Routine(Guid trainingId, string name)
         {
-            
+            TrainingId = trainingId;
+            SetName(name);
         }
 
-        public void AddExercise(string name, string description, string musclePart)
+        public void AddExercise(Guid routineId, string name, string description, string musclePart)
         {
-            _exercises.Add(new Exercise(this, name, description, musclePart));
+            _exercises.Add(new Exercise(routineId, name, description, musclePart));
+        }
+
+        public void SetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new Exception($"Routine can not have an empty name");
+            }
+            Name = name;
         }
     }
 }
