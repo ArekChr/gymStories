@@ -15,19 +15,19 @@ namespace gymNotebook.Core.Domain
 
         public int Difficulty { get; protected set; }
 
-        public IEnumerable<Routine> Toutines => _routines;
+        public IEnumerable<Routine> Routines => _routines;
 
         protected Training()
         {
         }
 
-        public Training(User user, Guid id, string name, string description, int difficulty)
+        public Training(Guid userId, Guid trainingId, string name, string description, int difficulty)
         {
-            Id = id;
-            UserId = user.Id;
-            Name = name;
-            Description = description;
-            Difficulty = difficulty;
+            Id = trainingId;
+            UserId = userId;
+            SetName(name);
+            SetDescription(description);
+            SetDifficulty(difficulty);
         }
 
         public void AddRoutine(string name)
@@ -41,11 +41,17 @@ namespace gymNotebook.Core.Domain
             {
                 throw new Exception($"Routine with id: '{Id}' can not have an empty name.");
             }
+            Name = name;
         }
 
         public void SetDescription(string description)
         {
             Description = description;
+        }
+
+        public void SetDifficulty(int difficulty)
+        {
+            Difficulty = difficulty;
         }
     }
 }

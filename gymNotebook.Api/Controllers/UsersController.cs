@@ -22,30 +22,38 @@ namespace gymNotebook.Api.Controllers
         // GET users/5
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
-            => Json(await _userService.GetAsync(email));
-
-        // GET api/values
+        {  
+            var user =await _userService.GetAsync(email);
+            if(user == null)
+            {
+                return NotFound();
+            }
+            return Json(user);
+        }
+        // GET users
         [HttpGet]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // POST api/values
+        // POST users
         [HttpPost("")]
-        public void Post([FromBody]CreateUser command)
+        public async Task<IActionResult> Post([FromBody]CreateUser command)
         {
-            _userService.Register(command.Email, command.Username, command.Password);
+            await _userService.Register(command.Email, command.Username, command.Password);
+
+            return Created($"users/{command.Email}", new object());
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
+        // PUT users/5
+        [HttpPut("{userId}")]
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
+        // DELETE users/5
+        [HttpDelete("{userId}")]
         public void Delete(int id)
         {
         }

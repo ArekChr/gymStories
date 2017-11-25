@@ -9,23 +9,23 @@ namespace gymNotebook.Core.Domain
     {
         public int ID { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime Date { get; protected set; }
 
-        public float Weight { get; set; }
+        public float Weight { get; protected set; }
 
-        public float Biceps { get; set; }
+        public float Biceps { get; protected set; }
 
-        public float Chest { get; set; }
+        public float Chest { get; protected set; }
 
-        public float Thigh { get; set; }
+        public float Thigh { get; protected set; }
 
-        public float Calf { get; set; }
+        public float Calf { get; protected set; }
 
-        public float Waist { get; set; }
+        public float Waist { get; protected set; }
 
-        public float Shoulders { get; set; }
+        public float Shoulders { get; protected set; }
 
-        public float Neck { get; set; }
+        public float Neck { get; protected set; }
 
     }
 }

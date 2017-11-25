@@ -1,0 +1,23 @@
+﻿using gymNotebook.Core.Domain;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace gymNotebook.Core.Repositories
+{
+    public interface ITrainingRepository
+    {
+        Task<Training> GetAsync(Guid id);
+
+        Task<Training> GetAsync(Guid userId, string name);
+
+        Task<IEnumerable<Training>> BrowseAsync(Guid userId);
+
+        Task AddAsync(Training training);
+
+        Task UpdateAsync(Training training);
+
+        Task DeleteAsync(Training training);
+    }
+}

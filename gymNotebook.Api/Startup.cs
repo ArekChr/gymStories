@@ -30,6 +30,8 @@ namespace gymNotebook.Api
             services.AddSingleton(AutoMapperConfig.Initialize());
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ITrainingRepository, TrainingRepository>();
+            services.AddScoped<ITrainingService, TrainingService>();
             services.AddMvc();
         } 
 

@@ -22,9 +22,9 @@ namespace gymNotebook.Core.Domain
             
         }
 
-        public void AddExercise(string name, string description)
+        public void AddExercise(string name, string description, string musclePart)
         {
-            _exercises.Add(new Exercise(this, name, description));
+            _exercises.Add(new Exercise(this, name, description, musclePart));
         }
     }
 }

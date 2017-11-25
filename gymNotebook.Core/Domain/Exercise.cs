@@ -14,7 +14,7 @@ namespace gymNotebook.Core.Domain
 
         public string Description { get; protected set; }
 
-        public string MusclePart { get; set; }
+        public string MusclePart { get; protected set; }
 
         public IEnumerable<Result> Results => _results;
 
@@ -22,11 +22,12 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public Exercise(Routine routine, string name, string description)
+        public Exercise(Routine routine, string name, string description, string musclePart)
         {
             RoutineId = routine.Id;
             Name = name;
             Description = description;
+            MusclePart = musclePart;
         }
 
         public void AddResult(int numberSeries, int repetitions, float weight, string comments)

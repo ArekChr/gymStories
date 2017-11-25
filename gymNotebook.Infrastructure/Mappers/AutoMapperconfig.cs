@@ -13,6 +13,7 @@ namespace gymNotebook.Infrastructure.Mappers
             => new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, UserDto>();
+                cfg.CreateMap<Training, TrainingDto>();
             })
             .CreateMapper();
     }
