@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace gymNotebook.Core.Repositories
 {
-    public interface IRoutineRepository
+    public interface IRoutineRepository : IRepository
     {
         Task<Routine> GetAsync(Guid id);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Services
 {
-    public interface IRoutineService
+    public interface IRoutineService : IService
     {
         Task<RoutineDto> GetAsync(Guid id);
 

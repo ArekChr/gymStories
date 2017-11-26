@@ -12,6 +12,7 @@ using gymNotebook.Infrastructure.Mappers;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using gymNotebook.Infrastructure.IoC.Modules;
+using gymNotebook.Infrastructure.IoC;
 
 namespace gymNotebook.Api
 {
@@ -29,16 +30,12 @@ namespace gymNotebook.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(AutoMapperConfig.Initialize());
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ITrainingRepository, TrainingRepository>();
-            services.AddScoped<ITrainingService, TrainingService>();
+
             services.AddMvc();
 
             var builder = new ContainerBuilder();
             builder.Populate(services);
-            builder.RegisterModule<CommandModule>();
+            builder.RegisterModule(new ContainerModule(Configuration));
             ApplicationContainer = builder.Build();
 
             return new AutofacServiceProvider(ApplicationContainer);

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Services
 {
-    public interface IUserService
+    public interface IUserService : IService
     {
         Task<UserDto> GetAsync(string email);
 
