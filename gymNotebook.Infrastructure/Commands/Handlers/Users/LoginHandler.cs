@@ -7,18 +7,15 @@ using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Commands.Handlers.Users
 {
-    public class CreateUserHandler : ICommandHandler<CreateUser>
+    public class LoginHandler : ICommandHandler<Login>
     {
         private readonly IUserService _userService;
 
-        public CreateUserHandler(IUserService userService)
-        {
-            _userService = userService;
-        }
+        //private readonly IJwtHandler _jwtHandler;
 
-        public async Task HandleAsync(CreateUser command)
+        public async Task HandleAsync(Login command)
         {
-            await _userService.RegisterAsync(command.Email, command.Username, command.Password);
+            throw new NotImplementedException();
         }
     }
 }
