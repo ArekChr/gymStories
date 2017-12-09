@@ -16,6 +16,8 @@ namespace gymNotebook.Infrastructure.Services
 
         Task<IEnumerable<RoutineDto>> BrowseAsync(Guid trainingId);
 
+        Task AddFullAsync(IEnumerable<RoutineDto> routines);
+
         Task UpdateAsync(Guid id, string name);
 
         Task DeleteAsync(Guid id);

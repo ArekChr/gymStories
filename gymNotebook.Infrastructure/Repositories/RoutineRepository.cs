@@ -37,5 +37,6 @@ namespace gymNotebook.Infrastructure.Repositories
         {
             await Task.CompletedTask;
         }
+
     }
 }

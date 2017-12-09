@@ -8,7 +8,7 @@ namespace gymNotebook.Infrastructure.Extensions
         {
             var section = typeof(T).Name.Replace("Settings", string.Empty);
             var configurationValue = new T();
-            configuration.GetSection(section).Bind(configuration);
+            configuration.GetSection(section).Bind(configurationValue);
 
             return configurationValue;
         }

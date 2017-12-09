@@ -16,19 +16,21 @@ namespace gymNotebook.Api
     public class Startup
     {
         public IContainer ApplicationContainer { get; private set; }
-
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IApplicationBuilder app, IServiceCollection services)
+        public Startup(IHostingEnvironment env)
         {
-            var jwtSettings = app.ApplicationServices.GetService<JwtSettings>();
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public IServiceProvider ConfigureServices(IServiceCollection services)
+        {
             services.AddMvc();
             services.AddAuthentication(o =>
             {
@@ -41,11 +43,12 @@ namespace gymNotebook.Api
                     cfg.RequireHttpsMetadata = false;
                     cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        ValidIssuer = jwtSettings.Issuer,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidateAudience = false,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                 });
+            services.AddAuthorization(x => x.AddPolicy("admin", p => p.RequireRole("admin")));
 
             var builder = new ContainerBuilder();
             builder.Populate(services);

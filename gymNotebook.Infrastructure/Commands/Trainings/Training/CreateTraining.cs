@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace gymNotebook.Infrastructure.Commands.Training
+namespace gymNotebook.Infrastructure.Commands.Trainings.Training
 {
-    public class UpdateTraining : ICommand
+    public class CreateTraining : ICommand
     {
+        public Guid UserId { get; set; }
+
         public Guid TrainingId { get; set; }
 
         public string Name { get; set; }
@@ -13,5 +15,6 @@ namespace gymNotebook.Infrastructure.Commands.Training
         public string Description { get; set; }
 
         public int Difficulty { get; set; }
+        
     }
 }

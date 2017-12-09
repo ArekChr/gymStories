@@ -12,6 +12,10 @@
     <ProjectReference Include="..\gymNotebook.Core\gymNotebook.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Trainings\Results\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>

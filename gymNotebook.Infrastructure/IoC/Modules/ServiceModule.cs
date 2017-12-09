@@ -19,7 +19,10 @@ namespace gymNotebook.Infrastructure.IoC.Modules
                 .As<IEncrypter>()
                 .SingleInstance();
 
-            
+            builder.RegisterType<JwtHandler>()
+                .As<IJwtHandler>()
+                .SingleInstance();
+
         }
     }
 }
