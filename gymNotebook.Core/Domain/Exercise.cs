@@ -25,8 +25,31 @@ namespace gymNotebook.Core.Domain
         public Exercise(Guid routineId, string name, string description, string musclePart)
         {
             RoutineId = routineId;
+            SetName(name);
+            SetDescription(description);
+            SetMusclePart(musclePart);
+        }
+
+        public void SetName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new Exception($"Exercise with id: '{Id}' can not have an empty name.");
+            }
             Name = name;
+        }
+
+        public void SetDescription(string description)
+        {
             Description = description;
+        }
+
+        public void SetMusclePart(string musclePart)
+        {
+            if (string.IsNullOrWhiteSpace(musclePart))
+            {
+                throw new Exception($"Exercise with id: '{Id}' can not have empty muscle part.");
+            }
             MusclePart = musclePart;
         }
 

@@ -17,5 +17,9 @@ namespace gymNotebook.Api.Controllers
         {
             CommandDispatcher = commandDispatcher;
         }
+
+        protected Guid UserId => User?.Identity?.IsAuthenticated == true ?
+            Guid.Parse(User.Identity.Name) :
+            Guid.Empty;
     }
 }

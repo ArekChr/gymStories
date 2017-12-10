@@ -1,4 +1,5 @@
-﻿using gymNotebook.Infrastructure.DTO;
+﻿using gymNotebook.Infrastructure.Commands.Trainings.Exercises;
+using gymNotebook.Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,9 +11,9 @@ namespace gymNotebook.Infrastructure.Services
     {
         Task<ExerciseDto> GetAsync(Guid id);
 
-        Task<ExerciseDto> GetAsync(Guid trainingId, string name);
+        Task<ExerciseDto> GetAsync(Guid routineId, string name);
 
-        Task CreateAsync(Guid routineId, Guid id, string name, string description, string musclePart);
+        Task CreateAsync(Guid routineId, string name, string description, string musclePart);
 
         Task<IEnumerable<ExerciseDto>> BrowseAsync(Guid routineId);
 

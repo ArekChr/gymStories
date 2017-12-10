@@ -2,68 +2,62 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using gymNotebook.Infrastructure.Commands.Trainings.Training;
 using gymNotebook.Infrastructure.Services;
-using gymNotebook.Infrastructure.Commands.Training;
 using gymNotebook.Infrastructure.Commands;
 
 namespace gymNotebook.Api.Controllers
 {
+    [Produces("application/json")]
+    [Route("api/Trainings")]
     public class TrainingsController : ApiControllerBase
     {
         private readonly ITrainingService _trainingService;
 
-        public TrainingsController(ITrainingService trainingService, 
+        public TrainingsController(ITrainingService trainingService,
             ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
             _trainingService = trainingService;
         }
 
-        // GET trainings
-        [HttpGet("")]
-        public async Task<IActionResult> Get([FromHeader]string userId)
+        // GET: api/Trainings
+        [HttpGet]
+        public IEnumerable<string> Get()
         {
-            Guid _userId = new Guid(userId);
-            var trainings = await _trainingService.BrowseAsync(_userId);
-
-            return Json(trainings);
+            return new string[] { "value1", "value2" };
         }
 
-        // GET trainings/5
-        [HttpGet("{trainingId}")]
-        public async Task<IActionResult> Get(Guid trainingId)
+        // GET: api/Trainings/5
+        [HttpGet("{id}", Name = "Get")]
+        public string Get(int id)
         {
-           
-            var training = await _trainingService.GetAsync(trainingId);
-
-            return Json(training);
+            return "value";
         }
-
-        // POST trainings
+        
+        // POST: api/Trainings
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]CreateTraining command)
+        public void Post([FromBody]string value)
+        {
+        }
+        
+        // PUT: api/Trainings/5
+        [HttpPut("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Put([FromBody]CreateFullTraining command)
         {
             command.TrainingId = Guid.NewGuid();
             await CommandDispatcher.DispatchAsync(command);
 
             return Created($"/trainings/{command.TrainingId}", null);
         }
-
-        // PUT trainings/5
-        [HttpPut("{trainingId}")]
-        public async Task<IActionResult> Put([FromBody]UpdateTraining command)
+        
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
         {
-            await CommandDispatcher.DispatchAsync(command);
-            return NoContent();
-        }
-
-        // DELETE trainings/5
-        [HttpDelete("{trainingId}")]
-        public async Task<IActionResult> Delete(Guid trainingId)
-        {
-            await _trainingService.DeleteAsync(trainingId);
-
-            return NoContent();
         }
     }
 }

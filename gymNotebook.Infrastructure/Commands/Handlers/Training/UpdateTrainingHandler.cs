@@ -1,5 +1,4 @@
-﻿using gymNotebook.Core.Repositories;
-using gymNotebook.Infrastructure.Commands.Training;
+﻿using gymNotebook.Infrastructure.Commands.Trainings.Training;
 using gymNotebook.Infrastructure.Services;
 using System.Threading.Tasks;
 

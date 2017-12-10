@@ -1,4 +1,5 @@
-﻿using gymNotebook.Infrastructure.DTO;
+﻿using gymNotebook.Infrastructure.Commands.Trainings.Routines;
+using gymNotebook.Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,11 +13,9 @@ namespace gymNotebook.Infrastructure.Services
 
         Task<RoutineDto> GetAsync(Guid trainingId, string name);
 
-        Task CreateAsync(Guid trainingId, Guid id, string name);
+        Task CreateAsync(Guid trainingId, string name);
 
         Task<IEnumerable<RoutineDto>> BrowseAsync(Guid trainingId);
-
-        Task AddFullAsync(IEnumerable<RoutineDto> routines);
 
         Task UpdateAsync(Guid id, string name);
 

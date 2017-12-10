@@ -6,6 +6,7 @@ using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Core.Repositories;
 using AutoMapper;
 using gymNotebook.Core.Domain;
+using gymNotebook.Infrastructure.Commands.Trainings.Routines;
 
 namespace gymNotebook.Infrastructure.Services
 {
@@ -41,7 +42,7 @@ namespace gymNotebook.Infrastructure.Services
             return _mapper.Map<IEnumerable<RoutineDto>>(routines);
         }
 
-        public async Task CreateAsync(Guid trainingId, Guid id, string name)
+        public async Task CreateAsync(Guid trainingId, string name)
         {
             var routine = await _repo.GetAsync(trainingId, name);
             if(routine != null)
@@ -50,20 +51,6 @@ namespace gymNotebook.Infrastructure.Services
             }
             routine = new Routine(trainingId, name);
             await _repo.AddAsync(routine);
-        }
-
-        public async Task AddFullAsync(IEnumerable<RoutineDto> routines)
-        {
-            foreach(var routine in routines)
-            {
-                var _routine = await _repo.GetAsync(routine.TrainingId, routine.Name);
-                if(_routine != null)
-                {
-                    throw new Exception($"Routine with name: '{routine.Name}' already exists");
-                }
-                _routine = new Routine(routine.TrainingId, routine.Name);
-                await _repo.AddAsync(_routine);
-            }
         }
 
         public async Task UpdateAsync(Guid id, string name)

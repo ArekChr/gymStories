@@ -10,11 +10,11 @@ using gymNotebook.Infrastructure.Commands;
 
 namespace gymNotebook.Api.Controllers
 {
-    public class UsersController : ApiControllerBase
+    public class UserController : ApiControllerBase
     {
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService, 
+        public UserController(IUserService userService, 
             ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
             _userService = userService;
