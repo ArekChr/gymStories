@@ -5,7 +5,6 @@ using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Core.Repositories;
 using AutoMapper;
 using gymNotebook.Core.Domain;
-using gymNotebook.Infrastructure.Commands.Trainings.Exercises;
 
 namespace gymNotebook.Infrastructure.Services
 {
