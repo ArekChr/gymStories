@@ -9,7 +9,7 @@ using gymNotebook.Infrastructure.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using gymNotebook.Infrastructure.Settings;
+using gymNotebook.Infrastructure.Mongo;
 
 namespace gymNotebook.Api
 {
@@ -65,7 +65,7 @@ namespace gymNotebook.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            MongoConfigurator.Initialize();
             app.UseAuthentication();
             app.UseMvc();
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
