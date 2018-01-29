@@ -6,7 +6,6 @@ using gymNotebook.Core.Repositories;
 using AutoMapper;
 using gymNotebook.Core.Domain;
 
-
 namespace gymNotebook.Infrastructure.Services
 {
     public class ExerciseService : IExerciseService
