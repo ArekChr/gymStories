@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using gymNotebook.Infrastructure.Services;
-using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Infrastructure.Commands.Users;
 using gymNotebook.Infrastructure.Commands;
 

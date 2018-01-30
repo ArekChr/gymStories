@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace gymNotebook.Infrastructure.Repositories
+namespace gymNotebook.Infrastructure.EF
 {
     // Marker
 
-    public interface IMongoRepository
+    public interface ISqlRepository
     {
     }
 }

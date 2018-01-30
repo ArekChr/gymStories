@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using gymNotebook.Infrastructure.EF;
 using gymNotebook.Infrastructure.Extensions;
 using gymNotebook.Infrastructure.Mongo;
 using gymNotebook.Infrastructure.Settings;
@@ -20,6 +21,7 @@ namespace gymNotebook.Infrastructure.IoC.Modules
             builder.RegisterInstance(_configuration.GetSettings<GeneralSettings>()).SingleInstance();
             builder.RegisterInstance(_configuration.GetSettings<JwtSettings>()).SingleInstance();
             builder.RegisterInstance(_configuration.GetSettings<MongoSettings>()).SingleInstance();
+            builder.RegisterInstance(_configuration.GetSettings<SqlSettings>()).SingleInstance();
         }
     }
 }
