@@ -47,7 +47,7 @@ namespace gymNotebook.Core.Domain
             CreateAt = DateTime.UtcNow;
         }
 
-        public void AddTraining(Guid userId, Guid trainingId, string name, string description, int difficulty)
+        public void AddTraining(Guid userId, Guid trainingId, string name, string description, byte difficulty)
         {
             _trainings.Add(new Training(userId, trainingId, name, description, difficulty));
         }

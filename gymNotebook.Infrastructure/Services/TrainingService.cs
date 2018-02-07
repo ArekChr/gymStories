@@ -34,7 +34,7 @@ namespace gymNotebook.Infrastructure.Services
             return _mapper.Map<TrainingDto>(training);
         }
 
-        public async Task CreateAsync(Guid userId, Guid trainingId, string name, string description, int difficulty)
+        public async Task CreateAsync(Guid userId, Guid trainingId, string name, string description, byte difficulty)
         {
             var training = await _trainingRepository.GetAsync(userId, name);
             if(training != null)
@@ -62,7 +62,7 @@ namespace gymNotebook.Infrastructure.Services
             return _mapper.Map<IEnumerable<TrainingDto>>(trainings);
         }
 
-        public async Task UpdateAsync(Guid id, string name, string description, int difficulty)
+        public async Task UpdateAsync(Guid id, string name, string description, byte difficulty)
         {
             var training = await _trainingRepository.GetAsync(id);
             if(training == null)

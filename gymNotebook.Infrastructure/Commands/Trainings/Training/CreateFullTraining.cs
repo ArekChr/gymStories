@@ -14,7 +14,7 @@ namespace gymNotebook.Infrastructure.Commands.Trainings.Training
 
         public string Description { get; set; }
 
-        public int Difficulty { get; set; }
+        public byte Difficulty { get; set; }
 
         public IEnumerable<CreateFullRoutine> FullRoutine { get; set; }
     }

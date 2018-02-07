@@ -13,7 +13,7 @@ namespace gymNotebook.Core.Domain
 
         public string Description { get; protected set; }
 
-        public int Difficulty { get; protected set; }
+        public byte Difficulty { get; protected set; }
 
         public IEnumerable<Routine> Routines => _routines;
 
@@ -21,7 +21,7 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public Training(Guid userId, Guid trainingId, string name, string description, int difficulty)
+        public Training(Guid userId, Guid trainingId, string name, string description, byte difficulty)
         {
             Id = trainingId;
             UserId = userId;
@@ -49,7 +49,7 @@ namespace gymNotebook.Core.Domain
             Description = description;
         }
 
-        public void SetDifficulty(int difficulty)
+        public void SetDifficulty(byte difficulty)
         {
             Difficulty = difficulty;
         }

@@ -12,11 +12,11 @@ namespace gymNotebook.Infrastructure.Services
 
         Task<TrainingDto> GetAsync(Guid userId, string name);
 
-        Task CreateAsync(Guid userId, Guid trainingId, string name, string description, int difficulty);
+        Task CreateAsync(Guid userId, Guid trainingId, string name, string description, byte difficulty);
 
         Task<IEnumerable<TrainingDto>> BrowseAsync(Guid userId);
 
-        Task UpdateAsync(Guid id, string name, string description, int difficulty);
+        Task UpdateAsync(Guid id, string name, string description, byte difficulty);
 
         Task DeleteAsync(Guid id);
     }

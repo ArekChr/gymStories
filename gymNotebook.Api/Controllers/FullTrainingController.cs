@@ -11,11 +11,11 @@ namespace gymNotebook.Api.Controllers
 {
     [Produces("application/json")]
     [Route("api/Trainings")]
-    public class TrainingsController : ApiControllerBase
+    public class FullTrainingController : ApiControllerBase
     {
         private readonly ITrainingService _trainingService;
 
-        public TrainingsController(ITrainingService trainingService,
+        public FullTrainingController(ITrainingService trainingService,
             ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
             _trainingService = trainingService;

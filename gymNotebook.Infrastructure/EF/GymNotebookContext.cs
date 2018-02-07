@@ -12,6 +12,8 @@ namespace gymNotebook.Infrastructure.EF
 
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Training> Trainings { get; set; }
+
         public GymNotebookContext(DbContextOptions<GymNotebookContext> options, SqlSettings sqlSettings ) : base (options)
         {
             _sqlSettings = sqlSettings;
@@ -21,9 +23,9 @@ namespace gymNotebook.Infrastructure.EF
         {
             if (_sqlSettings.InMemory)
             {
-                optionsBuilder.UseInMemoryDatabase();
-
-                return;
+                //optionsBuilder.UseInMemoryDatabase();
+                throw new Exception("In memory database is not implemented");
+                //return;
             }
             optionsBuilder.UseSqlServer(_sqlSettings.ConnectionString);
         }
@@ -31,6 +33,8 @@ namespace gymNotebook.Infrastructure.EF
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var userBuilder = modelBuilder.Entity<User>();
+            userBuilder.HasKey(x => x.Id);
+            var trainingBuilder = modelBuilder.Entity<Training>();
             userBuilder.HasKey(x => x.Id);
         }
     }
