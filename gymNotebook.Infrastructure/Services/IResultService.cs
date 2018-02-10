@@ -11,7 +11,7 @@ namespace gymNotebook.Infrastructure.Services
 
         Task<ResultDto> GetAsync(Guid exerciseId, int numberSeries);
 
-        Task CreateAsync(Guid exerciseId, Guid id, int numberSeries, int repetitions, float weight, string comments);
+        Task CreateAsync(Guid exerciseId, int numberSeries, int repetitions, float weight, string comments);
 
         Task<IEnumerable<ResultDto>> BrowseAsync(Guid exerciseId);
 

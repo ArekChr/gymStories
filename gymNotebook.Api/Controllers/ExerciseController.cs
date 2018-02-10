@@ -7,8 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Exercise")]
     public class ExerciseController : ApiControllerBase
     {
         private readonly IExerciseService _exerviseService;
@@ -19,7 +17,7 @@ namespace gymNotebook.Api.Controllers
         }
 
         // GET: api/Exercise
-        [HttpGet]
+        [HttpGet("id")]
         public async Task<IActionResult> Get([FromHeader]Guid routineId)
         {
             var exercises = await _exerviseService.BrowseAsync(routineId);
@@ -28,7 +26,7 @@ namespace gymNotebook.Api.Controllers
         }
 
         // GET: api/Exercise/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{name}")]
         public async Task<IActionResult> Get(Guid routineId, string name)
         {
             var exercises = await _exerviseService.GetAsync(routineId, name);

@@ -14,6 +14,7 @@ namespace gymNotebook.Api.Controllers
         public TrainingController(ITrainingService trainingService, 
             ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
+            _trainingService = trainingService;
         }
 
         // GET trainings

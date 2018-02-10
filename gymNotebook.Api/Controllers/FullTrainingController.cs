@@ -9,8 +9,6 @@ using gymNotebook.Infrastructure.Commands;
 
 namespace gymNotebook.Api.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/Trainings")]
     public class FullTrainingController : ApiControllerBase
     {
         private readonly ITrainingService _trainingService;
@@ -21,27 +19,27 @@ namespace gymNotebook.Api.Controllers
             _trainingService = trainingService;
         }
 
-        // GET: api/Trainings
-        [HttpGet]
+        // GET: Trainings
+        [HttpGet("")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Trainings/5
-        [HttpGet("{id}", Name = "Get")]
+        // GET: Trainings/5
+        [HttpGet("{name}")]
         public string Get(int id)
         {
             return "value";
         }
         
-        // POST: api/Trainings
+        // POST: Trainings
         [HttpPost]
         public void Post([FromBody]string value)
         {
         }
         
-        // PUT: api/Trainings/5
+        // PUT: Trainings/5
         [HttpPut("{id}")]
         [Authorize]
         public async Task<IActionResult> Put([FromBody]CreateFullTraining command)
@@ -52,7 +50,7 @@ namespace gymNotebook.Api.Controllers
             return Created($"/trainings/{command.TrainingId}", null);
         }
         
-        // DELETE: api/ApiWithActions/5
+        // DELETE: Trainings/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

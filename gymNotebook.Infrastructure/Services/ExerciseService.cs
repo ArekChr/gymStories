@@ -23,21 +23,21 @@ namespace gymNotebook.Infrastructure.Services
         {
             var exercise = await _repo.GetAsync(id);
 
-            return _mapper.Map<ExerciseDto>(exercise);
+            return _mapper.Map<Exercise,ExerciseDto>(exercise);
         }
 
         public async Task<ExerciseDto> GetAsync(Guid routineId, string name)
         {
             var exercise = await _repo.GetAsync(routineId, name);
 
-            return _mapper.Map<ExerciseDto>(exercise);
+            return _mapper.Map<Exercise,ExerciseDto>(exercise);
         }
 
         public async Task<IEnumerable<ExerciseDto>> BrowseAsync(Guid routineId)
         {
             var exercises = await _repo.BrowseAsync(routineId);
 
-            return _mapper.Map<IEnumerable<ExerciseDto>>(exercises);
+            return _mapper.Map<IEnumerable<Exercise>,IEnumerable<ExerciseDto>>(exercises);
         }
 
         public async Task CreateAsync(Guid routineId, string name, string description, string musclePart)

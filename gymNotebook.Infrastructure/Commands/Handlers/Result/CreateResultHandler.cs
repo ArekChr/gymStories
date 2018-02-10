@@ -1,0 +1,25 @@
+﻿using gymNotebook.Infrastructure.Commands.Trainings.Results;
+using gymNotebook.Infrastructure.Services;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace gymNotebook.Infrastructure.Commands.Handlers.Results
+{
+    public class CreateResultHandler : ICommandHandler<CreateResult>
+    {
+        private readonly IResultService _resultService;
+
+        public CreateResultHandler(IResultService resultService)
+        {
+            _resultService = resultService;
+        }
+
+        public async Task HandleAsync(CreateResult command)
+        {
+            await _resultService.CreateAsync(command.ExerciseId, command.NumberSeries, 
+                command.Repetitions, command.Weigth, command.Comments);
+        }
+    }
+}
