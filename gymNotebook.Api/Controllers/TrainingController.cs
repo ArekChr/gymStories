@@ -14,7 +14,6 @@ namespace gymNotebook.Api.Controllers
         public TrainingController(ITrainingService trainingService, 
             ICommandDispatcher commandDispatcher) : base(commandDispatcher)
         {
-            _trainingService = trainingService;
         }
 
         // GET trainings
@@ -31,7 +30,6 @@ namespace gymNotebook.Api.Controllers
         [HttpGet("{trainingId}")]
         public async Task<IActionResult> Get(Guid trainingId)
         {
-           
             var training = await _trainingService.GetAsync(trainingId);
 
             return Json(training);
@@ -52,14 +50,15 @@ namespace gymNotebook.Api.Controllers
         public async Task<IActionResult> Put([FromBody]UpdateTraining command)
         {
             await CommandDispatcher.DispatchAsync(command);
+
             return NoContent();
         }
 
         // DELETE trainings/5
         [HttpDelete("{trainingId}")]
-        public async Task<IActionResult> Delete(Guid trainingId)
+        public async Task<IActionResult> Delete(DeleteTraining command)
         {
-            await _trainingService.DeleteAsync(trainingId);
+            await CommandDispatcher.DispatchAsync(command);
 
             return NoContent();
         }

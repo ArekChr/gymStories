@@ -4,9 +4,9 @@ using System.Text;
 
 namespace gymNotebook.Infrastructure.Commands.Trainings.Exercises
 {
-    public class CreateExercise : ICommand
+    public class UpdateExercise : ICommand
     {
-        public Guid RoutineId { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

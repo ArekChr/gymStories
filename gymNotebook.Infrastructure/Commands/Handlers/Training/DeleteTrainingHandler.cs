@@ -1,21 +1,24 @@
 ﻿using gymNotebook.Infrastructure.Commands.Trainings.Training;
 using gymNotebook.Infrastructure.Services;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Commands.Handlers.Training
 {
-    public class CreateTrainingHandler : ICommandHandler<CreateTraining>
+    public class DeleteTrainingHandler : ICommandHandler<DeleteTraining>
     {
         private readonly ITrainingService _trainingService;
 
-        public CreateTrainingHandler(ITrainingService trainingService)
+        public DeleteTrainingHandler(ITrainingService trainingService)
         {
             _trainingService = trainingService;
         }
 
-        public async Task HandleAsync(CreateTraining command)
+        public async Task HandleAsync(DeleteTraining command)
         {
-            await _trainingService.CreateAsync(command.UserId, command.TrainingId, command.Name, command.Description, command.Difficulty);
+            await _trainingService.DeleteAsync(command.trainingId);
         }
     }
 }
