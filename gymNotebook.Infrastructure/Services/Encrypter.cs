@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using gymNotebook.Infrastructure.Extensions;
 using System.Security.Cryptography;
 

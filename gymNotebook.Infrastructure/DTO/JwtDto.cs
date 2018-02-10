@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace gymNotebook.Infrastructure.DTO
+﻿namespace gymNotebook.Infrastructure.DTO
 {
     public class JwtDto
     {

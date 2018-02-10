@@ -1,9 +1,6 @@
 ﻿using Autofac;
 using gymNotebook.Infrastructure.EF;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace gymNotebook.Infrastructure.IoC.Modules
 {

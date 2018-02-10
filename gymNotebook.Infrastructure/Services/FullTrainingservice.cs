@@ -1,7 +1,5 @@
 ﻿using gymNotebook.Core.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using gymNotebook.Infrastructure.Commands.Trainings.Training;
 using gymNotebook.Infrastructure.DTO;
 using System.Threading.Tasks;

@@ -1,7 +1,4 @@
 ﻿using gymNotebook.Infrastructure.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace gymNotebook.Infrastructure.Services
 {

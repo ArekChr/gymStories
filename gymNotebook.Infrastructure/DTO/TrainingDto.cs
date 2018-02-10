@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace gymNotebook.Infrastructure.DTO
 {
     public class TrainingDto
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

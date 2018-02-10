@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using gymNotebook.Core.Domain;
 using gymNotebook.Infrastructure.DTO;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace gymNotebook.Infrastructure.Mappers
 {

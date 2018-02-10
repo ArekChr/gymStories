@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Core.Repositories;
 using AutoMapper;
 using gymNotebook.Core.Domain;
-using gymNotebook.Infrastructure.Commands.Trainings.Routines;
 
 namespace gymNotebook.Infrastructure.Services
 {

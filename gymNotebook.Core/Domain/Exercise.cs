@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace gymNotebook.Core.Domain
 {
     public class Exercise : Entity

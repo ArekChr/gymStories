@@ -1,7 +1,6 @@
 ﻿using gymNotebook.Core.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using gymNotebook.Core.Domain;
 using System.Threading.Tasks;
 using System.Linq;

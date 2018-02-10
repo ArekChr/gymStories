@@ -1,8 +1,6 @@
 ﻿using gymNotebook.Infrastructure.Commands.Trainings.Training;
 using gymNotebook.Infrastructure.DTO;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Services
