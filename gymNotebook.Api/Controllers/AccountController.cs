@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace gymNotebook.Api.Controllers
 {
+
     [Route("Account")]
     public class AccountController : ApiControllerBase
     {

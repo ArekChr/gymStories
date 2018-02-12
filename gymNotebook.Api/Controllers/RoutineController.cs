@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Trainings.Routines;
 using gymNotebook.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
 {
+    [Authorize]
     public class RoutineController : ApiControllerBase
     {
         private readonly IRoutineService _routineService;

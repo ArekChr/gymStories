@@ -17,8 +17,11 @@ namespace gymNotebook.Infrastructure.Repositories
             _database = database;
         }
 
+        private IMongoCollection<User> Users 
+            => _database.GetCollection<User>("Users");
+
         public async Task<User> GetAsync(Guid id)
-           => await Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
+            => await Users.AsQueryable().FirstOrDefaultAsync(x => x.Id == id);
 
         public async Task<User> GetAsync(string email)
             => await Users.AsQueryable().FirstOrDefaultAsync(x => x.Email == email);
@@ -34,7 +37,5 @@ namespace gymNotebook.Infrastructure.Repositories
 
         public async Task UpdateAsync(User user)
             => await Users.ReplaceOneAsync(x => x.Id == user.Id, user);
-
-        private IMongoCollection<User> Users => _database.GetCollection<User>("Users");
     }
 }

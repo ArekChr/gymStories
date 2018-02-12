@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using gymNotebook.Infrastructure.Services;
 using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Trainings.Training;
+using Microsoft.AspNetCore.Authorization;
 
 namespace gymNotebook.Api.Controllers
 {
+    [Authorize]
     public class TrainingController : ApiControllerBase
     {
         private readonly ITrainingService _trainingService;
