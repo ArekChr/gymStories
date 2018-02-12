@@ -8,6 +8,7 @@ namespace gymNotebook.Core.Domain
     {
         private ISet<Training> _trainings = new HashSet<Training>();
         private ISet<Progress> _progress = new HashSet<Progress>();
+        private ISet<Friend> _friends = new HashSet<Friend>();
 
         private static List<string> _roles = new List<string>
         {
@@ -28,6 +29,7 @@ namespace gymNotebook.Core.Domain
 
         public IEnumerable<Training> Trainings => _trainings;
         public IEnumerable<Progress> Progress => _progress;
+        public IEnumerable<Friend> Friends => _friends;
 
         private static readonly Regex EmailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         private static readonly Regex NameRegex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
@@ -44,16 +46,6 @@ namespace gymNotebook.Core.Domain
             SetEmail(email);
             SetPassword(password);
             CreateAt = DateTime.UtcNow;
-        }
-
-        public void AddTraining(Guid userId, Guid trainingId, string name, string description, byte difficulty)
-        {
-            _trainings.Add(new Training(userId, trainingId, name, description, difficulty));
-        }
-
-        public void AddProgress(float weight, float biceps, float chest, float thigh, float calf, float waist, float shoulders, float neck)
-        {
-            _progress.Add(new Progress(weight, biceps, chest, thigh, calf, waist, shoulders, neck));
         }
 
         public void SetUsername(string username)
