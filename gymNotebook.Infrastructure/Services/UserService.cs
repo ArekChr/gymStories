@@ -32,7 +32,6 @@ namespace gymNotebook.Infrastructure.Services
             var user = await _userRepository.GetAsync(email);
             if(user == null)
             {
-                //throw new Exception($"User with email: '{email}' does not exists.");
                 throw new Exception("Invalid credentials");
             }
             var salt = _encrypter.GetSalt(password);
