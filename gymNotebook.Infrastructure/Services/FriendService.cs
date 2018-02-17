@@ -54,8 +54,15 @@ namespace gymNotebook.Infrastructure.Services
             {
                 throw new Exception($"Friend with id: '{id}' does not exists.");
             }
-            friend.AcceptFriend(Status.Friends);
-            await _repo.UpdateAsync(friend);
+            friend.SetStatus(status);
+            if(status == Status.Discard)
+            {
+                await _repo.DeleteAsync(friend);
+            }
+            else
+            {
+                await _repo.UpdateAsync(friend);
+            }
         }
 
         public async Task DeleteAsync(Guid id)

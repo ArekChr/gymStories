@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using gymNotebook.Infrastructure.Mongo;
 using gymNotebook.Infrastructure.EF;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace gymNotebook.Api
 {
@@ -36,8 +37,12 @@ namespace gymNotebook.Api
             services.AddEntityFrameworkSqlServer()
                     .AddEntityFrameworkInMemoryDatabase()
                     .AddDbContext<GymNotebookContext>();
-
-            services.AddAuthentication(o =>
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "gymNotebook", Version = "v1" });
+            });
+        
+        services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -73,6 +78,11 @@ namespace gymNotebook.Api
             MongoConfigurator.Initialize();
             app.UseAuthentication();
             app.UseMvc();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "gymNotebook v1");
+            });
             appLifetime.ApplicationStopped.Register(() => ApplicationContainer.Dispose());
         }
     }

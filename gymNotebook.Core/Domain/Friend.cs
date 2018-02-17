@@ -24,7 +24,7 @@ namespace gymNotebook.Core.Domain
             DateAdded = DateTime.UtcNow;
         }
 
-        public void AcceptFriend(Status status)
+        public void SetStatus(Status status)
         {
             FriendStatus = status;
         }
@@ -35,6 +35,7 @@ namespace gymNotebook.Core.Domain
         Received,
         Sent,
         Blocked,
-        Friends
+        Friends,
+        Discard
     }
 }
