@@ -1,8 +1,5 @@
 ﻿using gymNotebook.Infrastructure.Commands.Friends;
 using gymNotebook.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Commands.Handlers.Friends

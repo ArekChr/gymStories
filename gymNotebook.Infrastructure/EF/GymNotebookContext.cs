@@ -9,10 +9,12 @@ namespace gymNotebook.Infrastructure.EF
         private readonly SqlSettings _sqlSettings;
 
         public DbSet<User> Users { get; set; }
-
         public DbSet<Training> Trainings { get; set; }
-
         public DbSet<Friend> Friends { get; set; }
+        public DbSet<Routine> Routines { get; set; }
+        public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<Progress> Progress { get; set; }
+        public DbSet<Result> Results { get; set; }
 
         public GymNotebookContext(DbContextOptions<GymNotebookContext> options, SqlSettings sqlSettings ) : base (options)
         {
@@ -35,7 +37,17 @@ namespace gymNotebook.Infrastructure.EF
             var userBuilder = modelBuilder.Entity<User>();
             userBuilder.HasKey(x => x.Id);
             var trainingBuilder = modelBuilder.Entity<Training>();
-            userBuilder.HasKey(x => x.Id);
+            trainingBuilder.HasKey(x => x.Id);
+            var friendBuilder = modelBuilder.Entity<Friend>();
+            friendBuilder.HasKey(x => x.Id);
+            var routineBuilder = modelBuilder.Entity<Routine>();
+            routineBuilder.HasKey(x => x.Id);
+            var exerciseBuilder = modelBuilder.Entity<Exercise>();
+            exerciseBuilder.HasKey(x => x.Id);
+            var progressBuilder = modelBuilder.Entity<Progress>();
+            progressBuilder.HasKey(x => x.Id);
+            var resultBuilder = modelBuilder.Entity<Result>();
+            resultBuilder.HasKey(x => x.Id);
         }
     }
 }
