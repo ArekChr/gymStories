@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using gymNotebook.Core.Domain;
 using gymNotebook.Core.Repositories;
+using gymNotebook.Infrastructure.DTO;
 
 namespace gymNotebook.Infrastructure.Services
 {
@@ -29,11 +31,11 @@ namespace gymNotebook.Infrastructure.Services
             return friend;
         }
 
-        public async Task<IEnumerable<Friend>> BrowseAsync(Guid userId)
+        public async Task<IEnumerable<FriendDto>> BrowseAsync(Guid userId)
         {
             var friends = await _repo.BrowseAsync(userId);
 
-            return friends;
+            return Mapper.Map<IEnumerable<FriendDto>>(friends);
         }
 
         public async Task CreateAsync(Guid userId, Guid friendId, Status status)
@@ -42,6 +44,10 @@ namespace gymNotebook.Infrastructure.Services
             if(friend != null)
             {
                 throw new Exception($"Friend with id: '{friendId}' already exists.");
+            }
+            if(userId == friendId)
+            {
+                throw new Exception("You can not add yourself.");
             }
             friend = new Friend(userId, friendId, Status.Sent);
             await _repo.AddAsync(friend);

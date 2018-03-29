@@ -32,6 +32,7 @@ namespace gymNotebook.Core.Domain
 
     public enum Status
     {
+        Unknown = 0,
         Received,
         Sent,
         Blocked,

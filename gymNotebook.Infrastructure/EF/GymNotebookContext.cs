@@ -12,6 +12,8 @@ namespace gymNotebook.Infrastructure.EF
 
         public DbSet<Training> Trainings { get; set; }
 
+        public DbSet<Friend> Friends { get; set; }
+
         public GymNotebookContext(DbContextOptions<GymNotebookContext> options, SqlSettings sqlSettings ) : base (options)
         {
             _sqlSettings = sqlSettings;

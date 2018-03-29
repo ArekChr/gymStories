@@ -4,6 +4,7 @@ using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Users;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace gymNotebook.Api.Controllers
 {

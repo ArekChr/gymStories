@@ -1,4 +1,5 @@
 ﻿using gymNotebook.Core.Domain;
+using gymNotebook.Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace gymNotebook.Infrastructure.Services
 
         Task<Friend> GetAsync(Guid userId, Guid friendId);
 
-        Task<IEnumerable<Friend>> BrowseAsync(Guid userId);
+        Task<IEnumerable<FriendDto>> BrowseAsync(Guid userId);
 
         Task CreateAsync(Guid userId, Guid friendId, Status status);
 
