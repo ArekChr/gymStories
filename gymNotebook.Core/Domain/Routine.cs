@@ -32,7 +32,7 @@ namespace gymNotebook.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new Exception($"Routine can not have an empty name");
+                throw new Exception($"Routine can not have an empty name.");
             }
             Name = name;
         }

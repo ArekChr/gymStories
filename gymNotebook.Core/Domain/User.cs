@@ -52,7 +52,7 @@ namespace gymNotebook.Core.Domain
         {
             if (!NameRegex.IsMatch(username))
             {
-                throw new Exception($"User can not have an empty username.");
+                throw new DomainException(ErrorCodes.InvalidUsername, $"User can not have an empty username.");
             }
             Username = username;
         }
@@ -62,7 +62,7 @@ namespace gymNotebook.Core.Domain
             
             if (!EmailRegex.Match(email).Success)
             {
-                throw new Exception($"User can not have an empty email.");
+                throw new DomainException(ErrorCodes.InvalidEmail, $"User can not have an empty email.");
             }
             Email = email.ToLowerInvariant();
         }
@@ -71,12 +71,12 @@ namespace gymNotebook.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(role))
             {
-                throw new Exception($"User can not have an empty role.");
+                throw new DomainException(ErrorCodes.InvalidRole, $"User can not have an empty role.");
             }
             role = role.ToLowerInvariant();
             if (!_roles.Contains(role))
             {
-                throw new Exception($"User can not have a role: '{role}'.");
+                throw new DomainException(ErrorCodes.InvalidRole, $"User can not have a role: '{role}'.");
             }
             Role = role;
         }
@@ -86,13 +86,13 @@ namespace gymNotebook.Core.Domain
             var hasMiniMaxChars = new Regex(@".{6,20}");
             if (!hasMiniMaxChars.IsMatch(password))
             {
-                throw new Exception($"Password should not be less than 6 or greater than 20 characters.");
+                throw new DomainException(ErrorCodes.InvalidPassword, $"Password should not be less than 6 or greater than 20 characters.");
             }
 
             var hasNumber = new Regex(@"[0-9]+");
             if (!hasNumber.IsMatch(password))
             {
-                throw new Exception($"Password should contain At least one numeric value.");
+                throw new DomainException(ErrorCodes.InvalidPassword, $"Password should contain At least one numeric value.");
             }
             Password = password;
         }

@@ -22,14 +22,20 @@ namespace gymNotebook.Infrastructure.Services
         public async Task<ExerciseDto> GetAsync(Guid id)
         {
             var exercise = await _repo.GetAsync(id);
-
+            if (exercise == null)
+            {
+                throw new Exception($"Exercise with does not exists.");
+            }
             return _mapper.Map<Exercise,ExerciseDto>(exercise);
         }
 
         public async Task<ExerciseDto> GetAsync(Guid routineId, string name)
         {
             var exercise = await _repo.GetAsync(routineId, name);
-
+            if (exercise == null)
+            {
+                throw new Exception($"Exercise with name: {name} does not exists.");
+            }
             return _mapper.Map<Exercise,ExerciseDto>(exercise);
         }
 

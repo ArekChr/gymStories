@@ -30,6 +30,15 @@ namespace gymNotebook.Core.Domain
             SetDifficulty(difficulty);
         }
 
+        public void SetUser(Guid userId)
+        {
+            if (userId == null)
+            {
+                throw new DomainException(ErrorCodes.InvalidTraining, "Training can not have an empty userId.");
+            }
+            UserId = userId;
+        }
+
         public void AddRoutine(Guid trainingId, string name)
         {
             _routines.Add(new Routine(trainingId, name));
@@ -39,7 +48,7 @@ namespace gymNotebook.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new Exception($"Routine with id: '{Id}' can not have an empty name.");
+                throw new DomainException(ErrorCodes.InvalidTraining, $"Training with id: '{Id}' can not have an empty name.");
             }
             Name = name;
         }

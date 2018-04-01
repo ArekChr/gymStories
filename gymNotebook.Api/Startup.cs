@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +11,8 @@ using System.Text;
 using gymNotebook.Infrastructure.Mongo;
 using gymNotebook.Infrastructure.EF;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Builder;
+using gymNotebook.Api.Framework;
 
 namespace gymNotebook.Api
 {
@@ -73,10 +74,12 @@ namespace gymNotebook.Api
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                //app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/error");
             }
             MongoConfigurator.Initialize();
             app.UseAuthentication();
+            app.UseMiddleware();  // invoked only before UseMvc!
             app.UseMvc();
             app.UseSwagger();
             app.UseSwaggerUI(c =>

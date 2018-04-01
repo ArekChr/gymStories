@@ -23,12 +23,12 @@ namespace gymNotebook.Infrastructure.EF
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (_sqlSettings.InMemory)
-            {
-                //optionsBuilder.UseInMemoryDatabase();
-                throw new Exception("In memory database is not implemented");
-                //return;
-            }
+            //if (_sqlSettings.InMemory)
+            //{
+            //    //optionsBuilder.UseInMemoryDatabase();
+            //    throw new Exception("In memory database is not implemented");
+            //    //return;
+            //}
             optionsBuilder.UseSqlServer(_sqlSettings.ConnectionString);
         }
 

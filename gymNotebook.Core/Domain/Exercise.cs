@@ -33,7 +33,7 @@ namespace gymNotebook.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new Exception($"Exercise with id: '{Id}' can not have an empty name.");
+                throw new DomainException(ErrorCodes.InvalidExerciseName, $"Exercise with id: '{Id}' can not have an empty name.");
             }
             Name = name;
         }
@@ -47,7 +47,7 @@ namespace gymNotebook.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(musclePart))
             {
-                throw new Exception($"Exercise with id: '{Id}' can not have empty muscle part.");
+                throw new DomainException(ErrorCodes.InvalidMusclePart, $"Exercise with id: '{Id}' can not have empty muscle part.");
             }
             MusclePart = musclePart;
         }

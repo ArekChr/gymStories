@@ -9,7 +9,6 @@ using gymNotebook.Infrastructure.Commands;
 
 namespace gymNotebook.Api.Controllers
 {
-    [Authorize]
     public class FullTrainingController : ApiControllerBase
     {
         private readonly ITrainingService _trainingService;

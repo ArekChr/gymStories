@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using gymNotebook.Infrastructure.DTO;
 using AutoMapper;
+using gymNotebook.Infrastructure.Exceptions;
 
 namespace gymNotebook.Infrastructure.Services
 {
@@ -32,7 +33,7 @@ namespace gymNotebook.Infrastructure.Services
             var user = await _userRepository.GetAsync(email);
             if(user == null)
             {
-                throw new Exception("Invalid credentials");
+                throw new ServiceException(ErrorServiceCodes.InvalidCredentials, "Invalid credentials");
             }
             var salt = _encrypter.GetSalt(password);
             var hash = _encrypter.GetHash(password, salt);
@@ -40,7 +41,7 @@ namespace gymNotebook.Infrastructure.Services
             {
                 return;
             }
-            throw new Exception("Invalid credentials");
+            throw new ServiceException(ErrorServiceCodes.InvalidCredentials, "Invalid credentials");
         }
 
         public async Task RegisterAsync(string username, string email, string password)
@@ -48,7 +49,7 @@ namespace gymNotebook.Infrastructure.Services
             var user = await _userRepository.GetAsync(email);
             if(user != null)
             {
-                throw new Exception($"User with email: '{email}' already exists.");
+                throw new ServiceException(ErrorServiceCodes.EmailInUse, $"User with email: '{email}' already exists.");
             }
             var salt = _encrypter.GetSalt(password);
             var hash = _encrypter.GetHash(password, salt);
