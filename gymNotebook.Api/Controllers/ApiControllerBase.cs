@@ -18,6 +18,15 @@ namespace gymNotebook.Api.Controllers
             CommandDispatcher = commandDispatcher;
         }
 
+        protected async Task DispatchAsync<T>(T command) where T : ICommand
+        {
+            //if (command is IAuthenticatedCommand authenticatedCommand)
+            //{
+            //    authenticatedCommand.UserId = UserId;
+            //}
+            await CommandDispatcher.DispatchAsync(command);
+        }
+
         protected Guid UserId => User?.Identity?.IsAuthenticated == true ?
             Guid.Parse(User.Identity.Name) :
             Guid.Empty;

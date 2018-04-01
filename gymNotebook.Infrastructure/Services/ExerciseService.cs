@@ -5,17 +5,22 @@ using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Core.Repositories;
 using AutoMapper;
 using gymNotebook.Core.Domain;
+using gymNotebook.Infrastructure.Exceptions;
 
 namespace gymNotebook.Infrastructure.Services
 {
     public class ExerciseService : IExerciseService
     {
         private readonly IExerciseRepository _repo;
+        
         private readonly IMapper _mapper;
 
-        public ExerciseService(IExerciseRepository repo, IMapper mapper)
+        private readonly IRoutineRepository _routineRepo;
+
+        public ExerciseService(IExerciseRepository repo, IRoutineRepository routineRepo, IMapper mapper)
         {
             _repo = repo;
+            _routineRepo = routineRepo;
             _mapper = mapper;
         }
 
@@ -48,10 +53,15 @@ namespace gymNotebook.Infrastructure.Services
 
         public async Task CreateAsync(Guid routineId, string name, string description, string musclePart)
         {
+            var routine = await _routineRepo.GetAsync(routineId);
+            if(routine == null)
+            {
+                throw new ServiceException(ErrorServiceCodes.InvalidRoutine, "Cannot create exercise, routine does not exists.");
+            }
             var exercise = await _repo.GetAsync(routineId, name);
             if(exercise != null)
             {
-                throw new Exception($"Exercise with name: '{name}' already exists.");
+                throw new ServiceException(ErrorServiceCodes.InvalidRoutine, $"Exercise with name: '{name}' already exists.");
             }
             exercise = new Exercise(routineId, name, description, musclePart);
             await _repo.AddAsync(exercise);

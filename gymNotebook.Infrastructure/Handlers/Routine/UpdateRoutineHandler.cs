@@ -1,8 +1,9 @@
-﻿using gymNotebook.Infrastructure.Commands.Trainings.Routines;
+﻿using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Trainings.Routines;
 using gymNotebook.Infrastructure.Services;
 using System.Threading.Tasks;
 
-namespace gymNotebook.Infrastructure.Commands.Handlers.Routine
+namespace gymNotebook.Infrastructure.Handlers.Routine
 {
     public class UpdateRoutineHandler : ICommandHandler<UpdateRoutine>
     {

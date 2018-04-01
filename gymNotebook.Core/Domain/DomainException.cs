@@ -16,7 +16,7 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public DomainException(string code, string message, params object[] args) : base(null, string.Empty, message, args)
+        public DomainException(string code, string message, params object[] args) : base(null, code, message, args)
         {
         }
 

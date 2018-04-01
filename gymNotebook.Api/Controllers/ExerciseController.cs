@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
 {
-    [Authorize]
+    [Route("api/Exercise")]
+    [Produces("application/json")]
     public class ExerciseController : ApiControllerBase
     {
         private readonly IExerciseService _exerviseService;
@@ -18,8 +19,7 @@ namespace gymNotebook.Api.Controllers
             _exerviseService = exerviseService;
         }
 
-        // GET: api/Exercise
-        [HttpGet("id")]
+        [HttpGet]
         public async Task<IActionResult> Get([FromHeader]Guid routineId)
         {
             var exercises = await _exerviseService.BrowseAsync(routineId);
@@ -27,8 +27,7 @@ namespace gymNotebook.Api.Controllers
             return Json(exercises);
         }
 
-        // GET: api/Exercise/5
-        [HttpGet("{name}")]
+        [HttpGet("name")]
         public async Task<IActionResult> Get(Guid routineId, string name)
         {
             var exercises = await _exerviseService.GetAsync(routineId, name);
@@ -36,29 +35,26 @@ namespace gymNotebook.Api.Controllers
             return Json(exercises);
         }
 
-        // POST: api/Exercise
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateExercise command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return Created($"/routine/{command.Name}", null);
         }
 
-        // PUT: api/Exercise/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody]UpdateExercise command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }
 
-        // DELETE: api/Exercise/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete([FromBody]DeleteExercise command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }

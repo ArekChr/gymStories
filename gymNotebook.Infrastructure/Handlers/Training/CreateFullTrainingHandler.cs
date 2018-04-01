@@ -1,10 +1,9 @@
-﻿using gymNotebook.Infrastructure.Commands.Trainings.Training;
+﻿using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Trainings.Training;
 using gymNotebook.Infrastructure.Services;
-using System;
-using System.Collections;
 using System.Threading.Tasks;
 
-namespace gymNotebook.Infrastructure.Commands.Handlers.Training
+namespace gymNotebook.Infrastructure.Handlers.Training
 {
     public class CreateFullTrainingHandler : ICommandHandler<CreateFullTraining>
     {

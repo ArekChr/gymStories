@@ -5,11 +5,13 @@ using System.Threading.Tasks;
 using gymNotebook.Infrastructure.DTO;
 using AutoMapper;
 using gymNotebook.Infrastructure.Exceptions;
+using NLog;
 
 namespace gymNotebook.Infrastructure.Services
 {
     public class UserService : IUserService
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger(); // object reference null
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IEncrypter _encrypter;
@@ -53,7 +55,7 @@ namespace gymNotebook.Infrastructure.Services
             }
             var salt = _encrypter.GetSalt(password);
             var hash = _encrypter.GetHash(password, salt);
-            user = new User(email, username, hash, salt);
+            user = new User(username, email, hash, salt);
             await _userRepository.AddAsync(user);
         }
     }

@@ -21,7 +21,7 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public GnException(string code, string message, params object[] args) : this(null, string.Empty, message, args)
+        public GnException(string code, string message, params object[] args) : this(null, code, message, args)
         {
         }
 

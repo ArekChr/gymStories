@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using gymNotebook.Infrastructure.Services;
 using gymNotebook.Infrastructure.Commands.Users;
 using gymNotebook.Infrastructure.Commands;
+using System;
 
 namespace gymNotebook.Api.Controllers
 {
+    [Route("api/User")]
+    [Produces("application/json")]
     public class UserController : ApiControllerBase
     {
         private readonly IUserService _userService;
@@ -17,7 +20,6 @@ namespace gymNotebook.Api.Controllers
             _userService = userService;
         }
 
-        // GET users/5
         [HttpGet("{email}")]
         public async Task<IActionResult> Get(string email)
         {  
@@ -28,26 +30,25 @@ namespace gymNotebook.Api.Controllers
             }
             return Json(user);
         }
-        // GET users
+
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            throw new NotImplementedException();
         }
 
-        // POST users
         [HttpPost("")]
         public async Task<IActionResult> Post([FromBody]CreateUser command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return Created($"users/{command.Email}", new object());
         }
 
-        // DELETE users/5
         [HttpDelete("{userId}")]
         public void Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

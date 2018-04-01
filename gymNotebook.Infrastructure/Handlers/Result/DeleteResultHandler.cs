@@ -1,11 +1,9 @@
-﻿using gymNotebook.Infrastructure.Commands.Trainings.Results;
+﻿using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Trainings.Results;
 using gymNotebook.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace gymNotebook.Infrastructure.Commands.Handlers.Result
+namespace gymNotebook.Infrastructure.Handlers.Result
 {
     public class DeleteResultHandler : ICommandHandler<DeleteResult>
     {

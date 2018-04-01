@@ -5,12 +5,16 @@ using gymNotebook.Infrastructure.Services;
 using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Trainings.Training;
 using Microsoft.AspNetCore.Authorization;
+using NLog;
 
 namespace gymNotebook.Api.Controllers
 {
-
+    [Route("api/Training")]
+    [Produces("application/json")]
     public class TrainingController : ApiControllerBase
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly ITrainingService _trainingService;
 
         public TrainingController(ITrainingService trainingService, 
@@ -19,18 +23,17 @@ namespace gymNotebook.Api.Controllers
             _trainingService = trainingService;
         }
 
-        // GET trainings
-        [HttpGet("")]
+        [HttpGet("userId")]
         public async Task<IActionResult> Get([FromHeader]string userId)
         {
+            Logger.Info("Fetching trainings.");
             Guid _userId = new Guid(userId);
             var trainings = await _trainingService.BrowseAsync(_userId);
 
             return Json(trainings);
         }
 
-        // GET trainings/5
-        [HttpGet("{trainingId}")]
+        [HttpGet]
         public async Task<IActionResult> Get(Guid trainingId)
         {
             var training = await _trainingService.GetAsync(trainingId);
@@ -38,30 +41,27 @@ namespace gymNotebook.Api.Controllers
             return Json(training);
         }
 
-        // POST trainings
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateTraining command)
         {
             command.TrainingId = Guid.NewGuid();
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return Created($"/training/{command.TrainingId}", null);
         }
 
-        // PUT trainings/5
-        [HttpPut("{trainingId}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody]UpdateTraining command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }
 
-        // DELETE trainings/5
-        [HttpDelete("{trainingId}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete(DeleteTraining command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }

@@ -1,8 +1,9 @@
-﻿using gymNotebook.Infrastructure.Commands.Friends;
+﻿using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Friends;
 using gymNotebook.Infrastructure.Services;
 using System.Threading.Tasks;
 
-namespace gymNotebook.Infrastructure.Commands.Handlers.Friends
+namespace gymNotebook.Infrastructure.Handlers.Friends
 {
     public class AddFriendHandler : ICommandHandler<AddFriend>
     {

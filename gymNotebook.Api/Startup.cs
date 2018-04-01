@@ -1,18 +1,21 @@
 ﻿using System;
-using Microsoft.AspNetCore.Hosting;
+using System.Text;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using gymNotebook.Infrastructure.IoC;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using gymNotebook.Infrastructure.Mongo;
+using gymNotebook.Infrastructure.IoC;
 using gymNotebook.Infrastructure.EF;
-using Swashbuckle.AspNetCore.Swagger;
-using Microsoft.AspNetCore.Builder;
 using gymNotebook.Api.Framework;
+using Swashbuckle.AspNetCore.Swagger;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace gymNotebook.Api
 {
@@ -70,13 +73,16 @@ namespace gymNotebook.Api
         } 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime appLifetime, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 //app.UseDeveloperExceptionPage();
                 //app.UseExceptionHandler("/error");
             }
+            loggerFactory.AddNLog();
+            app.AddNLogWeb();
+            env.ConfigureNLog("nlog.config");
             MongoConfigurator.Initialize();
             app.UseAuthentication();
             app.UseMiddleware();  // invoked only before UseMvc!

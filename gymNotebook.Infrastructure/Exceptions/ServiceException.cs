@@ -17,7 +17,7 @@ namespace gymNotebook.Infrastructure.Exceptions
         {
         }
 
-        public ServiceException(string code, string message, params object[] args) : base(null, string.Empty, message, args)
+        public ServiceException(string code, string message, params object[] args) : base(null, code, message, args)
         {
         }
 

@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using Moq;
 using gymNotebook.Infrastructure.Services;
-using gymNotebook.Infrastructure.DTO;
 using System.Threading.Tasks;
 using gymNotebook.Core.Repositories;
 using gymNotebook.Core.Domain;

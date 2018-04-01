@@ -1,11 +1,9 @@
-﻿using gymNotebook.Infrastructure.Commands.Users;
+﻿using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Users;
 using gymNotebook.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace gymNotebook.Infrastructure.Commands.Handlers.Users
+namespace gymNotebook.Infrastructure.Handlers.Users
 {
     public class CreateUserHandler : ICommandHandler<CreateUser>
     {
@@ -18,7 +16,7 @@ namespace gymNotebook.Infrastructure.Commands.Handlers.Users
 
         public async Task HandleAsync(CreateUser command)
         {
-            await _userService.RegisterAsync(command.Email, command.Username, command.Password);
+            await _userService.RegisterAsync(command.Username, command.Email, command.Password);
         }
     }
 }

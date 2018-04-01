@@ -1,10 +1,8 @@
-﻿using gymNotebook.Infrastructure.Commands.Users;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Users;
 using System.Threading.Tasks;
 
-namespace gymNotebook.Infrastructure.Commands.Handlers.Users
+namespace gymNotebook.Infrastructure.Handlers.Users
 {
     public class ChangeUserPasswordHandler : ICommandHandler<ChangeUserPassword>
     {

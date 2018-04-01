@@ -9,7 +9,8 @@ using Microsoft.CodeAnalysis.CSharp;
 namespace gymNotebook.Api.Controllers
 {
 
-    [Route("Account")]
+    [Route("api/Account")]
+    [Produces("application/json")]
     public class AccountController : ApiControllerBase
     {
         private readonly IJwtHandler _jwtHandler;
@@ -23,7 +24,7 @@ namespace gymNotebook.Api.Controllers
         [Route("password")]
         public async Task<IActionResult> Put([FromBody]ChangeUserPassword command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }

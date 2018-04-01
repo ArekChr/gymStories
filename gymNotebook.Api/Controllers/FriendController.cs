@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
 {
-    [Produces("application/json")]
     [Route("api/Friend")]
+    [Produces("application/json")]
     public class FriendController : ApiControllerBase
     {
         private readonly IFriendService _friendService;
@@ -20,8 +20,7 @@ namespace gymNotebook.Api.Controllers
             _friendService = friendService;
         }
 
-        // GET: api/Friend/5
-        [HttpGet("{name}")]
+        [HttpGet]
         public async Task<IActionResult> Get(Guid friendId)
         {
             var exercises = await _friendService.GetAsync(friendId);
@@ -29,29 +28,26 @@ namespace gymNotebook.Api.Controllers
             return Json(exercises);
         }
 
-        // POST: api/Friend
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]AddFriend command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }
 
-        // PUT: api/Friend/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody]UpdateFriendStatus command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }
 
-        // DELETE: api/Friend/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public async Task<IActionResult> Delete([FromBody]DeleteFriend command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }

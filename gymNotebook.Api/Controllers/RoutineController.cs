@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
 {
-    [Authorize]
+    [Route("api/Routine")]
+    [Produces("application/json")]
     public class RoutineController : ApiControllerBase
     {
         private readonly IRoutineService _routineService;
@@ -18,8 +19,7 @@ namespace gymNotebook.Api.Controllers
             _routineService = routineService;
         }
 
-        // GET: Routine
-        [HttpGet("")]
+        [HttpGet]
         public async Task<IActionResult> Get([FromHeader]Guid trainingId)
         {
             var routines = await _routineService.BrowseAsync(trainingId);
@@ -27,8 +27,7 @@ namespace gymNotebook.Api.Controllers
             return Json(routines);
         }
 
-        // GET: api/Routine/5
-        [HttpGet("{name}")]
+        [HttpGet("name")]
         public async Task<IActionResult> Get(Guid trainingId, string name)
         {
             var routine = await _routineService.GetAsync(trainingId, name);
@@ -36,28 +35,26 @@ namespace gymNotebook.Api.Controllers
             return Json(routine);
         }
         
-        // POST: api/Routine
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]CreateRoutine command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return Created($"/routine/{command.Name}", null);
         }
         
-        // PUT: api/Routine/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody]UpdateRoutine command)
         {
-            await CommandDispatcher.DispatchAsync(command);
+            await DispatchAsync(command);
 
             return NoContent();
         }
         
-        // DELETE: api/Routine/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public void Delete(int id)
         {
+            throw new NotImplementedException();
         }
     }
 }

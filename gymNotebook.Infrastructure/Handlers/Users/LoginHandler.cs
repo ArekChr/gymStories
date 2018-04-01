@@ -1,12 +1,10 @@
-﻿using gymNotebook.Infrastructure.Commands.Users;
+﻿using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Users;
 using gymNotebook.Infrastructure.Services;
 using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace gymNotebook.Infrastructure.Commands.Handlers.Users
+namespace gymNotebook.Infrastructure.Handlers.Users
 {
     public class LoginHandler : ICommandHandler<Login>
     {

@@ -1,8 +1,9 @@
-﻿using gymNotebook.Infrastructure.Commands.Trainings.Exercises;
+﻿using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Trainings.Exercises;
 using gymNotebook.Infrastructure.Services;
 using System.Threading.Tasks;
 
-namespace gymNotebook.Infrastructure.Commands.Handlers.Exercise
+namespace gymNotebook.Infrastructure.Handlers.Exercise
 {
     public class DeleteExerciseHandler : ICommandHandler<DeleteExercise>
     {
