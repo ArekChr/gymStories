@@ -24,7 +24,7 @@ namespace gymNotebook.Core.Domain
         public Training(Guid userId, Guid trainingId, string name, string description, byte difficulty)
         {
             Id = trainingId;
-            UserId = userId;
+            SetUser(userId);
             SetName(name);
             SetDescription(description);
             SetDifficulty(difficulty);
@@ -32,7 +32,7 @@ namespace gymNotebook.Core.Domain
 
         public void SetUser(Guid userId)
         {
-            if (userId == null)
+            if (userId == Guid.Empty)
             {
                 throw new DomainException(ErrorCodes.InvalidTraining, "Training can not have an empty userId.");
             }

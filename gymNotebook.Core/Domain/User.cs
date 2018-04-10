@@ -45,6 +45,7 @@ namespace gymNotebook.Core.Domain
             SetUsername(username);
             SetEmail(email);
             SetPassword(password);
+            Salt = salt;
             CreateAt = DateTime.UtcNow;
         }
 

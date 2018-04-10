@@ -24,7 +24,7 @@ namespace gymNotebook.Infrastructure.Services
             var claims = new Claim[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
-                new Claim(ClaimTypes.Role, role),
+                //new Claim(ClaimTypes.Role, role),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString(), ClaimValueTypes.Integer64)
             };

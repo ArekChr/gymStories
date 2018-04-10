@@ -11,6 +11,11 @@ namespace gymNotebook.Infrastructure.Mappers
             {
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<Training, TrainingDto>();
+                cfg.CreateMap<Exercise, ExerciseDto>();
+                cfg.CreateMap<Friend, FriendDto>();
+                cfg.CreateMap<User, UserDto>();
+                cfg.CreateMap<Routine, RoutineDto>();
+                cfg.CreateMap<Result, ResultDto>();
             })
             .CreateMapper();
     }

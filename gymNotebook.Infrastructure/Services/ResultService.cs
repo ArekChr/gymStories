@@ -5,17 +5,20 @@ using AutoMapper;
 using gymNotebook.Core.Domain;
 using gymNotebook.Core.Repositories;
 using gymNotebook.Infrastructure.DTO;
+using gymNotebook.Infrastructure.Exceptions;
 
 namespace gymNotebook.Infrastructure.Services
 {
     public class ResultService : IResultService
     {
         private readonly IResultRepository _resultRepository;
+        private readonly IExerciseRepository _exerciseRepository;
         private readonly IMapper _mapper;
 
-        public ResultService(IResultRepository resultRepository, IMapper mapper)
+        public ResultService(IResultRepository resultRepository, IExerciseRepository exerciseRepository, IMapper mapper)
         {
             _resultRepository = resultRepository;
+            _exerciseRepository = exerciseRepository;
             _mapper = mapper;
         }
 
@@ -42,6 +45,11 @@ namespace gymNotebook.Infrastructure.Services
 
         public async Task CreateAsync(Guid exerciseId, int numberSeries, int repetitions, float weight, string comments)
         {
+            var exercise = await _exerciseRepository.GetAsync(exerciseId);
+            if(exercise == null)
+            {
+                throw new ServiceException("Can not add result, exercise does not exists.");
+            }
             var result = await _resultRepository.GetAsync(exerciseId, numberSeries);
             if (result != null)
             {
