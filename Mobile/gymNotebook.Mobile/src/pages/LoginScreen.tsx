@@ -3,7 +3,6 @@ import {
     StyleSheet,
     Text,
     View,
-    StatusBar,
     TouchableOpacity
 } from 'react-native'
 import Logo from '../component/Logo'
@@ -11,19 +10,24 @@ import LoginForm from '../component/LoginForm'
 
 import { Actions } from 'react-native-router-flux'
 
-export default class LoginScreen extends Component {
-  constructor(props) {
+interface Props {
+  navigation: any
+}
+
+export default class LoginScreen extends Component<Props> {
+  constructor(props: any) {
     super(props)
   }
   public signup() {
     Actions.signup()
   }
+
   public render() {
     return(
         <View style={styles.container}>
             <Logo/>
             <Text style={styles.logoText}>Welcome in gymNotebook</Text>
-            <LoginForm type="Login" loginScreen={() => this.onLoginSuccess() }/>
+            <LoginForm type="Login" loginScreen={() => this.onLoginSuccess()}/>
             <View style={styles.signupTextCont}>
                 <Text style={styles.signupText}>Don't have an account? </Text>
                 <TouchableOpacity onPress={this.signup}>

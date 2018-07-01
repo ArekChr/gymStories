@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "@expo/vector-icons": "^6.3.1",
     "@types/jest": "^22.2.3",
     "@types/react": "^16.3.13",
     "@types/react-native": "^0.55.12",
@@ -13,6 +14,10 @@
     "react-native-scripts": "1.13.1",
     "react-native-typescript-transformer": "^1.2.5",
     "react-test-renderer": "16.3.0-alpha.1",
+    "babel-jest": "23.0.0",
+    "babel-plugin-import": "^1.7.0",
+    "babel-preset-react-native": "4.0.0",
+    "jest": "23.0.0",
     "ts-jest": "^22.4.5",
     "tslib": "^1.9.0",
     "typescript": "^2.8.3"
@@ -30,6 +35,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^6.3.1",
+    "antd-mobile": "^2.1.10",
     "expo": "^26.0.0",
     "lodash": "^4.17.10",
     "native-base": "^2.4.3",
