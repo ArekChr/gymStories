@@ -64,6 +64,18 @@ export class Initializer {
       Description: 'Full body workout',
       Difficulty: 3,
       Routines: this.routines
+    },
+    {
+      Id: 'training1-0000-0000-0000-000000000000',
+      Name: 'Split',
+      Description: 'Training Split',
+      Difficulty: 2
+    },
+    {
+      Id: 'training2-0000-0000-0000-000000000000',
+      Name: 'Push-Pull',
+      Description: 'Push Pull Legs',
+      Difficulty: 3
     }
   ]
   public user: User = {

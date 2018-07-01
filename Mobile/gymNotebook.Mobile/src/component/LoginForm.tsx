@@ -8,17 +8,37 @@ import {
     ActivityIndicator
 } from 'react-native'
 
-export default class LoginForm extends React.Component {
+interface AppProps {
+  type: string
+  loginScreen: any
+}
+
+interface MainState {
+  success: boolean
+  badCredentials: boolean
+  unknownError: boolean
+  opacity: number
+  statusCode: number
+  email: string
+  password: string
+}
+
+export default class LoginForm extends React.Component<AppProps, MainState> {
   public constructor(props: any) {
     super(props)
     this.state = {
+      success: false,
+      badCredentials: false,
+      unknownError: false,
       opacity: 0,
-      statusCode: 0
+      statusCode: 0,
+      email: '',
+      password: ''
     }
   }
 
   public render() {
-    var errorCtrl = <View />
+    let errorCtrl = <View />
 
     if (!this.state.success && this.state.badCredentials) {
       errorCtrl = <Text style={styles.error}>Invalid credentials</Text>
@@ -62,7 +82,7 @@ export default class LoginForm extends React.Component {
     console.log('login pressed')
     this.setState({ opacity: 1 })
 
-    let authService = require('../services/AuthService')
+    const authService = require('../services/AuthService')
     authService.login({
       email: this.state.email,
       password: this.state.password

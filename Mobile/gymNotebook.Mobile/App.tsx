@@ -1,11 +1,18 @@
 import React from 'react'
 import LoginScreen from './src/pages/LoginScreen'
-import HomeScreen from './src/pages/HomeScreen'
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, TabNavigator } from 'react-navigation'
 import AuthService from './src/services/AuthService'
+import ActiveTab from './src/pages/tabNavigator/ActiveTab'
+import GymTab from './src/pages/tabNavigator/GymTab'
+import HomeTab from './src/pages/tabNavigator/HomeTab'
+import ProfileTab from './src/pages/tabNavigator/ProfileTab'
+import SearchTab from './src/pages/tabNavigator/SearchTab'
+import AddTraining from './src/pages/AddTraining'
+
+import { ACTIVE_ICON, INACTIVE_ICON, COLOR_SECONDARY } from './src/styles/common'
 
 export default class App extends React.Component {
-  constructor(props) {
+  constructor(props: any) {
     super(props)
     this.state = {
       checkingAuth: false
@@ -13,7 +20,7 @@ export default class App extends React.Component {
   }
 
   public componentDidMount() {
-    AuthService.getAuthInfo((err, authInfo) => {
+    AuthService.getAuthInfo((err: any, authInfo: any) => {
       this.setState({
         checkingAuth: false,
         isLoggedIn: authInfo !== null
@@ -33,7 +40,6 @@ export default class App extends React.Component {
     //     </View>
     //   );
     // }
-
     return (
         // <View style={styles.container}>
         //   <StatusBar backgroundColor="#1c313a" barStyle="light-content" />
@@ -53,9 +59,69 @@ export default class App extends React.Component {
   }
 }
 
-const AppNavigator = StackNavigator({
-  HomeScreen: {
-    screen: HomeScreen
+const GymNavigator = StackNavigator({
+  GymTab: {
+    screen: GymTab,
+    navigationOptions: {
+      header: null
+    }
   },
-  LoginScreen: { screen: LoginScreen }
+  AddTraining: {
+    screen: AddTraining,
+    navigationOptions: {
+      header: null,
+      tabBarVisible: false
+    }
+  }
+})
+
+const AppTabNavigator = TabNavigator({
+  HomeTab: {
+    screen: HomeTab
+  },
+  SearchTab: {
+    screen: SearchTab
+  },
+  ActiveTab: {
+    screen: ActiveTab
+  },
+  GymTab: {
+    screen: GymNavigator
+  },
+  ProfileTab: {
+    screen: ProfileTab
+  }
+},
+  {
+    animationEnabled: true,
+    swipeEnabled: true,
+    tabBarPosition: 'bottom',
+    tabBarOptions : {
+      activeTintColor: ACTIVE_ICON,
+      inactiveTintColor: INACTIVE_ICON,
+      showIcon: true,
+      showLabel: false,
+      style: {
+        backgroundColor: COLOR_SECONDARY,
+        elevation: 15
+      },
+      indicatorStyle: {
+        opacity: 0
+      }
+    }
+  })
+
+const AppNavigator = StackNavigator({
+  LoginScreen: {
+    screen: AppTabNavigator,
+    navigationOptions: {
+      header: null
+    }
+  },
+  HomeScreen: {
+    screen: AppTabNavigator,
+    navigationOptions: {
+      header: null
+    }
+  }
 })
