@@ -47,7 +47,6 @@ class AuthService extends Component {
       ], (err: any) => {
         if (err){
           return cb({ success: false })
-          throw err
         }
         console.log('success set to true')
         return cb({ success: true })
@@ -55,7 +54,6 @@ class AuthService extends Component {
     })
     .catch((err) => {
       return cb(err)
-      console.log('logon failed: ' + err)
     })
     .finally(() => {
       console.log('finally status code: ' + this.statusCode)

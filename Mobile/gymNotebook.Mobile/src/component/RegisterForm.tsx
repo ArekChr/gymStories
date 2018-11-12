@@ -7,7 +7,11 @@ import {
     TouchableOpacity
 } from 'react-native'
 
-export default class RegisterForm extends React.Component {
+export interface AppProps {
+  type: string
+}
+
+export default class RegisterForm extends React.Component<AppProps> {
   public render(){
     return(
       <View style={styles.container}>
