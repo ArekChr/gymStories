@@ -1,5 +1,5 @@
 interface User {
-  Id: AAGUID
+  Id: string
   UserName: string
   Email: string
   Role: string

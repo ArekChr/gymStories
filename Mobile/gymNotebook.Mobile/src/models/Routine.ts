@@ -1,6 +1,6 @@
 interface Routine {
-  Id: AAGUID
-  TrainingId: AAGUID
+  Id: string
+  TrainingId: string
   Name: string
   Exercises?: Array<Exercise>
 }

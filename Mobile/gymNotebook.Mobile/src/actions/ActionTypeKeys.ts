@@ -1,0 +1,13 @@
+export enum ActionTypeStates {
+    INPROGRESS = '_INPROGRESS',
+    SUCCESS = '_SUCCESS',
+    FAIL = '_FAIL'
+}
+
+enum ActionTypeKeys {
+    GET_TRAININGS_INPROGRESS = 'GET_TRAININGS_INPROGRESS',
+    GET_TRAININGS_SUCCESS = 'GET_TRAININGS_SUCCESS',
+    GET_TRAININGS_FAIL = 'GET_TRAININGS_FAIL'
+}
+
+export default ActionTypeKeys

@@ -1,6 +1,6 @@
 interface Exercise {
-  Id: AAGUID
-  RoutineId: AAGUID
+  Id: string
+  RoutineId: string
   Name: string
   Description?: string
   MusclePart: string

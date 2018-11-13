@@ -1,7 +1,7 @@
 interface Training {
-  Id: AAGUID
-  Name: string
-  Description: string
-  Difficulty: number
-  Routines?: Array<Routine>
+  readonly Id: string
+  readonly Name: string
+  readonly Description: string
+  readonly Difficulty: number
+  readonly Routines?: Array<Routine>
 }

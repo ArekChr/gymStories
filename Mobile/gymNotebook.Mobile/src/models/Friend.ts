@@ -1,5 +1,5 @@
 interface Friend {
-  UserId: AAGUID
-  FriendId: AAGUID
+  UserId: string
+  FriendId: string
   Status: string
 }
