@@ -1,8 +1,8 @@
-interface Exercise {
+interface IExercise {
   Id: string
   RoutineId: string
   Name: string
   Description?: string
   MusclePart: string
-  Results?: Array<Result>
+  Results?: Array<IResult>
 }

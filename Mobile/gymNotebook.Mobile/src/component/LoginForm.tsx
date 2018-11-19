@@ -8,12 +8,12 @@ import {
     ActivityIndicator
 } from 'react-native'
 
-interface AppProps {
+interface IAppProps {
   type: string
   loginScreen: any
 }
 
-interface MainState {
+interface IMainState {
   success: boolean
   badCredentials: boolean
   unknownError: boolean
@@ -23,7 +23,7 @@ interface MainState {
   password: string
 }
 
-export default class LoginForm extends React.Component<AppProps, MainState> {
+export default class LoginForm extends React.Component<IAppProps, IMainState> {
   public constructor(props: any) {
     super(props)
     this.state = {

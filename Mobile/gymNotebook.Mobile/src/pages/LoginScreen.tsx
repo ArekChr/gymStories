@@ -10,11 +10,11 @@ import LoginForm from '../component/LoginForm'
 
 import { Actions } from 'react-native-router-flux'
 
-interface Props {
+interface IProps {
   navigation: any
 }
 
-export default class LoginScreen extends Component<Props> {
+export default class LoginScreen extends Component<IProps> {
   constructor(props: any) {
     super(props)
   }

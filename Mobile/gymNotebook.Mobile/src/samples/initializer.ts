@@ -1,6 +1,6 @@
 export class Initializer {
 
-  public exercises: Array<Exercise> = [
+  public exercises: Array<IExercise> = [
     {
       Id: 'exercise1-0000-0000-0000-000000000000',
       Description: 'Bench Rress',
@@ -37,7 +37,7 @@ export class Initializer {
       RoutineId: 'routine01-0000-0000-0000-000000000000'
     }
   ]
-  public routines: Array<Routine> = [
+  public routines: Array<IRoutine> = [
     {
       Id: 'routine01-0000-0000-0000-000000000000',
       TrainingId: 'training0-0000-0000-0000-000000000000',
@@ -57,7 +57,7 @@ export class Initializer {
       Exercises: this.exercises
     }
   ]
-  public trainings: Array<Training> = [
+  public trainings: Array<ITraining> = [
     {
       Id: 'training0-0000-0000-0000-000000000000',
       Name: 'FBW',
@@ -78,7 +78,7 @@ export class Initializer {
       Difficulty: 3
     }
   ]
-  public user: User = {
+  public user: IUser = {
     Id: '00000000-USER-0000-0000-000000000000',
     UserName: 'ArekAras',
     Email: 'arekmos2@gmail.com',

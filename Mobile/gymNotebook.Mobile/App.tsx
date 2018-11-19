@@ -8,7 +8,8 @@ import HomeTab from './src/pages/tabNavigator/HomeTab'
 import ProfileTab from './src/pages/tabNavigator/ProfileTab'
 import SearchTab from './src/pages/tabNavigator/SearchTab'
 import AddTraining from './src/pages/AddTraining'
-
+import store from './src/configureStore'
+import { Provider, connect } from 'react-redux'
 import { ACTIVE_ICON, INACTIVE_ICON, COLOR_SECONDARY } from './src/styles/common'
 
 export default class App extends React.Component {
@@ -45,7 +46,8 @@ export default class App extends React.Component {
         //   <StatusBar backgroundColor="#1c313a" barStyle="light-content" />
         //   <Login onLogin={this.onLogin}/>
         // </View>
-        <AppNavigator/>
+        <Provider store={store}><AppNavigator/></Provider>
+        
     )
   }
   public onLogin = () => {

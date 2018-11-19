@@ -1,4 +1,4 @@
-interface Jwt {
+interface IJwt {
   Token: string
   Expiry: number
 }

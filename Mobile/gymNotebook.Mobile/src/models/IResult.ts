@@ -1,4 +1,4 @@
-interface Result {
+interface IResult {
   Id: string
   ExerciseId: string
   NumberSeries: number
