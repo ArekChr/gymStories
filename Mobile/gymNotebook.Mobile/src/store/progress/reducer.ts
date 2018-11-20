@@ -15,7 +15,13 @@ const progressReducer = (state: ProgressState | undefined, action: Actions): Pro
       }
     }
     default: {
-      return state!
+      if (state === undefined) {
+        return {
+          progress: []
+        }
+      }
+
+      return state;
     }
   }
 }

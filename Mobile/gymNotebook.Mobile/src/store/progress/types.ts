@@ -20,7 +20,7 @@ export const enum ProgressActionTypes {
 }
 
 export interface ProgressState {
-  readonly progress: Progress[] | undefined
+  progress: Progress[]
 }
 
 export type Actions = 
@@ -33,5 +33,5 @@ export interface IFetchProgress extends Action<ProgressActionTypes> {
 
 export interface IFetchSuccess extends Action<ProgressActionTypes> {
   type: ProgressActionTypes.FETCH_SUCCESS
-  progress: Progress[] | undefined
+  progress: Progress[]
 }
