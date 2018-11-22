@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
+  "expoServerPort": 19000,
   "packagerPort": 8081,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://2y-d54.arekmos2.gymnotebook-mobile.exp.direct",
+  "packagerNgrokUrl": "https://packager.2y-d54.arekmos2.gymnotebook-mobile.exp.direct",
+  "ngrokPid": 7120,
   "devToolsPort": 19002
 }
