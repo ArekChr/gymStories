@@ -21,7 +21,7 @@ class ActiveTab extends Component<IAppProps> {
 
 
   componentDidMount(){
-    this.props.onFetch("asdasd");
+    this.props.onFetch("0B704143-3739-4C6D-B0C4-280795FE271A");
   }
 
   public static navigationOptions = {
@@ -29,13 +29,16 @@ class ActiveTab extends Component<IAppProps> {
       <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor} />
     )
   }
-
+  
   public render() {
+
+
     return (
-            <View style={styles.container}>
-                <Text>ActiveTab</Text>
-                <Text>{this.props.progress![0].CreatedAt}</Text>
-            </View>
+      <View style={styles.container}>
+          <Text>ActiveTab</Text>
+          {console.log(JSON.stringify(this.props))}
+          <Text>{this.props.progress ? this.props.progress : "brak"}</Text>
+      </View>
     )
   }
 }

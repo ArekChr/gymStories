@@ -13,9 +13,10 @@ export const fetchProgress = (userId: string) => {
 
     axios.get(`${URL}${userId}`)
       .then(response => {
+        // console.log(response.data)
         dispatch({ 
           type: ProgressActionTypes.FETCH_SUCCESS,
-          payload: response.data 
+          payload: response.data
         })
       })
       .catch(error => {

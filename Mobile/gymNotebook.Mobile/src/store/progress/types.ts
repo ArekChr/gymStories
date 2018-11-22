@@ -1,6 +1,7 @@
 import { Action } from 'redux'
 
 export interface Progress {
+  Id: string
   Weight: number
   Biceps: number
   Chest: number
@@ -16,7 +17,7 @@ export const enum ProgressActionTypes {
   FETCH_REQUEST = '@@progress/FETCH_REQUEST',
   FETCH_SUCCESS = '@@progress/FETCH_SUCCESS',
   FETCH_ERROR = '@@progress/FETCH_ERROR',
-  SELECTED = '@@progress/SELECTED'
+  SELECTED = '@@progress/SELECTED' 
 }
 
 export interface ProgressState {

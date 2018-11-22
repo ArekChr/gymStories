@@ -4,8 +4,10 @@
     "\\Mobile",
     "\\Mobile\\gymNotebook.Mobile",
     "\\Mobile\\gymNotebook.Mobile\\src",
+    "\\Mobile\\gymNotebook.Mobile\\src\\component",
+    "\\Mobile\\gymNotebook.Mobile\\src\\pages",
     "\\Mobile\\gymNotebook.Mobile\\src\\pages\\tabNavigator"
   ],
-  "SelectedNode": "\\Mobile\\gymNotebook.Mobile\\src\\configureStore.ts",
+  "SelectedNode": "\\Mobile\\gymNotebook.Mobile\\src\\pages\\tabNavigator\\ActiveTab.tsx",
   "PreviewInSolutionExplorer": false
 }

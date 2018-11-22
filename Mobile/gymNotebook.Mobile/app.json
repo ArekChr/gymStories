@@ -1,16 +1,21 @@
 {
   "name": "gymnotebookmobile",
   "displayName": "gymnotebookmobile",
-  "expo": { 
+  "expo": {
     "sdkVersion": "26.0.0",
     "packagerOpts": {
-      "sourceExts": ["ts", "tsx"],
+      "sourceExts": [
+        "ts",
+        "tsx"
+      ],
       "transformer": "node_modules/react-native-typescript-transformer/index.js"
     },
     "androidStatusBarColor": "#000000",
     "androidStatusBar": {
       "barStyle": "light-content",
       "backgroundColor": "#000000"
-    }
+    },
+    "slug": "gymnotebookmobile",
+    "name": "gymnotebookmobile"
   }
 }
