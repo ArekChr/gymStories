@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {   
   FETCH_REQUEST,
   FETCH_SUCCESS,
@@ -13,12 +14,11 @@ export const fetchProgress = (userId) => {
       type: FETCH_REQUEST
     })
 
-    fetch(`${URL}${userId}`)
-      .then(response => response.json())
+    axios(`${URL}${userId}`)
       .then(response => {
         dispatch({ 
           type: FETCH_SUCCESS,
-          payload: response
+          payload: response.data
         })
       })
       .catch(error => {

@@ -8,34 +8,25 @@ import {
 import Logo from '../component/Logo'
 import LoginForm from '../component/LoginForm'
 
-// import { Actions } from 'react-native-router-flux'
-
 export default class LoginScreen extends Component {
-  constructor(props) {
-    super(props)
-  }
-  // signup() {
-  //   Actions.signup()
-  // }
 
   render() {
     return(
-        <View style={styles.container}>
-            <Logo/>
-            <Text style={styles.logoText}>Welcome in gymNotebook</Text>
-            <LoginForm type="Login" loginScreen={() => this.onLoginSuccess()}/>
-            <View style={styles.signupTextCont}>
-                <Text style={styles.signupText}>Don't have an account? </Text>
-                <TouchableOpacity onPress={this.signup}>
-                    <Text style={styles.signupButton}>Sign up</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+      <View style={styles.container}>
+          <Logo/>
+          <Text style={styles.logoText}>Welcome in gymNotebook</Text>
+          <LoginForm type="Login" loginScreen={() => this.onLoginSuccess()}/>
+          <View style={styles.signupTextCont}>
+              <Text style={styles.signupText}>Don't have an account? </Text>
+              <TouchableOpacity onPress={this.signup}>
+                  <Text style={styles.signupButton}>Sign up</Text>
+              </TouchableOpacity>
+          </View>
+      </View>
     )
   }
   onLoginSuccess() {
-    console.log('OK2')
-    this.props.navigation.navigate('HomeScreen')
+    //this.props.navigation.navigate('HomeScreen')
   }
 }
 

@@ -1,29 +1,35 @@
 import {   
   FETCH_REQUEST,
-  FETCH_SUCCESS,
-  FETCH_ERROR,
-  SELECTED } from './types'
+  FETCH_SUCCESS
+  } from './types'
 
-const progressReducer = (state, action) => {
+const initialState = {
+  progress: [],
+  progressLoading: true
+}
+
+const progressReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_REQUEST: {
       return { 
-        ...state, 
+        ...state,
+        progressLoading: true
       }
     }
     case FETCH_SUCCESS: {
       return { 
         ...state, 
-        progress: action.payload 
+        progress: action.payload,
+        progressLoading: false
       }
     }
     default: {
       if (state === undefined) {
         return {
-          progress: []
+          progress: [],
+          progressLoading: false
         }
       }
-
       return state;
     }
   }

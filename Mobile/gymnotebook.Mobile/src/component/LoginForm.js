@@ -1,25 +1,15 @@
 import React, { Component } from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    TouchableOpacity,
-    ActivityIndicator
-} from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 
 export default class LoginForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      success: false,
-      badCredentials: false,
-      unknownError: false,
-      opacity: 0,
-      statusCode: 0,
-      email: '',
-      password: ''
-    }
+
+  state = {
+    success: false,
+    badCredentials: false,
+    unknownError: false,
+    opacity: 0,
+    email: '',
+    password: ''
   }
 
   render() {
@@ -48,7 +38,7 @@ export default class LoginForm extends React.Component {
             onChangeText={(text) => this.setState({ password: text })}
         />
         <TouchableOpacity style={styles.button}
-            onPress={this.onLoginPressed.bind(this)}>
+            onPress={this.onLoginPressed}>
             <Text style={styles.buttonText}>{this.props.type}</Text>
         </TouchableOpacity>
 
@@ -65,20 +55,6 @@ export default class LoginForm extends React.Component {
   }
   onLoginPressed = () => {
     console.log('login pressed')
-    this.setState({ opacity: 1 })
-
-    const authService = require('../services/AuthService')
-    authService.login({
-      email: this.state.email,
-      password: this.state.password
-    }, (results) => {
-      this.setState(results)
-      console.log('results.success: ' + results.success)
-      if (results.success){
-        console.log('changing screen after login')
-        this.props.loginScreen()
-      }
-    })
   }
 }
 

@@ -17,9 +17,33 @@ class ActiveTab extends Component {
   }
   
   render() {
+    if(this.props.progressLoading) {
+      return (
+      <View>
+        <Text>Loading ...</Text>
+      </View>
+      )
+    }
+    console.log(this.props.progress)
+    const listProgress = this.props.progress.map(progress => 
+      <View key={progress.id}>
+        <Text>
+          Id: {progress.id}
+        </Text>
+        <Text>
+          Created At: {progress.createdAt}
+        </Text>
+        <Text>
+          Biceps: {progress.biceps}
+        </Text>
+        <Text>
+          Weight: {progress.weight}
+        </Text>
+      </View>
+    )
     return (
       <View style={styles.container}>
-          <Text>ActiveTab</Text>
+          {listProgress}
       </View>
     )
   }
@@ -34,7 +58,8 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = ({progress}) => ({
-  progress: progress.progress
+  progress: progress.progress,
+  progressLoading: progress.progressLoading
 })
 
 const mapDispatchToProps = (dispatch) => ({

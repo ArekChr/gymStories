@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    TextInput,
-    TouchableOpacity
-} from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 
-export default class RegisterForm extends React.Component {
+class RegisterForm extends React.Component {
   render(){
     return(
       <View style={styles.container}>
@@ -15,7 +9,7 @@ export default class RegisterForm extends React.Component {
         <TextInput style={styles.inputBox} underlineColorAndroid="rgba(0,0,0,0)" placeholder="Password" secureTextEntry={true}/>
         <TextInput style={styles.inputBox} underlineColorAndroid="rgba(0,0,0,0)" placeholder="Confirm Password" secureTextEntry={true}/>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>{this.props.type}</Text>
+          <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
       </View>
     )
@@ -54,3 +48,5 @@ const styles = StyleSheet.create({
     paddingVertical: 14
   }
 })
+
+export default RegisterForm

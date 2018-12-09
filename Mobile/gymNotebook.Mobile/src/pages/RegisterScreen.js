@@ -1,25 +1,18 @@
 import React, { Component } from 'react'
-import {
-    StyleSheet,
-    Text,
-    View,
-    TouchableOpacity
-} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import Logo from '../component/Logo'
 import RegisterForm from '../component/RegisterForm'
-// import { Actions } from 'react-native-router-flux'
+import { connect } from 'redux'
 
-export default class SignUp extends Component {
-  // goBack() {
-  //   Actions.pop()
-  // }
+class RegisterScreen extends Component {
+
   render() {
     return(
       <View style={styles.container}>
         <Logo/>
-        <RegisterForm type="signup"/>
         <Text style={styles.logoText}>Welcome in gymNotebook</Text>
-        {/* <Form/> */}
+        <RegisterForm />
+        
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Already have an account? </Text>
           <TouchableOpacity onPress={this.goBack}><Text style={styles.signupButton}>Sign in</Text></TouchableOpacity>
@@ -58,3 +51,11 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   }
 })
+
+const mapStateToProps = ({progress}) => ({
+})
+
+const mapDispatchToProps = (dispatch) => ({
+})
+
+export default RegisterScreen

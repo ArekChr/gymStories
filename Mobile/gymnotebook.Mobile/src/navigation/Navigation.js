@@ -5,6 +5,8 @@ import HomeTab from '../pages/tabNavigator/HomeTab'
 import ProfileTab from '../pages/tabNavigator/ProfileTab'
 import SearchTab from '../pages/tabNavigator/SearchTab'
 import AddTraining from '../pages/AddTraining'
+import LoginScreen from '../pages/LoginScreen'
+import RegisterScreen from '../pages/RegisterScreen'
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 
 const GymNavigator = createStackNavigator({
@@ -50,8 +52,14 @@ const AppTabNavigator = createBottomTabNavigator({
   })
 
 const Home = createStackNavigator({
+  RegisterScreen: {
+    screen: RegisterScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   LoginScreen: {
-    screen: AppTabNavigator,
+    screen: LoginScreen,
     navigationOptions: {
       header: null
     }
