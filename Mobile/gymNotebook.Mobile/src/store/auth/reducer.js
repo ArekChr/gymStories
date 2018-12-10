@@ -1,7 +1,10 @@
 import {
   USER_REGISTER_SUC,
   USER_REGISTER_ERR,
-  USER_REGISTER_REQ
+  USER_REGISTER_REQ,
+  USER_LOGIN_REQ,
+  USER_LOGIN_SUC,
+  USER_LOGIN_ERR
 } from './types'
 
 const initialState = {
@@ -11,10 +14,39 @@ const initialState = {
   },
   loading: true,
   registerSuccess: null,
+  loginSuccess: null,
+  token: ''
 }
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case USER_LOGIN_REQ: {
+      return {
+        ...state,
+        loginSuccess: null,
+        loading: true,
+        error: {
+          code: '',
+          message: ''
+        },
+      }
+    }
+    case USER_LOGIN_SUC: {
+      return {
+        ...state,
+        loading: false,
+        loginSuccess: true,
+        token: action.payload
+      }
+    }
+    case USER_LOGIN_ERR: {
+      return {
+        error: action.payload,
+        loginSuccess: false,
+        loading: false
+      }
+    }
+
     case USER_REGISTER_REQ: {
       return {
         ...state,
