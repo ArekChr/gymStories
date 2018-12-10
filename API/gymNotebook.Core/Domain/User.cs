@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gymNotebook.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -51,9 +52,13 @@ namespace gymNotebook.Core.Domain
 
         public void SetUsername(string username)
         {
-            if (!NameRegex.IsMatch(username))
+            if (string.IsNullOrEmpty(username))
             {
                 throw new DomainException(ErrorCodes.InvalidUsername, $"User can not have an empty username.");
+            }
+            else if(!NameRegex.IsMatch(username))
+            {
+                throw new DomainException(ErrorCodes.InvalidUsername, $"Invalid characters in username: {username}.");
             }
             Username = username;
         }

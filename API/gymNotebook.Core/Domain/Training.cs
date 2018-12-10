@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using gymNotebook.Core.Exceptions;
 
 namespace gymNotebook.Core.Domain
 {

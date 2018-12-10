@@ -16,6 +16,7 @@ namespace gymNotebook.Infrastructure.Mappers
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<Routine, RoutineDto>();
                 cfg.CreateMap<Result, ResultDto>();
+                cfg.CreateMap<Progress, ProgressDto>();
             })
             .CreateMapper();
     }

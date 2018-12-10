@@ -16,6 +16,7 @@ using gymNotebook.Api.Framework;
 using Swashbuckle.AspNetCore.Swagger;
 using NLog.Extensions.Logging;
 using NLog.Web;
+using System.Collections.Generic;
 
 namespace gymNotebook.Api
 {

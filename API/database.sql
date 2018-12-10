@@ -46,14 +46,15 @@ SELECT * FROM [Results]
 
 CREATE TABLE [Progress] (
 	[Id] UNIQUEIDENTIFIER PRIMARY KEY NOT NULL,
-	[Weight] FLOAT NULL,
-	[Biceps] FLOAT NULL,
-	[Chest] FLOAT NULL,
-	[Thigh] FLOAT NULL,
-	[Calf] FLOAT NULL,
-	[Waist] FLOAT NULL,
-	[Shoulders] FLOAT NULL,
-	[Neck] FLOAT NULL,
+	[UserId] UNIQUEIDENTIFIER NOT NULL,
+	[Weight] REAL NULL,
+	[Biceps] REAL NULL,
+	[Chest] REAL NULL,
+	[Thigh] REAL NULL,
+	[Calf] REAL NULL,
+	[Waist] REAL NULL,
+	[Shoulders] REAL NULL,
+	[Neck] REAL NULL,
 	[CreatedAt] DATETIME NOT NULL)
 SELECT * FROM [Progress]
 

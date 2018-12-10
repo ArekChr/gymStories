@@ -16,9 +16,9 @@ namespace gymNotebook.Infrastructure.Repositories
         {
             _context = context;
         }
-            
+
         public async Task<User> GetAsync(Guid id)
-            => await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
+        => await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task<User> GetAsync(string email)
             => await _context.Users.SingleOrDefaultAsync(x => x.Email.ToLowerInvariant() == email.ToLowerInvariant());

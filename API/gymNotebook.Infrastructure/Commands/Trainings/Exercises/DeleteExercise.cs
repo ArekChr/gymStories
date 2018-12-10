@@ -6,6 +6,6 @@ namespace gymNotebook.Infrastructure.Commands.Trainings.Exercises
 {
     public class DeleteExercise : ICommand
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
     }
 }

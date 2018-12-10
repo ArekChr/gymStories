@@ -1,4 +1,5 @@
 ﻿using System;
+using gymNotebook.Core.Exceptions;
 
 namespace gymNotebook.Core.Domain
 {
@@ -39,7 +40,7 @@ namespace gymNotebook.Core.Domain
         {
             if(numberSeries == 0)
             {
-                throw new Exception($"Number of series can not be equal to zreo.");
+                throw new DomainException(ErrorCodes.InvalidResult, $"Number of series can not be equal to zero.");
             }
             NumberSeries = numberSeries;
         }
