@@ -5,7 +5,6 @@ import AppNavigator from './src/navigation/Navigation'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import promiseMiddleware from 'redux-promise'
-import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { rootReducer } from './src/store'
 
