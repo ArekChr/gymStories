@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace gymNotebook.Core.Domain
+namespace gymNotebook.Core.Exceptions
 {
     public class DomainException : GnException
     {

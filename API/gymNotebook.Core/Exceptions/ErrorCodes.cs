@@ -1,4 +1,4 @@
-﻿namespace gymNotebook.Core.Domain
+﻿namespace gymNotebook.Core.Exceptions
 {
     public static class ErrorCodes
     {
@@ -9,5 +9,8 @@
         public static string InvalidExerciseName => "invalid_exercisename";
         public static string InvalidMusclePart => "invalid_musclepart";
         public static string InvalidTraining => "invalid_training";
+        public static string InvalidRoutine => "invalid_routine";
+
+        public static string InvalidResult => "invalid_result";
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using gymNotebook.Core.Exceptions;
 
 namespace gymNotebook.Core.Domain
 {
@@ -32,7 +33,7 @@ namespace gymNotebook.Core.Domain
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new Exception($"Routine can not have an empty name.");
+                throw new DomainException(ErrorCodes.InvalidRoutine, $"Routine can not have an empty name.");
             }
             Name = name;
         }

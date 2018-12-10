@@ -22,15 +22,8 @@ if (process.env.NODE_ENV === 'development') {
 
 const composedEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-// const store = createStore(
-//   rootReducer,
-//   initialState,
-//   composedEnhancers
-// );
-
 const store = createStore(rootReducer, composeWithDevTools(
-  applyMiddleware(...middleware),
-  // other store enhancers if any
+  applyMiddleware(...middleware)
 ));
 
 export default store

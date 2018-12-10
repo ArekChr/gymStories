@@ -21,10 +21,10 @@ export const fetchProgress = (userId) => {
           payload: response.data
         })
       })
-      .catch(error => {
+      .catch(response => {
         dispatch({
           type: FETCH_ERROR,
-          payload: error
+          payload: response.data
         })
       })
   }

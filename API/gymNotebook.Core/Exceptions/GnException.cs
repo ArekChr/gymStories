@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace gymNotebook.Core.Domain
+namespace gymNotebook.Core.Exceptions
 {
     public abstract class GnException : Exception
     {

@@ -1,14 +1,93 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
+import { registerUser } from '../store/auth/actions'
 
 class RegisterForm extends React.Component {
+
+  state = {
+    email: '',
+    password: '',
+    confirmPassword: '',
+    username: '',
+    passwordValid: true,
+    canSignUp: false
+  }
+
+  signUp = () => {
+    const { email, password, username } = this.state
+    this.props.onRegister({ email, password, username })
+  }
+
+  handleConfirmPassword = (confirmPassword) => {
+    if(this.state.password.length === 0 && confirmPassword.length === 0){
+      this.setState({ passwordValid: true, confirmPassword: confirmPassword, canSignUp: false })
+    }
+    else if(this.state.password === confirmPassword){
+      this.setState({ passwordValid: true, confirmPassword: confirmPassword, canSignUp: true  })
+    } 
+    else {
+      this.setState({ passwordValid: false, confirmPassword: confirmPassword, canSignUp: false  })
+    }
+  }
+
+  handlePassword = (password) => {
+    if(this.state.confirmPassword.length === 0){
+      this.setState({ passwordValid: true, password: password, canSignUp: false  })
+    }
+    else if (password === this.state.confirmPassword){
+      this.setState({ passwordValid: true, password: password, canSignUp: true })
+    }
+    else {
+      this.setState({ passwordValid: false, password: password, canSignUp: false  })
+    }
+  }
+
   render(){
+
+    var errorMessage = null;
+    if(!this.state.passwordValid){
+      errorMessage = <Text style={styles.errorMessage}>Password does not match</Text>
+    }
+    else if(this.props.registerSuccess === false){
+      errorMessage = <Text style={styles.errorMessage}>{this.props.error.message}</Text>
+    }
+
     return(
       <View style={styles.container}>
-        <TextInput style={styles.inputBox} underlineColorAndroid="rgba(0,0,0,0)" placeholder="Email"/>
-        <TextInput style={styles.inputBox} underlineColorAndroid="rgba(0,0,0,0)" placeholder="Password" secureTextEntry={true}/>
-        <TextInput style={styles.inputBox} underlineColorAndroid="rgba(0,0,0,0)" placeholder="Confirm Password" secureTextEntry={true}/>
-        <TouchableOpacity style={styles.button}>
+        <TextInput 
+          onChangeText={(text) => this.setState({ email: text })}
+          onSubmitEditing={() => this.username.focus()}
+          style={styles.inputBox} 
+          underlineColorAndroid="rgba(0,0,0,0)" 
+          placeholder="Email"/>
+        <TextInput 
+          onChangeText={(text) => this.setState({ username: text })}
+          onSubmitEditing={() => this.password.focus()}
+          ref={(input) => this.username = input}
+          style={styles.inputBox} 
+          underlineColorAndroid="rgba(0,0,0,0)" 
+          placeholder="User Name"/>
+        <TextInput 
+          onChangeText={this.handlePassword}
+          ref={(input) => this.password = input}
+          onSubmitEditing={() => this.confirmPassword.focus()}
+          style={styles.inputBox} 
+          underlineColorAndroid="rgba(0,0,0,0)" 
+          placeholder="Password" 
+          secureTextEntry={true}/>
+        <TextInput 
+          onChangeText={this.handleConfirmPassword}
+          ref={(input) => this.confirmPassword = input}
+          style={styles.inputBox} 
+          underlineColorAndroid="rgba(0,0,0,0)" 
+          placeholder="Confirm Password" 
+          secureTextEntry={true}/>
+        {errorMessage}
+        <TouchableOpacity
+          onPress={this.signUp} 
+          style={this.state.canSignUp? styles.button : styles.disabledButton} 
+          disabled={!this.state.canSignUp}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
       </View>
@@ -46,7 +125,28 @@ const styles = StyleSheet.create({
     height: 50,
     marginVertical: 10,
     paddingVertical: 14
+  },
+  errorMessage: {
+    color: 'red'
+  },
+  disabledButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.3)',
+    borderRadius: 25,
+    width: 250,
+    height: 50,
+    marginVertical: 10,
+    paddingVertical: 14
   }
 })
 
-export default RegisterForm
+const mapStateToProps = (state) => ({
+  registerLoading: state.auth.loading,
+  error: state.auth.error,
+  registerSuccess: state.auth.registerSuccess
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  onRegister: (data) => registerUser(data)(dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)

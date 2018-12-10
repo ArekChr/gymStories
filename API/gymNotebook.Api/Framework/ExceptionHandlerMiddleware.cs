@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Net;
 using gymNotebook.Infrastructure.Exceptions;
+using gymNotebook.Core.Exceptions;
 
 namespace gymNotebook.Api.Framework
 {
@@ -42,6 +43,11 @@ namespace gymNotebook.Api.Framework
                     break;
 
                 case ServiceException e when exceptionType == typeof(ServiceException):
+                    statusCode = HttpStatusCode.BadRequest;
+                    errorCode = e.Code;
+                    break;
+
+                case DomainException e when exceptionType == typeof(DomainException):
                     statusCode = HttpStatusCode.BadRequest;
                     errorCode = e.Code;
                     break;
