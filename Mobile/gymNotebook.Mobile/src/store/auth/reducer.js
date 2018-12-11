@@ -12,10 +12,13 @@ const initialState = {
     code: '',
     message: ''
   },
-  loading: true,
+  loading: null,
   registerSuccess: null,
   loginSuccess: null,
-  token: ''
+  jwt: {
+    token: null,
+    expiry: null
+  }
 }
 
 const authReducer = (state = initialState, action) => {
@@ -36,7 +39,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         loginSuccess: true,
-        token: action.payload
+        jwt: action.payload
       }
     }
     case USER_LOGIN_ERR: {

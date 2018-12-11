@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import Logo from '../component/Logo'
 import RegisterForm from '../component/RegisterForm'
-import { connect } from 'redux'
 
 class RegisterScreen extends Component {
+
+  onSignInPressed = () => {
+    this.props.navigation.popToTop()
+  }
 
   render() {
     return(
@@ -15,7 +18,7 @@ class RegisterScreen extends Component {
         
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Already have an account? </Text>
-          <TouchableOpacity onPress={this.goBack}><Text style={styles.signupButton}>Sign in</Text></TouchableOpacity>
+          <TouchableOpacity onPress={this.onSignInPressed}><Text style={styles.signupButton}>Sign in</Text></TouchableOpacity>
         </View>
       </View>
     )

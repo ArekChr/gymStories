@@ -10,14 +10,15 @@ import {
 import { API_URL } from '../../consts'
 
 const URL = `${API_URL}/user/`
+const LOGIN_URL = `${API_URL}/login`
 
-export const login = () => {
+export const login = (data) => {
   return (dispatch) => {
     dispatch({ type: USER_LOGIN_REQ })
 
     axios({
       method:"POST",
-      url: URL,
+      url: LOGIN_URL,
       data: {
         email: data.email,
         password: data.password
