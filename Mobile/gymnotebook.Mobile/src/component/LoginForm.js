@@ -1,26 +1,32 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { connect } from 'react-redux'
+import { login } from '../store/auth/actions'
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
 
   state = {
-    success: false,
-    badCredentials: false,
-    unknownError: false,
     opacity: 0,
     email: '',
     password: ''
   }
 
-  render() {
-    let errorCtrl = <View />
+  onLoginPressed = () => {
+    console.log("pressed")
+    const {email, password} = this.state
+    this.props.onLogin({email, password})
+  }
 
-    if (!this.state.success && this.state.badCredentials) {
-      errorCtrl = <Text style={styles.error}>Invalid credentials</Text>
+  render() {
+    let errorMessage = <View />
+
+    if (this.props.loginSuccess === false) {
+      errorMessage = <Text style={styles.error}>{this.props.error.message}</Text>
     }
-    if (!this.state.success && this.state.unknownError) {
-      errorCtrl = <Text style={styles.error}>We experienced an unexpected issue</Text>
+    else if(this.props.loginSuccess) {
+      this.props.onLoginSuccess()
     }
+
     return(
       <View style={styles.container}>
         <TextInput style={styles.inputBox}
@@ -39,22 +45,19 @@ export default class LoginForm extends React.Component {
         />
         <TouchableOpacity style={styles.button}
             onPress={this.onLoginPressed}>
-            <Text style={styles.buttonText}>{this.props.type}</Text>
+            <Text style={styles.buttonText}>Login</Text>
         </TouchableOpacity>
 
-        {errorCtrl}
+        {errorMessage}
 
         <ActivityIndicator
             animating={true}
             size="large"
-            opacity={this.state.opacity}
+            opacity={this.props.loginLoading? 1 : 0}
             style={styles.loader}
         />
       </View>
     )
-  }
-  onLoginPressed = () => {
-    console.log('login pressed')
   }
 }
 
@@ -97,3 +100,16 @@ const styles = StyleSheet.create({
     paddingTop: 10
   }
 })
+
+const mapStateToProps = (state) => ({
+  error: state.auth.error,
+  loginLoading: state.auth.loading,
+  loginSuccess: state.auth.loginSuccess,
+  jwt: state.auth.jwt
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  onLogin: (data) => login(data)(dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

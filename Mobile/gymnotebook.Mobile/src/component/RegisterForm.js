@@ -45,7 +45,7 @@ class RegisterForm extends React.Component {
 
   render(){
 
-    var errorMessage = null;
+    let errorMessage = <Text/>
     if(!this.state.passwordValid){
       errorMessage = <Text style={styles.errorMessage}>Password does not match</Text>
     }

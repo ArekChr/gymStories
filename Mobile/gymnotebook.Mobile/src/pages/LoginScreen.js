@@ -10,23 +10,28 @@ import LoginForm from '../component/LoginForm'
 
 export default class LoginScreen extends Component {
 
+  onLoginSuccess = () => {
+    this.props.navigation.navigate('HomeScreen')
+  }
+
+  onRegisterPressed = () => {
+    this.props.navigation.navigate('RegisterScreen')
+  }
+
   render() {
     return(
       <View style={styles.container}>
           <Logo/>
           <Text style={styles.logoText}>Welcome in gymNotebook</Text>
-          <LoginForm type="Login" loginScreen={() => this.onLoginSuccess()}/>
+          <LoginForm onLoginSuccess={() => this.onLoginSuccess()}/>
           <View style={styles.signupTextCont}>
               <Text style={styles.signupText}>Don't have an account? </Text>
-              <TouchableOpacity onPress={this.signup}>
+              <TouchableOpacity onPress={this.onRegisterPressed}>
                   <Text style={styles.signupButton}>Sign up</Text>
               </TouchableOpacity>
           </View>
       </View>
     )
-  }
-  onLoginSuccess() {
-    //this.props.navigation.navigate('HomeScreen')
   }
 }
 

@@ -1,9 +1,9 @@
 import { ACTIVE_ICON, INACTIVE_ICON, COLOR_SECONDARY } from '../styles/common'
-import ActiveTab from '../pages/tabNavigator/ActiveTab'
-import GymTab from '../pages/tabNavigator/GymTab'
-import HomeTab from '../pages/tabNavigator/HomeTab'
-import ProfileTab from '../pages/tabNavigator/ProfileTab'
-import SearchTab from '../pages/tabNavigator/SearchTab'
+import ActiveTab from '../pages/tabs/ActiveTab'
+import GymTab from '../pages/tabs/GymTab'
+import HomeTab from '../pages/tabs/HomeTab'
+import ProfileTab from '../pages/tabs/ProfileTab'
+import SearchTab from '../pages/tabs/SearchTab'
 import AddTraining from '../pages/AddTraining'
 import LoginScreen from '../pages/LoginScreen'
 import RegisterScreen from '../pages/RegisterScreen'
@@ -52,14 +52,14 @@ const AppTabNavigator = createBottomTabNavigator({
   })
 
 const Home = createStackNavigator({
-  RegisterScreen: {
-    screen: RegisterScreen,
+  LoginScreen: {
+    screen: LoginScreen,
     navigationOptions: {
       header: null
     }
   },
-  LoginScreen: {
-    screen: LoginScreen,
+  RegisterScreen: {
+    screen: RegisterScreen,
     navigationOptions: {
       header: null
     }
