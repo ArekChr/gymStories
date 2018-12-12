@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     color: 'rgba(74,217,255,1)'
   },
   signupTextCont: {
-    flexGrow: 1,
+    // flexGrow: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
     paddingVertical: 16,

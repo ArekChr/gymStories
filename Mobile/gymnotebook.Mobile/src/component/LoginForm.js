@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { login } from '../store/auth/actions'
+import { setTokens, getTokens } from '../utils/misc'
 
 class LoginForm extends React.Component {
 
@@ -12,9 +13,14 @@ class LoginForm extends React.Component {
   }
 
   onLoginPressed = () => {
-    console.log("pressed")
     const {email, password} = this.state
     this.props.onLogin({email, password})
+  }
+
+  componentDidMount() {
+    getTokens((values) => {
+      console.log(values)
+    })
   }
 
   render() {
@@ -24,7 +30,9 @@ class LoginForm extends React.Component {
       errorMessage = <Text style={styles.error}>{this.props.error.message}</Text>
     }
     else if(this.props.loginSuccess) {
-      this.props.onLoginSuccess()
+      setTokens(this.props.jwt, () => {
+        this.props.onLoginSuccess()
+      })
     }
 
     return(

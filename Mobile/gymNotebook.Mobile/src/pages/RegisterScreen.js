@@ -9,12 +9,16 @@ class RegisterScreen extends Component {
     this.props.navigation.popToTop()
   }
 
+  onSingUpSuccess = () => {
+    this.props.navigation.navigate('LoginScreen')
+  }
+
   render() {
     return(
       <View style={styles.container}>
         <Logo/>
         <Text style={styles.logoText}>Welcome in gymNotebook</Text>
-        <RegisterForm />
+        <RegisterForm onSingUpSuccess={this.onSingUpSuccess} />
         
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Already have an account? </Text>

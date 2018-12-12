@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { registerUser } from '../store/auth/actions'
 
@@ -52,6 +52,9 @@ class RegisterForm extends React.Component {
     else if(this.props.registerSuccess === false){
       errorMessage = <Text style={styles.errorMessage}>{this.props.error.message}</Text>
     }
+    else if(this.props.registerSuccess) {
+      this.props.onSingUpSuccess()
+    }
 
     return(
       <View style={styles.container}>
@@ -90,6 +93,12 @@ class RegisterForm extends React.Component {
           disabled={!this.state.canSignUp}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
+        <ActivityIndicator
+            animating={true}
+            size="large"
+            opacity={this.props.registerLoading? 1 : 0}
+            style={styles.loader}
+        />
       </View>
     )
   }
@@ -111,6 +120,9 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 16,
     color: '#ffffff'
+  },
+  loader: {
+    marginTop: 20
   },
   buttonText: {
     fontSize: 16,
