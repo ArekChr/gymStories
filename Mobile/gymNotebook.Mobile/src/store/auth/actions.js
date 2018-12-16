@@ -5,12 +5,22 @@ import {
   USER_REGISTER_REQ,
   USER_LOGIN_REQ,
   USER_LOGIN_SUC,
-  USER_LOGIN_ERR
+  USER_LOGIN_ERR,
+  STORAGE_MAP_JWT
  } from './types'
-import { API_URL } from '../../consts'
+import { API_URL } from '../../utils/misc'
 
 const URL = `${API_URL}/user/`
 const LOGIN_URL = `${API_URL}/login`
+
+export const mapJwtToState = (jwt) => {
+  return (dispatch) => {
+    dispatch({
+      type: STORAGE_MAP_JWT,
+      payload: jwt
+    })
+  }
+}
 
 export const login = (data) => {
   return (dispatch) => {

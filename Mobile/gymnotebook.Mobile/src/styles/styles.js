@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { COLOR_PRIMARY, COLOR_SECONDARY, FONT_COLOR } from './common'
+import { COLOR_PRIMARY, COLOR_SECONDARY, FONT_COLOR, HEADER_COLOR } from './common'
 
 export default StyleSheet.create({
   container: {
@@ -12,7 +12,9 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   header: {
-    backgroundColor: COLOR_SECONDARY
+    backgroundColor: COLOR_SECONDARY,
+    flex: 1,
+    justifyContent: 'flex-start'
   },
   trainingButton: {
     backgroundColor: 'white',

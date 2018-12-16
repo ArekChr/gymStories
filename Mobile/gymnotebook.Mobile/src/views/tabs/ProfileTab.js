@@ -50,15 +50,15 @@ export default class ProfileTab extends Component {
                           <Text style={{ fontSize: 11, color: 'grey' }}>following</Text>
                         </View>
                     </View>
-                      <View style={{ flexDirection: 'row', paddingTop: 7 }}>
-                        <Button bordered={true} dark={true}
-                          style={{ flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
-                          <Text>Edit Profile</Text>
-                        </Button>
-                        <Button bordered={true} dark={true}
-                          style={{ flex: 1, marginLeft: 5, marginRight: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
-                        </Button>
-                      </View>
+                    <View style={{ flexDirection: 'row', paddingTop: 7 }}>
+                      <Button bordered={true} dark={true}
+                        style={{ flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
+                        <Text>Edit Profile</Text>
+                      </Button>
+                      <Button bordered={true} dark={true}
+                        style={{ flex: 1, marginLeft: 5, marginRight: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
+                      </Button>
+                    </View>
                   </View>
             </View>
             <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>

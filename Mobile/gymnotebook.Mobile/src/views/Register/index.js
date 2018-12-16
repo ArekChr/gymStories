@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import Logo from '../component/Logo'
-import RegisterForm from '../component/RegisterForm'
+import Logo from '../../component/Logo'
+import RegisterForm from './RegisterForm'
 
 class RegisterScreen extends Component {
 

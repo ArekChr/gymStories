@@ -7,3 +7,5 @@ export const BORDER_RADIUS = 5
 
 export const ACTIVE_ICON = 'black'
 export const INACTIVE_ICON = '#D1CECE'
+export const HEADER_COLOR = '#00796B'
+export const STATUS_BAR_COLOR = '#00695C'

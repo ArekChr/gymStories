@@ -24,7 +24,7 @@ export default class GymTab extends Component {
             </TouchableOpacity>
           </Left>
           <Body>
-            <Text style={styles.title}>My Trainings</Text>
+            <Text style={styles.title}>My Trainingsss</Text>
           </Body>
           <Right>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('AddTraining')}>

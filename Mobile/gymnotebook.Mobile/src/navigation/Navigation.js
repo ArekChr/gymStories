@@ -1,13 +1,17 @@
+import React from 'react';
 import { ACTIVE_ICON, INACTIVE_ICON, COLOR_SECONDARY } from '../styles/common'
-import ActiveTab from '../pages/tabs/ActiveTab'
-import GymTab from '../pages/tabs/GymTab'
-import HomeTab from '../pages/tabs/HomeTab'
-import ProfileTab from '../pages/tabs/ProfileTab'
-import SearchTab from '../pages/tabs/SearchTab'
-import AddTraining from '../pages/AddTraining'
-import LoginScreen from '../pages/LoginScreen'
-import RegisterScreen from '../pages/RegisterScreen'
+import ActiveTab from '../views/tabs/ActiveTab'
+import GymTab from '../views/tabs/GymTab'
+import HomeTab from '../views/tabs/HomeTab'
+import ProfileTab from '../views/tabs/ProfileTab'
+import SearchTab from '../views/tabs/SearchTab'
+import AddTraining from '../views/AddTraining'
+import LoginScreen from '../views/Login'
+import RegisterScreen from '../views/Register'
+import AddProgressScreen from '../views/ProgressTab/AddProgressScreen'
 import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/Entypo'
 
 const GymNavigator = createStackNavigator({
   GymTab: {
@@ -25,14 +29,31 @@ const GymNavigator = createStackNavigator({
   }
 })
 
+const ProgressTab = createStackNavigator({
+  ProgressTab: { screen: ActiveTab},
+  AddProgress: { screen: AddProgressScreen}
+})
+{/* <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor} /> */}
+{/* <Icon name="home" size={25} color={tintColor} /> */}
 const AppTabNavigator = createBottomTabNavigator({
     HomeTab: HomeTab,
     SearchTab: SearchTab,
-    ActiveTab: ActiveTab,
+    ActiveTab: ProgressTab,
     GymTab: GymTab,
     ProfileTab: ProfileTab
   },
   {
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({tintColor}) => {
+        const { routeName } = navigation.state
+        if(routeName === 'HomeTab') {
+          return <Icon name="home" size={25} color={tintColor} />
+        }
+        else if (routeName === 'ActiveTab'){
+          return <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor} />
+        }
+      }
+    }),
     animationEnabled: true,
     swipeEnabled: true,
     tabBarPosition: 'bottom',
@@ -40,14 +61,7 @@ const AppTabNavigator = createBottomTabNavigator({
       activeTintColor: ACTIVE_ICON,
       inactiveTintColor: INACTIVE_ICON,
       showIcon: true,
-      showLabel: false,
-      style: {
-        backgroundColor: COLOR_SECONDARY,
-        elevation: 15
-      },
-      indicatorStyle: {
-        opacity: 0
-      }
+      showLabel: false
     }
   })
 

@@ -2,9 +2,9 @@ import axios from 'axios'
 import {   
   FETCH_REQUEST,
   FETCH_SUCCESS,
-  FETCH_ERROR,
-  SELECTED } from './types'
-import { API_URL } from '../../consts'
+  FETCH_ERROR 
+} from './types'
+import { API_URL } from '../../utils/misc'
 
 const URL = `${API_URL}/progress/browse/`
 

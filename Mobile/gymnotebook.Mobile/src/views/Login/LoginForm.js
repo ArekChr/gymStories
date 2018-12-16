@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { login } from '../store/auth/actions'
-import { setTokens, getTokens } from '../utils/misc'
+import { login } from '../../store/auth/actions'
+import { setTokens } from '../../utils/misc'
 
 class LoginForm extends React.Component {
 
@@ -15,12 +15,6 @@ class LoginForm extends React.Component {
   onLoginPressed = () => {
     const {email, password} = this.state
     this.props.onLogin({email, password})
-  }
-
-  componentDidMount() {
-    getTokens((values) => {
-      console.log(values)
-    })
   }
 
   render() {

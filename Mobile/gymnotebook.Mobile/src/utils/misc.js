@@ -1,5 +1,7 @@
 import { AsyncStorage } from 'react-native'
 
+export const API_URL = 'http:/192.168.178.91:5001/api'
+
 export const setTokens = (values, callback) => {
 
   AsyncStorage.multiSet([
@@ -18,4 +20,9 @@ export const getTokens = (callback) => {
   ]).then(value =>{
     callback(value)
   })
+}
+
+// TODO: save information stored in token in async storage
+const openToken =  (token) => {
+
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { registerUser } from '../store/auth/actions'
+import { registerUser } from '../../store/auth/actions'
 
 class RegisterForm extends React.Component {
 
