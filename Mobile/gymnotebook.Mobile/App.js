@@ -12,7 +12,7 @@ import { rootReducer } from './src/store'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 // FIXME: fix yellowbox
-YellowBox.ignoreWarnings(['unknown call: "relay:check"']);
+// YellowBox.ignoreWarnings(['unknown call: "relay:check"']);
 
 const createStoreWithMiddleware = applyMiddleware(promiseMiddleware)(createStore)
 

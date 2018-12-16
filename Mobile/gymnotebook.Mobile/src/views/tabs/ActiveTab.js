@@ -7,14 +7,10 @@ import { HEADER_COLOR, STATUS_BAR_COLOR } from '../../styles/common'
 
 class ActiveTab extends Component {
 
-  componentDidMount(){
-    this.props.onFetch("0B704143-3739-4C6D-B0C4-280795FE271A");
-  }
-
   static navigationOptions = {
     title: 'Progress',
     headerRight: (
-      <TouchableOpacity style={{paddingRight: 10}}>
+      <TouchableOpacity style={{paddingRight: 10}} onPress={() => console.log(this)}>
         <MaterialIcons name="add" size={30} color='white' /> 
       </TouchableOpacity>
     ),
@@ -22,6 +18,16 @@ class ActiveTab extends Component {
     headerStyle: {
       backgroundColor: HEADER_COLOR,
     },
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ handleAdd: this.onProgressAdd})
+    this.props.onFetch("0B704143-3739-4C6D-B0C4-280795FE271A");
+  }
+
+  onProgressAdd = () => {
+    console.log('tuta')
+    this.props.navigation.navigate('AddProgressScreen')
   }
   
   render() {

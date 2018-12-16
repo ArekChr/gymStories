@@ -33,8 +33,7 @@ const ProgressTab = createStackNavigator({
   ProgressTab: { screen: ActiveTab},
   AddProgress: { screen: AddProgressScreen}
 })
-{/* <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor} /> */}
-{/* <Icon name="home" size={25} color={tintColor} /> */}
+
 const AppTabNavigator = createBottomTabNavigator({
     HomeTab: HomeTab,
     SearchTab: SearchTab,
