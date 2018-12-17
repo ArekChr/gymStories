@@ -1,32 +1,29 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
-import { fetchProgress } from '../../store/progress/actions'
+import { fetchProgress } from '../../../store/progress/actions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { HEADER_COLOR, STATUS_BAR_COLOR } from '../../styles/common'
+import { HEADER_COLOR, STATUS_BAR_COLOR } from '../../../styles/common'
 
 class ActiveTab extends Component {
 
-  static navigationOptions = {
-    title: 'Progress',
-    headerRight: (
-      <TouchableOpacity style={{paddingRight: 10}} onPress={() => console.log(this)}>
-        <MaterialIcons name="add" size={30} color='white' /> 
-      </TouchableOpacity>
-    ),
-    headerTintColor: 'white',
-    headerStyle: {
-      backgroundColor: HEADER_COLOR,
-    },
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Progress',
+      headerRight: (
+        <TouchableOpacity style={{paddingRight: 10}} onPress={navigation.getParam('onProgressAdd')}>
+          <MaterialIcons name="add" size={30} color='white' /> 
+        </TouchableOpacity>
+      ),
+    }
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ handleAdd: this.onProgressAdd})
+    this.props.navigation.setParams({ onProgressAdd: this._onProgressAdd})
     this.props.onFetch("0B704143-3739-4C6D-B0C4-280795FE271A");
   }
 
-  onProgressAdd = () => {
-    console.log('tuta')
+  _onProgressAdd = () => {
     this.props.navigation.navigate('AddProgressScreen')
   }
   

@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { Container, Content, Header, Left, Body, Right, Button } from 'native-base'
-import styles from '../../styles/styles'
-import { ACTIVE_ICON } from '../../styles/common'
+import styles from '../../../styles/styles'
+import { ACTIVE_ICON } from '../../../styles/common'
 
 export default class GymTab extends Component {
 

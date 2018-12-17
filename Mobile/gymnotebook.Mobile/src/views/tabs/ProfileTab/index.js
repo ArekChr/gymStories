@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import { Container, Content, Header, Left, Body, Right, Button } from 'native-base'
-import styles from '../../styles/styles'
+import styles from '../../../styles/styles'
 import Icon from 'react-native-vector-icons/Entypo'
 export default class ProfileTab extends Component {
 
@@ -18,14 +18,14 @@ export default class ProfileTab extends Component {
           <Left>
             <TouchableOpacity>
               <Image style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}
-                  source={require('../../images/photo-camera.png')}/>
+                  source={require('../../../images/photo-camera.png')}/>
             </TouchableOpacity>
           </Left>
           <Body><Text style={styles.title}>gymNotebook</Text></Body>
           <Right>
             <TouchableOpacity>
               <Image style={{ width: 20, height: 20, marginLeft: 15, marginRight: 15 }}
-                  source={require('../../images/send.png')}/>
+                  source={require('../../../images/send.png')}/>
             </TouchableOpacity>
           </Right>
         </Header>
@@ -33,7 +33,7 @@ export default class ProfileTab extends Component {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <Image style={{ width: 90, height: 90, borderRadius: 37.5 }} source={require('../../images/default-user.png')}/>
+                  <Image style={{ width: 90, height: 90, borderRadius: 37.5 }} source={require('../../../images/default-user.png')}/>
                 </View>
                   <View style={{ flex: 3 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>

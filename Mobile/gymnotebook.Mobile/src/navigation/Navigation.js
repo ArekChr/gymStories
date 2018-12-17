@@ -2,36 +2,27 @@ import React from 'react';
 import { ACTIVE_ICON, INACTIVE_ICON, COLOR_SECONDARY } from '../styles/common'
 import ActiveTab from '../views/tabs/ActiveTab'
 import GymTab from '../views/tabs/GymTab'
-import HomeTab from '../views/tabs/HomeTab'
+import HomeTab from '../views/tabs/HomeTab/index.js'
 import ProfileTab from '../views/tabs/ProfileTab'
 import SearchTab from '../views/tabs/SearchTab'
-import AddTraining from '../views/AddTraining'
 import LoginScreen from '../views/Login'
 import RegisterScreen from '../views/Register'
-import AddProgressScreen from '../views/ProgressTab/AddProgressScreen'
-import { createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
+import AddProgressScreen from '../views/AddProgress'
+import { createSwitchNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Icon from 'react-native-vector-icons/Entypo'
-
-const GymNavigator = createStackNavigator({
-  GymTab: {
-    screen: GymTab,
-    navigationOptions: {
-      header: null
-    }
-  },
-  AddTraining: {
-    screen: AddTraining,
-    navigationOptions: {
-      header: null,
-      tabBarVisible: false
-    }
-  }
-})
+import { HEADER_COLOR, STATUS_BAR_COLOR } from '../styles/common'
 
 const ProgressTab = createStackNavigator({
-  ProgressTab: { screen: ActiveTab},
-  AddProgress: { screen: AddProgressScreen}
+  ProgressTab: { screen: ActiveTab }
+},
+{
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: HEADER_COLOR,
+    },
+    headerTintColor: 'white'
+  })
 })
 
 const AppTabNavigator = createBottomTabNavigator({
@@ -64,7 +55,7 @@ const AppTabNavigator = createBottomTabNavigator({
     }
   })
 
-const Home = createStackNavigator({
+const SignIn = createStackNavigator({
   LoginScreen: {
     screen: LoginScreen,
     navigationOptions: {
@@ -76,15 +67,33 @@ const Home = createStackNavigator({
     navigationOptions: {
       header: null
     }
-  },
+  }
+})
+
+const Home = createStackNavigator({
   HomeScreen: {
     screen: AppTabNavigator,
     navigationOptions: {
       header: null
     }
+  },
+  AddProgressScreen: { 
+    screen: AddProgressScreen 
   }
+},{
+  defaultNavigationOptions: () => ({
+    headerStyle: {
+      backgroundColor: HEADER_COLOR,
+    },
+    headerTintColor: 'white'
+  })
 })
 
-const AppNavigator = createAppContainer(Home);
+const AppNavigator = createAppContainer(createSwitchNavigator(
+  {
+    LoginScreen: SignIn,
+    HomeScreen: Home
+  }
+));
 
 export default AppNavigator
