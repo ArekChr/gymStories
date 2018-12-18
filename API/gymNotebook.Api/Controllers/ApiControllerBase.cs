@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using gymNotebook.Infrastructure.Commands;
 
@@ -20,10 +17,10 @@ namespace gymNotebook.Api.Controllers
 
         protected async Task DispatchAsync<T>(T command) where T : ICommand
         {
-            //if (command is IAuthenticatedCommand authenticatedCommand)
-            //{
-            //    authenticatedCommand.UserId = UserId;
-            //}
+            if (command is IAuthenticatedCommand authenticatedCommand)
+            {
+                authenticatedCommand.UserId = UserId;
+            }
             await CommandDispatcher.DispatchAsync(command);
         }
 
