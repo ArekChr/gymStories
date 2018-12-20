@@ -55,7 +55,6 @@ class LoginScreen extends Component {
       return(
         <View style={styles.container}>
             <Logo/>
-            <Text style={styles.logoText}>Welcome in gymNotebook</Text>
             <LoginForm onLoginSuccess={() => this.onLoginSuccess()}/>
             <View style={styles.signupTextCont}>
                 <Text style={styles.signupText}>Don't have an account? </Text>
@@ -75,11 +74,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  logoText: {
-    fontSize: 20,
-    fontWeight: '500',
-    color: 'rgba(74,217,255,1)'
   },
   signupTextCont: {
     // flexGrow: 1,

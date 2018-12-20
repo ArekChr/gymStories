@@ -17,7 +17,6 @@ class RegisterScreen extends Component {
     return(
       <View style={styles.container}>
         <Logo/>
-        <Text style={styles.logoText}>Welcome in gymNotebook</Text>
         <RegisterForm onSingUpSuccess={this.onSingUpSuccess} />
         
         <View style={styles.signupTextCont}>
