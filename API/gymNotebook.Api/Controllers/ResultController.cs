@@ -13,7 +13,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IResultService _resultService;
 
-        public ResultController(IResultService resultService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public ResultController(IResultService resultService, 
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _resultService = resultService;
         }

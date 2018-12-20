@@ -15,7 +15,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IMemoryCache _cache;
 
-        public LoginController(IMemoryCache cache, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public LoginController(IMemoryCache cache,
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _cache = cache;
         }

@@ -14,7 +14,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IRoutineService _routineService;
 
-        public RoutineController(IRoutineService routineService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public RoutineController(IRoutineService routineService,
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _routineService = routineService;
         }

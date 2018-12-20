@@ -47,7 +47,7 @@ namespace gymNotebook.Api
                 c.SwaggerDoc("v1", new Info { Title = "gymNotebook", Version = "v1" });
             });
         
-        services.AddAuthentication(o =>
+            services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -1,8 +1,9 @@
-﻿using System;
+﻿using gymNotebook.Infrastructure.Commands;
+using System;
 
 namespace gymNotebook.Infrastructure.DTO
 {
-    public class UserDto
+    public class UserDto : IResult
     {
         public Guid Id { get; set; }
 

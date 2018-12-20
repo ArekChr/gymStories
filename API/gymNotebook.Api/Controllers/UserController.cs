@@ -14,8 +14,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IUserService _userService;
 
-        public UserController(IUserService userService, 
-            ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public UserController(IUserService userService,
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _userService = userService;
         }
