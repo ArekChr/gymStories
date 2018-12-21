@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Commands
 {
-    public class CommandDispatcher : ICommandDispatcher
+    public class CommandDispatcher : ICommandDispatcher, IResultDispatcher
     {
         private readonly IComponentContext _context;
 
@@ -21,6 +21,16 @@ namespace gymNotebook.Infrastructure.Commands
             }
             var handler = _context.Resolve<ICommandHandler<T>>();
             await handler.HandleAsync(command);
+        }
+
+        public async Task<R> DispatchAsync<T, R>(T command) where T : ICommand where R : IResult
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command), $"Command {typeof(T).Name} can not be null.");
+            }
+            var handler = _context.Resolve<IResultHandler<T, R>>();
+            return await handler.HandleAsync(command);
         }
     }
 }

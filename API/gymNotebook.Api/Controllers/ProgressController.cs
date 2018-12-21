@@ -1,7 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Trainings.Progress;
+using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,25 +14,28 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IProgressService _progressService;
 
-        public ProgressController(IProgressService progressService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public ProgressController(IProgressService progressService, 
+            ICommandDispatcher commandDispatcher, 
+            IResultDispatcher resultDispatcher) 
+            : base(commandDispatcher, resultDispatcher)
         {
             _progressService = progressService;
         }
 
         [HttpGet("browse/{userId}")]
-        public async Task<IActionResult> GetAll(Guid userId)
+        public async Task<IActionResult> GetAll(BrowseProgress command)
         {
-            var progress = await _progressService.BrowseAsync(userId);
+            var results = await DispatchAsync<BrowseProgress, ProgressListDto>(command);
 
-            return Json(progress);
+            return Json(results);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(GetProgress command)
         {
-            var exercises = await _progressService.GetAsync(id);
+            await DispatchAsync(command);
 
-            return Json(exercises);
+            return Json(null);
         }
 
         [HttpPost]

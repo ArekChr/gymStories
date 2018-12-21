@@ -16,7 +16,9 @@ namespace gymNotebook.Api.Controllers
         private readonly ITrainingService _trainingService;
 
         public FullTrainingController(ITrainingService trainingService,
-            ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _trainingService = trainingService;
         }

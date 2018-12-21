@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using gymNotebook.Infrastructure.Commands;
+using System;
 
 namespace gymNotebook.Infrastructure.DTO
 {
-    public class ProgressDto
+    public class ProgressDto : IResult
     {
         public Guid Id { get; set; }
 

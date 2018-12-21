@@ -19,11 +19,11 @@ namespace gymNotebook.Infrastructure.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ProgressDto>> BrowseAsync(Guid userId)
+        public async Task<ProgressListDto> BrowseAsync(Guid userId)
         {
             var progress = await _progressRepository.BrowseAsync(userId);
 
-            return _mapper.Map<IEnumerable<Progress>, IEnumerable<ProgressDto>>(progress);
+            return _mapper.Map<IEnumerable<Progress>, ProgressListDto>(progress);
         }
 
         public async Task CreateAsync(Guid userId, float weight, float biceps, float chest, float thigh, float calf, float waist, float shoulders, float neck)
