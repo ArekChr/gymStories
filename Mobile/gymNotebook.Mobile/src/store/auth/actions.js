@@ -19,6 +19,7 @@ export const mapJwtToState = (jwt) => {
       type: STORAGE_MAP_JWT,
       payload: jwt
     })
+    axios.defaults.headers.common['Authorization'] = `Bearer ${jwt.token}`;
   }
 }
 

@@ -22,7 +22,6 @@ export default class Logo extends Component {
         easing:Easing.easeOutCubic
       })
     ]).start(() => {
-      alert('Done')
     })
   }
 

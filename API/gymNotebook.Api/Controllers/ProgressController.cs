@@ -27,7 +27,7 @@ namespace gymNotebook.Api.Controllers
         {
             var results = await DispatchAsync<BrowseProgress, ProgressListDto>(command);
 
-            return Json(results);
+            return Json(results.ProgressList);
         }
 
         [HttpGet("{id}")]

@@ -39,6 +39,6 @@ namespace gymNotebook.Api.Controllers
 
         protected Guid UserId => User?.Identity?.IsAuthenticated == true ?
             Guid.Parse(User.Identity.Name) :
-            Guid.Empty;
+            throw new UnauthorizedAccessException();
     }
 }

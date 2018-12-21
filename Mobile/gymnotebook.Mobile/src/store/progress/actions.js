@@ -24,7 +24,7 @@ export const fetchProgress = (userId) => {
       .catch(response => {
         dispatch({
           type: FETCH_ERROR,
-          payload: response.data
+          payload: response.response.data
         })
       })
   }

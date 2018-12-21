@@ -1,11 +1,13 @@
 import {   
   FETCH_REQUEST,
-  FETCH_SUCCESS
+  FETCH_SUCCESS,
+  FETCH_ERROR
   } from './types'
 
 const initialState = {
   progress: [],
-  progressLoading: true
+  progressLoading: true,
+  error: null
 }
 
 const progressReducer = (state = initialState, action) => {
@@ -13,7 +15,8 @@ const progressReducer = (state = initialState, action) => {
     case FETCH_REQUEST: {
       return { 
         ...state,
-        progressLoading: true
+        progressLoading: true,
+        error: null
       }
     }
     case FETCH_SUCCESS: {
@@ -21,6 +24,14 @@ const progressReducer = (state = initialState, action) => {
         ...state, 
         progress: action.payload,
         progressLoading: false
+      }
+    }
+    case FETCH_ERROR: {
+      return {
+        ...state,
+        progress: [],
+        progressLoading: false,
+        error: action.payload
       }
     }
     default: {
