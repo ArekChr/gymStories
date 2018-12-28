@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Image, StyleSheet, Text, Animated, Easing } from 'react-native'
-import { View } from 'native-base';
+import { Image, StyleSheet, Text, Animated, Easing, View } from 'react-native'
 
 export default class Logo extends Component {
 

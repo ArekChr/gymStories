@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { YellowBox } from 'react-native'
 
 import AppNavigator from './src/navigation/Navigation'
 

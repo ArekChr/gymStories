@@ -1,4 +1,19 @@
-export const FETCH_REQUEST = 'progress/FETCH_REQUEST';
-export const FETCH_SUCCESS = 'progress/FETCH_SUCCESS';
-export const FETCH_ERROR = 'progress/FETCH_ERROR';
-export const SELECTED = 'progress/SELECTED';
+export const FETCH_PROGRESS_REQ = 'progress/FETCH_PROGRESS_REQ';
+export const FETCH_PROGRESS_SUC = 'progress/FETCH_PROGRESS_SUC';
+export const FETCH_PROGRESS_ERR = 'progress/FETCH_PROGRESS_ERR';
+export const CREATE_PROGRESS_REQ = 'progress/CREATE_PROGRESS_REQ';
+export const CREATE_PROGRESS_SUC = 'progress/CREATE_PROGRESS_SUC';
+export const CREATE_PROGRESS_ERR = 'progress/CREATE_PROGRESS_ERR';
+export const UPDATE_PROGRESS_REQ = 'progress/UPDATE_PROGRESS_REQ';
+export const UPDATE_PROGRESS_SUC = 'progress/UPDATE_PROGRESS_SUC';
+export const UPDATE_PROGRESS_ERR = 'progress/UPDATE_PROGRESS_ERR';
+export const DELETE_PROGRESS_REQ = 'progress/DELETE_PROGRESS_REQ';
+export const DELETE_PROGRESS_SUC = 'progress/DELETE_PROGRESS_SUC';
+export const DELETE_PROGRESS_ERR = 'progress/DELETE_PROGRESS_ERR';
+export const SELECTED_PROGRESS = 'progress/SELECTED_PROGRESS';
+export const HANDLE_PROGRESS_MODAL = 'progress/HANDLE_PROGRESS_MODAL';
+export const HANDLE_CALENDAR_MODAL = 'progress/HANDLE_CALENDAR_MODAL';
+export const SELECT_DATE = 'progress/SELECT_DATE';
+export const PICK_DATE = 'progress/PICK_DATE';
+export const SET_LAST_PROGRESS = 'progress/SET_LAST_PROGRESS';
+

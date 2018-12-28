@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native'
 import Logo from '../../component/Logo'
 import LoginForm from './LoginForm'
 import { getTokens } from '../../utils/misc'
 import { mapJwtToState } from '../../store/auth/actions'
 import { connect } from 'react-redux'
+import { STATUS_BAR_COLOR } from '../../styles/common'
 
 class LoginScreen extends Component {
 
@@ -22,7 +23,6 @@ class LoginScreen extends Component {
 
   componentDidMount(){
     getTokens((value) => {
-      console.log(value)
       if(value[0][1] === null){
         this.setState({loading:false})
       } 
@@ -48,6 +48,7 @@ class LoginScreen extends Component {
     if(this.state.loading){
       return (
         <View style={styles.loading}>
+          <StatusBar backgroundColor={STATUS_BAR_COLOR} />
           <ActivityIndicator size='large'/>
         </View>
       )

@@ -22,7 +22,7 @@ namespace gymNotebook.Api.Controllers
             _progressService = progressService;
         }
 
-        [HttpGet("browse/{userId}")]
+        [HttpGet("browse")]
         public async Task<IActionResult> GetAll(BrowseProgress command)
         {
             var results = await DispatchAsync<BrowseProgress, ProgressListDto>(command);

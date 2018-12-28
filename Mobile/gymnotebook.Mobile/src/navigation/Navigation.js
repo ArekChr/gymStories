@@ -48,6 +48,10 @@ const AppTabNavigator = createBottomTabNavigator({
     swipeEnabled: true,
     tabBarPosition: 'bottom',
     tabBarOptions : {
+      style: {
+        elevation: 10,
+        borderTopWidth: 0,
+      },
       activeTintColor: ACTIVE_ICON,
       inactiveTintColor: INACTIVE_ICON,
       showIcon: true,

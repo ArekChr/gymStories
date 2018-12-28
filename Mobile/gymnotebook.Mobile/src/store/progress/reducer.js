@@ -1,32 +1,89 @@
 import {   
-  FETCH_REQUEST,
-  FETCH_SUCCESS,
-  FETCH_ERROR
-  } from './types'
+  FETCH_PROGRESS_REQ,
+  FETCH_PROGRESS_SUC,
+  FETCH_PROGRESS_ERR,
+  CREATE_PROGRESS_REQ,
+  CREATE_PROGRESS_SUC,
+  CREATE_PROGRESS_ERR,
+  UPDATE_PROGRESS_REQ,
+  UPDATE_PROGRESS_SUC,
+  UPDATE_PROGRESS_ERR,
+  DELETE_PROGRESS_REQ,
+  DELETE_PROGRESS_SUC,
+  DELETE_PROGRESS_ERR,
+  SELECTED_PROGRESS,
+  HANDLE_PROGRESS_MODAL,
+  HANDLE_CALENDAR_MODAL,
+  SELECT_DATE,
+  PICK_DATE,
+  SET_LAST_PROGRESS
+} from './types'
 
 const initialState = {
   progress: [],
   progressLoading: true,
-  error: null
+  error: null,
+  selectedProgress: "biceps",
+  modal: false,
+  lastProgress: 0,
+  calendarModal: false,
+  selectedDate: new Date().toISOString().substring(0,10),
+  pickedDate: new Date().toISOString().substring(0,10)
 }
 
 const progressReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_REQUEST: {
+    case HANDLE_PROGRESS_MODAL: {
+      return {
+        ...state,
+        modal: !state.modal ? true : false 
+      }
+    }
+    case HANDLE_CALENDAR_MODAL: {
+      return {
+        ...state,
+        calendarModal: !state.calendarModal ? true : false 
+      }
+    }
+    case SET_LAST_PROGRESS: {
+      return {
+        ...state,
+        lastProgress: action.payload
+      }
+    }
+    case SELECT_DATE: {
+      return {
+        ...state,
+        selectedDate: action.payload
+      }
+    }
+    case PICK_DATE: {
+      return {
+        ...state,
+        pickedDate: action.payload
+      }
+    }
+    case SELECTED_PROGRESS: {
+      return {
+        ...state,
+        selectedProgress: action.payload
+      }
+    }
+    case FETCH_PROGRESS_REQ: {
       return { 
         ...state,
         progressLoading: true,
         error: null
       }
     }
-    case FETCH_SUCCESS: {
+    case FETCH_PROGRESS_SUC: {
       return { 
         ...state, 
         progress: action.payload,
         progressLoading: false
       }
     }
-    case FETCH_ERROR: {
+    case FETCH_PROGRESS_ERR: {
       return {
         ...state,
         progress: [],
@@ -34,6 +91,70 @@ const progressReducer = (state = initialState, action) => {
         error: action.payload
       }
     }
+
+    case CREATE_PROGRESS_REQ: {
+      return {
+        ...state,
+
+      }
+    }
+
+    case CREATE_PROGRESS_SUC: {
+      return {
+        ...state,
+
+      }
+    }
+
+    // case CREATE_PROGRESS_ERR: {
+    //   return {
+    //     ...state,
+
+    //   }
+    // }
+
+    case UPDATE_PROGRESS_REQ: {
+      return {
+        ...state,
+
+      }
+    }
+
+    case UPDATE_PROGRESS_SUC: {
+      return {
+        ...state,
+
+      }
+    }
+
+    // case UPDATE_PROGRESS_ERR: {
+    //   return {
+    //     ...state,
+
+    //   }
+    // }
+
+    case DELETE_PROGRESS_REQ: {
+      return {
+        ...state,
+
+      }
+    }
+
+    case DELETE_PROGRESS_SUC: {
+      return {
+        ...state,
+
+      }
+    }
+
+    // case DELETE_PROGRESS_ERR: {
+    //   return {
+    //     ...state,
+
+    //   }
+    // }
+
     default: {
       if (state === undefined) {
         return {
