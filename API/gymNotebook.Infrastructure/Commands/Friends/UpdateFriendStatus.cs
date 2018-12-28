@@ -4,7 +4,7 @@ using System.Text;
 
 namespace gymNotebook.Infrastructure.Commands.Friends
 {
-    public class UpdateFriendStatus : ICommand
+    public class UpdateFriendStatus : AuthenticatedCommandBase
     {
     }
 }

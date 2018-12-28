@@ -4,24 +4,24 @@ using System.Text;
 
 namespace gymNotebook.Infrastructure.Commands.Trainings.Progress
 {
-    public class CreateProgress : ICommand
+    public class CreateProgress : AuthenticatedCommandBase
     {
-        public Guid UserId { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public float Weight { get; set; }
+        public float? Weight { get; set; }
 
-        public float Biceps { get; set; }
+        public float? Biceps { get; set; }
 
-        public float Chest { get; set; }
+        public float? Chest { get; set; }
 
-        public float Thigh { get; set; }
+        public float? Thigh { get; set; }
 
-        public float Calf { get; set; }
+        public float? Calf { get; set; }
 
-        public float Waist { get; set; }
+        public float? Waist { get; set; }
 
-        public float Shoulders { get; set; }
+        public float? Shoulders { get; set; }
 
-        public float Neck { get; set; }
+        public float? Neck { get; set; }
     }
 }

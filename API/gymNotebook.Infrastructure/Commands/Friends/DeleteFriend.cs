@@ -4,7 +4,7 @@ using System.Text;
 
 namespace gymNotebook.Infrastructure.Commands.Friends
 {
-    public class DeleteFriend : ICommand
+    public class DeleteFriend : AuthenticatedCommandBase
     {
     }
 }

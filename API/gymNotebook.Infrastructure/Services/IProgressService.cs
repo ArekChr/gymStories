@@ -9,7 +9,7 @@ namespace gymNotebook.Infrastructure.Services
     {
         Task<ProgressDto> GetAsync(Guid id);
 
-        Task CreateAsync(Guid userId, float Weight, float Biceps, float Chest, float Thigh, float Calf, float Waist, float Shoulders, float Neck);
+        Task CreateAsync(Guid userId, DateTime createdAt, float? Weight, float? Biceps, float? Chest, float? Thigh, float? Calf, float? Waist, float? Shoulders, float? Neck);
 
         Task<ProgressListDto> BrowseAsync(Guid userId);
 

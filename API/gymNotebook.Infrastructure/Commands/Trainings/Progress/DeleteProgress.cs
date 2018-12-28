@@ -4,7 +4,7 @@ using System.Text;
 
 namespace gymNotebook.Infrastructure.Commands.Trainings.Progress
 {
-    public class DeleteProgress : ICommand
+    public class DeleteProgress : AuthenticatedCommandBase
     {
         public Guid Id { get; set; }
     }

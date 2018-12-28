@@ -5,6 +5,6 @@ namespace gymNotebook.Infrastructure.Commands.Trainings.Training
 {
     public class UpdateAllTraining : UpdateTraining
     {
-        public IEnumerable<UpdateAllRoutines> updateAllRoutines { get; set; }
+        public IEnumerable<UpdateAllRoutines> uUpdateAllRoutines { get; set; }
     }
 }

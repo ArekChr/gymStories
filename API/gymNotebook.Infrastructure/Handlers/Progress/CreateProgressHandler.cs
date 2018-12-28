@@ -16,7 +16,7 @@ namespace gymNotebook.Infrastructure.Handlers.Progress
 
         public async Task HandleAsync(CreateProgress command)
         {
-            await _progressService.CreateAsync(command.UserId, command.Weight, command.Biceps, command.Chest, 
+            await _progressService.CreateAsync(command.UserId, command.CreatedAt, command.Weight, command.Biceps, command.Chest, 
                 command.Thigh, command.Calf, command.Waist, command.Shoulders, command.Neck);
         }
     }

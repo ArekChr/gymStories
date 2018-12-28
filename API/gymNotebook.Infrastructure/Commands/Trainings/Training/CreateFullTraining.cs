@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace gymNotebook.Infrastructure.Commands.Trainings.Training
 {
-    public class CreateFullTraining : ICommand
+    public class CreateFullTraining : AuthenticatedCommandBase
     {
-        public Guid UserId { get; set; }
-
         public Guid TrainingId { get; set; }
 
         public string Name { get; set; }

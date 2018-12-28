@@ -28,10 +28,19 @@ namespace gymNotebook.Infrastructure.Services
             return new ProgressListDto(enumerableProgress);
         }
 
-        public async Task CreateAsync(Guid userId, float weight, float biceps, float chest, float thigh, float calf, float waist, float shoulders, float neck)
+        public async Task CreateAsync(Guid userId, DateTime createdAt, float? weight, float? biceps, float? chest, float? thigh, float? calf, float? waist, float? shoulders, float? neck)
         {
-            var progress = new Progress(userId, weight, biceps, chest, thigh, calf, waist, shoulders, neck);
-            await _progressRepository.AddAsync(progress);
+            var progress = await _progressRepository.GetAsync(userId, createdAt);
+            if(progress == null)
+            {
+                progress = new Progress(userId, createdAt, weight, biceps, chest, thigh, calf, waist, shoulders, neck);
+                await _progressRepository.AddAsync(progress);
+            }
+            else
+            {
+                progress.OverrideProgress(weight, biceps, chest, thigh, calf, waist, shoulders, neck);
+                await _progressRepository.UpdateAsync(progress);
+            }
         }
 
         public async Task DeleteAsync(Guid id)

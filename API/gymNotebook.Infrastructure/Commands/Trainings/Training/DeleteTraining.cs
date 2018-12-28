@@ -4,8 +4,8 @@ using System.Text;
 
 namespace gymNotebook.Infrastructure.Commands.Trainings.Training
 {
-    public class DeleteTraining : ICommand
+    public class DeleteTraining : AuthenticatedCommandBase
     {
-        public Guid trainingId { get; set; }
+        public Guid TrainingId { get; set; }
     }
 }

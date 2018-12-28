@@ -21,6 +21,9 @@ namespace gymNotebook.Infrastructure.Repositories
         public async Task<Progress> GetAsync(Guid id)
             => await _context.Progress.SingleOrDefaultAsync(x => x.Id == id);
 
+        public async Task<Progress> GetAsync(Guid userId, DateTime date)
+            => await _context.Progress.SingleOrDefaultAsync(x => x.UserId == userId && x.CreatedAt == date);
+
         public async Task AddAsync(Progress progress)
         {
             await _context.Progress.AddAsync(progress);
