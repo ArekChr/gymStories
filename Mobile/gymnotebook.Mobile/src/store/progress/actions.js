@@ -102,12 +102,8 @@ export const createProgress = (progress) => {
     dispatch({
       type: CREATE_PROGRESS_REQ
     })
-
-    axios.post({URL,
-      data: {
-        ...progress
-      }
-    })
+    
+    axios.post(URL, { ...progress })
     .then(response => {
       dispatch({ 
         type: CREATE_PROGRESS_SUC,

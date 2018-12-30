@@ -25,7 +25,6 @@ namespace gymNotebook.Infrastructure.Services
 
         public async Task<UserDto> GetAsync(string email)
         {
-
             var user = await _userRepository.GetAsync(email);
 
             return _mapper.Map<User, UserDto>(user);

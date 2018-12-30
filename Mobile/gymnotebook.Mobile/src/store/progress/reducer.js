@@ -95,14 +95,14 @@ const progressReducer = (state = initialState, action) => {
     case CREATE_PROGRESS_REQ: {
       return {
         ...state,
-
+        progressLoading: true
       }
     }
 
     case CREATE_PROGRESS_SUC: {
       return {
         ...state,
-
+        progressLoading: false
       }
     }
 

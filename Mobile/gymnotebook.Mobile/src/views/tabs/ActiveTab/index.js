@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { fetchProgress, handleProgressModal, setLastProgress } from '../../../store/progress/actions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { HEADER_COLOR, STATUS_BAR_COLOR } from '../../../styles/common'
 import ProgressModal from './ProgressModal'
-import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts'
+import { LineChart, Grid, XAxis, YAxis, StackedAreaChart } from 'react-native-svg-charts'
 import { progressNormalize, progressSort } from '../../../utils/progress'
 import { capFirst } from '../../../utils/string'
 
@@ -19,16 +19,41 @@ class ActiveTab extends Component {
     return {
       title: 'Progress',
       headerRight: (
-        <TouchableOpacity style={{paddingRight: 10}} onPress={navigation.getParam('onProgressAddOpen')}>
-          <MaterialIcons name="add" size={30} color='white' /> 
-        </TouchableOpacity>
+        <View style={{ flexDirection: "row" }}>
+          <ActivityIndicator opacity={navigation.getParam('loadingIndicator') ? 1 : 0} size={25} color="white" style={{ marginRight: 10 }} />
+          <TouchableOpacity style={{paddingRight: 10}} onPress={navigation.getParam('onProgressAddOpen')}>
+            <MaterialIcons name="add" size={30} color='white' /> 
+          </TouchableOpacity>
+        </View>
       )
     }
   }
 
+  state = {
+    loading: true
+  }
+
   componentDidMount() {
-    this.props.navigation.setParams({ onProgressAddOpen: this._onProgressAddOpen})
+    this.props.navigation.setParams({
+      onHandleIndicator: this._onHandleIndicator,
+      onProgressAddOpen: this._onProgressAddOpen, 
+      loadingIndicator: this.state.loading 
+    })
+
     this.props.onFetch();
+  }
+
+  onProgressLoading = () => {
+    this.props.navigation.setParams({ 
+      loadingIndicator: this.props.progressLoading 
+    })
+  }
+
+  _onHandleIndicator = () => {
+    this.setState({ loading: !this.state.loading})
+    this.props.navigation.setParams({
+      loadingIndicator: !this.state.loading 
+    })
   }
 
   _onProgressAddOpen = () => {
@@ -43,7 +68,7 @@ class ActiveTab extends Component {
       </View>
       )
     }
-  
+
     const verticalContentInset = { top: 10, bottom: 10 }
     const xAxisHeight = 30
 
@@ -107,7 +132,7 @@ class ActiveTab extends Component {
                     fill: 'grey',
                     fontSize: 8,
                     fontWeight: 'bold',
-                    rotation: 20,
+                    rotation: 0,
                     originY: 30,
                     y: 5,
                   }}
