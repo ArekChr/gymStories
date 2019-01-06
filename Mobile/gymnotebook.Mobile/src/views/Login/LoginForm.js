@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator 
 import { connect } from 'react-redux'
 import { login } from '../../store/auth/actions'
 import { setTokens } from '../../utils/misc'
+import { mapJwtToState } from '../../store/auth/actions'
 
 class LoginForm extends React.Component {
 
@@ -25,7 +26,8 @@ class LoginForm extends React.Component {
     }
     else if(this.props.loginSuccess) {
       setTokens(this.props.jwt, () => {
-        this.props.onLoginSuccess(this.props.jwt)
+        this.props.mapJwtToState(this.props.jwt)
+        this.props.onLoginSuccess()
       })
     }
 
@@ -111,6 +113,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+  mapJwtToState: (token) => mapJwtToState(token)(dispatch),
   onLogin: (data) => login(data)(dispatch)
 })
 

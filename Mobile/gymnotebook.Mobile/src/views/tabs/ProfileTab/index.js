@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from '../../../styles/styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import Entypo from 'react-native-vector-icons/Entypo'
+
 export default class ProfileTab extends Component {
 
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
-      <Entypo name="user" size={26} color={tintColor} />
-    )
+  onSettingsPress = () => {
+    this.props.navigation.navigate('Settings')
   }
 
   render() {
@@ -39,7 +37,7 @@ export default class ProfileTab extends Component {
                       style={{ alignItems: 'center', borderWidth: 1, flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
                       <Text>Edytuj profil</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity bordered={true} dark={true}
+                    <TouchableOpacity onPress={this.onSettingsPress} bordered={true} dark={true}
                         style={{ alignItems: 'center', borderWidth: 1, flex: 1, marginLeft: 5, marginRight: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
                       <AntDesign size={20} name='setting' color='black' />
                     </TouchableOpacity>
@@ -52,9 +50,6 @@ export default class ProfileTab extends Component {
             <Text>www.gymNotebook.com</Text>
           </View>
         </View>
-
-
-
       </View>
     )
   }

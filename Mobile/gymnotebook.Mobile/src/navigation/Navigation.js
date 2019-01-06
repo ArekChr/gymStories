@@ -1,4 +1,5 @@
 import React from 'react';
+import {Easing, Animated} from 'react-native'
 import { ACTIVE_ICON, INACTIVE_ICON, COLOR_SECONDARY } from '../styles/common'
 import ActiveTab from '../views/tabs/ActiveTab'
 import GymTab from '../views/tabs/GymTab'
@@ -29,9 +30,7 @@ const ProgressTab = createStackNavigator({
 const ProfileStackNavigator = createStackNavigator({
   Profile: {
     screen: ProfileTab,
-    navigationOptions: ({ navigation }) => ({
-      
-    })
+    navigationOptions: { header: null }
   },
   Settings: SettingsScreen
 },{
@@ -73,7 +72,7 @@ const AppTabNavigator = createBottomTabNavigator({
     }
   })
 
-const SignIn = createStackNavigator({
+const SignInStackNavigator = createStackNavigator({
   LoginScreen: {
     screen: LoginScreen,
     navigationOptions: {
@@ -86,6 +85,24 @@ const SignIn = createStackNavigator({
       header: null
     }
   }
+},{
+  transitionConfig: () => ({
+    transitionSpec: {
+      duration: 300,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+    },
+    screenInterpolator: sceneProps => {      
+      const { position, scene } = sceneProps
+      const thisSceneIndex = scene.index
+      const opacity = position.interpolate({
+        inputRange: [thisSceneIndex - 1, thisSceneIndex],
+        outputRange: [0, 1],
+      })
+
+      return { opacity } 
+    }
+  })
 })
 
 const MainDrawerNavigator = createDrawerNavigator({
@@ -116,7 +133,7 @@ const Home = createStackNavigator({
 
 const AppNavigator = createAppContainer(createSwitchNavigator(
   {
-    LoginScreen: SignIn,
+    LoginScreen: SignInStackNavigator,
     HomeScreen: Home
   }
 ));

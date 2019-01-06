@@ -22,7 +22,7 @@ export const getTokens = (callback) => {
   })
 }
 
-export const signOut = (callback) => {
+export const removeTokensFromStorage = (callback) => {
   AsyncStorage.multiRemove([
     '@gymNotebook@token',
     '@gymNotebook@expiryToken'

@@ -13,8 +13,7 @@ class LoginScreen extends Component {
     loading: true
   }
 
-  onLoginSuccess = (jwt) => {
-    this.props.mapJwtToState(jwt)
+  onLoginSuccess = () => {
     this.props.navigation.navigate('HomeScreen')
   }
 
@@ -35,7 +34,8 @@ class LoginScreen extends Component {
           const token = value.find(x => x[0] ==='@gymNotebook@token')[1]
           const jwt = { token: token, expiry: expiry }
           this.setState({loading:false})
-          this.onLoginSuccess(jwt)
+          this.props.mapJwtToState(jwt)
+          this.onLoginSuccess()
           
         }
         else {
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   signupTextCont: {
-    // flexGrow: 1,
     alignItems: 'flex-end',
     justifyContent: 'center',
     paddingVertical: 16,
@@ -100,10 +99,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   }
-})
-
-const mapStateToProps = (state) => ({
-
 })
 
 const mapDispatchToProps = (dispatch) => ({

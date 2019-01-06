@@ -6,7 +6,8 @@ import {
   USER_LOGIN_REQ,
   USER_LOGIN_SUC,
   USER_LOGIN_ERR,
-  STORAGE_MAP_JWT
+  STORAGE_MAP_JWT,
+  USER_LOGOUT
  } from './types'
 import { API_URL } from '../../utils/misc'
 
@@ -20,6 +21,12 @@ export const mapJwtToState = (jwt) => {
       payload: jwt
     })
     axios.defaults.headers.common['Authorization'] = `Bearer ${jwt.token}`;
+  }
+}
+
+export const logout = () => {
+  return (dispatch) => {
+    dispatch({type: USER_LOGOUT })
   }
 }
 

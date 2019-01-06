@@ -5,7 +5,8 @@ import {
   USER_LOGIN_REQ,
   USER_LOGIN_SUC,
   USER_LOGIN_ERR,
-  STORAGE_MAP_JWT
+  STORAGE_MAP_JWT,
+  USER_LOGOUT
 } from './types'
 
 const initialState = {
@@ -28,6 +29,11 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         jwt: action.payload
+      }
+    }
+    case USER_LOGOUT: {
+      return {
+        ...initialState
       }
     }
     case USER_LOGIN_REQ: {
