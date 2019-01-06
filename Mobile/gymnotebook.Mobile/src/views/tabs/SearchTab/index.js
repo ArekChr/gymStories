@@ -28,7 +28,7 @@ export default class SearchTab extends Component {
             <View style={{
               backgroundColor: 'white',
               height: 30,
-              width: '6%',
+              width: 22,
               borderTopLeftRadius: 3,
               borderBottomLeftRadius: 3,
               justifyContent: 'center',
@@ -52,7 +52,7 @@ export default class SearchTab extends Component {
             <View style={{
               backgroundColor: 'white',
               height: 30,
-              width: '6%',
+              width: 22,
               borderTopLeftRadius: 3,
               borderBottomLeftRadius: 3,
               justifyContent: 'center',

@@ -16,7 +16,8 @@ import {
   HANDLE_CALENDAR_MODAL,
   SELECT_DATE,
   PICK_DATE,
-  SET_LAST_PROGRESS
+  SET_LAST_PROGRESS,
+  USER_LOGOUT
 } from './types'
 
 const initialState = {
@@ -33,6 +34,11 @@ const initialState = {
 
 const progressReducer = (state = initialState, action) => {
   switch (action.type) {
+    case USER_LOGOUT: {
+      return {
+        ...initialState
+      }
+    }
     case HANDLE_PROGRESS_MODAL: {
       return {
         ...state,

@@ -43,7 +43,7 @@ class LoginForm extends React.Component {
         />
         <TextInput style={styles.inputBox}
             underlineColorAndroid="rgba(0,0,0,0)"
-            placeholder="Password" secureTextEntry={true}
+            placeholder="Hasło" secureTextEntry={true}
             ref={(input) => this.password = input}
             onChangeText={(text) => this.setState({ password: text })}
         />

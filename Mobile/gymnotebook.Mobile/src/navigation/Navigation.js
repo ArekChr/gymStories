@@ -1,6 +1,7 @@
 import React from 'react';
 import {Easing, Animated} from 'react-native'
 import { ACTIVE_ICON, INACTIVE_ICON, COLOR_SECONDARY } from '../styles/common'
+
 import ActiveTab from '../views/tabs/ActiveTab'
 import GymTab from '../views/tabs/GymTab'
 import HomeTab from '../views/tabs/HomeTab/index.js'
@@ -10,12 +11,20 @@ import SettingsScreen from '../views/tabs/ProfileTab/SettingsScreen'
 import LoginScreen from '../views/Login'
 import RegisterScreen from '../views/Register'
 import AddProgressScreen from '../views/AddProgress'
+
+import BirthDateScreen from '../views/Register/BirthDateScreen'
+import EmailScreen from '../views/Register/EmailScreen'
+import GenderTypeScreen from '../views/Register/GenderTypeScreen'
+import NameScreen from '../views/Register/NameScreen'
+import PasswordScreen from '../views/Register/PasswordScreen'
+import ProfileTypeScreen from '../views/Register/ProfileTypeScreen'
+
 import { createSwitchNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { HEADER_COLOR, STATUS_BAR_COLOR } from '../styles/common'
 
-const ProgressTab = createStackNavigator({
+const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
 },
 {
@@ -39,7 +48,7 @@ const ProfileStackNavigator = createStackNavigator({
 const AppTabNavigator = createBottomTabNavigator({
     HomeTab: HomeTab,
     SearchTab: SearchTab,
-    ActiveTab: ProgressTab,
+    ActiveTab: ProgressTabStackNavigator,
     GymTab: GymTab,
     ProfileTab: ProfileStackNavigator
   },
@@ -84,6 +93,42 @@ const SignInStackNavigator = createStackNavigator({
     navigationOptions: {
       header: null
     }
+  },
+  NameScreen : { 
+    screen: NameScreen,
+    navigationOptions: {
+      title: 'Nazwa'
+    }
+  },
+  BirthDateScreen : { 
+    screen: BirthDateScreen,
+    navigationOptions: {
+      title: 'Data urodzenia'
+    }
+  },
+  GenderTypeScreen : { 
+    screen: GenderTypeScreen,
+    navigationOptions: {
+      title: 'Rodzaj płci'
+    }
+  },
+  ProfileTypeScreen : { 
+    screen: ProfileTypeScreen,
+    navigationOptions: {
+      title: 'Rodzaj profilu'
+    }
+  },
+  EmailScreen : { 
+    screen: EmailScreen,
+    navigationOptions: {
+      title: 'Adres email'
+    }
+  },
+  PasswordScreen : { 
+    screen: PasswordScreen,
+    navigationOptions: {
+      title: 'Hasło'
+    }
   }
 },{
   transitionConfig: () => ({
@@ -112,7 +157,7 @@ const MainDrawerNavigator = createDrawerNavigator({
   drawerLockMode: 'unlocked'
 })
 
-const Home = createStackNavigator({
+const HomeStackNavigator = createStackNavigator({
   HomeScreen: {
     screen: MainDrawerNavigator,
     navigationOptions: {
@@ -134,7 +179,7 @@ const Home = createStackNavigator({
 const AppNavigator = createAppContainer(createSwitchNavigator(
   {
     LoginScreen: SignInStackNavigator,
-    HomeScreen: Home
+    HomeScreen: HomeStackNavigator
   }
 ));
 

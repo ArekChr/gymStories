@@ -18,7 +18,7 @@ class LoginScreen extends Component {
   }
 
   onRegisterPressed = () => {
-    this.props.navigation.navigate('RegisterScreen')
+    this.props.navigation.navigate('NameScreen')
   }
 
   componentDidMount(){
@@ -60,9 +60,9 @@ class LoginScreen extends Component {
             <Logo/>
             <LoginForm onLoginSuccess={() => this.onLoginSuccess()}/>
             <View style={styles.signupTextCont}>
-                <Text style={styles.signupText}>Don't have an account? </Text>
+                <Text style={styles.signupText}>Nie masz konta? </Text>
                 <TouchableOpacity onPress={this.onRegisterPressed}>
-                    <Text style={styles.signupButton}>Sign up</Text>
+                    <Text style={styles.signupButton}>Zajerestruj się</Text>
                 </TouchableOpacity>
             </View>
         </View>
