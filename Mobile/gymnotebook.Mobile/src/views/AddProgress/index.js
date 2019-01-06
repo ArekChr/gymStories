@@ -34,6 +34,7 @@ class AddProgressScreen extends Component {
       [selectedProgress]: this.state.number.toString()
     }
     this.props.createProgress(progress)
+    this.props.navigation.popToTop();
   }
 
   handleInput = (text) => {

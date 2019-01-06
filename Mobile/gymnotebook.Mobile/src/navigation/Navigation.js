@@ -5,12 +5,13 @@ import GymTab from '../views/tabs/GymTab'
 import HomeTab from '../views/tabs/HomeTab/index.js'
 import ProfileTab from '../views/tabs/ProfileTab'
 import SearchTab from '../views/tabs/SearchTab'
+import SettingsScreen from '../views/tabs/ProfileTab/SettingsScreen'
 import LoginScreen from '../views/Login'
 import RegisterScreen from '../views/Register'
 import AddProgressScreen from '../views/AddProgress'
-import { createSwitchNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import Icon from 'react-native-vector-icons/Entypo'
+import Entypo from 'react-native-vector-icons/Entypo'
 import { HEADER_COLOR, STATUS_BAR_COLOR } from '../styles/common'
 
 const ProgressTab = createStackNavigator({
@@ -25,22 +26,35 @@ const ProgressTab = createStackNavigator({
   })
 })
 
+const ProfileStackNavigator = createStackNavigator({
+  Profile: {
+    screen: ProfileTab,
+    navigationOptions: ({ navigation }) => ({
+      
+    })
+  },
+  Settings: SettingsScreen
+},{
+})
+
 const AppTabNavigator = createBottomTabNavigator({
     HomeTab: HomeTab,
     SearchTab: SearchTab,
     ActiveTab: ProgressTab,
     GymTab: GymTab,
-    ProfileTab: ProfileTab
+    ProfileTab: ProfileStackNavigator
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({tintColor}) => {
         const { routeName } = navigation.state
-        if(routeName === 'HomeTab') {
-          return <Icon name="home" size={25} color={tintColor} />
-        }
-        else if (routeName === 'ActiveTab'){
-          return <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor} />
+        switch(routeName){
+          case 'HomeTab': 
+            return <Entypo name="home" size={25} color={tintColor} />
+          case 'ActiveTab':
+            return <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor} />
+          case 'ProfileTab':
+            return <Entypo name="user" size={26} color={tintColor} />
         }
       }
     }),
@@ -74,9 +88,16 @@ const SignIn = createStackNavigator({
   }
 })
 
+const MainDrawerNavigator = createDrawerNavigator({
+  Home: AppTabNavigator
+}, {
+  drawerPosition:'right',
+  drawerLockMode: 'unlocked'
+})
+
 const Home = createStackNavigator({
   HomeScreen: {
-    screen: AppTabNavigator,
+    screen: MainDrawerNavigator,
     navigationOptions: {
       header: null
     }

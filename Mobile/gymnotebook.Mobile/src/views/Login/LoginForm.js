@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
     }
     else if(this.props.loginSuccess) {
       setTokens(this.props.jwt, () => {
-        this.props.onLoginSuccess()
+        this.props.onLoginSuccess(this.props.jwt)
       })
     }
 

@@ -13,7 +13,8 @@ class LoginScreen extends Component {
     loading: true
   }
 
-  onLoginSuccess = () => {
+  onLoginSuccess = (jwt) => {
+    this.props.mapJwtToState(jwt)
     this.props.navigation.navigate('HomeScreen')
   }
 
@@ -33,13 +34,14 @@ class LoginScreen extends Component {
         if(expiry >= now){
           const token = value.find(x => x[0] ==='@gymNotebook@token')[1]
           const jwt = { token: token, expiry: expiry }
-          this.props.mapJwtToState(jwt)
           this.setState({loading:false})
-          this.onLoginSuccess()
+          this.onLoginSuccess(jwt)
           
         }
+        else {
+          this.setState({loading:false})
+        }
       }
-      //this.setState({loading: false})
     })
   }
 

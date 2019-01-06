@@ -22,7 +22,11 @@ export const getTokens = (callback) => {
   })
 }
 
-// TODO: save information stored in token in async storage
-const openToken =  (token) => {
-
+export const signOut = (callback) => {
+  AsyncStorage.multiRemove([
+    '@gymNotebook@token',
+    '@gymNotebook@expiryToken'
+  ]).then(
+      callback()
+    )
 }

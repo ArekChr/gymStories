@@ -5,7 +5,7 @@ import { fetchProgress, handleProgressModal, setLastProgress } from '../../../st
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { HEADER_COLOR, STATUS_BAR_COLOR } from '../../../styles/common'
 import ProgressModal from './ProgressModal'
-import { LineChart, Grid, XAxis, YAxis, StackedAreaChart } from 'react-native-svg-charts'
+import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts'
 import { progressNormalize, progressSort } from '../../../utils/progress'
 import { capFirst } from '../../../utils/string'
 
@@ -20,7 +20,6 @@ class ActiveTab extends Component {
       title: 'Progress',
       headerRight: (
         <View style={{ flexDirection: "row" }}>
-          <ActivityIndicator opacity={navigation.getParam('loadingIndicator') ? 1 : 0} size={25} color="white" style={{ marginRight: 10 }} />
           <TouchableOpacity style={{paddingRight: 10}} onPress={navigation.getParam('onProgressAddOpen')}>
             <MaterialIcons name="add" size={30} color='white' /> 
           </TouchableOpacity>
@@ -29,31 +28,11 @@ class ActiveTab extends Component {
     }
   }
 
-  state = {
-    loading: true
-  }
-
   componentDidMount() {
     this.props.navigation.setParams({
-      onHandleIndicator: this._onHandleIndicator,
-      onProgressAddOpen: this._onProgressAddOpen, 
-      loadingIndicator: this.state.loading 
+      onProgressAddOpen: this._onProgressAddOpen
     })
-
     this.props.onFetch();
-  }
-
-  onProgressLoading = () => {
-    this.props.navigation.setParams({ 
-      loadingIndicator: this.props.progressLoading 
-    })
-  }
-
-  _onHandleIndicator = () => {
-    this.setState({ loading: !this.state.loading})
-    this.props.navigation.setParams({
-      loadingIndicator: !this.state.loading 
-    })
   }
 
   _onProgressAddOpen = () => {
@@ -61,14 +40,6 @@ class ActiveTab extends Component {
   }
   
   render() {
-    if(this.props.progressLoading) {
-      return (
-      <View>
-        <Text>Loading ...</Text>
-      </View>
-      )
-    }
-
     const verticalContentInset = { top: 10, bottom: 10 }
     const xAxisHeight = 30
 

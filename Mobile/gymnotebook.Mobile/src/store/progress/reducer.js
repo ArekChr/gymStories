@@ -93,9 +93,48 @@ const progressReducer = (state = initialState, action) => {
     }
 
     case CREATE_PROGRESS_REQ: {
+      
+      const payload = {
+        ...action.payload,
+        createdAt: new Date(action.payload.createdAt).toISOString().substr(0,19)
+      }
+      debugger;
+
+      const findone = state.progress.find(x => x.createdAt === payload.createdAt)
+      if(findone == undefined){
+        
+      }
+
+      const progress = state.progress.map(item => {
+
+        if(item.createdAt === payload.createdAt){
+          let newItem = {}
+          Object.keys(item).forEach(key => {
+            if(key !== 'createdAt' && action.payload.hasOwnProperty(key)){
+              newItem = {
+                ...newItem,
+                [key]: payload[key]
+              }
+            }
+            else {
+              newItem = {
+                ...newItem, 
+                [key]: item[key]
+              }
+            }
+          })
+          return newItem
+        } 
+        else 
+        {
+          return item
+        }
+      })
+
       return {
         ...state,
-        progressLoading: true
+        progressLoading: true,
+        progress: progress
       }
     }
 

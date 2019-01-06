@@ -100,7 +100,8 @@ export const fetchProgress = () => {
 export const createProgress = (progress) => {
   return (dispatch) => {
     dispatch({
-      type: CREATE_PROGRESS_REQ
+      type: CREATE_PROGRESS_REQ,
+      payload: progress
     })
     
     axios.post(URL, { ...progress })
