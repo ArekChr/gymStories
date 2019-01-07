@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native'
-import Logo from '../../component/Logo'
+import {Logo} from '../../component'
 import LoginForm from './LoginForm'
 import { getTokens } from '../../utils/misc'
 import { mapJwtToState } from '../../store/auth/actions'
 import { connect } from 'react-redux'
-import { STATUS_BAR_COLOR } from '../../styles/common'
+import { STATUS_BAR_COLOR, PRIMARY_COLOR } from '../../styles/common'
 
 class LoginScreen extends Component {
 
@@ -57,14 +57,15 @@ class LoginScreen extends Component {
     } else {
       return(
         <View style={styles.container}>
-            <Logo/>
-            <LoginForm onLoginSuccess={() => this.onLoginSuccess()}/>
-            <View style={styles.signupTextCont}>
-                <Text style={styles.signupText}>Nie masz konta? </Text>
-                <TouchableOpacity onPress={this.onRegisterPressed}>
-                    <Text style={styles.signupButton}>Zajerestruj się</Text>
-                </TouchableOpacity>
-            </View>
+          <StatusBar backgroundColor={STATUS_BAR_COLOR} />
+          <Logo/>
+          <LoginForm onLoginSuccess={() => this.onLoginSuccess()}/>
+          <View style={styles.signupTextCont}>
+              <Text style={styles.signupText}>Nie masz konta? </Text>
+              <TouchableOpacity onPress={this.onRegisterPressed}>
+                  <Text style={styles.signupButton}>Zajerestruj się</Text>
+              </TouchableOpacity>
+          </View>
         </View>
       )
     }

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import AntDesignIcon from 'react-native-vector-icons/AntDesign'
-import { HEADER_COLOR } from '../../../styles/common'
+import { PRIMARY_COLOR } from '../../../styles/common'
 
 
 export default class SearchTab extends Component {
@@ -17,13 +17,13 @@ export default class SearchTab extends Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <View style={{ backgroundColor: HEADER_COLOR, flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ backgroundColor: PRIMARY_COLOR, flexDirection: 'row', justifyContent: 'space-between'}}>
           <TouchableOpacity><Text style={{ color: 'white', padding: 10 }}>Filtrowanie</Text></TouchableOpacity>
           <TouchableOpacity><Text style={{ color: 'white', padding: 10 }}>Mapy</Text></TouchableOpacity>
           <TouchableOpacity><Text style={{ color: 'white', padding: 10 }}>Najpopularniejsze</Text></TouchableOpacity>
         </View>
 
-        <View style={{ backgroundColor: HEADER_COLOR}}>
+        <View style={{ backgroundColor: PRIMARY_COLOR}}>
           <View style={{flexDirection: 'row', marginBottom: 5, justifyContent: 'center', paddingLeft: 20, paddingRight: 20 }}>
             <View style={{
               backgroundColor: 'white',
@@ -80,19 +80,19 @@ export default class SearchTab extends Component {
                 <Image style={styles.photo} source={require('../../../images/profile.jpg')}/>
                 <View style={styles.ratingContainer}>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={styles.ratingButton}>
@@ -134,19 +134,19 @@ export default class SearchTab extends Component {
                 <Image style={styles.photo} source={require('../../../images/profile2.jpg')}/>
                 <View style={styles.ratingContainer}>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={styles.ratingButton}>
@@ -177,19 +177,19 @@ export default class SearchTab extends Component {
                 <Image style={styles.photo} source={require('../../../images/profile3.jpg')}/>
                 <View style={styles.ratingContainer}>
                   <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                   <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={HEADER_COLOR} />
+                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={styles.ratingButton}>
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     marginTop: 6
   },
   ratingText: {
-    color: HEADER_COLOR, 
+    color: PRIMARY_COLOR, 
     fontWeight:'600',
     backgroundColor: 'rgba(0,121,107,0.2)', 
     paddingRight: 4,
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight:'600',
     color: 'white',
-    backgroundColor: HEADER_COLOR,
+    backgroundColor: PRIMARY_COLOR,
     paddingRight: 4,
     paddingLeft: 4,
     borderRadius: 4

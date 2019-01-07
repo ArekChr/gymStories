@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Image, StyleSheet, Text, Animated, Easing, View } from 'react-native'
+import { StyleSheet, Text, Animated, Easing, View } from 'react-native'
+import { PRIMARY_COLOR } from '../styles/common'
 
 export default class Logo extends Component {
 
@@ -35,7 +36,7 @@ export default class Logo extends Component {
               outputRange:[100,0]
             }) 
           }}>
-            <Text style={{...styles.logoText, color: 'white'}}>gym</Text>
+            <Text style={{...styles.logoText, color: 'black'}}>gym</Text>
           </Animated.View>
           <Animated.View style={{ 
             opacity:this.state.notebookAnim
@@ -43,8 +44,6 @@ export default class Logo extends Component {
             <Text style={styles.logoText}>Notebook</Text>
           </Animated.View>
         </View>
-        {/* <Image style={styles.logo}
-        source={{ uri: 'https://cdn-images-1.medium.com/max/1200/1*K0a7xINk0RM5gfXGSN68cw.png' }}/> */}
       </View>
     )
   }
@@ -64,7 +63,7 @@ const styles = StyleSheet.create({
   logoText: {
     fontSize: 40,
     fontFamily: 'Ubuntu-Medium',
-    color: 'rgba(74,217,255,1)'
+    color: PRIMARY_COLOR
   }
 })
  

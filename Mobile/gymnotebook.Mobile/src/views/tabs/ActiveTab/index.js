@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, Activi
 import { connect } from 'react-redux'
 import { fetchProgress, handleProgressModal, setLastProgress } from '../../../store/progress/actions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { HEADER_COLOR, STATUS_BAR_COLOR } from '../../../styles/common'
+import { PRIMARY_COLOR, STATUS_BAR_COLOR } from '../../../styles/common'
 import ProgressModal from './ProgressModal'
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts'
 import { progressNormalize, progressSort } from '../../../utils/progress'
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     shadowColor: '#000',
-    backgroundColor: HEADER_COLOR
+    backgroundColor: PRIMARY_COLOR
   },
   title: {
     alignSelf: 'center',

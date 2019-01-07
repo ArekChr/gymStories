@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { login } from '../../store/auth/actions'
 import { setTokens } from '../../utils/misc'
 import { mapJwtToState } from '../../store/auth/actions'
+import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 
 class LoginForm extends React.Component {
 
@@ -38,6 +39,7 @@ class LoginForm extends React.Component {
             placeholder="Email"
             keyboardType="email-address"
             selectionColor="#fff"
+            ref={(input) => this.email = input}
             onSubmitEditing={() => this.password.focus()}
             onChangeText={(text) => this.setState({ email: text })}
         />
@@ -85,11 +87,11 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#000000',
+    color: THEME_FONT_COLOR,
     textAlign: 'center'
   },
   button: {
-    backgroundColor: 'rgba(74,217,255,1)',
+    backgroundColor: PRIMARY_COLOR,
     borderRadius: 25,
     width: 250,
     height: 50,

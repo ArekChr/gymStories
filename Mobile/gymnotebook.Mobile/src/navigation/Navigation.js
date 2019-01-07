@@ -1,6 +1,5 @@
 import React from 'react';
 import {Easing, Animated} from 'react-native'
-import { ACTIVE_ICON, INACTIVE_ICON, COLOR_SECONDARY } from '../styles/common'
 
 import ActiveTab from '../views/tabs/ActiveTab'
 import GymTab from '../views/tabs/GymTab'
@@ -9,20 +8,30 @@ import ProfileTab from '../views/tabs/ProfileTab'
 import SearchTab from '../views/tabs/SearchTab'
 import SettingsScreen from '../views/tabs/ProfileTab/SettingsScreen'
 import LoginScreen from '../views/Login'
-import RegisterScreen from '../views/Register'
 import AddProgressScreen from '../views/AddProgress'
 
-import BirthDateScreen from '../views/Register/BirthDateScreen'
-import EmailScreen from '../views/Register/EmailScreen'
-import GenderTypeScreen from '../views/Register/GenderTypeScreen'
-import NameScreen from '../views/Register/NameScreen'
-import PasswordScreen from '../views/Register/PasswordScreen'
-import ProfileTypeScreen from '../views/Register/ProfileTypeScreen'
+import {
+  BirthDateScreen, 
+  EmailScreen, 
+  GenderTypeScreen, 
+  NameScreen, 
+  PasswordScreen, 
+  ProfileTypeScreen, 
+  RegisterScreen
+} from '../views/Register'
 
-import { createSwitchNavigator, createStackNavigator, createAppContainer, createBottomTabNavigator, createDrawerNavigator } from 'react-navigation'
+import { 
+  createSwitchNavigator, 
+  createStackNavigator, 
+  createAppContainer, 
+  createBottomTabNavigator, 
+  createDrawerNavigator 
+} from 'react-navigation'
+
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
-import { HEADER_COLOR, STATUS_BAR_COLOR } from '../styles/common'
+
+import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON } from '../styles/common'
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -30,9 +39,9 @@ const ProgressTabStackNavigator = createStackNavigator({
 {
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
-      backgroundColor: HEADER_COLOR,
+      backgroundColor: PRIMARY_COLOR,
     },
-    headerTintColor: 'white'
+    headerTintColor: THEME_FONT_COLOR
   })
 })
 
@@ -43,6 +52,12 @@ const ProfileStackNavigator = createStackNavigator({
   },
   Settings: SettingsScreen
 },{
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: PRIMARY_COLOR,
+    },
+    headerTintColor: THEME_FONT_COLOR
+  })
 })
 
 const AppTabNavigator = createBottomTabNavigator({
@@ -131,6 +146,12 @@ const SignInStackNavigator = createStackNavigator({
     }
   }
 },{
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: PRIMARY_COLOR,
+    },
+    headerTintColor: THEME_FONT_COLOR
+  }),
   transitionConfig: () => ({
     transitionSpec: {
       duration: 300,
@@ -170,9 +191,9 @@ const HomeStackNavigator = createStackNavigator({
 },{
   defaultNavigationOptions: () => ({
     headerStyle: {
-      backgroundColor: HEADER_COLOR,
+      backgroundColor: PRIMARY_COLOR,
     },
-    headerTintColor: 'white'
+    headerTintColor: THEME_FONT_COLOR
   })
 })
 

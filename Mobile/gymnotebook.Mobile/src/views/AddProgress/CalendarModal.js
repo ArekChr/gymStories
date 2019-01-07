@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-import CalendarComponent from '../../component/CalendarComponent'
+import {CalendarComponent} from '../../component'
 import { selectDate, handleCalendarModal, pickDate } from '../../store/progress/actions'
 import { connect } from 'react-redux'
 
