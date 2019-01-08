@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { ButtonNext, FloatingInput, TitleComponent, ErrorMessage } from '../../component'
+import { setName } from '../../store/profile/actions'
+import { connect } from 'react-redux'
 
 class NameScreen extends Component {
   constructor(props) {
@@ -21,16 +23,22 @@ class NameScreen extends Component {
   }
 
   onNextClicked = () => {
-    if(this.state.firstName === '' && this.state.lastName === ''){
+    const {firstName, lastName } = this.state;
+
+    if(firstName === '' && lastName === ''){
       this.setState({error: 'Wprowadź imię i nazwisko.', firstNameValid: true, lastNameValid: true })
     }
-    else if(this.state.firstName === ''){
+    else if(firstName === ''){
       this.setState({error: 'Wprowadź imię.', firstNameValid: true, lastNameValid: false})
     }
-    else if(this.state.lastName === ''){
+    else if(lastName === ''){
       this.setState({error: 'Wprowadź nazwisko.', lastNameValid: true, firstNameValid: false})
     }
-    
+    else {
+      this.setState({error: '', lastNameValid: true, firstNameValid: true})
+      this.props.setName(firstName, lastName)
+      this.props.navigation.navigate('BirthDateScreen')
+    }
   }
 
   handleFirstNameChange = (newText) => {
@@ -65,4 +73,8 @@ class NameScreen extends Component {
   }
 }
 
-export default NameScreen
+const mapDispatchToProps = (dispatch) => ({
+  setName: (firstName, lastName) => setName(firstName, lastName)(dispatch)
+})
+
+export default connect(null, mapDispatchToProps)(NameScreen)

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import styles from '../../../styles/styles'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 export default class ProfileTab extends Component {

@@ -6,6 +6,9 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center'
   },
+  registerContainer: { 
+    margin: 20 
+  },
   body: {
     flex: 1,
     justifyContent: 'center',

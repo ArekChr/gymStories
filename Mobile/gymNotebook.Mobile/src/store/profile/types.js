@@ -1,0 +1,7 @@
+export const SET_PROFILE_NAME = 'profile/SET_PROFILE_NAME';
+export const SET_PROFILE_BIRTH_DATE = 'profile/SET_PROFILE_BIRTH_DATE';
+export const SET_PROFILE_GENDER_TYPE = 'profile/SET_PROFILE_GENDER_TYPE';
+export const SET_PROFILE_PASSWORD = 'profile/SET_PROFILE_PASSWORD';
+export const SET_PROFILE_EMAIL = 'profile/SET_PROFILE_EMAIL';
+export const SET_PROFILE_TYPE = 'profile/SET_PROFILE_TYPE';
+export const REMOVE_PROFILE_PASSWORD = 'profile/REMOVE_PROFILE_PASSWORD';

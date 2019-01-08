@@ -20,8 +20,8 @@ class RegisterScreen extends Component {
         <RegisterForm onSingUpSuccess={this.onSingUpSuccess} />
         
         <View style={styles.signupTextCont}>
-          <Text style={styles.signupText}>Already have an account? </Text>
-          <TouchableOpacity onPress={this.onSignInPressed}><Text style={styles.signupButton}>Sign in</Text></TouchableOpacity>
+          <Text style={styles.signupText}>Masz już konto? </Text>
+          <TouchableOpacity onPress={this.onSignInPressed}><Text style={styles.signupButton}>Zaloguj się</Text></TouchableOpacity>
         </View>
       </View>
     )
