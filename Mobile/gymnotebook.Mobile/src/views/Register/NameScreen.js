@@ -22,8 +22,16 @@ class NameScreen extends Component {
     this.inputs[id].focus();
   }
 
+  validateHaveNumbers = (name) => {
+    if(Number.isInteger(name.substr(-1))){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   onNextClicked = () => {
-    const {firstName, lastName } = this.state;
+    const {firstName, lastName, firstNameValid } = this.state;
 
     if(firstName === '' && lastName === ''){
       this.setState({error: 'Wprowadź imię i nazwisko.', firstNameValid: true, lastNameValid: true })
@@ -34,7 +42,7 @@ class NameScreen extends Component {
     else if(lastName === ''){
       this.setState({error: 'Wprowadź nazwisko.', lastNameValid: true, firstNameValid: false})
     }
-    else {
+    else if(firstNameValid && lastNameValid){
       this.setState({error: '', lastNameValid: true, firstNameValid: true})
       this.props.setName(firstName, lastName)
       this.props.navigation.navigate('BirthDateScreen')
@@ -42,11 +50,33 @@ class NameScreen extends Component {
   }
 
   handleFirstNameChange = (newText) => {
-    this.setState({ firstName: newText, error: '', firstNameValid: false })
+    const firstNameHaveNumbers = validateHaveNumbers(firstName)
+    const {lastNameHaveNumbers} = this.state;
+    let error = '';
+    let firstNameValid = true;
+    if(firstNameHaveNumbers){
+      if(lastNameHaveNumbers){
+        error = 'Twoje imię i nazwisko nie może zawierać cyfr.';
+      }
+      error = 'Twoje imię nie może zawierać cyfr.';
+      firstNameValid = false;
+    }
+    this.setState({ firstName: newText, error: error, firstNameValid: firstNameValid, firstNameHaveNumbers: firstNameHaveNumbers })
   }
 
   handleLastNameChange = (newText) => {
-    this.setState({ lastName: newText, error: '', lastNameValid: false })
+    const lastNameHaveNumbers = validateHaveNumbers(lastName)
+    const {firstNameHaveNumbers} = this.state;
+    let error = '';
+    let lastNameValid = true;
+    if(lastNameHaveNumbers){
+      if(firstNameHaveNumbers){
+        error = 'Twoje imię i nazwisko nie może zawierać cyfr.';
+      }
+      error = 'Twoje nazwisko nie może zawierać cyfr.';
+      lastNameValid = false;
+    }
+    this.setState({ lastName: newText, error: error, lastNameValid: lastNameValid, lastNameHaveNumbers: lastNameHaveNumbers })
   }
 
   render() {
