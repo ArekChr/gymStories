@@ -35,7 +35,7 @@ export default class FloatingInput extends Component {
 
   render() {
     const { label, ...props } = this.props;
-    const FOCUSED_COLOR = this.props.isValid? WARNING_COLOR : this.state.isFocused ? PRIMARY_COLOR : '#aaa'
+    const FOCUSED_COLOR = this.props.isValid? this.state.isFocused ? PRIMARY_COLOR : '#aaa' : WARNING_COLOR
     const FOCUSED_BORDER = this.state.isFocused ? 2 : 1
     const labelStyle = {
       position: 'absolute',

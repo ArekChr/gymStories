@@ -29,4 +29,4 @@ const mapDispatchToProps = (dispatch) => ({
   setBirthDate: (birthDate) => setBirthDate(birthDate)(dispatch)
 })
 
-export default connect()(BirthDateScreen)
+export default connect(null, mapDispatchToProps)(BirthDateScreen)

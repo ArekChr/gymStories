@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, CheckBox, Text } from 'react-native';
 import { ButtonNext, TitleComponent, ErrorMessage } from '../../component'
 import styles from '../../styles'
 import {setGenderType} from '../../store/profile/actions'
@@ -27,11 +27,37 @@ class GenderTypeScreen extends Component {
     }
   }
 
+  onSelectMale = () => {
+    this.setState({genderType: 'Male'})
+  }
+
+  onSelectFemale = () => {
+    this.setState({genderType: 'Female'})
+  }
+
   render() {
     return (
       <View style={styles.registerContainer}>
         <TitleComponent>Jakiej jesteś płci?</TitleComponent>
         <ErrorMessage>{this.state.error}</ErrorMessage>
+        <View style={{ flexDirection: 'column'}}>
+          <View style={{ flexDirection: 'row' }}>
+            <CheckBox
+              value={this.state.genderType === 'Male' ? true : false }
+              onValueChange={() => this.onSelectMale()}
+            />
+            <Text style={{marginTop: 5}}>Mężczyzna</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'column'}}>
+          <View style={{ flexDirection: 'row' }}>
+            <CheckBox
+              value={this.state.genderType === 'Female' ? true : false }
+              onValueChange={() => this.onSelectFemale()}
+            />
+            <Text style={{marginTop: 5}}>Kobieta</Text>
+          </View>
+        </View>
         <ButtonNext onPress={this.onNextClicked}>Dalej</ButtonNext>
       </View>
     );

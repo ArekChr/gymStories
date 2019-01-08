@@ -14,33 +14,29 @@ class NameScreen extends Component {
     firstName: '',
     lastName: '',
     error: '',
-    firstNameValid: false,
-    lastNameValid: false
+    firstNameValid: true,
+    lastNameValid: true
   }
 
   focusNextField = (id) => {
     this.inputs[id].focus();
   }
 
-  validateHaveNumbers = (name) => {
-    if(Number.isInteger(name.substr(-1))){
-      return true;
-    } else {
-      return false;
-    }
+  hasNumber = (myString) => {
+    return /\d/.test(myString);
   }
 
   onNextClicked = () => {
-    const {firstName, lastName, firstNameValid } = this.state;
+    const {firstName, lastName, firstNameValid, lastNameValid } = this.state;
 
     if(firstName === '' && lastName === ''){
-      this.setState({error: 'Wprowadź imię i nazwisko.', firstNameValid: true, lastNameValid: true })
+      this.setState({error: 'Wprowadź imię i nazwisko.', firstNameValid: false, lastNameValid: false })
     }
     else if(firstName === ''){
-      this.setState({error: 'Wprowadź imię.', firstNameValid: true, lastNameValid: false})
+      this.setState({error: 'Wprowadź imię.', firstNameValid: false, lastNameValid: true})
     }
     else if(lastName === ''){
-      this.setState({error: 'Wprowadź nazwisko.', lastNameValid: true, firstNameValid: false})
+      this.setState({error: 'Wprowadź nazwisko.', lastNameValid: false, firstNameValid: true})
     }
     else if(firstNameValid && lastNameValid){
       this.setState({error: '', lastNameValid: true, firstNameValid: true})
@@ -50,7 +46,7 @@ class NameScreen extends Component {
   }
 
   handleFirstNameChange = (newText) => {
-    const firstNameHaveNumbers = validateHaveNumbers(firstName)
+    const firstNameHaveNumbers = this.hasNumber(newText)
     const {lastNameHaveNumbers} = this.state;
     let error = '';
     let firstNameValid = true;
@@ -65,7 +61,7 @@ class NameScreen extends Component {
   }
 
   handleLastNameChange = (newText) => {
-    const lastNameHaveNumbers = validateHaveNumbers(lastName)
+    const lastNameHaveNumbers = this.hasNumber(newText)
     const {firstNameHaveNumbers} = this.state;
     let error = '';
     let lastNameValid = true;
