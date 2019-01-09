@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { ButtonNext, TitleComponent, ErrorMessage, FloatingInput } from '../../component'
 import styles from '../../styles'
+import {setPassword} from '../../store/profile/actions'
 import {connect} from 'react-redux'
 
 class PasswordScreen extends Component {
+  constructor(props) {
+    super(props)
+    this.inputs = {}
+  }
 
   state = {
     password: '',
@@ -13,19 +18,16 @@ class PasswordScreen extends Component {
     error: ''
   }
 
-  handleConfirmPassword = (confirmPassword) => {
-    if(this.state.password.length === 0 && confirmPassword.length === 0){
-      this.setState({ passwordMatch: true, confirmPassword: confirmPassword})
+  onNextClicked = () => {
+    if(!this.state.passwordMatch){
+      this.setState({error: 'Hasła nie są takie same.'})
     }
-    else if(this.state.password === confirmPassword){
-      this.setState({ passwordMatch: true, confirmPassword: confirmPassword})
-    } 
     else {
-      this.setState({ passwordMatch: false, confirmPassword: confirmPassword})
+      this.props.setPassword(this.state.password)
     }
   }
 
-  handlePassword = (password) => {
+  handlePasswordChange = (password) => {
     if(this.state.confirmPassword.length === 0){
       this.setState({ passwordMatch: true, password: password })
     }
@@ -34,6 +36,18 @@ class PasswordScreen extends Component {
     }
     else {
       this.setState({ passwordMatch: false, password: password})
+    }
+  }
+
+  handleConfirmPasswordChange = (confirmPassword) => {
+    if(this.state.password.length === 0 && confirmPassword.length === 0){
+      this.setState({ passwordMatch: true, confirmPassword: confirmPassword})
+    }
+    else if(this.state.password === confirmPassword){
+      this.setState({ passwordMatch: true, confirmPassword: confirmPassword})
+    } 
+    else {
+      this.setState({ passwordMatch: false, confirmPassword: confirmPassword})
     }
   }
 
@@ -46,11 +60,13 @@ class PasswordScreen extends Component {
           value={this.state.password}
           isValid={this.state.passwordMatch}
           onChangeText={this.handlePasswordChange}
-          autoFocus={true} />
+          autoFocus={true}
+          onSubmitEditing={() => { this.focusNextField('confirmPassword') }} />
         <FloatingInput label="Powtórz hasło"
           value={this.state.confirmPassword}
           isValid={this.state.passwordMatch}
-          onChangeText={this.handlePasswordChange}
+          onChangeText={this.handleConfirmPasswordChange}
+          onRef={(ref) => { this.inputs['confirmPassword'] = ref }}
           />
         <ButtonNext onPress={this.onNextClicked}>Dalej</ButtonNext>
       </View>
@@ -58,4 +74,12 @@ class PasswordScreen extends Component {
   }
 }
 
-export default connect(null, {})(PasswordScreen)
+const mapStateToProps = (state) => ({
+
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setPassword: (password) => setPassword(password)(dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(PasswordScreen)
