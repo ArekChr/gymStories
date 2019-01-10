@@ -10,7 +10,9 @@
         public static string InvalidMusclePart => "invalid_musclepart";
         public static string InvalidTraining => "invalid_training";
         public static string InvalidRoutine => "invalid_routine";
-
         public static string InvalidResult => "invalid_result";
+        public static string InvalidGender => "invalid_gender";
+
+        public static string InvalidProfile => "invalid_profile";
     }
 }

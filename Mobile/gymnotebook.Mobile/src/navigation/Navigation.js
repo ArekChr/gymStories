@@ -17,7 +17,8 @@ import {
   NameScreen, 
   PasswordScreen, 
   ProfileTypeScreen, 
-  RegisterScreen
+  RegisterScreen,
+  RegisterEndScreen
 } from '../views/Register'
 
 import { 
@@ -98,11 +99,17 @@ const AppTabNavigator = createBottomTabNavigator({
 
 const SignInStackNavigator = createStackNavigator({
   LoginScreen: {
-    screen: LoginScreen,
+    screen: RegisterEndScreen,
     navigationOptions: {
       header: null
     }
   },
+  // LoginScreen: {
+  //   screen: LoginScreen,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
   RegisterScreen: {
     screen: RegisterScreen,
     navigationOptions: {
@@ -143,6 +150,13 @@ const SignInStackNavigator = createStackNavigator({
     screen: PasswordScreen,
     navigationOptions: {
       title: 'Hasło'
+    }
+  },
+  RegisterEndScreen: {
+    screen: RegisterEndScreen,
+    navigationOptions: {
+      title: 'Rejestrowanie...',
+      right: null
     }
   }
 },{

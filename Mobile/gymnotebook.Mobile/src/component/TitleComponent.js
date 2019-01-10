@@ -7,7 +7,7 @@ class TitleComponent extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>{this.props.children}</Text>
+        <Text style={[styles.text, this.props.style]}>{this.props.children}</Text>
       </View>
     );
   }

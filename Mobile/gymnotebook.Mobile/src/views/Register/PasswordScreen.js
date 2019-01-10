@@ -18,12 +18,17 @@ class PasswordScreen extends Component {
     error: ''
   }
 
+  focusNextField = (id) => {
+    this.inputs[id].focus();
+  }
+
   onNextClicked = () => {
     if(!this.state.passwordMatch){
       this.setState({error: 'Hasła nie są takie same.'})
     }
     else {
       this.props.setPassword(this.state.password)
+      this.props.navigation.navigate('RegisterEndScreen');
     }
   }
 

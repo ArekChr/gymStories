@@ -17,8 +17,9 @@ class BirthDateScreen extends Component {
     this.setState({ birthDate: value});
   }
 
+  // TODO: if user does not change date ask if it is correct
   onNextClicked = () => {
-    let date = new Date(this.state.birthDate.constructor())
+    let date = this.state.birthDate
     date.setHours(12)
     const newDate = date.toISOString().substr(0,10)
     this.props.setBirthDate(newDate)
