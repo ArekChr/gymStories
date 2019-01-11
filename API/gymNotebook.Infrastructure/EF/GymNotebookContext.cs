@@ -9,6 +9,7 @@ namespace gymNotebook.Infrastructure.EF
         private readonly SqlSettings _sqlSettings;
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Routine> Routines { get; set; }
@@ -36,6 +37,8 @@ namespace gymNotebook.Infrastructure.EF
         {
             var userBuilder = modelBuilder.Entity<User>();
             userBuilder.HasKey(x => x.Id);
+            var profileBuilder = modelBuilder.Entity<Profile>();
+            profileBuilder.HasKey(x => x.Id);
             var trainingBuilder = modelBuilder.Entity<Training>();
             trainingBuilder.HasKey(x => x.Id);
             var friendBuilder = modelBuilder.Entity<Friend>();

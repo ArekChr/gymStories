@@ -1,7 +1,6 @@
 ﻿using gymNotebook.Core.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace gymNotebook.Core.Domain
 {
@@ -49,8 +48,9 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public Profile(string firstName, string lastName, DateTime dateOfBirth, string gender)
+        public Profile(string firstName, string lastName, DateTime dateOfBirth, string gender, Guid userId)
         {
+            UserId = userId;
             SetFirstName(firstName);
             SetLastName(lastName);
             SetGender(gender);

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
 {
@@ -12,7 +7,7 @@ namespace gymNotebook.Api.Controllers
     public class HomeController : Controller
     {
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public IActionResult Get()
         {
             return Ok("Welcome to gymNotebook");
         }

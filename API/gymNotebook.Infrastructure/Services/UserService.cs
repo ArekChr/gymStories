@@ -1,6 +1,6 @@
-﻿using gymNotebook.Core.Domain;
+﻿using System;
+using gymNotebook.Core.Domain;
 using gymNotebook.Core.Repositories;
-using System;
 using System.Threading.Tasks;
 using gymNotebook.Infrastructure.DTO;
 using AutoMapper;
@@ -13,12 +13,14 @@ namespace gymNotebook.Infrastructure.Services
     {
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger(); // object reference null
         private readonly IUserRepository _userRepository;
+        private readonly IProfileRepository _profileRepository;
         private readonly IMapper _mapper;
         private readonly IEncrypter _encrypter;
 
-        public UserService(IUserRepository userRepository, IEncrypter encrypter, IMapper mapper)
+        public UserService(IUserRepository userRepository, IProfileRepository profileRepository, IEncrypter encrypter, IMapper mapper)
         {
             _userRepository = userRepository;
+            _profileRepository = profileRepository;
             _mapper = mapper;
             _encrypter = encrypter;
         }
@@ -45,7 +47,7 @@ namespace gymNotebook.Infrastructure.Services
             throw new ServiceException(ErrorServiceCodes.InvalidCredentials, "Invalid credentials");
         }
 
-        public async Task RegisterAsync(string username, string email, string password)
+        public async Task RegisterAsync(string username, string email, string password, string firstName, string lastName, DateTime dateOfBirth, string gender)
         {
             var user = await _userRepository.GetAsync(email);
             if(user != null)
@@ -56,6 +58,13 @@ namespace gymNotebook.Infrastructure.Services
             var hash = _encrypter.GetHash(password, salt);
             user = new User(username, email, hash, salt);
             await _userRepository.AddAsync(user);
+            var profile = new Core.Domain.Profile(
+                userId: user.Id,
+                firstName: firstName, 
+                dateOfBirth: dateOfBirth, 
+                gender: gender,
+                lastName: lastName);
+            await _profileRepository.AddAsync(profile);
         }
     }
 }
