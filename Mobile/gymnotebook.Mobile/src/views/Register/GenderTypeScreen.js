@@ -75,7 +75,7 @@ class GenderTypeScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  gender: state.profile.gender
+  gender: state.Profile.profile.gender
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -5,60 +5,100 @@ import {
   SET_PROFILE_PASSWORD,
   SET_PROFILE_EMAIL,
   SET_PROFILE_TYPE,
-  REMOVE_PROFILE_PASSWORD
+  REMOVE_PROFILE_PASSWORD,
+  FETCH_PROFILE_REQ,
+  FETCH_PROFILE_SUC,
+  FETCH_PROFILE_ERR
 } from './types'
 
 const initialState = {
+  loading: null,
+  profile: undefined
 }
 
 export default profileReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_PROFILE_REQ: {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case FETCH_PROFILE_SUC: {
+      return {
+        ...state,
+        loading: false,
+        profile: action.payload
+      }
+    }
+    case FETCH_PROFILE_ERR: {
+      return {
+        ...state,
+        loading: false
+      }
+    }
     case SET_PROFILE_NAME: {
       return {
         ...state,
-        firstName: action.payload.firstName,
-        lastName: action.payload.lastName
+        profile: {
+          ...state.profile,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName
+        }
       }
     }
     case SET_PROFILE_BIRTH_DATE: {
       return {
         ...state,
-        dateOfBirth: action.payload
+        profile: {
+          ...state.profile,
+          dateOfBirth: action.payload
+        }
       }
     }
     case SET_PROFILE_GENDER_TYPE: {
       return {
         ...state,
-        gender: action.payload
+        profile: {
+          ...state.profile,
+          gender: action.payload
+        }
       }
     }
     case SET_PROFILE_PASSWORD: {
       return {
         ...state,
-        password: action.payload
+        profile: {
+          ...state.profile,
+          password: action.payload
+        }
       }
     }
     case REMOVE_PROFILE_PASSWORD: {
-      delete state.password;
+      delete state.profile.password;
       return state;
     }
     case SET_PROFILE_EMAIL: {
       return {
         ...state,
-        email: action.payload
+        profile: {
+          ...state.profile,
+          email: action.payload
+        }
       }
     }
     case SET_PROFILE_TYPE: {
       return {
         ...state,
-        profileType: profileType
+        profile: {
+          ...state.profile,
+          profileType: profileType
+        }
       }
     }
     default: {
       if (state === undefined) {
         return {
-          progress: [],
-          progressLoading: false
         }
       }
       return state;

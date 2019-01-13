@@ -102,9 +102,9 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = ({progress}) => ({
-  selectedDate: progress.selectedDate,
-  selectedProgress: progress.selectedProgress,
-  lastProgress: progress.lastProgress
+  selectedDate: Progress.selectedDate,
+  selectedProgress: Progress.selectedProgress,
+  lastProgress: Progress.lastProgress
 })
 
 const mapDispatchToProps = (dispatch) => ({

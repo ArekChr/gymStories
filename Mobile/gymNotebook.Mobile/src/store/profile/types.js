@@ -5,3 +5,6 @@ export const SET_PROFILE_PASSWORD = 'profile/SET_PROFILE_PASSWORD';
 export const SET_PROFILE_EMAIL = 'profile/SET_PROFILE_EMAIL';
 export const SET_PROFILE_TYPE = 'profile/SET_PROFILE_TYPE';
 export const REMOVE_PROFILE_PASSWORD = 'profile/REMOVE_PROFILE_PASSWORD';
+export const FETCH_PROFILE_REQ = 'profile/FETCH_PROFILE_REQ';
+export const FETCH_PROFILE_SUC = 'profile/FETCH_PROFILE_SUC';
+export const FETCH_PROFILE_ERR = 'profile/FETCH_PROFILE_ERR';

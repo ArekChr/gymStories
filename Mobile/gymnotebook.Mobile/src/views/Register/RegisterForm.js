@@ -152,9 +152,9 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  registerLoading: state.auth.loading,
-  error: state.auth.error,
-  registerSuccess: state.auth.registerSuccess
+  registerLoading: state.Auth.loading,
+  error: state.Auth.error,
+  registerSuccess: state.Auth.registerSuccess
 })
 
 const mapDispatchToProps = (dispatch) => ({

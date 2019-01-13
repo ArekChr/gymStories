@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Trainings.Progress;
 using gymNotebook.Infrastructure.DTO;
-using gymNotebook.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
@@ -12,14 +10,9 @@ namespace gymNotebook.Api.Controllers
     [Route("api/progress")]
     public class ProgressController : ApiControllerBase
     {
-        private readonly IProgressService _progressService;
-
-        public ProgressController(IProgressService progressService, 
-            ICommandDispatcher commandDispatcher, 
-            IResultDispatcher resultDispatcher) 
+        public ProgressController(ICommandDispatcher commandDispatcher, IResultDispatcher resultDispatcher) 
             : base(commandDispatcher, resultDispatcher)
         {
-            _progressService = progressService;
         }
 
         [HttpGet("browse")]

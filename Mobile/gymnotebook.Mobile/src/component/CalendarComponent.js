@@ -26,9 +26,9 @@ class CalendarComponent extends Component {
   }
 }
 
-const mapStateToProps = ({progress}) => ({
-  selectedDate: progress.selectedDate,
-  pickedDate: progress.pickedDate
+const mapStateToProps = ({Progress}) => ({
+  selectedDate: Progress.selectedDate,
+  pickedDate: Progress.pickedDate
 })
 
 const mapDispatchToProps = (dispatch) => ({

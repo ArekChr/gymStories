@@ -4,7 +4,7 @@ import authReducer from './auth/reducer'
 import profileReducer from './profile/reducer'
 
 export const rootReducer = combineReducers({
-  progress: progressReducer,
-  auth: authReducer,
-  profile: profileReducer
+  Progress: progressReducer,
+  Auth: authReducer,
+  Profile: profileReducer
 })

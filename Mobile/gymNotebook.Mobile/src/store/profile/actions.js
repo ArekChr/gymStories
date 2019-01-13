@@ -6,11 +6,39 @@ import {
   SET_PROFILE_PASSWORD ,
   SET_PROFILE_EMAIL,
   SET_PROFILE_TYPE,
-  REMOVE_PROFILE_PASSWORD
+  REMOVE_PROFILE_PASSWORD,
+  FETCH_PROFILE_REQ,
+  FETCH_PROFILE_SUC,
+  FETCH_PROFILE_ERR
 } from './types'
 import { API_URL } from '../../utils/misc'
 
-const URL = `${API_URL}/profile/`
+const URL = `${API_URL}/Profile`
+
+export const fetchProfile = (callback) => {
+  return (dispatch) => {
+    dispatch({
+      type: FETCH_PROFILE_REQ
+    })
+
+    axios.get(`${URL}`)
+    .then(response => {
+      dispatch({
+        type: FETCH_PROFILE_SUC,
+        payload: response.data
+      })
+      if(callback instanceof Function){
+        callback()
+      }
+    })
+    .catch(response => {
+      dispatch({
+        type: FETCH_PROFILE_ERR,
+        payload: response.response.data
+      })
+    })
+  }
+}
 
 export const setName = (firstName, lastName) => {
   return (dispatch) => {

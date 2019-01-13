@@ -119,8 +119,8 @@ class NameScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  firstName: state.profile.firstName,
-  lastName: state.profile.lastName
+  firstName: state.Profile.profile.firstName,
+  lastName: state.Profile.profile.lastName
 });
 
 const mapDispatchToProps = (dispatch) => ({

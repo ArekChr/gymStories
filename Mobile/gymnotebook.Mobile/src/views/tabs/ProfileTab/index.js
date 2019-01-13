@@ -1,14 +1,37 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, RefreshControl, ScrollView } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { fetchProfile } from '../../../store/profile/actions'
+import { connect } from 'react-redux';
 
-export default class ProfileTab extends Component {
+class ProfileTab extends Component {
+
+  state = {
+    refreshing: false,
+  }
 
   onSettingsPress = () => {
     this.props.navigation.navigate('Settings')
   }
 
+  componentDidMount() {
+    this.props.fetchProfile(()=>{});
+  }
+
+  onRefresh = () => {
+    this.setState({refreshing: true});
+    this.props.fetchProfile( () => {
+      this.setState({refreshing: false});
+    })
+  }
+
   render() {
+
+    if(this.props.profile === undefined){
+      return <View></View>
+    }
+    const profile = this.props.profile;
+
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
         <View style={{ paddingTop: 15 }}>
@@ -23,11 +46,11 @@ export default class ProfileTab extends Component {
                       <Text style={{ fontSize: 11, color: 'grey' }}>Posty</Text>
                     </View>
                       <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >1 551 425 325</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followingCount}</Text>
                         <Text style={{ fontSize: 11, color: 'grey' }}>Obserwujący</Text>
                       </View>
                       <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >548</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followersCount}</Text>
                         <Text style={{ fontSize: 11, color: 'grey' }}>Obserwuje</Text>
                       </View>
                   </View>
@@ -44,12 +67,32 @@ export default class ProfileTab extends Component {
                 </View>
           </View>
           <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>
-            <Text style={{ fontWeight: 'bold' }}>Arkadiusz Chrabąszczewski</Text>
-            <Text>Trening funkcjonalny</Text>
-            <Text>www.gymNotebook.com</Text>
+            <Text style={{ fontWeight: 'bold' }}>{`${profile.firstName} ${profile.lastName}`}</Text>
+            <Text>{profile.description}</Text>
           </View>
         </View>
+        <ScrollView 
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+         style={{height: '100%'}}>
+        </ScrollView>
+        
       </View>
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  profileLoading: state.Profile.loading,
+  profile: state.Profile.profile
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchProfile: (callback) => fetchProfile(callback)(dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab)

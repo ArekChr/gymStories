@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-  error: state.auth.error,
-  loginLoading: state.auth.loading,
-  loginSuccess: state.auth.loginSuccess,
-  jwt: state.auth.jwt
+  error: state.Auth.error,
+  loginLoading: state.Auth.loading,
+  loginSuccess: state.Auth.loginSuccess,
+  jwt: state.Auth.jwt
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -38,13 +38,13 @@ class RegisterEndScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  registerLoading: state.auth.loading,
-  error: state.auth.error,
-  registerSuccess: state.auth.registerSuccess,
-  loginLoading: state.auth.loading,
-  loginSuccess: state.auth.loginSuccess,
-  profile: state.profile,
-  jwt: state.auth.jwt
+  registerLoading: state.Auth.loading,
+  error: state.Auth.error,
+  registerSuccess: state.Auth.registerSuccess,
+  loginLoading: state.Auth.loading,
+  loginSuccess: state.Auth.loginSuccess,
+  profile: state.Profile.profile,
+  jwt: state.Auth.jwt
 });
 const mapDispatchToProps = (dispatch) => ({
   registerUser: (profile, callback) => registerUser(profile, callback)(dispatch),

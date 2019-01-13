@@ -1,9 +1,6 @@
 ﻿using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Trainings.Progress;
 using gymNotebook.Infrastructure.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Handlers.Progress

@@ -108,9 +108,9 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({progress}) => ({
-  selectedProgress: progress.selectedProgress,
-  modal: progress.modal
+const mapStateToProps = ({Progress}) => ({
+  selectedProgress: Progress.selectedProgress,
+  modal: Progress.modal
 })
 
 const mapDispatchToProps = (dispatch) => ({

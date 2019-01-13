@@ -79,7 +79,9 @@ export const registerUser = (data, callback) => {
         type: USER_REGISTER_SUC,
         payload: response.data
       })
-      callback()
+      if(callback instanceof Function){
+        callback()
+      }
     })
     .catch(error => {
       dispatch({

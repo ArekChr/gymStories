@@ -51,7 +51,7 @@ class BirthDateScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  dateOfBirth: state.profile.dateOfBirth
+  dateOfBirth: state.Profile.profile.dateOfBirth
 });
 
 const mapDispatchToProps = (dispatch) => ({

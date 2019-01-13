@@ -56,7 +56,7 @@ class EmailScreen extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  email: state.profile.email
+  email: state.Profile.profile.email
 })
 
 const mapDispatchToProps = (dispatch) => ({

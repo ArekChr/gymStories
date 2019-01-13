@@ -18,8 +18,8 @@ namespace gymNotebook.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Profile> GetAsync(Guid id)
-            => await _context.Profiles.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task<Profile> GetAsync(Guid userId)
+            => await _context.Profiles.FirstOrDefaultAsync(x => x.UserId == userId);
 
         public async Task<IEnumerable<Profile>> BrowseAsync()
             => await _context.Profiles.ToListAsync();
