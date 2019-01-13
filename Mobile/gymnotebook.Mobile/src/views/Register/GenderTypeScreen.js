@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { View, CheckBox, Text } from 'react-native';
 import { ButtonNext, TitleComponent, ErrorMessage } from '../../component'
 import styles from '../../styles'
-import {setGenderType} from '../../store/profile/actions'
+import {setGender} from '../../store/profile/actions'
 import {connect} from 'react-redux'
 
 class GenderTypeScreen extends Component {
 
   state = { 
-    genderType: '',
+    gender: this.props.gender || '',
     error: '',
   }
 
@@ -17,22 +17,31 @@ class GenderTypeScreen extends Component {
   }
 
   onNextClicked = () => {
-    const { genderType } = this.state;
-    if(genderType === '') {
+    const { gender } = this.state;
+    if(gender === '') {
       this.setState({error: 'Wybierz płeć.'})
-    }
-    else {
-      this.props.setGenderType(genderType)
+    } else {
+      this.props.setGender(gender)
       this.props.navigation.navigate('EmailScreen')
     }
   }
 
   onSelectMale = () => {
-    this.setState({genderType: 'Male'})
+    this.setState({error: ''})
+    if(this.state.gender === 'Male') {
+      this.setState({gender: ''})
+    } else {
+      this.setState({gender: "Male"})
+    }
   }
 
   onSelectFemale = () => {
-    this.setState({genderType: 'Female'})
+    this.setState({error: ''})
+    if(this.state.gender === 'Female') {
+      this.setState({gender: ''})
+    } else {
+      this.setState({gender: 'Female'})
+    }
   }
 
   render() {
@@ -43,7 +52,7 @@ class GenderTypeScreen extends Component {
         <View style={{ flexDirection: 'column'}}>
           <View style={{ flexDirection: 'row' }}>
             <CheckBox
-              value={this.state.genderType === 'Male' ? true : false }
+              value={this.state.gender === 'Male' ? true : false }
               onValueChange={() => this.onSelectMale()}
             />
             <Text style={{marginTop: 5}}>Mężczyzna</Text>
@@ -52,7 +61,8 @@ class GenderTypeScreen extends Component {
         <View style={{ flexDirection: 'column'}}>
           <View style={{ flexDirection: 'row' }}>
             <CheckBox
-              value={this.state.genderType === 'Female' ? true : false }
+
+              value={this.state.gender === 'Female' ? true : false }
               onValueChange={() => this.onSelectFemale()}
             />
             <Text style={{marginTop: 5}}>Kobieta</Text>
@@ -64,8 +74,12 @@ class GenderTypeScreen extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  setGenderType: (genderType) => setGenderType(genderType)(dispatch)
+const mapStateToProps = (state) => ({
+  gender: state.profile.gender
 })
 
-export default connect(null, mapDispatchToProps)(GenderTypeScreen)
+const mapDispatchToProps = (dispatch) => ({
+  setGender: (gender) => setGender(gender)(dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GenderTypeScreen)

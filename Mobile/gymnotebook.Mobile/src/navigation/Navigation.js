@@ -33,6 +33,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo'
 
 import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON } from '../styles/common'
+import { Fonts } from '../styles'
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -42,7 +43,11 @@ const ProgressTabStackNavigator = createStackNavigator({
     headerStyle: {
       backgroundColor: PRIMARY_COLOR,
     },
-    headerTintColor: THEME_FONT_COLOR
+    headerTintColor: THEME_FONT_COLOR,
+    headerTitleStyle : {
+      fontWeight: undefined,
+      fontFamily: Fonts.primaryRegular
+    }
   })
 })
 
@@ -57,7 +62,11 @@ const ProfileStackNavigator = createStackNavigator({
     headerStyle: {
       backgroundColor: PRIMARY_COLOR,
     },
-    headerTintColor: THEME_FONT_COLOR
+    headerTintColor: THEME_FONT_COLOR,
+    headerTitleStyle : {
+      fontWeight: undefined,
+      fontFamily: Fonts.primaryRegular
+    }
   })
 })
 
@@ -94,22 +103,20 @@ const AppTabNavigator = createBottomTabNavigator({
       inactiveTintColor: INACTIVE_ICON,
       showIcon: true,
       showLabel: false
+    },
+    headerTitleStyle : {
+      fontWeight: undefined,
+      fontFamily: Fonts.primaryRegular
     }
   })
 
 const SignInStackNavigator = createStackNavigator({
   LoginScreen: {
-    screen: RegisterEndScreen,
+    screen: LoginScreen,
     navigationOptions: {
       header: null
     }
   },
-  // LoginScreen: {
-  //   screen: LoginScreen,
-  //   navigationOptions: {
-  //     header: null
-  //   }
-  // },
   RegisterScreen: {
     screen: RegisterScreen,
     navigationOptions: {
@@ -151,20 +158,17 @@ const SignInStackNavigator = createStackNavigator({
     navigationOptions: {
       title: 'Hasło'
     }
-  },
-  RegisterEndScreen: {
-    screen: RegisterEndScreen,
-    navigationOptions: {
-      title: 'Rejestrowanie...',
-      right: null
-    }
   }
 },{
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
       backgroundColor: PRIMARY_COLOR,
     },
-    headerTintColor: THEME_FONT_COLOR
+    headerTintColor: THEME_FONT_COLOR,
+    headerTitleStyle : {
+      fontWeight: undefined,
+      fontFamily: Fonts.primaryRegular
+    }
   }),
   transitionConfig: () => ({
     transitionSpec: {
@@ -183,6 +187,16 @@ const SignInStackNavigator = createStackNavigator({
       return { opacity } 
     }
   })
+})
+
+const RegisterLoadingSwitchNavigator = createSwitchNavigator({
+  LoginScreen: SignInStackNavigator,
+  RegisterEndScreen: {
+    screen: RegisterEndScreen,
+    navigationOptions: {
+      header: null
+    }
+  }
 })
 
 const MainDrawerNavigator = createDrawerNavigator({
@@ -207,13 +221,17 @@ const HomeStackNavigator = createStackNavigator({
     headerStyle: {
       backgroundColor: PRIMARY_COLOR,
     },
-    headerTintColor: THEME_FONT_COLOR
+    headerTintColor: THEME_FONT_COLOR,
+    headerTitleStyle : {
+      fontWeight: undefined,
+      fontFamily: Fonts.primaryRegular
+    }
   })
 })
 
 const AppNavigator = createAppContainer(createSwitchNavigator(
   {
-    LoginScreen: SignInStackNavigator,
+    LoginScreen: RegisterLoadingSwitchNavigator,
     HomeScreen: HomeStackNavigator
   }
 ));

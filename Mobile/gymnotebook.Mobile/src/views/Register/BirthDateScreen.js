@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { ButtonNext, TitleComponent } from '../../component'
-import { setBirthDate } from '../../store/profile/actions'
+import { setDateOfBirth } from '../../store/profile/actions'
 import { connect } from 'react-redux'
 import { DatePickerView } from '@ant-design/react-native';
 import en_US from '@ant-design/react-native/lib/locale-provider/en_US';
@@ -10,19 +10,19 @@ import en_US from '@ant-design/react-native/lib/locale-provider/en_US';
 class BirthDateScreen extends Component {
 
   state = {
-    birthDate: ''
+    dateOfBirth: this.props.dateOfBirth? new Date(this.props.dateOfBirth) : new Date(2000,1,1)
   }
 
   onChange = (value) => {
-    this.setState({ birthDate: value});
+    this.setState({ dateOfBirth: value});
   }
 
   // TODO: if user does not change date ask if it is correct
   onNextClicked = () => {
-    let date = this.state.birthDate
+    let date = this.state.dateOfBirth
     date.setHours(12)
     const newDate = date.toISOString().substr(0,10)
-    this.props.setBirthDate(newDate)
+    this.props.setDateOfBirth(newDate)
     this.props.navigation.navigate('GenderTypeScreen')
   }
 
@@ -35,7 +35,7 @@ class BirthDateScreen extends Component {
         <TitleComponent>Podaj swoją datę urodzenia</TitleComponent>
         <DatePickerView
           mode="date"
-          value={this.state.birthDate}
+          value={this.state.dateOfBirth}
           onChange={this.onChange}
           onValueChange={this.onValueChange}
           locale={en_US}
@@ -50,8 +50,12 @@ class BirthDateScreen extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  dateOfBirth: state.profile.dateOfBirth
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  setBirthDate: (birthDate) => setBirthDate(birthDate)(dispatch)
+  setDateOfBirth: (dateOfBirth) => setDateOfBirth(dateOfBirth)(dispatch)
 })
 
-export default connect(null, mapDispatchToProps)(BirthDateScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(BirthDateScreen)

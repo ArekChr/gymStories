@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, ScrollView } from 'react-native'
 import { ButtonNext, FloatingInput, TitleComponent, ErrorMessage } from '../../component'
 import { setName } from '../../store/profile/actions'
 import { connect } from 'react-redux'
@@ -11,11 +11,19 @@ class NameScreen extends Component {
   }
 
   state = {
-    firstName: '',
-    lastName: '',
+    firstName: this.props.firstName || '',
+    lastName: this.props.lastName || '',
     error: '',
     firstNameValid: true,
-    lastNameValid: true
+    lastNameValid: true,
+    errors: {
+      firstLastEmpty: 'Wprowadź imię i nazwisko.',
+      firstEmpty: 'Wprowadź imię.',
+      lastEmpty: 'Wprowadź nazwisko.',
+      firstLastHaveNumbers: 'Twoje imię i nazwisko nie może zawierać cyfr.',
+      firstHaveNumbers: 'Twoje imię nie może zawierać cyfr.',
+      lastHaveNumbers: 'Twoje nazwisko nie może zawierać cyfr.'
+    }
   }
 
   focusNextField = (id) => {
@@ -27,16 +35,25 @@ class NameScreen extends Component {
   }
 
   onNextClicked = () => {
-    const {firstName, lastName, firstNameValid, lastNameValid } = this.state;
+    const {firstName, lastName, firstNameValid, lastNameValid, firstNameHaveNumbers, lastNameHaveNumbers, errors } = this.state;
 
     if(firstName === '' && lastName === ''){
-      this.setState({error: 'Wprowadź imię i nazwisko.', firstNameValid: false, lastNameValid: false })
+      this.setState({error: errors.firstLastEmpty, firstNameValid: false, lastNameValid: false })
     }
     else if(firstName === ''){
-      this.setState({error: 'Wprowadź imię.', firstNameValid: false, lastNameValid: true})
+      this.setState({error: errors.firstEmpty, firstNameValid: false, lastNameValid: true})
     }
     else if(lastName === ''){
-      this.setState({error: 'Wprowadź nazwisko.', lastNameValid: false, firstNameValid: true})
+      this.setState({error: errors.lastEmpty, lastNameValid: false, firstNameValid: true})
+    }
+    else if(firstNameHaveNumbers && lastNameHaveNumbers){
+      this.setState({error: errors.firstLastHaveNumbers, firstNameValid: false, lastNameValid: false })
+    }
+    else if(firstNameHaveNumbers){
+      this.setState({error: errors.firstHaveNumbers, firstNameValid: false, lastNameValid: true })
+    }
+    else if(lastNameHaveNumbers){
+      this.setState({error: errors.lastHaveNumbers, firstNameValid: true, lastNameValid: false })
     }
     else if(firstNameValid && lastNameValid){
       this.setState({error: '', lastNameValid: true, firstNameValid: true})
@@ -52,9 +69,10 @@ class NameScreen extends Component {
     let firstNameValid = true;
     if(firstNameHaveNumbers){
       if(lastNameHaveNumbers){
-        error = 'Twoje imię i nazwisko nie może zawierać cyfr.';
+        error = this.state.errors.firstLastHaveNumbers;
+      } else {
+        error = this.state.errors.firstHaveNumbers;
       }
-      error = 'Twoje imię nie może zawierać cyfr.';
       firstNameValid = false;
     }
     this.setState({ firstName: newText, error: error, firstNameValid: firstNameValid, firstNameHaveNumbers: firstNameHaveNumbers })
@@ -67,9 +85,10 @@ class NameScreen extends Component {
     let lastNameValid = true;
     if(lastNameHaveNumbers){
       if(firstNameHaveNumbers){
-        error = 'Twoje imię i nazwisko nie może zawierać cyfr.';
+        error = this.state.errors.firstLastHaveNumbers;
+      } else {
+        error = this.state.errors.lastHaveNumbers;
       }
-      error = 'Twoje nazwisko nie może zawierać cyfr.';
       lastNameValid = false;
     }
     this.setState({ lastName: newText, error: error, lastNameValid: lastNameValid, lastNameHaveNumbers: lastNameHaveNumbers })
@@ -77,7 +96,7 @@ class NameScreen extends Component {
 
   render() {
     return (
-      <View style={{ margin: 20 }}>
+      <View style={{ margin: 20, flex: 1 }}>
         <TitleComponent>Jak się nazywasz?</TitleComponent>
         <ErrorMessage>{this.state.error}</ErrorMessage>
         <View style={{ flexDirection: 'row', width: '50%' }}>
@@ -99,8 +118,13 @@ class NameScreen extends Component {
   }
 }
 
+const mapStateToProps = (state) => ({
+  firstName: state.profile.firstName,
+  lastName: state.profile.lastName
+});
+
 const mapDispatchToProps = (dispatch) => ({
   setName: (firstName, lastName) => setName(firstName, lastName)(dispatch)
 })
 
-export default connect(null, mapDispatchToProps)(NameScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(NameScreen)

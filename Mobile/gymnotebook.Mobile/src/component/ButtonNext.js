@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { SECONDARY_COLOR } from '../styles/common';
+import { Fonts } from '../styles'
 
 export default class ButtonNext extends Component {
 
@@ -10,7 +11,8 @@ export default class ButtonNext extends Component {
         <Text style={{ 
           width: '100%', 
           backgroundColor: SECONDARY_COLOR, 
-          color: 'black', 
+          color: 'white', 
+          fontFamily: Fonts.primaryMedium,
           textAlignVertical: "center",
           textAlign: 'center',
           height: 35,

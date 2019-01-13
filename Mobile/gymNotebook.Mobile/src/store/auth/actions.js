@@ -60,7 +60,7 @@ export const login = (data) => {
   }
 }
 
-export const registerUser = (data) => {
+export const registerUser = (data, callback) => {
   return (dispatch) => {
     dispatch({ type: USER_REGISTER_REQ })
 
@@ -68,9 +68,7 @@ export const registerUser = (data) => {
       method:"POST",
       url: URL,
       data: {
-        email: data.email,
-        username: data.username,
-        password: data.password
+        ...data
       },
       headers: {
         "Content-Type": "application/json"
@@ -81,6 +79,7 @@ export const registerUser = (data) => {
         type: USER_REGISTER_SUC,
         payload: response.data
       })
+      callback()
     })
     .catch(error => {
       dispatch({

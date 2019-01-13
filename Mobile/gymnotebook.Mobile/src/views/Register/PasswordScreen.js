@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
 import { ButtonNext, TitleComponent, ErrorMessage, FloatingInput } from '../../component'
 import styles from '../../styles'
 import {setPassword} from '../../store/profile/actions'
@@ -14,7 +14,7 @@ class PasswordScreen extends Component {
   state = {
     password: '',
     confirmPassword: '',
-    passwordMatch: false,
+    passwordMatch: true,
     error: ''
   }
 
@@ -33,6 +33,7 @@ class PasswordScreen extends Component {
   }
 
   handlePasswordChange = (password) => {
+    this.setState({error: ''})
     if(this.state.confirmPassword.length === 0){
       this.setState({ passwordMatch: true, password: password })
     }
@@ -45,6 +46,7 @@ class PasswordScreen extends Component {
   }
 
   handleConfirmPasswordChange = (confirmPassword) => {
+    this.setState({error: ''})
     if(this.state.password.length === 0 && confirmPassword.length === 0){
       this.setState({ passwordMatch: true, confirmPassword: confirmPassword})
     }
@@ -58,7 +60,8 @@ class PasswordScreen extends Component {
 
   render() {
     return (
-      <View style={styles.registerContainer}>
+      <ScrollView>
+              <View style={styles.registerContainer}>
         <TitleComponent>Wprowadż swoje hasło</TitleComponent>
         <ErrorMessage>{this.state.error}</ErrorMessage>
         <FloatingInput label="Hasło"
@@ -66,21 +69,37 @@ class PasswordScreen extends Component {
           isValid={this.state.passwordMatch}
           onChangeText={this.handlePasswordChange}
           autoFocus={true}
-          onSubmitEditing={() => { this.focusNextField('confirmPassword') }} />
+          onSubmitEditing={() => { this.focusNextField('confirmPassword') }}
+          autoCapitalize={'none'}
+          secureTextEntry={true}
+        />
         <FloatingInput label="Powtórz hasło"
           value={this.state.confirmPassword}
           isValid={this.state.passwordMatch}
           onChangeText={this.handleConfirmPasswordChange}
           onRef={(ref) => { this.inputs['confirmPassword'] = ref }}
-          />
-        <ButtonNext onPress={this.onNextClicked}>Dalej</ButtonNext>
+          style={{ marginTop: 20 }}
+          autoCapitalize={'none'}
+          secureTextEntry={true}
+        />
+          <Text style={{margin: 8, marginBottom: 0}}>
+            Wybierając opcje Zarejestruj się i {'\n'}
+            Akceptuj, poświadczasz zapoznanie się {'\n'}
+            z Polityką prywatności i wyrażasz zgode {'\n'}
+            na Regulamin usługi.
+          </Text>
+        <ButtonNext onPress={this.onNextClicked}>Zarejestruj sie i Akceptuj</ButtonNext>
       </View>
+      </ScrollView>
+
     );
   }
 }
 
-const mapStateToProps = (state) => ({
 
+
+const mapStateToProps = (state) => ({
+  
 });
 
 const mapDispatchToProps = (dispatch) => ({

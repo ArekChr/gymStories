@@ -8,7 +8,7 @@ import {connect} from 'react-redux'
 class EmailScreen extends Component {
 
   state = {
-    email: '',
+    email: this.props.email || '',
     error: '',
     emailValid: true
   }
@@ -22,7 +22,7 @@ class EmailScreen extends Component {
       this.setState({error: 'Adres e-mail jest niepoprawny.', emailValid: false})
     }
     else {
-      this.setState({emailValid: false})
+      this.setState({emailValid: true})
       this.props.setEmail(email)
       this.props.navigation.navigate('PasswordScreen')
     }
@@ -46,15 +46,21 @@ class EmailScreen extends Component {
             value={this.state.email}
             isValid={this.state.emailValid}
             onChangeText={this.handleEmailChange}
-            autoFocus={true} />
+            autoFocus={true}
+            autoCapitalize={'none'}
+            keyboardType={'email-address'} />
         <ButtonNext onPress={this.onNextClicked}>Dalej</ButtonNext>
       </View>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  email: state.profile.email
+})
+
 const mapDispatchToProps = (dispatch) => ({
   setEmail: (email) => setEmail(email)(dispatch)
 })
 
-export default connect(null, mapDispatchToProps)(EmailScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(EmailScreen)

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, Animated, Easing, View } from 'react-native'
 import { PRIMARY_COLOR } from '../styles/common'
+import { Fonts,  } from '../styles'
 
 export default class Logo extends Component {
 
@@ -56,13 +57,14 @@ const styles = StyleSheet.create({
   },
   logoStyles: {
     marginTop: 50,
-    flex:1,
     flexDirection: 'row',
-    maxHeight: 100
+    maxHeight: 100,
+    justifyContent: 'center',
+    marginBottom: 20,
   },
   logoText: {
     fontSize: 40,
-    fontFamily: 'Ubuntu-Medium',
+    fontFamily: Fonts.primaryLight,
     color: PRIMARY_COLOR
   }
 })

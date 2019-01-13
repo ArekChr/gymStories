@@ -74,10 +74,8 @@ class LoginScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(34,34,34,1)',
+    backgroundColor: 'white',
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
   },
   signupTextCont: {
     alignItems: 'flex-end',
@@ -86,11 +84,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   signupText: {
-    color: 'rgba(255,255,255,0.7)',
+    color: 'rgba(0,0,0,0.7)',
     fontSize: 16
   },
   signupButton: {
-    color: '#ffffff',
+    color: 'black',
     fontSize: 16,
     fontWeight: '500'
   },

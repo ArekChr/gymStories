@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated } from 'react-native';
+import { View, TextInput, Animated, StyleSheet } from 'react-native';
 import { WARNING_COLOR, PRIMARY_COLOR } from '../styles/common'
+import { Fonts } from '../styles'
 
 export default class FloatingInput extends Component {
 
@@ -38,6 +39,7 @@ export default class FloatingInput extends Component {
     const FOCUSED_COLOR = this.props.isValid? this.state.isFocused ? PRIMARY_COLOR : '#aaa' : WARNING_COLOR
     const FOCUSED_BORDER = this.state.isFocused ? 2 : 1
     const labelStyle = {
+      fontFamily: Fonts.primaryLight,
       position: 'absolute',
       left: 7,
 
@@ -55,7 +57,7 @@ export default class FloatingInput extends Component {
       }),
     };
     return (
-      <View style={{ paddingTop: 18, width: '100%', padding: 2}}>
+      <View style={[{ paddingTop: 18, width: '100%', padding: 2},this.props.style]}>
         <Animated.Text style={labelStyle}>
           {label}
         </Animated.Text>
@@ -67,6 +69,7 @@ export default class FloatingInput extends Component {
             marginTop: 20,  
             fontSize: 19, 
             color: '#000', 
+            fontFamily: Fonts.primaryRegular,
             borderBottomWidth: FOCUSED_BORDER, 
             borderBottomColor: FOCUSED_COLOR 
           }}

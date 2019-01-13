@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { WARNING_COLOR } from '../styles/common'
+import { Fonts } from '../styles'
 
 export default class ErrorMessage extends Component {
   render() {
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
+    fontFamily: Fonts.primaryLight,
     color: WARNING_COLOR,
     textAlignVertical: 'center',
     marginBottom: 15

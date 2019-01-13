@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { FONT_COLOR } from '../styles/common';
+import { Fonts } from '../styles'
 
 class TitleComponent extends Component {
 
@@ -18,8 +19,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontWeight: 'bold',
     fontSize: 18,
+    fontFamily: Fonts.primaryMedium,
     color: FONT_COLOR,
     textAlignVertical: 'center',
     marginTop: 50,

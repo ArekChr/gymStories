@@ -8,8 +8,7 @@ namespace gymNotebook.Infrastructure.Services
     {
         Task<UserDto> GetAsync(string email);
 
-        Task RegisterAsync(string username, string email, string password, string firstName, string lastName,
-            DateTime dateOfBirth, string gender);
+        Task RegisterAsync(string email, string password, string firstName, string lastName, DateTime dateOfBirth, string gender);
 
         Task LoginAsync(string email, string password);
     }

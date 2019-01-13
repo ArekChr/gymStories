@@ -5,6 +5,7 @@ import { login } from '../../store/auth/actions'
 import { setTokens } from '../../utils/misc'
 import { mapJwtToState } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
+import { FloatingInput } from '../../component'
 
 class LoginForm extends React.Component {
 
@@ -34,21 +35,26 @@ class LoginForm extends React.Component {
 
     return(
       <View style={styles.container}>
-        <TextInput style={styles.inputBox}
-            underlineColorAndroid="rgba(0,0,0,0)"
-            placeholder="Email"
+        <View>
+          <FloatingInput 
+            style={{ marginTop: 30}}
+            label="Email"
+            value={this.state.email}
             keyboardType="email-address"
-            selectionColor="#fff"
             ref={(input) => this.email = input}
             onSubmitEditing={() => this.password.focus()}
+            isValid={true}
             onChangeText={(text) => this.setState({ email: text })}
-        />
-        <TextInput style={styles.inputBox}
-            underlineColorAndroid="rgba(0,0,0,0)"
-            placeholder="Hasło" secureTextEntry={true}
+          />
+          <FloatingInput 
+            label="Hasło" 
+            value={this.state.password}
+            secureTextEntry={true}
             ref={(input) => this.password = input}
+            isValid={true}
             onChangeText={(text) => this.setState({ password: text })}
-        />
+          />
+        </View>
         <TouchableOpacity style={styles.button}
             onPress={this.onLoginPressed}>
             <Text style={styles.buttonText}>Login</Text>
@@ -69,10 +75,9 @@ class LoginForm extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignSelf: 'center'
   },
   inputBox: {
     width: 250,

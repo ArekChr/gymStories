@@ -21,20 +21,20 @@ export const setName = (firstName, lastName) => {
   }
 }
 
-export const setBirthDate = (birthDate) => {
+export const setDateOfBirth = (dateOfBirth) => {
   return (dispatch) => {
     dispatch({
       type: SET_PROFILE_BIRTH_DATE, 
-      payload: birthDate
+      payload: dateOfBirth
     })
   }
 }
 
-export const setGenderType = (genderType) => {
+export const setGender = (gender) => {
   return (dispatch) => {
     dispatch({
       type: SET_PROFILE_GENDER_TYPE, 
-      payload: genderType
+      payload: gender
     })
   }
 }

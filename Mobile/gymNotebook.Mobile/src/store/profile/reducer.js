@@ -9,13 +9,6 @@ import {
 } from './types'
 
 const initialState = {
-  firstName: '',
-  lastName: '',
-  birthDate: '',
-  genderType: '',
-  email: '',
-  password: '',
-  profileType: ''
 }
 
 export default profileReducer = (state = initialState, action) => {
@@ -30,13 +23,13 @@ export default profileReducer = (state = initialState, action) => {
     case SET_PROFILE_BIRTH_DATE: {
       return {
         ...state,
-        birthDate: action.payload
+        dateOfBirth: action.payload
       }
     }
     case SET_PROFILE_GENDER_TYPE: {
       return {
         ...state,
-        genderType: action.payload
+        gender: action.payload
       }
     }
     case SET_PROFILE_PASSWORD: {

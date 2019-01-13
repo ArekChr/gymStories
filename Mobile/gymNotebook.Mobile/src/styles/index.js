@@ -1,5 +1,10 @@
 import { StyleSheet } from 'react-native'
 import { COLOR_PRIMARY, COLOR_SECONDARY, FONT_COLOR, PRIMARY_COLOR } from './common'
+import Fonts from './Fonts'
+
+export {
+  Fonts
+}
 
 export default StyleSheet.create({
   container: {

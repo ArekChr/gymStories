@@ -11,8 +11,8 @@ namespace gymNotebook.Infrastructure.Repositories
     {
         private static readonly ISet<User> _users = new HashSet<User>
         {
-            new User("user1","user1@gmail.com","secret11","salt123"),
-            new User("user2","user2@gmail.com","secret11","salt123")
+            new User("user1@gmail.com","secret11","salt123"),
+            new User("user2@gmail.com","secret11","salt123")
         };
 
         public async Task AddAsync(User user)

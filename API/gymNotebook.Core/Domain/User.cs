@@ -39,11 +39,10 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public User(string username, string email, string password, string salt)
+        public User(string email, string password, string salt)
         {
             Id = Guid.NewGuid();
             //SetRole(role);
-            SetUsername(username);
             SetEmail(email);
             SetPassword(password);
             Salt = salt;

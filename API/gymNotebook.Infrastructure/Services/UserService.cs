@@ -47,24 +47,26 @@ namespace gymNotebook.Infrastructure.Services
             throw new ServiceException(ErrorServiceCodes.InvalidCredentials, "Invalid credentials");
         }
 
-        public async Task RegisterAsync(string username, string email, string password, string firstName, string lastName, DateTime dateOfBirth, string gender)
+        public async Task RegisterAsync(string email, string password, string firstName, string lastName, DateTime dateOfBirth, string gender)
         {
             var user = await _userRepository.GetAsync(email);
             if(user != null)
             {
-                throw new ServiceException(ErrorServiceCodes.EmailInUse, $"User with email: '{email}' already exists.");
+                throw new ServiceException(ErrorServiceCodes.InvalidEmail, $"User with email: '{email}' already exists.");
             }
             var salt = _encrypter.GetSalt(password);
             var hash = _encrypter.GetHash(password, salt);
-            user = new User(username, email, hash, salt);
-            await _userRepository.AddAsync(user);
+            user = new User(email, hash, salt);
             var profile = new Core.Domain.Profile(
                 userId: user.Id,
-                firstName: firstName, 
-                dateOfBirth: dateOfBirth, 
+                firstName: firstName,
+                dateOfBirth: dateOfBirth,
                 gender: gender,
                 lastName: lastName);
+
+            await _userRepository.AddAsync(user);
             await _profileRepository.AddAsync(profile);
+
         }
     }
 }
