@@ -13,11 +13,31 @@ import {
 
 const initialState = {
   loading: null,
-  profile: undefined
+  profile: undefined,
+  error: undefined
 }
 
 export default profileReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_PROFILE_REQ: {
+      return {
+        ...state,
+        loading: true
+      }
+    }
+    case FETCH_PROFILE_SUC: {
+      return {
+        ...state,
+        loading: false
+      }
+    }
+    case FETCH_PROFILE_ERR: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      }
+    }
     case FETCH_PROFILE_REQ: {
       return {
         ...state,
@@ -34,7 +54,8 @@ export default profileReducer = (state = initialState, action) => {
     case FETCH_PROFILE_ERR: {
       return {
         ...state,
-        loading: false
+        loading: false,
+        error: action.payload
       }
     }
     case SET_PROFILE_NAME: {

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, Image, TouchableOpacity, RefreshControl, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, RefreshControl, ScrollView } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { fetchProfile } from '../../../store/profile/actions'
 import { connect } from 'react-redux';
+import { ProfilePhoto } from '../../../component'
 
 class ProfileTab extends Component {
 
@@ -15,14 +16,18 @@ class ProfileTab extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchProfile(()=>{});
+    this.props.fetchProfile();
   }
 
   onRefresh = () => {
     this.setState({refreshing: true});
-    this.props.fetchProfile( () => {
+    this.props.fetchProfile(() => {
       this.setState({refreshing: false});
     })
+  }
+
+  onPhotoClicked = () => {
+    // TODO: modal for edit photo
   }
 
   render() {
@@ -34,43 +39,6 @@ class ProfileTab extends Component {
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
-        <View style={{ paddingTop: 15 }}>
-          <View style={{ flexDirection: 'row' }}>
-              <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                <Image style={{ width: 90, height: 90, borderRadius: 45 }} source={require('../../../images/profile2.jpg')}/>
-              </View>
-                <View style={{ flex: 3 }}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                    <View style={{ alignItems: 'center' }}>
-                      <Text style={{ fontSize: 18, fontWeight: 'bold' }} >0</Text>
-                      <Text style={{ fontSize: 11, color: 'grey' }}>Posty</Text>
-                    </View>
-                      <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followingCount}</Text>
-                        <Text style={{ fontSize: 11, color: 'grey' }}>Obserwujący</Text>
-                      </View>
-                      <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followersCount}</Text>
-                        <Text style={{ fontSize: 11, color: 'grey' }}>Obserwuje</Text>
-                      </View>
-                  </View>
-                  <View style={{ flexDirection: 'row', paddingTop: 7 }}>
-                    <TouchableOpacity
-                      style={{ alignItems: 'center', borderWidth: 1, flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
-                      <Text>Edytuj profil</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={this.onSettingsPress} bordered={true} dark={true}
-                        style={{ alignItems: 'center', borderWidth: 1, flex: 1, marginLeft: 5, marginRight: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
-                      <AntDesign size={20} name='setting' color='black' />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-          </View>
-          <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>
-            <Text style={{ fontWeight: 'bold' }}>{`${profile.firstName} ${profile.lastName}`}</Text>
-            <Text>{profile.description}</Text>
-          </View>
-        </View>
         <ScrollView 
           refreshControl={
             <RefreshControl
@@ -79,8 +47,44 @@ class ProfileTab extends Component {
             />
           }
          style={{height: '100%'}}>
+          <View style={{ paddingTop: 15 }}>
+            <View style={{ flexDirection: 'row' }}>
+                <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
+                  <ProfilePhoto onPress={this.onPhotoClicked} source={require('../../../images/profile2.jpg')} />
+                </View>
+                  <View style={{ flex: 3 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                      <View style={{ alignItems: 'center' }}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >0</Text>
+                        <Text style={{ fontSize: 11, color: 'grey' }}>Posty</Text>
+                      </View>
+                        <View style={{ alignItems: 'center' }}>
+                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followingCount}</Text>
+                          <Text style={{ fontSize: 11, color: 'grey' }}>Obserwujący</Text>
+                        </View>
+                        <View style={{ alignItems: 'center' }}>
+                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followersCount}</Text>
+                          <Text style={{ fontSize: 11, color: 'grey' }}>Obserwuje</Text>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', paddingTop: 7 }}>
+                      <TouchableOpacity
+                        style={{ alignItems: 'center', borderWidth: 1, flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
+                        <Text>Edytuj profil</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={this.onSettingsPress} bordered={true} dark={true}
+                          style={{ alignItems: 'center', borderWidth: 1, flex: 1, marginLeft: 5, marginRight: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
+                        <AntDesign size={20} name='setting' color='black' />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+            </View>
+            <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>
+              <Text style={{ fontWeight: 'bold' }}>{`${profile.firstName} ${profile.lastName}`}</Text>
+              <Text>{profile.description}</Text>
+            </View>
+          </View>
         </ScrollView>
-        
       </View>
     )
   }

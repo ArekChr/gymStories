@@ -9,7 +9,10 @@ import {
   REMOVE_PROFILE_PASSWORD,
   FETCH_PROFILE_REQ,
   FETCH_PROFILE_SUC,
-  FETCH_PROFILE_ERR
+  FETCH_PROFILE_ERR,
+  UPDATE_PROFILE_REQ,
+  UPDATE_PROFILE_SUC,
+  UPDATE_PROFILE_ERR
 } from './types'
 import { API_URL } from '../../utils/misc'
 
@@ -34,6 +37,32 @@ export const fetchProfile = (callback) => {
     .catch(response => {
       dispatch({
         type: FETCH_PROFILE_ERR,
+        payload: response.response.data
+      })
+    })
+  }
+}
+
+export const updateProfile = (profile) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_PROFILE_REQ
+    })
+
+    axios.put({URL,
+      data: {
+        ...profile
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: UPDATE_PROFILE_SUC,
+        payload: response.data
+      })
+    })
+    .catch(response => {
+      dispatch({
+        type: UPDATE_PROFILE_ERR,
         payload: response.response.data
       })
     })

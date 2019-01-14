@@ -8,16 +8,16 @@ namespace gymNotebook.Infrastructure.Handlers.Profile
 {
     public class GetProfileHandler : IResultHandler<GetProfile, ProfileDto>
     {
-        private readonly IProfileService _profileService;
+        private readonly IUserProfileService _userProfileService;
 
-        public GetProfileHandler(IProfileService profileService)
+        public GetProfileHandler(IUserProfileService userProfileService)
         {
-            _profileService = profileService;
+            _userProfileService = userProfileService;
         }
 
         public async Task<ProfileDto> HandleAsync(GetProfile command)
         {
-            return await _profileService.GetAsync(command.UserId);
+            return await _userProfileService.GetAsync(command.UserId);
         }
     }
 }
