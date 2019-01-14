@@ -3,8 +3,9 @@ using gymNotebook.Core.Repositories;
 using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Infrastructure.Exceptions;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Domain = gymNotebook.Core.Domain;
+using Profile = gymNotebook.Core.Domain.Profile;
 
 namespace gymNotebook.Infrastructure.Services
 {
@@ -31,14 +32,24 @@ namespace gymNotebook.Infrastructure.Services
             }
             var profile = await _profileRepository.GetAsync(userId);
 
-            var profileDto = _mapper.Map<Domain.Profile, ProfileDto>(profile);
+            var profileDto = _mapper.Map<Profile, ProfileDto>(profile);
             profileDto.Email = user.Email;
             return profileDto;
+        }
+
+        public async Task<ProfileListDto> SearchAsync(string param)
+        {
+            var @params = param.Split(' ');
+            var profiles = await _profileRepository.SearchAsync(@params);
+
+            var profileDtos =_mapper.Map<IEnumerable<Profile>, IEnumerable<ProfileDto>>(profiles);
+            return new ProfileListDto(profileDtos);
         }
     }
 
     public interface IUserProfileService : IService
     {
         Task<ProfileDto> GetAsync(Guid userId);
+        Task<ProfileListDto> SearchAsync(string param);
     }
 }
