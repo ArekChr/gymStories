@@ -45,23 +45,26 @@ class EditProfileScreen extends Component {
         }
       }
     },
+    pickedImage: null
   }
 
   onPhotoPress = () => {
-    console.log('dupa')
     const options = {
       noData: true,
     };
     ImagePicker.launchImageLibrary(options, response => {
+      // TODO: remove warn
       if (response.didCancel) {
-        console.log('User cancelled image picker');
+        console.warn('User cancelled image picker');
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+        console.warn('ImagePicker Error: ', response.error);
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
+        console.warn('User tapped custom button: ', response.customButton);
       }
-      if (response.uri) {
-        this.setState({ photo: response });
+      else {
+        this.setState({
+          pickedImage: { uri: response.uri }
+        });
       }
     });
   };
@@ -97,13 +100,7 @@ class EditProfileScreen extends Component {
       <ScrollView>
         <View style={{ margin: 10}}>
           <View style={{justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
-            <ProfilePhoto onPress={this.onPhotoClick} source={require('../../../images/profile2.jpg')}/>
-            {photo && (
-          <Image
-            source={{ uri: photo.uri }}
-            style={{ width: 300, height: 300 }}
-          />
-        )}
+            <ProfilePhoto onPress={this.onPhotoClick} source={this.state.pickedImage ? this.state.pickedImage : require('../../../images/profile2.jpg')}/>
             <TextButton style={{ marginTop: 5 }} onPress={this.onPhotoPress}>Zmień zdjęcie</TextButton>
           </View>
           <FloatingInput label={firstName.label}
