@@ -7,8 +7,32 @@ import { ProfilePhoto } from '../../../component'
 
 class ProfileTab extends Component {
 
+  // TODO: get previous state from asyncStorage 
+
   state = {
     refreshing: false,
+    // profile: {
+    //   firstName: {
+    //     label: '',
+    //     value: this.props.profile.firstName || ''
+    //   },
+    //   lastName: {
+    //     label: '',
+    //     value: this.props.profile.lastName || ''
+    //   },
+    //   description: {
+    //     label: '',
+    //     value: this.props.profile.description || ''
+    //   },
+    //   email: {
+    //     label: '',
+    //     value: this.props.profile.email || ''
+    //   },
+    //   gender: {
+    //     label: '',
+    //     value: this.props.profile.gender || ''
+    //   }
+    // }
   }
 
   onSettingsPress = () => {

@@ -30,3 +30,16 @@ export const removeTokensFromStorage = (callback) => {
       callback()
     )
 }
+
+export const setProfile = (profile, callback) => {
+  AsyncStorage.multiSet([
+    ['@gymNotebook@profile@email', profile.email],
+    ['@gymNotebook@profile@firstName', profile.firstName],
+    ['@gymNotebook@profile@lastName', profile.lastName],
+    ['@gymNotebook@profile@gender', profile.gender],
+    ['@gymNotebook@profile@dateOfBirth', profile.dateOfBirth]
+  ])
+  .then(() => {
+    callback()
+  })
+}
