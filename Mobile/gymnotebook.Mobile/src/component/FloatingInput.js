@@ -45,7 +45,7 @@ export default class FloatingInput extends Component {
 
       top: this._animatedIsFocused.interpolate({
         inputRange: [0, 1],
-        outputRange: [52, 28],
+        outputRange: [50, 28],
       }),
       fontSize: this._animatedIsFocused.interpolate({
         inputRange: [0, 1],
@@ -66,7 +66,7 @@ export default class FloatingInput extends Component {
           style={{
             paddingLeft: 6,
             paddingBottom: 6,
-            marginTop: 20,  
+            marginTop: 15,  
             fontSize: 19, 
             color: '#000', 
             fontFamily: Fonts.primaryRegular,

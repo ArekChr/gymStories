@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Image, View } from 'react-native'
+import { Image, TouchableOpacity } from 'react-native'
 
-export class ProfilePhoto extends Component {
+export default class ProfilePhoto extends Component {
   render() {
     return (
       <TouchableOpacity onPress={() => this.props.onPress}>
@@ -10,5 +10,3 @@ export class ProfilePhoto extends Component {
     )
   }
 }
-
-export default ProfilePhoto

@@ -11,28 +11,48 @@ class ProfileTab extends Component {
 
   state = {
     refreshing: false,
-    // profile: {
-    //   firstName: {
-    //     label: '',
-    //     value: this.props.profile.firstName || ''
-    //   },
-    //   lastName: {
-    //     label: '',
-    //     value: this.props.profile.lastName || ''
-    //   },
-    //   description: {
-    //     label: '',
-    //     value: this.props.profile.description || ''
-    //   },
-    //   email: {
-    //     label: '',
-    //     value: this.props.profile.email || ''
-    //   },
-    //   gender: {
-    //     label: '',
-    //     value: this.props.profile.gender || ''
-    //   }
-    // }
+    profile: {
+      firstName: {
+        label: '',
+        value: ''
+      },
+      lastName: {
+        label: '',
+        value: ''
+      },
+      description: {
+        label: '',
+        value: ''
+      },
+      email: {
+        label: '',
+        value: ''
+      },
+      gender: {
+        label: '',
+        value: ''
+      },
+      followingCount: {
+        label: '',
+        value: 0
+      },
+      followersCount: {
+        label: '',
+        value: 0
+      },
+      posts: {
+        label: '',
+        value: 0
+      },
+      description: {
+        label: '',
+        value: ''
+      }
+    }
+  }
+
+  onEditProfilePress = () => {
+    this.props.navigation.navigate('EditProfileScreen')
   }
 
   onSettingsPress = () => {
@@ -56,10 +76,7 @@ class ProfileTab extends Component {
 
   render() {
 
-    if(this.props.profile === undefined){
-      return <View></View>
-    }
-    const profile = this.props.profile;
+    const { profile } = this.props;
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -92,7 +109,7 @@ class ProfileTab extends Component {
                         </View>
                     </View>
                     <View style={{ flexDirection: 'row', paddingTop: 7 }}>
-                      <TouchableOpacity
+                      <TouchableOpacity onPress={this.onEditProfilePress}
                         style={{ alignItems: 'center', borderWidth: 1, flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
                         <Text>Edytuj profil</Text>
                       </TouchableOpacity>

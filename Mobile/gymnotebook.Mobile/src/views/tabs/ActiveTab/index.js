@@ -3,11 +3,12 @@ import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, Activi
 import { connect } from 'react-redux'
 import { fetchProgress, handleProgressModal, setLastProgress } from '../../../store/progress/actions'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import { PRIMARY_COLOR, STATUS_BAR_COLOR } from '../../../styles/common'
+import { PRIMARY_COLOR } from '../../../styles/common'
 import ProgressModal from './ProgressModal'
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts'
 import { progressNormalize, progressSort } from '../../../utils/progress'
 import { capFirst } from '../../../utils/string'
+import progressConfig from '../../../config/progressConfig'
 
 import * as scale from 'd3-scale'
 import * as shape from 'd3-shape'
@@ -58,7 +59,7 @@ class ActiveTab extends Component {
       <View style={styles.container}>
         <View style={styles.horizontalContainer}>
           <TouchableOpacity onPress={() => this.props.handleProgressModal()} style={{...styles.button, ...styles.buttonRight}}>
-            <Text>{capFirst(this.props.selectedProgress)}</Text>
+            <Text>{capFirst(progressConfig[this.props.selectedProgress].label)}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button}>
             <Text>Wszyscy</Text>

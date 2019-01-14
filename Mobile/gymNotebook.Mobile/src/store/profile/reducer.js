@@ -8,30 +8,43 @@ import {
   REMOVE_PROFILE_PASSWORD,
   FETCH_PROFILE_REQ,
   FETCH_PROFILE_SUC,
-  FETCH_PROFILE_ERR
+  FETCH_PROFILE_ERR,
+  UPDATE_PROFILE_REQ,
+  UPDATE_PROFILE_SUC,
+  UPDATE_PROFILE_ERR
 } from './types'
 
 const initialState = {
   loading: null,
-  profile: undefined,
+  profile: {
+    firstName: undefined,
+    lastName: undefined,
+    description: undefined,
+    email: undefined,
+    gender: undefined,
+    followingCount: undefined,
+    followersCount: undefined,
+    posts: undefined,
+    description: undefined,
+  },
   error: undefined
 }
 
 export default profileReducer = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_PROFILE_REQ: {
+    case UPDATE_PROFILE_REQ: {
       return {
         ...state,
         loading: true
       }
     }
-    case FETCH_PROFILE_SUC: {
+    case UPDATE_PROFILE_SUC: {
       return {
         ...state,
         loading: false
       }
     }
-    case FETCH_PROFILE_ERR: {
+    case UPDATE_PROFILE_ERR: {
       return {
         ...state,
         loading: false,

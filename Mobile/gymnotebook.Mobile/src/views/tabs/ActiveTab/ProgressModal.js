@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, CheckBox, Modal, TouchableOpacity } from 'react
 import { selectProgress, handleProgressModal } from '../../../store/progress/actions';
 import { connect } from 'react-redux';
 import { capFirst } from '../../../utils/string'
+import progressConfig from '../../../config/progressConfig'
 
 class ProgressModal extends Component {
   state = {
@@ -17,32 +18,6 @@ class ProgressModal extends Component {
       "shoulders",
       "neck"
     ],
-    newProgresState: {
-      weight: {
-        label: 'Waga',
-      },
-      biceps: {
-        label: 'Biceps',
-      },
-      chest: {
-        label: 'Klatka piersiowa',
-      },
-      thigh: {
-        label: 'Udo',
-      },
-      calf: {
-        label: 'Łydki',
-      },
-      waist: {
-        label: 'Talia',
-      },
-      shoulders: {
-        label: 'Barki',
-      },
-      neck: {
-        label: 'Kark',
-      },
-    },
     checked: null
   }
 
@@ -69,7 +44,7 @@ class ProgressModal extends Component {
                 value={this.state.checked === item ? true : false }
                 onValueChange={() => this.onCheck(item)}
               />
-              <Text style={{marginTop: 5}}>{capFirst(item)}</Text>
+              <Text style={{marginTop: 5}}>{progressConfig[item].label}</Text>
             </View>
           </View>
         )

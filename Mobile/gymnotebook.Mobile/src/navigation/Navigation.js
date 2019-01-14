@@ -9,6 +9,7 @@ import SearchTab from '../views/tabs/SearchTab'
 import SettingsScreen from '../views/tabs/ProfileTab/SettingsScreen'
 import LoginScreen from '../views/Login'
 import AddProgressScreen from '../views/AddProgress'
+import EditProfileScreen from '../views/tabs/ProfileTab/EditProfileScreen'
 
 import {
   BirthDateScreen, 
@@ -215,6 +216,12 @@ const HomeStackNavigator = createStackNavigator({
   },
   AddProgressScreen: { 
     screen: AddProgressScreen 
+  },
+  EditProfileScreen: {
+    screen: EditProfileScreen,
+    navigationOptions: {
+      title: 'Edytuj Profil'
+    }
   }
 },{
   defaultNavigationOptions: () => ({
