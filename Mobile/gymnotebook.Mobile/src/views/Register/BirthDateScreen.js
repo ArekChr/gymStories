@@ -3,8 +3,8 @@ import { View } from 'react-native';
 import { ButtonNext, TitleComponent } from '../../component'
 import { setDateOfBirth } from '../../store/profile/actions'
 import { connect } from 'react-redux'
-import { DatePickerView } from '@ant-design/react-native';
-import en_US from '@ant-design/react-native/lib/locale-provider/en_US';
+import { DatePickerView, Provider } from '@ant-design/react-native';
+import enUS from '@ant-design/react-native/lib/locale-provider/en_US';
 
 
 class BirthDateScreen extends Component {
@@ -31,21 +31,22 @@ class BirthDateScreen extends Component {
     const datemax = new Date()
     
     return (
-      <View style={{ margin: 20 }}>
-        <TitleComponent>Podaj swoją datę urodzenia</TitleComponent>
-        <DatePickerView
-          mode="date"
-          value={this.state.dateOfBirth}
-          onChange={this.onChange}
-          onValueChange={this.onValueChange}
-          locale={en_US}
-          minDate={datemin}
-          maxDate={datemax}
-          format='dd-MM-yyyy'
-          style={{width: '80%', alignSelf: 'center', marginTop: 10 }}
-        />
-        <ButtonNext onPress={this.onNextClicked}>Dalej</ButtonNext>
-      </View>
+      <Provider locale={enUS}>
+        <View style={{ margin: 20 }}>
+          <TitleComponent>Podaj swoją datę urodzenia</TitleComponent>
+            <DatePickerView
+              mode="date"
+              value={this.state.dateOfBirth}
+              onChange={this.onChange}
+              onValueChange={this.onValueChange}
+              minDate={datemin}
+              maxDate={datemax}
+              format='dd-MM-yyyy'
+              style={{width: '80%', alignSelf: 'center', marginTop: 10 }}
+            />
+          <ButtonNext onPress={this.onNextClicked}>Dalej</ButtonNext>
+        </View>
+      </Provider>
     );
   }
 }
