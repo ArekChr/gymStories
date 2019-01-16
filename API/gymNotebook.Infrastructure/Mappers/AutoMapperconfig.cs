@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using gymNotebook.Core.Domain;
 using gymNotebook.Infrastructure.DTO;
+using Profile = gymNotebook.Core.Domain.Profile;
 
 namespace gymNotebook.Infrastructure.Mappers
 {
@@ -17,6 +18,8 @@ namespace gymNotebook.Infrastructure.Mappers
                 cfg.CreateMap<Routine, RoutineDto>();
                 cfg.CreateMap<Result, ResultDto>();
                 cfg.CreateMap<Progress, ProgressDto>();
+                cfg.CreateMap<Profile, ProfileDto>();
+
             })
             .CreateMapper();
     }

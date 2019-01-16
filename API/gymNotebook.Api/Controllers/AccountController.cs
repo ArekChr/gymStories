@@ -15,7 +15,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IJwtHandler _jwtHandler;
 
-        public AccountController(ICommandDispatcher commandDispatcher, IJwtHandler jwtHandler) : base(commandDispatcher)
+        public AccountController(IJwtHandler jwtHandler,
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _jwtHandler = jwtHandler;
         }

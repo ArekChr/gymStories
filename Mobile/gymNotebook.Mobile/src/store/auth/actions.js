@@ -5,19 +5,38 @@ import {
   USER_REGISTER_REQ,
   USER_LOGIN_REQ,
   USER_LOGIN_SUC,
-  USER_LOGIN_ERR
+  USER_LOGIN_ERR,
+  STORAGE_MAP_JWT,
+  USER_LOGOUT
  } from './types'
-import { API_URL } from '../../consts'
+import { API_URL } from '../../utils/misc'
 
 const URL = `${API_URL}/user/`
+const LOGIN_URL = `${API_URL}/login`
 
-export const login = () => {
+export const mapJwtToState = (jwt) => {
+  return (dispatch) => {
+    dispatch({
+      type: STORAGE_MAP_JWT,
+      payload: jwt
+    })
+    axios.defaults.headers.common['Authorization'] = `Bearer ${jwt.token}`;
+  }
+}
+
+export const logout = () => {
+  return (dispatch) => {
+    dispatch({type: USER_LOGOUT })
+  }
+}
+
+export const login = (data) => {
   return (dispatch) => {
     dispatch({ type: USER_LOGIN_REQ })
 
     axios({
       method:"POST",
-      url: URL,
+      url: LOGIN_URL,
       data: {
         email: data.email,
         password: data.password
@@ -41,7 +60,7 @@ export const login = () => {
   }
 }
 
-export const registerUser = (data) => {
+export const registerUser = (data, callback) => {
   return (dispatch) => {
     dispatch({ type: USER_REGISTER_REQ })
 
@@ -49,9 +68,7 @@ export const registerUser = (data) => {
       method:"POST",
       url: URL,
       data: {
-        email: data.email,
-        username: data.username,
-        password: data.password
+        ...data
       },
       headers: {
         "Content-Type": "application/json"
@@ -62,6 +79,9 @@ export const registerUser = (data) => {
         type: USER_REGISTER_SUC,
         payload: response.data
       })
+      if(callback instanceof Function){
+        callback()
+      }
     })
     .catch(error => {
       dispatch({

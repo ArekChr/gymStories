@@ -1,9 +1,10 @@
 ﻿using gymNotebook.Core.Domain;
+using gymNotebook.Infrastructure.Commands;
 using System;
 
 namespace gymNotebook.Infrastructure.DTO
 {
-    public class FriendDto
+    public class FriendDto : IResult
     {
         public Guid UserId { get; set; }
 

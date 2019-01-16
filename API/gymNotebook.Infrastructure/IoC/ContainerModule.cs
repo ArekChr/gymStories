@@ -18,6 +18,7 @@ namespace gymNotebook.Infrastructure.IoC
         {
             builder.RegisterInstance(AutoMapperConfig.Initialize()).SingleInstance();
             builder.RegisterModule<CommandModule>();
+            builder.RegisterModule<ResultModule>();
             builder.RegisterModule<RepositoryModule>();
             builder.RegisterModule<MongoModule>();
             builder.RegisterModule<SqlModule>();

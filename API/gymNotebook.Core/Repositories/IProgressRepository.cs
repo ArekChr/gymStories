@@ -9,6 +9,8 @@ namespace gymNotebook.Core.Repositories
     {
         Task<Progress> GetAsync(Guid id);
 
+        Task<Progress> GetAsync(Guid userId, DateTime date);
+
         Task<IEnumerable<Progress>> BrowseAsync(Guid userId);
 
         Task AddAsync(Progress progress);

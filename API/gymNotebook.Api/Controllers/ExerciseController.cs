@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Trainings.Exercises;
 using gymNotebook.Infrastructure.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
@@ -14,7 +13,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IExerciseService _exerviseService;
 
-        public ExerciseController(IExerciseService exerviseService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public ExerciseController(IExerciseService exerviseService,
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _exerviseService = exerviseService;
         }

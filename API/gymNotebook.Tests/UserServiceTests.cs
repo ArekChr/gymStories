@@ -12,11 +12,11 @@ namespace gymNotebook.Tests
     public class UserServiceTests
     {
         [Test]
-        public async Task get_async_should_return_propertly_dto()
+        public async Task Get_async_should_return_properly_dto()
         {
             var mockRepository = new Mock<IUserRepository>();
 
-            var userService = new UserService(mockRepository.Object, null, null);
+            var userService = new UserService(mockRepository.Object, null, null, null);
 
             var actual = await userService.GetAsync("user1@gmail.com");
 

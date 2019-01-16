@@ -16,7 +16,7 @@ namespace gymNotebook.Infrastructure.Handlers.Users
 
         public async Task HandleAsync(CreateUser command)
         {
-            await _userService.RegisterAsync(command.Username, command.Email, command.Password);
+            await _userService.RegisterAsync(command.Email, command.Password, command.FirstName, command.LastName, command.DateOfBirth, command.Gender);
         }
     }
 }

@@ -4,7 +4,9 @@ import {
   USER_REGISTER_REQ,
   USER_LOGIN_REQ,
   USER_LOGIN_SUC,
-  USER_LOGIN_ERR
+  USER_LOGIN_ERR,
+  STORAGE_MAP_JWT,
+  USER_LOGOUT
 } from './types'
 
 const initialState = {
@@ -12,14 +14,28 @@ const initialState = {
     code: '',
     message: ''
   },
-  loading: true,
+  loading: null,
   registerSuccess: null,
   loginSuccess: null,
-  token: ''
+  jwt: {
+    token: null,
+    expiry: null
+  }
 }
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case STORAGE_MAP_JWT: {
+      return {
+        ...state,
+        jwt: action.payload
+      }
+    }
+    case USER_LOGOUT: {
+      return {
+        ...initialState
+      }
+    }
     case USER_LOGIN_REQ: {
       return {
         ...state,
@@ -36,7 +52,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         loginSuccess: true,
-        token: action.payload
+        jwt: action.payload
       }
     }
     case USER_LOGIN_ERR: {
