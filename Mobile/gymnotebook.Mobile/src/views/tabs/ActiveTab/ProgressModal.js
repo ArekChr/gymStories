@@ -65,7 +65,7 @@ class ProgressModal extends Component {
               </View>
 
               <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.button} onPress={this.props.handleProgressModal}>
+                <TouchableOpacity style={styles.button} onPress={this.props.handleProgressModal}>
                   <Text style={styles.buttonText}>Anuluj</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={this.onSelect}>

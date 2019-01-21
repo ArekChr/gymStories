@@ -4,7 +4,7 @@ import CalendarModal from './CalendarModal'
 import { handleCalendarModal, createProgress } from '../../store/progress/actions';
 import { connect } from 'react-redux';
 import { capFirst } from '../../utils/string'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import { CheckButton } from '../../component';
 
 class AddProgressScreen extends Component {
 
@@ -12,9 +12,7 @@ class AddProgressScreen extends Component {
     return {
       title: 'Dodaj ',
       headerRight: (
-        <TouchableOpacity style={{padding: 10}} onPress={navigation.getParam('onProgressAdd')}>
-          <MaterialIcons name="check" size={25} color='white' /> 
-        </TouchableOpacity>
+        <CheckButton onPress={navigation.getParam('onProgressAdd')} />
       )
     }
   }
@@ -101,7 +99,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({progress}) => ({
+const mapStateToProps = ({Progress}) => ({
   selectedDate: Progress.selectedDate,
   selectedProgress: Progress.selectedProgress,
   lastProgress: Progress.lastProgress

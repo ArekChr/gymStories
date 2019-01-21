@@ -23,5 +23,13 @@ namespace gymNotebook.Api.Controllers
             return Json(results);
         }
 
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody]UpdateProfileImage command)
+        {
+            var a = command;
+
+            return Ok();
+        }
+
     }
 }

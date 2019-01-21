@@ -12,7 +12,10 @@ import {
   FETCH_PROFILE_ERR,
   UPDATE_PROFILE_REQ,
   UPDATE_PROFILE_SUC,
-  UPDATE_PROFILE_ERR
+  UPDATE_PROFILE_ERR,
+  UPDATE_PROFILE_PHOTO_REQ,
+  UPDATE_PROFILE_PHOTO_SUC,
+  UPDATE_PROFILE_PHOTO_ERR,
 } from './types'
 import { API_URL } from '../../utils/misc'
 
@@ -37,6 +40,32 @@ export const fetchProfile = (callback) => {
     .catch(response => {
       dispatch({
         type: FETCH_PROFILE_ERR,
+        payload: response.response.data
+      })
+    })
+  }
+}
+
+export const updateProfilePhoto = (photo) => {
+  return (dispatch) => {
+    dispatch({
+      type: UPDATE_PROFILE_PHOTO_REQ
+    })
+
+    axios.put({
+      URL,
+      data: {
+
+      }
+    })
+    .then(response => {
+      dispatch({
+        type: UPDATE_PROFILE_PHOTO_SUC
+      })
+    })
+    .catch(response => {
+      dispatch({
+        type: UPDATE_PROFILE_PHOTO_ERR,
         payload: response.response.data
       })
     })

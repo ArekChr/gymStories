@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { View, Picker, ScrollView, CameraRoll, PermissionsAndroid } from 'react-native'
 import { connect } from 'react-redux'
-import ImagePicker from 'react-native-image-picker'
-import { ProfilePhoto, FloatingInput, TextButton } from '../../../component';
+//import ImagePicker from 'react-native-image-picker'
+import ImagePicker from 'react-native-image-crop-picker';
+import { ProfilePhoto, FloatingInput, TextButton, CheckButton } from '../../../component';
 
 class EditProfileScreen extends Component {
   
@@ -48,25 +49,49 @@ class EditProfileScreen extends Component {
     pickedImage: null
   }
 
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Dodaj',
+      headerRight: (
+        <CheckButton onPress={navigation.getParam('onProfileSave')} />
+      )
+    }
+  }
+
+  componentDidMount() {
+    this.props.navigation.setParams({ onProfileSave: this._onProfileSave})
+  }
+
+  _onProfileSave = () => {
+    this.props.navigation.popToTop();
+  }
+
   onPhotoPress = () => {
-    const options = {
-      noData: true,
-    };
-    ImagePicker.launchImageLibrary(options, response => {
-      // TODO: remove warn
-      if (response.didCancel) {
-        console.warn('User cancelled image picker');
-      } else if (response.error) {
-        console.warn('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.warn('User tapped custom button: ', response.customButton);
-      }
-      else {
-        this.setState({
-          pickedImage: { uri: response.uri }
-        });
-      }
+    ImagePicker.openPicker({
+      width: 5000,
+      height: 5000,
+      cropping: true
+    }).then(image => {
+      console.log(image)
+      this.setState({
+        pickedImage: { uri: image.path }
+      });
     });
+    // ImagePicker.launchImageLibrary(options, response => {
+    //   // TODO: remove warn
+    //   if (response.didCancel) {
+    //     console.warn('User cancelled image picker');
+    //   } else if (response.error) {
+    //     console.warn('ImagePicker Error: ', response.error);
+    //   } else if (response.customButton) {
+    //     console.warn('User tapped custom button: ', response.customButton);
+    //   }
+    //   else {
+    //     this.setState({
+    //       pickedImage: { uri: response.uri }
+    //     });
+    //   }
+    // });
   };
 
   onFirstNameChange = () => {

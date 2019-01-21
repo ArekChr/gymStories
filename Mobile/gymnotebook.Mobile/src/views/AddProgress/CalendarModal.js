@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({progress}) => ({
+const mapStateToProps = ({Progress}) => ({
   selectedDate: Progress.selectedDate,
   pickedDate: Progress.pickedDate,
   calendarModal: Progress.calendarModal
