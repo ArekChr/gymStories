@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using gymNotebook.Core.Repositories;
 using gymNotebook.Infrastructure.Commands;
+using gymNotebook.Infrastructure.Commands.Image;
+using gymNotebook.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
@@ -11,17 +12,22 @@ namespace gymNotebook.Api.Controllers
     [Route("api/Image")]
     public class ImageController : ApiControllerBase
     {
-        public ImageController(ICommandDispatcher commandDispatcher, IResultDispatcher resultDispatcher)
+        private readonly IImageRepository _imageRepository;
+
+        public ImageController(ICommandDispatcher commandDispatcher, IResultDispatcher resultDispatcher, IImageRepository imageRepository)
             : base(commandDispatcher, resultDispatcher)
         {
+            _imageRepository = imageRepository;
         }
 
-        //[HttpGet("browse")]
-        //public async Task<IActionResult> GetAll(BrowseProgress command)
-        //{
-        //    var results = await DispatchAsync<BrowseProgress, ProgressListDto>(command);
+        [HttpGet("{imageId}")]
+        public async Task<IActionResult> Get([FromRoute]Guid imageId)
+        {
+            //var image = await DispatchAsync<GetImage, ImageDto>(command);
 
-        //    return Json(results.ProgressList);
-        //}
+            var image = await _imageRepository.GetAsync(imageId);
+
+            return File(image.Content, "image/jpeg");
+        }
     }
 }

@@ -7,8 +7,19 @@ namespace gymNotebook.Core.Domain
         public Guid UserId { get; protected set; }
         public byte[] Content { get; protected set; }
 
-        protected Image()
+        public Image()
         {
+        }
+
+        public Image(Guid userId, byte[] content)
+        {
+            UserId = userId;
+            SetContent(content);
+        }
+
+        public void SetContent(byte[] content)
+        {
+            Content = content;
         }
     }
 }

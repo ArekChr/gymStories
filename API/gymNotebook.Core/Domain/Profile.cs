@@ -71,5 +71,10 @@ namespace gymNotebook.Core.Domain
             }
             LastName = lastName;
         }
+
+        public void SetImage(Guid id)
+        {
+            ImageId = id;
+        }
     }
 }

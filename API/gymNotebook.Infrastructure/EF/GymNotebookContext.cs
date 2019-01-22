@@ -16,6 +16,7 @@ namespace gymNotebook.Infrastructure.EF
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Progress> Progress { get; set; }
         public DbSet<Result> Results { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public GymNotebookContext(DbContextOptions<GymNotebookContext> options, SqlSettings sqlSettings ) : base (options)
         {
@@ -51,6 +52,8 @@ namespace gymNotebook.Infrastructure.EF
             progressBuilder.HasKey(x => x.Id);
             var resultBuilder = modelBuilder.Entity<Result>();
             resultBuilder.HasKey(x => x.Id);
+            var imageBuilder = modelBuilder.Entity<Image>();
+            imageBuilder.HasKey(x => x.Id);
         }
     }
 }

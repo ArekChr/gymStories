@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 //import ImagePicker from 'react-native-image-picker'
 import ImagePicker from 'react-native-image-crop-picker';
 import { ProfilePhoto, FloatingInput, TextButton, CheckButton } from '../../../component';
+import { updateProfilePhoto } from '../../../store/profile/actions'
 
 class EditProfileScreen extends Component {
   
@@ -63,6 +64,10 @@ class EditProfileScreen extends Component {
   }
 
   _onProfileSave = () => {
+    const { pickedImage } = this.state;
+    if(pickedImage){
+      this.props.updateProfilePhoto(this.state.pickedImage);
+    }
     this.props.navigation.popToTop();
   }
 
@@ -74,24 +79,9 @@ class EditProfileScreen extends Component {
     }).then(image => {
       console.log(image)
       this.setState({
-        pickedImage: { uri: image.path }
+        pickedImage: { uri: image.path, ...image }
       });
     });
-    // ImagePicker.launchImageLibrary(options, response => {
-    //   // TODO: remove warn
-    //   if (response.didCancel) {
-    //     console.warn('User cancelled image picker');
-    //   } else if (response.error) {
-    //     console.warn('ImagePicker Error: ', response.error);
-    //   } else if (response.customButton) {
-    //     console.warn('User tapped custom button: ', response.customButton);
-    //   }
-    //   else {
-    //     this.setState({
-    //       pickedImage: { uri: response.uri }
-    //     });
-    //   }
-    // });
   };
 
   onFirstNameChange = () => {
@@ -161,7 +151,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  
+  updateProfilePhoto: (photo) => updateProfilePhoto(photo)(dispatch)
 })
 
-export default connect(mapStateToProps, {})(EditProfileScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen)

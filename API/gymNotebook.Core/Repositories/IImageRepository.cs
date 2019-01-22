@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace gymNotebook.Core.Repositories
 {
-    public interface IImageRepository
+    public interface IImageRepository : IRepository
     {
         Task<Image> GetAsync(Guid id);
 

@@ -52,12 +52,20 @@ export const updateProfilePhoto = (photo) => {
       type: UPDATE_PROFILE_PHOTO_REQ
     })
 
-    axios.put({
-      URL,
-      data: {
+    const data = new FormData();
+    data.append('name', 'profilePhoto')
+    data.append('file', {
+      uri: photo.uri,
+      type: photo.mime,
+      name: 'profilePhoto'
+    });
 
+    axios.put(URL, data,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       }
-    })
+    )
     .then(response => {
       dispatch({
         type: UPDATE_PROFILE_PHOTO_SUC

@@ -24,9 +24,9 @@ namespace gymNotebook.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody]UpdateProfileImage command)
+        public async Task<IActionResult> Put([FromForm]UpdateProfileImage command)
         {
-            var a = command;
+            await DispatchAsync(command);
 
             return Ok();
         }
