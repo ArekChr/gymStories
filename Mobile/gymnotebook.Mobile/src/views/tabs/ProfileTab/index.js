@@ -91,7 +91,7 @@ class ProfileTab extends Component {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <ProfilePhoto onPress={this.onPhotoClicked} source={require('../../../images/profile2.jpg')} />
+                  <ProfilePhoto onPress={this.onPhotoClicked} source={profile.imageId} />
                 </View>
                   <View style={{ flex: 3 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>

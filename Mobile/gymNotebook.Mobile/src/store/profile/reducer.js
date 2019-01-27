@@ -26,6 +26,7 @@ const initialState = {
     followersCount: undefined,
     posts: undefined,
     description: undefined,
+    imageId: undefined
   },
   error: undefined
 }
