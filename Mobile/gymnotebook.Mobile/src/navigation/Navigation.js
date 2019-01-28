@@ -10,6 +10,7 @@ import SettingsScreen from '../views/tabs/ProfileTab/SettingsScreen'
 import LoginScreen from '../views/Login'
 import AddProgressScreen from '../views/AddProgress'
 import EditProfileScreen from '../views/tabs/ProfileTab/EditProfileScreen'
+import VideoRelationsScreen from '../views/tabs/HomeTab/VideoRelations/VideoRelationsScreen'
 
 import {
   BirthDateScreen, 
@@ -47,8 +48,27 @@ const ProgressTabStackNavigator = createStackNavigator({
     headerTintColor: THEME_FONT_COLOR,
     headerTitleStyle : {
       fontWeight: undefined,
-      fontFamily: Fonts.primaryRegular
+      fontFamily: Fonts.robotoRegular
     }
+  })
+})
+
+const HomeTabStackNavigator = createStackNavigator({
+  HomeTab: { screen: HomeTab }
+},
+{
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: 'white',
+      height: 50
+    },
+    headerTintColor: 'black',
+    headerTitleStyle : {
+      fontWeight: undefined,
+      fontFamily: Fonts.pacificoRegular,
+      marginLeft: -10
+    },
+    title: 'gymNotebook'
   })
 })
 
@@ -66,13 +86,13 @@ const ProfileStackNavigator = createStackNavigator({
     headerTintColor: THEME_FONT_COLOR,
     headerTitleStyle : {
       fontWeight: undefined,
-      fontFamily: Fonts.primaryRegular
+      fontFamily: Fonts.robotoRegular
     }
   })
 })
 
 const AppTabNavigator = createBottomTabNavigator({
-    HomeTab: HomeTab,
+    HomeTab: HomeTabStackNavigator,
     SearchTab: SearchTab,
     ActiveTab: ProgressTabStackNavigator,
     GymTab: GymTab,
@@ -107,7 +127,7 @@ const AppTabNavigator = createBottomTabNavigator({
     },
     headerTitleStyle : {
       fontWeight: undefined,
-      fontFamily: Fonts.primaryRegular
+      fontFamily: Fonts.robotoRegular
     }
   })
 
@@ -168,7 +188,7 @@ const SignInStackNavigator = createStackNavigator({
     headerTintColor: THEME_FONT_COLOR,
     headerTitleStyle : {
       fontWeight: undefined,
-      fontFamily: Fonts.primaryRegular
+      fontFamily: Fonts.robotoRegular
     }
   }),
   transitionConfig: () => ({
@@ -222,6 +242,10 @@ const HomeStackNavigator = createStackNavigator({
     navigationOptions: {
       title: 'Edytuj Profil'
     }
+  },
+  VideoRelations: { 
+    screen: VideoRelationsScreen,
+    navigationOptions: { header: null }
   }
 },{
   defaultNavigationOptions: () => ({
@@ -231,7 +255,7 @@ const HomeStackNavigator = createStackNavigator({
     headerTintColor: THEME_FONT_COLOR,
     headerTitleStyle : {
       fontWeight: undefined,
-      fontFamily: Fonts.primaryRegular
+      fontFamily: Fonts.robotoRegular
     }
   })
 })

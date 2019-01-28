@@ -12,7 +12,7 @@ export default class ButtonNext extends Component {
           width: '100%', 
           backgroundColor: SECONDARY_COLOR, 
           color: 'white', 
-          fontFamily: Fonts.primaryMedium,
+          fontFamily: Fonts.robotoMedium,
           textAlignVertical: "center",
           textAlign: 'center',
           height: 35,

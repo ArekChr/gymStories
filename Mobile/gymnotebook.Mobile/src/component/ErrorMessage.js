@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 12,
-    fontFamily: Fonts.primaryLight,
+    fontFamily: Fonts.robotoLight,
     color: WARNING_COLOR,
     textAlignVertical: 'center',
     marginBottom: 15

@@ -94,6 +94,10 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
@@ -138,6 +142,8 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-video')
+    compile project(':react-native-linear-gradient')
     compile project(':rn-fetch-blob')
     compile project(':react-native-image-crop-picker')
     compile project(':react-native-image-picker')

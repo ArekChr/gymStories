@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 18,
-    fontFamily: Fonts.primaryMedium,
+    fontFamily: Fonts.robotoMedium,
     color: FONT_COLOR,
     textAlignVertical: 'center',
     marginTop: 50,

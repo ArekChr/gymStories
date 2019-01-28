@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   logoText: {
     fontSize: 40,
-    fontFamily: Fonts.primaryLight,
+    fontFamily: Fonts.robotoLight,
     color: PRIMARY_COLOR
   }
 })

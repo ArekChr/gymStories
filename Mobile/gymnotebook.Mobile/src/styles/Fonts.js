@@ -1,8 +1,9 @@
 export default {
-  primaryLight: 'Roboto-Light',
-  primaryBlack: 'Roboto-Black',
-  primaryBold: 'Roboto-Bold',
-  primaryMedium: 'Roboto-Medium',
-  primaryThin: 'Roboto-Thin',
-  primaryRegular: 'Roboto-Regular'
+  robotoLight: 'Roboto-Light',
+  robotoBlack: 'Roboto-Black',
+  robotoBold: 'Roboto-Bold',
+  robotoMedium: 'Roboto-Medium',
+  robotoThin: 'Roboto-Thin',
+  robotoRegular: 'Roboto-Regular',
+  pacificoRegular: 'Pacifico-Regular'
 }
