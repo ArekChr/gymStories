@@ -9,6 +9,21 @@ using gymNotebook.Infrastructure.Exceptions;
 
 namespace gymNotebook.Infrastructure.Services
 {
+    public interface IResultService : IService
+    {
+        Task<ResultDto> GetAsync(Guid id);
+
+        Task<ResultDto> GetAsync(Guid exerciseId, int numberSeries);
+
+        Task CreateAsync(Guid exerciseId, int numberSeries, int repetitions, float weight, string comments);
+
+        Task<IEnumerable<ResultDto>> BrowseAsync(Guid exerciseId);
+
+        Task UpdateAsync(Guid id, int repetitions, float weight, string comments);
+
+        Task DeleteAsync(Guid id);
+    }
+
     public class ResultService : IResultService
     {
         private readonly IResultRepository _resultRepository;

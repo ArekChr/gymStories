@@ -8,6 +8,7 @@ namespace gymNotebook.Core.Domain
     {
         private ISet<Follow> _following = new HashSet<Follow>();
         private ISet<Rate> _rates = new HashSet<Rate>();
+        private ISet<Post> _posts = new HashSet<Post>();
 
         public Guid UserId { get; protected set; }
         public string FirstName { get; protected set; }
@@ -24,6 +25,7 @@ namespace gymNotebook.Core.Domain
         public DateTime AccountTypeExpiration { get; protected set; }
         public DateTime DateOfBirth { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }
+        public IEnumerable<Post> Posts => _posts;
         public IEnumerable<Follow> Following => _following;
         public IEnumerable<Rate> Rates => _rates;
 

@@ -9,6 +9,11 @@ using System.Text;
 
 namespace gymNotebook.Infrastructure.Services
 {
+    public interface IJwtHandler
+    {
+        JwtDto CreateToken(Guid userId, string role);
+    }
+
     public class JwtHandler : IJwtHandler
     {
         private readonly JwtSettings _settings;

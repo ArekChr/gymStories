@@ -1,6 +1,5 @@
 ﻿using gymNotebook.Core.Domain;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace gymNotebook.Infrastructure.EF
 {
@@ -17,6 +16,8 @@ namespace gymNotebook.Infrastructure.EF
         public DbSet<Progress> Progress { get; set; }
         public DbSet<Result> Results { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Follow> Follows { get; set; }
 
         public GymNotebookContext(DbContextOptions<GymNotebookContext> options, SqlSettings sqlSettings ) : base (options)
         {
@@ -54,6 +55,10 @@ namespace gymNotebook.Infrastructure.EF
             resultBuilder.HasKey(x => x.Id);
             var imageBuilder = modelBuilder.Entity<Image>();
             imageBuilder.HasKey(x => x.Id);
+            var postBuilder = modelBuilder.Entity<Post>();
+            postBuilder.HasKey(x => x.Id);
+            var followBuilder = modelBuilder.Entity<Follow>();
+            followBuilder.HasKey(x => x.Id);
         }
     }
 }

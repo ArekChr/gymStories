@@ -8,6 +8,19 @@ using gymNotebook.Infrastructure.DTO;
 
 namespace gymNotebook.Infrastructure.Services
 {
+    public interface IProgressService : IService
+    {
+        Task<ProgressDto> GetAsync(Guid id);
+
+        Task CreateAsync(Guid userId, DateTime createdAt, float? weight, float? biceps, float? chest, float? thigh, float? calf, float? waist, float? shoulders, float? neck);
+
+        Task<ProgressListDto> BrowseAsync(Guid userId);
+
+        Task UpdateAsync(Guid id, float weight, float biceps, float chest, float thigh, float calf, float waist, float shoulders, float neck);
+
+        Task DeleteAsync(Guid id);
+    }
+
     public class ProgressService : IProgressService
     {
         private readonly IProgressRepository _progressRepository;
