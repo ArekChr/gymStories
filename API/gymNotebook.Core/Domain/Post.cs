@@ -14,5 +14,9 @@ namespace gymNotebook.Core.Domain
         public int Likes { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
         public IEnumerable<Comment> Comments => _comments;
+
+        protected Post()
+        {
+        }
     }
 }

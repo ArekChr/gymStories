@@ -6,6 +6,7 @@ namespace gymNotebook.Core.Domain
     {
         public Guid Follower { get; protected set; }
         public Guid Followed { get; protected set; }
+        public DateTime CreatedAt { get; protected set; }
 
         protected Follow()
         {
