@@ -1,0 +1,12 @@
+export const FETCH_FOLLOW_REQ = 'follow/FETCH_REQ';
+export const FETCH_FOLLOW_SUC = 'follow/FETCH_SUC';
+export const FETCH_FOLLOW_ERR = 'follow/FETCH_ERR';
+export const UPDATE_FOLLOW_REQ = 'follow/UPDATE_REQ';
+export const UPDATE_FOLLOW_SUC = 'follow/UPDATE_SUC';
+export const UPDATE_FOLLOW_ERR = 'follow/UPDATE_ERR';
+export const CREATE_FOLLOW_REQ = 'follow/CREATE_REQ';
+export const CREATE_FOLLOW_SUC = 'follow/CREATE_SUC';
+export const CREATE_FOLLOW_ERR = 'follow/CREATE_ERR';
+export const DELETE_FOLLOW_REQ = 'follow/DELETE_REQ';
+export const DELETE_FOLLOW_SUC = 'follow/DELETE_SUC';
+export const DELETE_FOLLOW_ERR = 'follow/DELETE_ERR';

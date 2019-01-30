@@ -23,7 +23,7 @@ namespace gymNotebook.Infrastructure.Repositories
             await _context.Images.AddAsync(image);
             await _context.SaveChangesAsync();
         }
-        public async Task<IEnumerable<Image>> BrowseAsync(Guid userId)
+        public async Task<IList<Image>> BrowseAsync(Guid userId)
             => await _context.Images.Where(x => x.UserId == userId).ToListAsync();
 
         public async Task<Image> GetAsync(Guid id)
