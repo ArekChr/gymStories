@@ -109,25 +109,26 @@ export default class HomeTab extends Component {
             </TouchableOpacity>
           </View>
 
-          <TouchableWithoutFeedback style={{}}>
-            <Image style={{width: 500, height: 300 }} source={require("../../../images/post1.jpg")}/>
-          </TouchableWithoutFeedback>
-
         </View>
-          <View style={{padding: 10}}>
-            <View style={{flexDirection: 'row', display: 'flex'}}>
-              <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-                <TouchableOpacity style={{...styles.icon}}>
-                  <FontAwesome name="heart" size={25} color="black"/>
-                </TouchableOpacity>
-                <TouchableOpacity style={{...styles.icon}}>
-                  <FontAwesome name="comment" size={25} color="black" style={{marginTop: -3}}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.icon}>
-                  <Ionicons name="ios-send" size={30} color="black" style={{marginTop: -3}}/>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.right}>
+
+        <TouchableWithoutFeedback style={{}}>
+            <Image style={{width: 500, height: 300 }} source={require("../../../images/post1.jpg")}/>
+        </TouchableWithoutFeedback>
+
+        <View style={{padding: 10}}>
+          <View style={{flexDirection: 'row', display: 'flex'}}>
+            <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+              <TouchableOpacity style={{...styles.icon}}>
+                <FontAwesome name="heart" size={25} color="black"/>
+              </TouchableOpacity>
+              <TouchableOpacity style={{...styles.icon}}>
+                <FontAwesome name="comment" size={25} color="black" style={{marginTop: -3}}/>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.icon}>
+                <Ionicons name="ios-send" size={30} color="black" style={{marginTop: -3}}/>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.right}>
 
               <TouchableOpacity style={styles.icon}>
 

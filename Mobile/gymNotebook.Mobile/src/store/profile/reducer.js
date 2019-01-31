@@ -11,11 +11,12 @@ import {
   FETCH_PROFILE_ERR,
   UPDATE_PROFILE_REQ,
   UPDATE_PROFILE_SUC,
-  UPDATE_PROFILE_ERR
+  UPDATE_PROFILE_ERR,
+  FETCH_PROFILE_IMAGE_REQ,
+  FETCH_PROFILE_IMAGE_SUC
 } from './types'
 
 const initialState = {
-  loading: null,
   profile: {
     firstName: undefined,
     lastName: undefined,
@@ -28,11 +29,26 @@ const initialState = {
     description: undefined,
     imageId: undefined
   },
-  error: undefined
+  loading: null,
+  error: undefined,
+  imagePath: undefined
 }
 
 export default profileReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FETCH_PROFILE_IMAGE_REQ: {
+      return {
+        ...state,
+        loading: true,
+      }
+    }
+    case FETCH_PROFILE_IMAGE_SUC: {
+      return {
+        ...state,
+        loading: false,
+        imagePath: action.payload
+      }
+    }
     case UPDATE_PROFILE_REQ: {
       return {
         ...state,

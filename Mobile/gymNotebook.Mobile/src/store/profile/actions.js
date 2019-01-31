@@ -1,4 +1,5 @@
 import axios from 'axios'
+import RNFetchBlob from 'rn-fetch-blob'
 import {
   SET_PROFILE_NAME,
   SET_PROFILE_BIRTH_DATE,
@@ -16,10 +17,13 @@ import {
   UPDATE_PROFILE_PHOTO_REQ,
   UPDATE_PROFILE_PHOTO_SUC,
   UPDATE_PROFILE_PHOTO_ERR,
+  FETCH_PROFILE_IMAGE_REQ,
+  FETCH_PROFILE_IMAGE_SUC
 } from './types'
 import { API_URL } from '../../utils/misc'
 
-const URL = `${API_URL}/Profile`
+const URL = `${API_URL}/Profile`;
+const URL_IMAGE = `${API_URL}/Image`;
 
 export const fetchProfile = (callback) => {
   return (dispatch) => {
@@ -27,12 +31,38 @@ export const fetchProfile = (callback) => {
       type: FETCH_PROFILE_REQ
     })
 
+    var imageId;
+
     axios.get(`${URL}`)
-    .then(response => {
+    .then((response) => {
+
+      // imageId = response.data.imageId;
+
+      // if(imageId !== "00000000-0000-0000-0000-000000000000" || imageId != null){
+
+      //   dispatch({
+      //     type: FETCH_PROFILE_IMAGE_REQ
+      //   })
+
+      //   RNFetchBlob.config({
+      //     session: 'imageProfile',
+      //     fileCache : true
+      //   })
+      //   .fetch('GET', `${URL_IMAGE}/${imageId}`)
+      //   .then((res) => {
+
+      //     dispatch({
+      //       type: FETCH_PROFILE_IMAGE_SUC,
+      //       payload: res.path()
+      //     })
+      //   })
+      // }
+
       dispatch({
         type: FETCH_PROFILE_SUC,
         payload: response.data
       })
+
       if(callback instanceof Function){
         callback()
       }
