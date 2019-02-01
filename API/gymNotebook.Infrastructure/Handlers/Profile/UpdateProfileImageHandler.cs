@@ -1,11 +1,13 @@
 ﻿using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Profile;
+using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Infrastructure.Services;
+using System;
 using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Handlers.Profile
 {
-    public class UpdateProfileImageHandler : ICommandHandler<UpdateProfileImage>
+    public class UpdateProfileImageHandler : IResultHandler<UpdateProfileImage, ImageGuid>
     {
         private readonly IUserProfileService _userProfileService;
 
@@ -14,9 +16,9 @@ namespace gymNotebook.Infrastructure.Handlers.Profile
             _userProfileService = userProfileService;
         }
 
-        public async Task HandleAsync(UpdateProfileImage command)
+        public async Task<ImageGuid> HandleAsync(UpdateProfileImage command)
         {
-            await _userProfileService.UploadImageAsync(userId: command.UserId, file: command.File);
+            return await _userProfileService.UploadImageAsync(userId: command.UserId, file: command.File);
         }
     }
 }

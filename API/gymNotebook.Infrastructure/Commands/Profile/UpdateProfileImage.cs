@@ -2,7 +2,7 @@
 
 namespace gymNotebook.Infrastructure.Commands.Profile
 {
-    public class UpdateProfileImage : AuthenticatedCommandBase
+    public class UpdateProfileImage : AuthenticatedCommandBase, IResult
     {
         public IFormFile File { get; set; }
     }

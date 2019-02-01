@@ -43,29 +43,21 @@ namespace gymNotebook.Infrastructure.Services
 
         public async Task<PostListDto> BrowseAsync(Guid userId, DateTime startDate, int quantity)
         {
-            var user = await userRepository.GetAsync(userId);
-            if(user == null)
-            {
-                throw new ServiceException(ErrorServiceCodes.InvalidUserId, $"User with id: {userId} does not exists.");
-            }
             var follows = await followRepository.BrowseFollowedAsync(userId);
             if(follows.Count == 0)
             {
                 return null;
             }
-            var posts = await postRepository.BrowseAsync(userId, startDate, quantity);
+            var followersId = follows.Select(x => x.FollowerId).ToList();
+            var posts = await postRepository.BrowseHomeAsync(followersId, startDate, quantity);
             if(posts.Count == 0)
             {
                 return null;
             }
-            var imageIds = posts.Select(x => x.Id).Where(x => x != Guid.Empty).ToList();
-            var images = await imageRepository.BrowseAsync(imageIds);
-            var comments = await imageRepository.BrowseAsync(posts.Select(x => x.Id).ToList());
-            var imagesDto = mapper.Map<IList<Image>, IList<ImageDto>>(images);
-            var postsDto = mapper.Map<IList<Post>, IList<PostDto>>(posts);
-            
 
-            return new PostListDto(postsDto, imagesDto);
+            var postsDto = mapper.Map<IList<Post>, IList<PostDto>>(posts);
+
+            return new PostListDto(postsDto);
         }
 
         public async Task CreateAsync(string description, Guid userId, IFormFile file)
@@ -75,7 +67,7 @@ namespace gymNotebook.Infrastructure.Services
             {
                 throw new ServiceException(ErrorServiceCodes.InvalidUserId, $"User with id: {userId} does not exist.");
             }
-            var image = new Image(userId, file);
+            var image = new Image(file);
             var post = new Post(description, image.Id, userId);
 
             await postRepository.AddAsync(post);

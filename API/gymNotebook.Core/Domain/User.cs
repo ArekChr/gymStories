@@ -10,7 +10,7 @@ namespace gymNotebook.Core.Domain
         private ISet<Training> _trainings = new HashSet<Training>();
         private ISet<Progress> _progress = new HashSet<Progress>();
         private ISet<Friend> _friends = new HashSet<Friend>();
-        private ISet<Comment> _comments = new HashSet<Comment>();
+        private ISet<CommentUserRels> _comments = new HashSet<CommentUserRels>();
         private ISet<Post> _posts = new HashSet<Post>();
         private ISet<Follow> _follows = new HashSet<Follow>();
 
@@ -20,7 +20,6 @@ namespace gymNotebook.Core.Domain
         };
 
         public string Role { get; protected set; }
-        public string Username { get; protected set; }
         public string Email { get; protected set; }
         public string Password { get; protected set; }
         public string Salt { get; protected set; }
@@ -32,7 +31,7 @@ namespace gymNotebook.Core.Domain
         public IEnumerable<Training> Trainings => _trainings;
         public IEnumerable<Progress> Progress => _progress;
         public IEnumerable<Friend> Friends => _friends;
-        public IEnumerable<Comment> Comments => _comments;
+        public IEnumerable<CommentUserRels> CommentUserRels => _comments;
 
         private static readonly Regex EmailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         private static readonly Regex NameRegex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
@@ -41,27 +40,14 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public User(string email, string password, string salt)
+        public User(string email, string hash, string salt)
         {
             Id = Guid.NewGuid();
             //SetRole(role);
             SetEmail(email);
-            SetPassword(password);
+            Password = hash;
             Salt = salt;
             CreateAt = DateTime.UtcNow;
-        }
-
-        public void SetUsername(string username)
-        {
-            if (string.IsNullOrEmpty(username))
-            {
-                throw new DomainException(ErrorCodes.InvalidUsername, $"User can not have an empty username.");
-            }
-            else if(!NameRegex.IsMatch(username))
-            {
-                throw new DomainException(ErrorCodes.InvalidUsername, $"Invalid characters in username: {username}.");
-            }
-            Username = username;
         }
 
         public void SetEmail(string email)

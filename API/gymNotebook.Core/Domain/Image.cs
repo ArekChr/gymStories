@@ -8,16 +8,14 @@ namespace gymNotebook.Core.Domain
 {
     public class Image : Entity
     {
-        public Guid UserId { get; protected set; }
         public byte[] Content { get; protected set; }
 
-        public Image()
+        protected Image()
         {
         }
 
-        public Image(Guid userId, IFormFile content)
+        public Image(IFormFile content)
         {
-            UserId = userId;
             SetContent(content);
         }
 
@@ -38,12 +36,12 @@ namespace gymNotebook.Core.Domain
 
         public bool IsImage(IFormFile file)
         {
-            var fileName = ContentDispositionHeaderValue
-                .Parse(file.ContentDisposition)
-                .FileName
-                .Trim('"');
-  
-            return fileName.EndsWith(".jpg") || fileName.EndsWith(".jpeg");
+            if(file.ContentType != "image/jpeg")
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

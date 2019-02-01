@@ -7,7 +7,7 @@ namespace gymNotebook.Core.Repositories
 {
     public interface IProfileRepository : IRepository
     {
-        Task<Profile> GetAsync(Guid id);
+        Task<Profile> GetAsync(Guid userId);
 
         Task<IEnumerable<Profile>> BrowseAsync();
 

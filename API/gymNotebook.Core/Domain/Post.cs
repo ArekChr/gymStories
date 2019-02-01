@@ -5,7 +5,7 @@ namespace gymNotebook.Core.Domain
 {
     public class Post : Entity
     {
-        private ISet<PostComment> _comments = new HashSet<PostComment>();
+        private ISet<CommentPostRels> _comments = new HashSet<CommentPostRels>();
 
         public Guid UserId { get; protected set; }
         public string Description { get; protected set; }
@@ -15,7 +15,7 @@ namespace gymNotebook.Core.Domain
 
         public Image Image { get; protected set; }
         public User User { get; protected set; }
-        public IEnumerable<PostComment> Comments => _comments;
+        public IEnumerable<CommentPostRels> CommentPostRels => _comments;
 
         protected Post()
         {

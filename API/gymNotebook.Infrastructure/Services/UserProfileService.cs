@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using gymNotebook.Core.Domain;
 using gymNotebook.Core.Repositories;
+using gymNotebook.Infrastructure.Commands.Profile;
 using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using Profile = gymNotebook.Core.Domain.Profile;
 
@@ -16,7 +16,8 @@ namespace gymNotebook.Infrastructure.Services
     {
         Task<ProfileDto> GetAsync(Guid userId);
         Task<ProfileListDto> SearchAsync(string param);
-        Task UploadImageAsync(Guid userId, IFormFile file);
+        Task<ImageGuid> UploadImageAsync(Guid userId, IFormFile file);
+        Task UpdateProfileAsync(UpdateProfileData command);
     }
 
     public class UserProfileService : IUserProfileService
@@ -57,30 +58,18 @@ namespace gymNotebook.Infrastructure.Services
             return new ProfileListDto(profileDtos);
         }
 
-        public async Task UploadImageAsync(Guid userId, IFormFile file)
+        public async Task<ImageGuid> UploadImageAsync(Guid userId, IFormFile file)
         {
-            var user = await _userRepository.GetAsync(userId);
-            if (user == null)
-            {
-                throw new ServiceException(ErrorServiceCodes.InvalidUserId, $"User with id: '{userId}' does not exists.");
-            }
-
-            var image = new Image(userId, null);
-            if (file.Length > 0)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    file.CopyTo(ms);
-                    var fileBytes = ms.ToArray();
-                    //string s = Convert.ToBase64String(fileBytes);
-                    image.SetContent(fileBytes);
-                }
-            }
+            var image = new Image(file);
 
             var profile = await _profileRepository.GetAsync(userId);
             if (profile.ImageId != Guid.Empty)
             {
-                await _imageRepository.UpdateAsync(image);
+                var oldImage = await _imageRepository.GetAsync(profile.ImageId);
+                await _imageRepository.DeleteAsync(oldImage);
+                await _imageRepository.AddAsync(image);
+                profile.SetImage(image.Id);
+                await _profileRepository.UpdateAsync(profile);
             }
             else
             {
@@ -88,6 +77,17 @@ namespace gymNotebook.Infrastructure.Services
                 profile.SetImage(image.Id);
                 await _profileRepository.UpdateAsync(profile);
             }
+
+            return new ImageGuid(image.Id);
+        }
+
+        public async Task UpdateProfileAsync(UpdateProfileData command)
+        {
+            var profile = await _profileRepository.GetAsync(command.UserId);
+            profile.SetFirstName(command.FirstName);
+            profile.SetLastName(command.LastName);
+            profile.SetGender(command.Gender);
+            await _profileRepository.UpdateAsync(profile);
         }
     }
 }

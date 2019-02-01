@@ -9,7 +9,7 @@ namespace gymNotebook.Core.Repositories
     {
         Task<Post> GetAsync(Guid id, Guid userId);
 
-        Task<IList<Post>> BrowseAsync(Guid userId, DateTime startDate, int quantity);
+        Task<IList<Post>> BrowseHomeAsync(IList<Guid> followed, DateTime startDate, int quantity);
 
         Task<IList<Post>> BrowseAsync(IList<Guid> followed);
 

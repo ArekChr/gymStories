@@ -37,7 +37,7 @@ namespace gymNotebook.Infrastructure.Services
                 throw new ServiceException(ErrorServiceCodes.InvalidUserId, $"User with id: '{userId}' does not exists.");
             }
 
-            var image = new Image(userId, file);
+            var image = new Image(file);
             await _imageRepository.AddAsync(image);
         }
 

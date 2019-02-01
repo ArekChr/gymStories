@@ -1,12 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace gymNotebook.Core.Domain
 {
     public class Comment : Entity
     {
         public Guid UserId { get; protected set; }
+        public User User { get; protected set; }
         public string Content { get; protected set; }
+        public DateTime CreatedAt { get; protected set; }
+
+        protected Comment()
+        {
+        }
+
+        public Comment(Guid userId, string content)
+        {
+            UserId = userId;
+            Content = content;
+            CreatedAt = DateTime.UtcNow;
+        }
     }
 }

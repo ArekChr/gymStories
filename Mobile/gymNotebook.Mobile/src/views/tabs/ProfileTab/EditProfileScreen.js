@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 //import ImagePicker from 'react-native-image-picker'
 import ImagePicker from 'react-native-image-crop-picker';
 import { ProfilePhoto, FloatingInput, TextButton, CheckButton } from '../../../component';
-import { updateProfilePhoto } from '../../../store/profile/actions'
+import { updateProfileImage, updateProfileData } from '../../../store/profile/actions'
 
 class EditProfileScreen extends Component {
   
@@ -64,9 +64,14 @@ class EditProfileScreen extends Component {
   }
 
   _onProfileSave = () => {
-    const { pickedImage } = this.state;
+    const { pickedImage, profile: { firstName, lastName, gender, description } } = this.state;
     if(pickedImage){
-      this.props.updateProfilePhoto(this.state.pickedImage);
+      this.props.updateProfileImage(this.state.pickedImage, { 
+        firstName: firstName.value, 
+        lastName: lastName.value, 
+        gender: gender.value, 
+        description: description.value 
+      });
     }
     this.props.navigation.popToTop();
   }
@@ -84,16 +89,46 @@ class EditProfileScreen extends Component {
     });
   };
 
-  onFirstNameChange = () => {
+  onFirstNameChange = (value) => {
     // TODO: fist name validation
+    this.setState(prevState => ({
+      ...prevState,
+      profile: {
+        ...prevState.profile,
+        firstName: {
+          ...prevState.profile.firstName,
+          value: value
+        }
+      }
+    }))
   }
 
-  onLastNameChange = () => {
+  onLastNameChange = (value) => {
     // TODO: last name validation
+    this.setState(prevState => ({
+      ...prevState,
+      profile: {
+        ...prevState.profile,
+        lastName: {
+          ...prevState.profile.lastName,
+          value: value
+        }
+      }
+    }))
   }
 
-  onDescriptionChange = () => {
+  onDescriptionChange = (value) => {
     // TODO: description name validation
+    this.setState(prevState => ({
+      ...prevState,
+      profile: {
+        ...prevState.profile,
+        description: {
+          ...prevState.profile.description,
+          value: value
+        }
+      }
+    }))
   }
 
   onGenderChange = (value) => {
@@ -151,7 +186,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateProfilePhoto: (photo) => updateProfilePhoto(photo)(dispatch)
+  updateProfileImage: (photo) => updateProfileImage(photo)(dispatch),
+  updateProfileData: (data) => updateProfileData(data)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen)

@@ -76,21 +76,22 @@ export const fetchProfile = (callback) => {
   }
 }
 
-export const updateProfilePhoto = (photo) => {
+export const updateProfileImage = (photo) => {
   return (dispatch) => {
     dispatch({
       type: UPDATE_PROFILE_PHOTO_REQ
     })
 
-    const data = new FormData();
-    data.append('name', 'profilePhoto')
-    data.append('file', {
+    const file = new FormData();
+    file.append('name', 'profilePhoto')
+    file.append('body', data)
+    file.append('file', {
       uri: photo.uri,
       type: photo.mime,
       name: 'profilePhoto'
     });
 
-    axios.put(URL, data,{
+    axios.put(`${URL}/Image`, file,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -98,7 +99,8 @@ export const updateProfilePhoto = (photo) => {
     )
     .then(response => {
       dispatch({
-        type: UPDATE_PROFILE_PHOTO_SUC
+        type: UPDATE_PROFILE_PHOTO_SUC,
+        payload: response.id
       })
     })
     .catch(response => {
@@ -110,7 +112,7 @@ export const updateProfilePhoto = (photo) => {
   }
 }
 
-export const updateProfile = (profile) => {
+export const updateProfileData = (profile) => {
   return (dispatch) => {
     dispatch({
       type: UPDATE_PROFILE_REQ

@@ -49,6 +49,15 @@ export default profileReducer = (state = initialState, action) => {
         imagePath: action.payload
       }
     }
+    case UPDATE_PROFILE_PHOTO_SUC: {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          imageId: action.payload
+        }
+      }
+    }
     case UPDATE_PROFILE_REQ: {
       return {
         ...state,
@@ -58,7 +67,14 @@ export default profileReducer = (state = initialState, action) => {
     case UPDATE_PROFILE_SUC: {
       return {
         ...state,
-        loading: false
+        loading: false,
+        profile: {
+          ...state.profile,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          description: action.payload.description,
+          gender: action.payload.gender,
+        }
       }
     }
     case UPDATE_PROFILE_ERR: {

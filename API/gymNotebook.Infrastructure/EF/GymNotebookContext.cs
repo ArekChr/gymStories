@@ -1,5 +1,6 @@
 ﻿using gymNotebook.Core.Domain;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace gymNotebook.Infrastructure.EF
 {
@@ -18,8 +19,8 @@ namespace gymNotebook.Infrastructure.EF
         public DbSet<Image> Images { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Follow> Follows { get; set; }
-        public DbSet<UserComment> UserComments { get; set; }
-        public DbSet<PostComment> PostComments { get; set; }
+        public DbSet<CommentUserRels> UserComments { get; set; }
+        public DbSet<CommentPostRels> PostComments { get; set; }
 
         public GymNotebookContext(DbContextOptions<GymNotebookContext> options, SqlSettings sqlSettings ) : base (options)
         {
@@ -43,10 +44,15 @@ namespace gymNotebook.Infrastructure.EF
             userBuilder.HasKey(x => x.Id);
             userBuilder.HasOne<Profile>(x => x.Profile).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
 
+            var followBuilder = modelBuilder.Entity<Follow>();
+            followBuilder.HasKey(x => new { x.FollowedId, x.FollowerId });
+            followBuilder.HasOne<User>(x => x.Followed).WithMany(x => x.Follows).HasForeignKey(x => x.FollowedId);
+            //followBuilder.HasOne<User>(x => x.Follower).WithMany(x => x.Follows).HasForeignKey(x => x.FollowerId);
+
             var profileBuilder = modelBuilder.Entity<Profile>();
             profileBuilder.HasKey(x => x.Id);
             profileBuilder.HasOne<User>(x => x.User).WithOne(x => x.Profile).HasForeignKey<Profile>(x => x.UserId);
-
+            
             var trainingBuilder = modelBuilder.Entity<Training>();
             trainingBuilder.HasKey(x => x.Id);
 
@@ -70,24 +76,19 @@ namespace gymNotebook.Infrastructure.EF
 
             var postBuilder = modelBuilder.Entity<Post>();
             postBuilder.HasKey(x => x.Id);
-            postBuilder.HasMany(x => x.Comments).WithOne(x => x.Post).OnDelete(DeleteBehavior.ClientSetNull);
+            postBuilder.HasMany(x => x.CommentPostRels).WithOne(x => x.Post).OnDelete(DeleteBehavior.ClientSetNull);
             postBuilder.HasOne(x => x.User).WithMany(x => x.Posts).HasForeignKey(x => x.UserId);
             postBuilder.HasOne(x => x.Image).WithOne().HasForeignKey<Post>(x => x.ImageId).OnDelete(DeleteBehavior.Cascade);
 
-            var followBuilder = modelBuilder.Entity<Follow>();
-            followBuilder.HasKey(x => x.Id);
-            followBuilder.HasOne<User>(x => x.Followed).WithMany(x => x.Follows).HasForeignKey(x => x.FollowedId);
-            followBuilder.HasOne<User>(x => x.Follower).WithMany(x => x.Follows).HasForeignKey(x => x.FollowerId);
-
             var commentBuilder = modelBuilder.Entity<Comment>();
-            commentBuilder.HasOne<User>().WithMany(x => x.Comments).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
-            commentBuilder.HasOne<Post>().WithMany(x => x.Comments).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
 
-            var postCommentBuilder = modelBuilder.Entity<PostComment>();
+            var postCommentBuilder = modelBuilder.Entity<CommentPostRels>();
             postCommentBuilder.HasKey(x => x.Id);
+            postCommentBuilder.HasOne<Post>().WithMany(x => x.CommentPostRels).HasForeignKey(x => x.PostId).OnDelete(DeleteBehavior.Cascade);
 
-            var userCommentBuilder = modelBuilder.Entity<UserComment>();
+            var userCommentBuilder = modelBuilder.Entity<CommentUserRels>();
             userCommentBuilder.HasKey(x => x.Id);
+            userCommentBuilder.HasOne<User>().WithMany(x => x.CommentUserRels).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
