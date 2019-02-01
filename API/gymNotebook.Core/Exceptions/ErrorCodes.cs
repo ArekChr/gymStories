@@ -12,7 +12,7 @@
         public static string InvalidRoutine => "invalid_routine";
         public static string InvalidResult => "invalid_result";
         public static string InvalidGender => "invalid_gender";
-
         public static string InvalidProfile => "invalid_profile";
+        public static string InvalidFileFormat => "invalid_file_format";
     }
 }

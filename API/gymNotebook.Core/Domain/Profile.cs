@@ -25,6 +25,8 @@ namespace gymNotebook.Core.Domain
         public DateTime AccountTypeExpiration { get; protected set; }
         public DateTime DateOfBirth { get; protected set; }
         public DateTime UpdatedAt { get; protected set; }
+
+        public User User { get; protected set; }
         public IEnumerable<Post> Posts => _posts;
         public IEnumerable<Follow> Following => _following;
         public IEnumerable<Rate> Rates => _rates;

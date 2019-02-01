@@ -4,18 +4,20 @@ namespace gymNotebook.Core.Domain
 {
     public class Follow : Entity
     {
-        public Guid Follower { get; protected set; }
-        public Guid Followed { get; protected set; }
+        public Guid FollowerId { get; protected set; }
+        public User Follower { get; protected set; }
+        public Guid FollowedId { get; protected set; }
+        public User Followed { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
 
         protected Follow()
         {
         }
 
-        public Follow(Guid follower, Guid followed)
+        public Follow(Guid followerId, Guid followedId)
         {
-            Follower = follower;
-            Followed = followed;
+            FollowerId = followerId;
+            FollowedId = followedId;
         }
     }
 }

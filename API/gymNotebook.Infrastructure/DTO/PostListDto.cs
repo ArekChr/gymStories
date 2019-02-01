@@ -7,9 +7,12 @@ namespace gymNotebook.Infrastructure.DTO
     {
         public IList<PostDto> PostList { get; set; }
 
-        public PostListDto(IList<PostDto> posts)
+        public IList<ImageDto> ImageList { get; set; }
+
+        public PostListDto(IList<PostDto> posts, IList<ImageDto> images)
         {
             PostList = posts;
+            ImageList = images;
         }
     }
 }

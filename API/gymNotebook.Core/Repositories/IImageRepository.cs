@@ -9,7 +9,7 @@ namespace gymNotebook.Core.Repositories
     {
         Task<Image> GetAsync(Guid id);
 
-        Task<IList<Image>> BrowseAsync(Guid userId);
+        Task<IList<Image>> BrowseAsync(IList<Guid> ids);
 
         Task AddAsync(Image image);
 

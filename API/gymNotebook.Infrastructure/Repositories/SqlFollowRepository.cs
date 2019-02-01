@@ -19,10 +19,10 @@ namespace gymNotebook.Infrastructure.Repositories
         }
 
         public async Task<IList<Follow>> BrowseFollowedAsync(Guid userId)
-            => await _context.Follows.Where(x => x.Followed == userId).ToListAsync();
+            => await _context.Follows.Where(x => x.FollowedId == userId).ToListAsync();
 
         public async Task<IList<Follow>> BrowseFollowersAsync(Guid userId)
-            => await _context.Follows.Where(x => x.Follower == userId).ToListAsync();
+            => await _context.Follows.Where(x => x.FollowerId == userId).ToListAsync();
 
         public async Task AddAsync(Follow follow)
         {

@@ -5,6 +5,7 @@ using gymNotebook.Infrastructure.DTO;
 using gymNotebook.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace gymNotebook.Infrastructure.Services
@@ -35,6 +36,9 @@ namespace gymNotebook.Infrastructure.Services
             {
                 throw new ServiceException(ErrorServiceCodes.InvalidUserId, $"User with id: '{userId}' does not exists.");
             }
+
+            var image = new Image(userId, file);
+            await _imageRepository.AddAsync(image);
         }
 
         public async Task<ImageDto> GetAsync(Guid id)

@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace gymNotebook.Infrastructure.Commands.Posts
+namespace gymNotebook.Infrastructure.Commands.Post
 {
     public class BrowsePosts : AuthenticatedCommandBase
     {
+        public DateTime StartDate { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

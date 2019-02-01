@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using gymNotebook.Core.Domain;
 using gymNotebook.Core.Repositories;
 using System.Threading.Tasks;

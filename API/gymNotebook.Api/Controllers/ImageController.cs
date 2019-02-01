@@ -2,8 +2,6 @@
 using System.Threading.Tasks;
 using gymNotebook.Core.Repositories;
 using gymNotebook.Infrastructure.Commands;
-using gymNotebook.Infrastructure.Commands.Image;
-using gymNotebook.Infrastructure.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
