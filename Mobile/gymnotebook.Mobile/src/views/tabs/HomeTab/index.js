@@ -7,8 +7,10 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../../../store/post/actions'
 
-export default class HomeTab extends Component {
+class HomeTab extends Component {
 
   state = {
     refreshing: false
@@ -31,11 +33,15 @@ export default class HomeTab extends Component {
     }
   }
 
+  componentDidMount() {
+    this.props.fetchPosts(null, 20);
+  }
+
   onRefresh = () => {
     this.setState({refreshing: true});
-    setTimeout(() => {
+    this.props.fetchPosts(null, 20, () => {
       this.setState({refreshing: false});
-    }, 1000)
+    })
   }
 
   onRelationClick = () => {
@@ -178,3 +184,12 @@ const styles = StyleSheet.create({
     paddingRight: 10
   }
 })
+
+const mapStateToProps = (state) => ({
+
+});
+const mapDispatchToProps = (dispatch) => ({
+  fetchPosts: (startDate, quantity, cb) => fetchPosts(startDate, quantity, cb)(dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(HomeTab)

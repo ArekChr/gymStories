@@ -22,14 +22,14 @@ namespace gymNotebook.Infrastructure.Repositories
             => await _context.Posts
             .SingleOrDefaultAsync(x => x.Id == id && x.UserId == userId);
 
-        public async Task<IList<Post>> BrowseHomeAsync(IList<Guid> followed, DateTime startDate, int quantity)
+        public async Task<IList<Post>> BrowseHomeAsync(IList<Guid> followed, DateTime? startDate, int quantity)
             => await _context.Posts
+            .Include(x => x.CommentPostRels)
+                .ThenInclude(x => x.Comment)
             .Where(x => followed.Contains(x.UserId))
             .OrderByDescending(x => x.CreatedAt)
-            .Where(x => x.CreatedAt > startDate)
+            .Where(x => x.CreatedAt < (startDate ?? DateTime.UtcNow))
             .Take(quantity)
-            .Include(x => x.Image)
-            .Include(x => x.CommentPostRels)
             .ToListAsync();
 
         public async Task<IList<Post>> BrowseAsync(IList<Guid> followed)

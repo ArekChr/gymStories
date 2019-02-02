@@ -20,7 +20,7 @@ namespace gymNotebook.Tests
 
             var actual = await userService.GetAsync("user1@gmail.com");
 
-            var user = new User("User1", "user1@gmail.com", "password", "salt");
+            var user = new User("user1@gmail.com", "password", "salt");
 
             mockRepository.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(user);
 

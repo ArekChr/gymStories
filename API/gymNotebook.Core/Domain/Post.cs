@@ -13,7 +13,7 @@ namespace gymNotebook.Core.Domain
         public int Likes { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
 
-        public Image Image { get; protected set; }
+        public string ImageURL => $"http:/192.168.178.91:5001/api/Images/{ImageId.ToString()}";
         public User User { get; protected set; }
         public IEnumerable<CommentPostRels> CommentPostRels => _comments;
 

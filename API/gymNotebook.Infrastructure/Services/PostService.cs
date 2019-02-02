@@ -15,7 +15,7 @@ namespace gymNotebook.Infrastructure.Services
     {
         Task<PostDto> GetAsync(Guid id);
 
-        Task<PostListDto> BrowseAsync(Guid userId, DateTime startDate, int quantity);
+        Task<PostListDto> BrowseAsync(Guid userId, DateTime? startDate, int quantity);
 
         Task CreateAsync(string description, Guid userId, IFormFile file);
 
@@ -41,7 +41,7 @@ namespace gymNotebook.Infrastructure.Services
             this.mapper = mapper;
         }
 
-        public async Task<PostListDto> BrowseAsync(Guid userId, DateTime startDate, int quantity)
+        public async Task<PostListDto> BrowseAsync(Guid userId, DateTime? startDate, int quantity)
         {
             var follows = await followRepository.BrowseFollowedAsync(userId);
             if(follows.Count == 0)
@@ -52,7 +52,7 @@ namespace gymNotebook.Infrastructure.Services
             var posts = await postRepository.BrowseHomeAsync(followersId, startDate, quantity);
             if(posts.Count == 0)
             {
-                return null;
+                return new PostListDto(null);
             }
 
             var postsDto = mapper.Map<IList<Post>, IList<PostDto>>(posts);

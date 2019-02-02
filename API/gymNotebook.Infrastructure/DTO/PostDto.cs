@@ -11,7 +11,7 @@ namespace gymNotebook.Infrastructure.DTO
         public Guid ImageId { get; set; }
         public int Likes { get; set; }
         public DateTime CreatedAt { get; set; }
-        public ImageDto Image { get; set; }
+        public string ImageURL { get; set; }
         public IList<CommentDto> Comments { get; set; }
     }
 }
