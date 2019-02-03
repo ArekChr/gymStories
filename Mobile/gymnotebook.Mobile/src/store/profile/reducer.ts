@@ -1,71 +1,56 @@
-import {
-  SET_PROFILE_NAME,
-  SET_PROFILE_BIRTH_DATE,
-  SET_PROFILE_GENDER_TYPE,
-  SET_PROFILE_PASSWORD,
-  SET_PROFILE_EMAIL,
-  SET_PROFILE_TYPE,
-  REMOVE_PROFILE_PASSWORD,
-  FETCH_PROFILE_REQ,
-  FETCH_PROFILE_SUC,
-  FETCH_PROFILE_ERR,
-  UPDATE_PROFILE_REQ,
-  UPDATE_PROFILE_SUC,
-  UPDATE_PROFILE_ERR,
-  FETCH_PROFILE_IMAGE_REQ,
-  FETCH_PROFILE_IMAGE_SUC,
-  UPDATE_PROFILE_PHOTO_SUC
-} from './types'
+import { Reducer } from 'redux'
+import { ProfileState, ProfileActionTypes } from './types'
 
-const initialState = {
+const initialState: ProfileState = {
   profile: {
-    firstName: undefined,
-    lastName: undefined,
-    description: undefined,
-    email: undefined,
-    gender: undefined,
-    followingCount: undefined,
-    followersCount: undefined,
-    posts: undefined,
-    description: undefined,
-    imageId: undefined
+    averageRates: 0,
+    dateOfBirth: new Date(),
+    description: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    followersCount: 0,
+    followingCount: 0,
+    gender: '',
+    imageId: '',
+    password: ''
   },
-  loading: null,
   error: undefined,
+  loading: false,
   imagePath: undefined
 }
 
-export default profileReducer = (state = initialState, action) => {
+const profileReducer: Reducer<ProfileState> = (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_PROFILE_IMAGE_REQ: {
+    case ProfileActionTypes.FETCH_IMAGE_REQ: {
       return {
         ...state,
         loading: true,
       }
     }
-    case FETCH_PROFILE_IMAGE_SUC: {
+    case ProfileActionTypes.FETCH_IMAGE_SUC: {
       return {
         ...state,
         loading: false,
         imagePath: action.payload
       }
     }
-    case UPDATE_PROFILE_PHOTO_SUC: {
+    case ProfileActionTypes.UPDATE_PHOTO_SUC: {
       return {
         ...state,
         profile: {
           ...state.profile,
-          imageId: action.payload
+          imageId: action.payload.id
         }
       }
     }
-    case UPDATE_PROFILE_REQ: {
+    case ProfileActionTypes.UPDATE_REQ: {
       return {
         ...state,
         loading: true
       }
     }
-    case UPDATE_PROFILE_SUC: {
+    case ProfileActionTypes.UPDATE_SUC: {
       return {
         ...state,
         loading: false,
@@ -78,34 +63,34 @@ export default profileReducer = (state = initialState, action) => {
         }
       }
     }
-    case UPDATE_PROFILE_ERR: {
+    case ProfileActionTypes.UPDATE_ERR: {
       return {
         ...state,
         loading: false,
         error: action.payload
       }
     }
-    case FETCH_PROFILE_REQ: {
+    case ProfileActionTypes.FETCH_REQ: {
       return {
         ...state,
         loading: true,
       }
     }
-    case FETCH_PROFILE_SUC: {
+    case ProfileActionTypes.FETCH_SUC: {
       return {
         ...state,
         loading: false,
         profile: action.payload
       }
     }
-    case FETCH_PROFILE_ERR: {
+    case ProfileActionTypes.FETCH_ERR: {
       return {
         ...state,
         loading: false,
         error: action.payload
       }
     }
-    case SET_PROFILE_NAME: {
+    case ProfileActionTypes.SET_NAME: {
       return {
         ...state,
         profile: {
@@ -115,7 +100,7 @@ export default profileReducer = (state = initialState, action) => {
         }
       }
     }
-    case SET_PROFILE_BIRTH_DATE: {
+    case ProfileActionTypes.SET_BIRTH_DATE: {
       return {
         ...state,
         profile: {
@@ -124,7 +109,7 @@ export default profileReducer = (state = initialState, action) => {
         }
       }
     }
-    case SET_PROFILE_GENDER_TYPE: {
+    case ProfileActionTypes.SET_GENDER_TYPE: {
       return {
         ...state,
         profile: {
@@ -133,7 +118,7 @@ export default profileReducer = (state = initialState, action) => {
         }
       }
     }
-    case SET_PROFILE_PASSWORD: {
+    case ProfileActionTypes.SET_PASSWORD: {
       return {
         ...state,
         profile: {
@@ -142,11 +127,16 @@ export default profileReducer = (state = initialState, action) => {
         }
       }
     }
-    case REMOVE_PROFILE_PASSWORD: {
-      delete state.profile.password;
-      return state;
+    case ProfileActionTypes.REMOVE_PASSWORD: {
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          password: undefined
+        }
+      }
     }
-    case SET_PROFILE_EMAIL: {
+    case ProfileActionTypes.SET_EMAIL: {
       return {
         ...state,
         profile: {
@@ -155,21 +145,10 @@ export default profileReducer = (state = initialState, action) => {
         }
       }
     }
-    case SET_PROFILE_TYPE: {
-      return {
-        ...state,
-        profile: {
-          ...state.profile,
-          profileType: profileType
-        }
-      }
-    }
     default: {
-      if (state === undefined) {
-        return {
-        }
-      }
       return state;
     }
   }
 }
+
+export default profileReducer;

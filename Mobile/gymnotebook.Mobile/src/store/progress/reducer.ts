@@ -1,26 +1,9 @@
-import {   
-  FETCH_PROGRESS_REQ,
-  FETCH_PROGRESS_SUC,
-  FETCH_PROGRESS_ERR,
-  CREATE_PROGRESS_REQ,
-  CREATE_PROGRESS_SUC,
-  CREATE_PROGRESS_ERR,
-  UPDATE_PROGRESS_REQ,
-  UPDATE_PROGRESS_SUC,
-  UPDATE_PROGRESS_ERR,
-  DELETE_PROGRESS_REQ,
-  DELETE_PROGRESS_SUC,
-  DELETE_PROGRESS_ERR,
-  SELECTED_PROGRESS,
-  HANDLE_PROGRESS_MODAL,
-  HANDLE_CALENDAR_MODAL,
-  SELECT_DATE,
-  PICK_DATE,
-  SET_LAST_PROGRESS,
-  USER_LOGOUT
-} from './types'
+import { ProgresActionTypes, Progress, ProgressState } from './types'
+import { Reducer } from 'redux'
 
-const initialState = {
+import { USER_LOGOUT } from '../auth/types'
+
+const initialState: ProgressState = {
   progress: [],
   progressLoading: true,
   error: null,
@@ -32,64 +15,64 @@ const initialState = {
   pickedDate: new Date().toISOString().substring(0,10)
 }
 
-const progressReducer = (state = initialState, action) => {
+const progressReducer: Reducer<ProgressState> = (state = initialState, action) => {
   switch (action.type) {
     case USER_LOGOUT: {
       return {
         ...initialState
       }
     }
-    case HANDLE_PROGRESS_MODAL: {
+    case ProgresActionTypes.HANDLE_PROGRESS_MODAL: {
       return {
         ...state,
         modal: !state.modal ? true : false 
       }
     }
-    case HANDLE_CALENDAR_MODAL: {
+    case ProgresActionTypes.HANDLE_CALENDAR_MODAL: {
       return {
         ...state,
         calendarModal: !state.calendarModal ? true : false 
       }
     }
-    case SET_LAST_PROGRESS: {
+    case ProgresActionTypes.SET_LAST_PROGRESS: {
       return {
         ...state,
         lastProgress: action.payload
       }
     }
-    case SELECT_DATE: {
+    case ProgresActionTypes.SELECT_DATE: {
       return {
         ...state,
         selectedDate: action.payload
       }
     }
-    case PICK_DATE: {
+    case ProgresActionTypes.PICK_DATE: {
       return {
         ...state,
         pickedDate: action.payload
       }
     }
-    case SELECTED_PROGRESS: {
+    case ProgresActionTypes.SELECTED_PROGRESS: {
       return {
         ...state,
         selectedProgress: action.payload
       }
     }
-    case FETCH_PROGRESS_REQ: {
+    case ProgresActionTypes.FETCH_PROGRESS_REQ: {
       return { 
         ...state,
         progressLoading: true,
         error: null
       }
     }
-    case FETCH_PROGRESS_SUC: {
+    case ProgresActionTypes.FETCH_PROGRESS_SUC: {
       return { 
         ...state, 
         progress: action.payload,
         progressLoading: false
       }
     }
-    case FETCH_PROGRESS_ERR: {
+    case ProgresActionTypes.FETCH_PROGRESS_ERR: {
       return {
         ...state,
         progress: [],
@@ -98,7 +81,7 @@ const progressReducer = (state = initialState, action) => {
       }
     }
 
-    case CREATE_PROGRESS_REQ: {
+    case ProgresActionTypes.CREATE_PROGRESS_REQ: {
       
       const payload = {
         ...action.payload,
@@ -106,12 +89,12 @@ const progressReducer = (state = initialState, action) => {
       }
       debugger;
 
-      const findone = state.progress.find(x => x.createdAt === payload.createdAt)
+      const findone = state.progress.find((x: Progress) => x.createdAt === payload.createdAt)
       if(findone == undefined){
         
       }
 
-      const progress = state.progress.map(item => {
+      const progress = state.progress.map((item: Progress) => {
 
         if(item.createdAt === payload.createdAt){
           let newItem = {}
@@ -136,77 +119,57 @@ const progressReducer = (state = initialState, action) => {
           return item
         }
       })
-
       return {
         ...state,
         progressLoading: true,
         progress: progress
       }
     }
-
-    case CREATE_PROGRESS_SUC: {
+    case ProgresActionTypes.CREATE_PROGRESS_SUC: {
       return {
         ...state,
         progressLoading: false
       }
     }
-
-    // case CREATE_PROGRESS_ERR: {
+    // case ProgresActionTypes.CREATE_PROGRESS_ERR: {
     //   return {
     //     ...state,
 
     //   }
     // }
-
-    case UPDATE_PROGRESS_REQ: {
+    case ProgresActionTypes.UPDATE_PROGRESS_REQ: {
       return {
         ...state,
 
       }
     }
-
-    case UPDATE_PROGRESS_SUC: {
+    case ProgresActionTypes.UPDATE_PROGRESS_SUC: {
       return {
         ...state,
 
       }
     }
-
-    // case UPDATE_PROGRESS_ERR: {
+    // case ProgresActionTypes.UPDATE_PROGRESS_ERR: {
     //   return {
-    //     ...state,
-
+    //     ...state
     //   }
     // }
-
-    case DELETE_PROGRESS_REQ: {
+    case ProgresActionTypes.DELETE_PROGRESS_REQ: {
       return {
-        ...state,
-
+        ...state
       }
     }
-
-    case DELETE_PROGRESS_SUC: {
+    case ProgresActionTypes.DELETE_PROGRESS_SUC: {
       return {
-        ...state,
-
+        ...state
       }
     }
-
-    // case DELETE_PROGRESS_ERR: {
+    // case ProgresActionTypes.DELETE_PROGRESS_ERR: {
     //   return {
-    //     ...state,
-
+    //     ...state
     //   }
     // }
-
     default: {
-      if (state === undefined) {
-        return {
-          progress: [],
-          progressLoading: false
-        }
-      }
       return state;
     }
   }

@@ -5,7 +5,7 @@ import {
 
 const initialState = {
   loading: false,
-  path: undefined
+  posts: undefined
 }
 
 
@@ -18,11 +18,10 @@ const postReducer = (state = initialState, action) => {
       }
     }
     case FETCH_POST_SUC: {
-      debugger;
       return {
         ...state,
         loading: false,
-        path: action.payload
+        posts: action.payload
       }
     }
     default: {

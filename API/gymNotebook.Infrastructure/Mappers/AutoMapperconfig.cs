@@ -19,7 +19,9 @@ namespace gymNotebook.Infrastructure.Mappers
                 cfg.CreateMap<Result, ResultDto>();
                 cfg.CreateMap<Progress, ProgressDto>();
                 cfg.CreateMap<Profile, ProfileDto>();
-                cfg.CreateMap<Post, PostDto>();
+                cfg.CreateMap<Post, PostDto>()
+                    .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.Profile.FirstName))
+                    .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.Profile.LastName));
                 cfg.CreateMap<Image, ImageDto>();
                 cfg.CreateMap<Comment, CommentDto>();
 

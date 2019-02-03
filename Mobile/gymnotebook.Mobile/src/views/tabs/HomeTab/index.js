@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, RefreshControl} from 'react-native'
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, RefreshControl, Dimensions} from 'react-native'
 import { STATUS_BAR_COLOR } from '../../../styles/common'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
-import AntDesign from 'react-native-vector-icons/AntDesign'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../../../store/post/actions'
+import PostImage from 'react-native-scalable-image';
 
 class HomeTab extends Component {
 
   state = {
-    refreshing: false
+    refreshing: false,
+    width: null
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -34,6 +34,7 @@ class HomeTab extends Component {
   }
 
   componentDidMount() {
+    this.setState({ win: Dimensions.get("window") });
     this.props.fetchPosts(null, 20);
   }
 
@@ -46,6 +47,84 @@ class HomeTab extends Component {
 
   onRelationClick = () => {
     this.props.navigation.navigate('VideoRelations')
+  }
+
+  renderPosts = (posts) => {
+    if(posts !== undefined){
+      return posts.map((post, i) => {
+        return (
+        <View key={i}>
+          <View style={{ height: 45, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
+            <View style={{display: 'flex', flexDirection: 'row'}}>
+              <TouchableOpacity>
+                <Image style={{ width: 30, height: 30, borderRadius: 45, marginTop: 'auto', marginBottom: 'auto', marginLeft: 8, marginRight: 8}} 
+                source={require('../../../images/profile2.jpg')}/>
+              </TouchableOpacity>
+              <View>
+                <TouchableOpacity style={{padding: 0, margin: 0, top: 0, bottom: 0}}>
+                  <Text style={{marginBottom: -5}}>{`${post.firstName} ${post.lastName}`}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{}}>
+                  <Text style={{fontSize: 12}}>Gdynia</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.right}>
+              <TouchableOpacity style={styles.optionsButton}>
+                <SimpleLineIcons name="options-vertical" size={15} style={{marginRight: 8}} color="gray" />
+              </TouchableOpacity>
+            </View>
+
+          </View>
+
+          <TouchableWithoutFeedback style={{}}>
+              <PostImage width={this.state.win.width} source={{uri: post.imageURL}}/>
+          </TouchableWithoutFeedback>
+
+          <View style={{padding: 10}}>
+            <View style={{flexDirection: 'row', display: 'flex'}}>
+              <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
+                <TouchableOpacity style={{...styles.icon}}>
+                  <FontAwesome name="heart" size={25} color="black"/>
+                </TouchableOpacity>
+                <TouchableOpacity style={{...styles.icon}}>
+                  <FontAwesome name="comment" size={25} color="black" style={{marginTop: -3}}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.icon}>
+                  <Ionicons name="ios-send" size={30} color="black" style={{marginTop: -3}}/>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.right}>
+
+                <TouchableOpacity style={styles.icon}>
+
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View>
+              <Text>Polubione przez <Text style={{fontWeight: '600'}}>Dart1123</Text></Text>
+            </View>
+            <View>
+              <Text><Text style={{fontWeight: '600'}}>Arkadiusz Chrabąszczewski </Text>
+              {post.description}
+              </Text>
+              <Text style={{color: 'gray'}}>Zobacz wszystkie komentarze: 2043</Text>
+              <Text><Text style={{fontWeight: '600'}}>Damian Hejda</Text> Fajny was pomys u was mmmm.</Text>
+              <TouchableOpacity style={{marginTop: 5, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                <Image style={{ width: 26, height: 26, borderRadius: 45, marginTop: 'auto', marginBottom: 'auto'}} 
+                source={require('../../../images/profile3.jpg')}/>
+                <Text style={{color: 'gray', marginLeft: 8}}>Dodaj komentarz...</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+        )
+      })
+    } else {
+      return (<Text>dupa</Text>);
+    }
+
   }
 
   renderVideoRelationsBar = () => {
@@ -89,7 +168,7 @@ class HomeTab extends Component {
     )
   }
 
-  renderPosts = () => {
+  renderPost = () => {
     return (
       <>
         <View style={{ height: 45, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -118,7 +197,7 @@ class HomeTab extends Component {
         </View>
 
         <TouchableWithoutFeedback style={{}}>
-            <Image style={{width: 500, height: 300 }} source={require("../../../images/post1.jpg")}/>
+            <Image style={{width: this.state.width, height: 300 }} source={require("../../../images/post1.jpg")}/>
         </TouchableWithoutFeedback>
 
         <View style={{padding: 10}}>
@@ -164,12 +243,16 @@ class HomeTab extends Component {
   }
 
   render() {
+
+    const { posts } = this.props;
+
     return (
       <View style={styles.container}>
         <StatusBar backgroundColor={"#eee"} barStyle="dark-content" />
         <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}/>}>
           {this.renderVideoRelationsBar()}
-          {this.renderPosts()}
+          {this.renderPosts(posts)}
+          {this.renderPost()}
         </ScrollView>
       </View>
     )
@@ -186,10 +269,11 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-
+  posts: state.Posts.posts,
+  loading: state.Posts.loading
 });
 const mapDispatchToProps = (dispatch) => ({
   fetchPosts: (startDate, quantity, cb) => fetchPosts(startDate, quantity, cb)(dispatch)
 });
 
-export default connect(null, mapDispatchToProps)(HomeTab)
+export default connect(mapStateToProps, mapDispatchToProps)(HomeTab)

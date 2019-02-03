@@ -16,7 +16,6 @@ export const fetchPosts = (startDate, quantity, cb) => {
 
     axios.get(URL, { params: { startDate: startDate, quantity: quantity }})
       .then(response => {
-        debugger;
         dispatch({
           type: FETCH_POST_SUC,
           payload: response.data

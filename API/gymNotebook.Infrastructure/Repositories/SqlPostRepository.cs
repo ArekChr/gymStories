@@ -26,6 +26,8 @@ namespace gymNotebook.Infrastructure.Repositories
             => await _context.Posts
             .Include(x => x.CommentPostRels)
                 .ThenInclude(x => x.Comment)
+            .Include(x => x.User)
+                .ThenInclude(x => x.Profile)
             .Where(x => followed.Contains(x.UserId))
             .OrderByDescending(x => x.CreatedAt)
             .Where(x => x.CreatedAt < (startDate ?? DateTime.UtcNow))

@@ -6,3 +6,8 @@ export const USER_LOGIN_SUC = 'auth/USER_LOGIN_SUC'
 export const USER_LOGIN_ERR = 'auth/USER_LOGIN_ERR'
 export const STORAGE_MAP_JWT = 'auth/STORAGE_MAP_JWT'
 export const USER_LOGOUT = 'auth/USER_LOGOUT'
+
+export interface JWT {
+  token: string,
+  expiry: number
+}

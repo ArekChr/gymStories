@@ -16,6 +16,5 @@ namespace gymNotebook.Infrastructure.DTO
         public int FollowingCount { get; set; }
         public int FollowersCount { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public IFormFile Image { get; set; }
     }
 }

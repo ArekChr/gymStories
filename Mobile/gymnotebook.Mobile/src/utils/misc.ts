@@ -1,8 +1,10 @@
 import { AsyncStorage } from 'react-native'
+import { Profile } from '../store/profile/types'
+import { JWT } from '../store/auth/types'
 
-export const API_URL = 'http:/192.168.178.91:5001/api'
+export const API_URL: string = 'http:/192.168.178.91:5001/api'
 
-export const setTokens = (values, callback) => {
+export const setTokens = (values: JWT, callback: Function) => {
 
   AsyncStorage.multiSet([
     ['@gymNotebook@token', values.token],
@@ -13,7 +15,7 @@ export const setTokens = (values, callback) => {
   })
 }
 
-export const getTokens = (callback) => {
+export const getTokens = (callback: Function) => {
   AsyncStorage.multiGet([
     '@gymNotebook@token',
     '@gymNotebook@expiryToken'
@@ -22,7 +24,7 @@ export const getTokens = (callback) => {
   })
 }
 
-export const removeTokensFromStorage = (callback) => {
+export const removeTokensFromStorage = (callback: Function) => {
   AsyncStorage.multiRemove([
     '@gymNotebook@token',
     '@gymNotebook@expiryToken'
@@ -31,13 +33,13 @@ export const removeTokensFromStorage = (callback) => {
     )
 }
 
-export const setProfile = (profile, callback) => {
+export const setProfile = (profile: Profile, callback: Function) => {
   AsyncStorage.multiSet([
     ['@gymNotebook@profile@email', profile.email],
     ['@gymNotebook@profile@firstName', profile.firstName],
     ['@gymNotebook@profile@lastName', profile.lastName],
     ['@gymNotebook@profile@gender', profile.gender],
-    ['@gymNotebook@profile@dateOfBirth', profile.dateOfBirth]
+    ['@gymNotebook@profile@dateOfBirth', profile.dateOfBirth.toString()]
   ])
   .then(() => {
     callback()
