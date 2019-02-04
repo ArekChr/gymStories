@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace gymNotebook.Infrastructure.Commands.Posts
 {
     public class DeletePost : AuthenticatedCommandBase
     {
+        public Guid Id { get; set; }
     }
 }
