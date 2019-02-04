@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated, StyleSheet } from 'react-native';
+import { View, TextInput, Animated, StyleProp, ViewStyle } from 'react-native';
 import { WARNING_COLOR, PRIMARY_COLOR } from '../styles/common'
 import { Fonts } from '../styles'
 
-export default class FloatingInput extends Component {
+interface Props {
+  label: string
+  isValid: boolean
+  value: string
+  onRef: any
+  style: StyleProp<ViewStyle>
+}
+
+export default class FloatingInput extends Component<Props, {}> {
 
   state = {
     isFocused: false,

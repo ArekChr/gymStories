@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
-import { Image, TouchableOpacity } from 'react-native'
+import { Image, TouchableOpacity, StyleProp, ImageStyle } from 'react-native'
 import { API_URL } from '../utils/misc'
 
-export default class ProfilePhoto extends Component {
+interface Props {
+  source: string
+  onPress: void
+  style: StyleProp<ImageStyle>
+}
+
+export default class ProfilePhoto extends Component<Props, {}>{
   render() {
     const source = this.props.source ? {uri: `${API_URL}/Image/${this.props.source}`} : require('../images/default-user.png')
     return (

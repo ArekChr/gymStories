@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, StyleProp, TextStyle } from 'react-native';
 import { FONT_COLOR } from '../styles/common';
 import { Fonts } from '../styles'
 
-class TitleComponent extends Component {
+interface Props {
+  style: StyleProp<TextStyle>
+}
+
+class TitleComponent extends Component<Props, {}>{
 
   render() {
     return (

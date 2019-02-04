@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { Calendar } from 'react-native-calendars'
 import { connect } from 'react-redux';
 import { pickDate } from '../store/progress/actions'
+import { Dispatch } from 'redux';
 
-class CalendarComponent extends Component {
+interface Props {
+  selectedDate: string
+}
+
+class CalendarComponent extends Component<Props, any> {
 
   componentDidMount(){
     this.setState({ selected: this.props.selectedDate})
@@ -26,13 +31,13 @@ class CalendarComponent extends Component {
   }
 }
 
-const mapStateToProps = ({Progress}) => ({
+const mapStateToProps = ({Progress}: any) => ({
   selectedDate: Progress.selectedDate,
   pickedDate: Progress.pickedDate
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  pickDate: (day) => pickDate(day)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  pickDate: (day: any) => pickDate(day)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CalendarComponent)
