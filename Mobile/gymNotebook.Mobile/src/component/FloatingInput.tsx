@@ -17,6 +17,10 @@ export default class FloatingInput extends Component<Props, {}> {
     isFocused: false,
   };
 
+  private textInput: TextInput | null = TextInput.prototype;
+
+  private _animatedIsFocused : Animated.Value = Animated.Value.prototype
+
   componentWillMount() {
     this._animatedIsFocused = new Animated.Value(this.props.value === '' ? 0 : 1);
     if (this.props.onRef != null) {
@@ -25,7 +29,9 @@ export default class FloatingInput extends Component<Props, {}> {
   }
 
   focus() {
-    this.textInput.focus()
+    if(this.textInput){
+      this.textInput.focus()
+    }
   }
 
   handleFocus = () => {

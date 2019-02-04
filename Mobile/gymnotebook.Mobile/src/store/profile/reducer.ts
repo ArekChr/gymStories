@@ -1,5 +1,5 @@
-import { Reducer } from 'redux'
-import { ProfileState, ProfileActionTypes } from './types'
+import { Reducer, Action } from 'redux'
+import { ProfileState, ProfileActionTypes, Profile } from './types'
 
 const initialState: ProfileState = {
   profile: {
@@ -18,6 +18,14 @@ const initialState: ProfileState = {
   error: undefined,
   loading: false,
   imagePath: undefined
+}
+
+export interface ProfileAction<T> extends Action<ProfileActionTypes> {
+  payload: T
+}
+
+export interface ProfileType extends Profile {
+  type: ProfileActionTypes
 }
 
 const profileReducer: Reducer<ProfileState> = (state = initialState, action) => {

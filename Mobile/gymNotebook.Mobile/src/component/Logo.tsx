@@ -15,12 +15,12 @@ export default class Logo extends Component {
       Animated.timing(this.state.gymAnim, {
         toValue:1,
         duration:1000,
-        easing:Easing.easeOutCubic
+        easing:Easing.cubic
       }),
       Animated.timing(this.state.notebookAnim, {
         toValue:1,
         duration:500,
-        easing:Easing.easeOutCubic
+        easing:Easing.cubic
       })
     ]).start(() => {
     })
