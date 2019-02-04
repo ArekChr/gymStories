@@ -1,23 +1,21 @@
 import axios from 'axios';
-import {
-  FETCH_POST_REQ,
-  FETCH_POST_SUC
-} from './types'
+import { PostActionTypes } from './types'
 import { API_URL } from '../../utils/misc'
+import { Dispatch } from 'redux';
 
 const URL = `${API_URL}/Post`;
 
-export const fetchPosts = (startDate, quantity, cb) => {
-  return (dispatch) => {
+export const fetchPosts = (startDate: string, quantity: number, cb?: Function) => {
+  return (dispatch: Dispatch) => {
 
     dispatch({
-      type: FETCH_POST_REQ
+      type: PostActionTypes.FETCH_POST_REQ
     })
 
     axios.get(URL, { params: { startDate: startDate, quantity: quantity }})
       .then(response => {
         dispatch({
-          type: FETCH_POST_SUC,
+          type: PostActionTypes.FETCH_POST_SUC,
           payload: response.data
         })
         if(cb instanceof Function){

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Calendar, CalendarList } from 'react-native-calendars'
+import { Calendar } from 'react-native-calendars'
 import { connect } from 'react-redux';
 import { pickDate } from '../store/progress/actions'
 

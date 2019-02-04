@@ -1,42 +1,34 @@
-import {
-  USER_REGISTER_SUC,
-  USER_REGISTER_ERR,
-  USER_REGISTER_REQ,
-  USER_LOGIN_REQ,
-  USER_LOGIN_SUC,
-  USER_LOGIN_ERR,
-  STORAGE_MAP_JWT,
-  USER_LOGOUT
-} from './types'
+import { AuthActionTypes, AuthState } from './types'
+import { Reducer } from 'redux'
 
-const initialState = {
+const initialState: AuthState = {
   error: {
-    code: '',
-    message: ''
+    code: undefined,
+    message: undefined
   },
-  loading: null,
+  loading: undefined,
   registerSuccess: null,
   loginSuccess: null,
   jwt: {
-    token: null,
-    expiry: null
+    token: undefined,
+    expiry: undefined
   }
 }
 
-const authReducer = (state = initialState, action) => {
+const authReducer: Reducer<AuthState> = (state = initialState, action) => {
   switch (action.type) {
-    case STORAGE_MAP_JWT: {
+    case AuthActionTypes.STORAGE_MAP_JWT: {
       return {
         ...state,
         jwt: action.payload
       }
     }
-    case USER_LOGOUT: {
+    case AuthActionTypes.USER_LOGOUT: {
       return {
         ...initialState
       }
     }
-    case USER_LOGIN_REQ: {
+    case AuthActionTypes.USER_LOGIN_REQ: {
       return {
         ...state,
         loginSuccess: null,
@@ -44,10 +36,10 @@ const authReducer = (state = initialState, action) => {
         error: {
           code: '',
           message: ''
-        },
+        }
       }
     }
-    case USER_LOGIN_SUC: {
+    case AuthActionTypes.USER_LOGIN_SUC: {
       return {
         ...state,
         loading: false,
@@ -55,15 +47,16 @@ const authReducer = (state = initialState, action) => {
         jwt: action.payload
       }
     }
-    case USER_LOGIN_ERR: {
+    case AuthActionTypes.USER_LOGIN_ERR: {
       return {
+        ...state,
         error: action.payload,
         loginSuccess: false,
         loading: false
       }
     }
 
-    case USER_REGISTER_REQ: {
+    case AuthActionTypes.USER_REGISTER_REQ: {
       return {
         ...state,
         loading: true,
@@ -74,14 +67,14 @@ const authReducer = (state = initialState, action) => {
         }
       }
     }
-    case USER_REGISTER_SUC: {
+    case AuthActionTypes.USER_REGISTER_SUC: {
       return {
         ...state,
         loading: false,
         registerSuccess: true
       }
     }
-    case USER_REGISTER_ERR: {
+    case AuthActionTypes.USER_REGISTER_ERR: {
       return {
         ...state,
         error: action.payload,
@@ -89,7 +82,6 @@ const authReducer = (state = initialState, action) => {
         registerSuccess: false
       }
     }
-
     default: {
       return state
     }

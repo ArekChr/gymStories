@@ -1,22 +1,20 @@
-import {
-  FETCH_IMAGE_REQ,
-  FETCH_IMAGE_SUC
-} from './types'
+import { ImageActionTypes, ImageState } from './types'
+import { Reducer } from 'redux';
 
-const initialState = {
+const initialState: ImageState = {
   loading: false,
   path: undefined
 }
 
-const imageReducer = (state = initialState, action) => {
+const imageReducer: Reducer<ImageState>  = (state = initialState, action) => {
   switch(action.type){
-    case FETCH_IMAGE_REQ: {
+    case ImageActionTypes.FETCH_IMAGE_REQ: {
       return {
         ...state,
         loading: true
       }
     }
-    case FETCH_IMAGE_SUC: {
+    case ImageActionTypes.FETCH_IMAGE_SUC: {
       return {
         ...state,
         loading: false,

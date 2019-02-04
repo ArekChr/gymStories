@@ -1,4 +1,4 @@
-export default progressConfig = {
+const progressConfig = {
   weight: {
     label: 'Waga',
   },
@@ -24,3 +24,5 @@ export default progressConfig = {
     label: 'Kark',
   }
 }
+
+export default progressConfig

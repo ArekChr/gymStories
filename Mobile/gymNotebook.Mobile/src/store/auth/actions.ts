@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Dispatch } from 'redux'
 import { 
   USER_REGISTER_SUC, 
   USER_REGISTER_ERR, 
@@ -14,8 +15,8 @@ import { API_URL } from '../../utils/misc'
 const URL = `${API_URL}/user/`
 const LOGIN_URL = `${API_URL}/login`
 
-export const mapJwtToState = (jwt) => {
-  return (dispatch) => {
+export const mapJwtToState = (jwt: any) => {
+  return (dispatch: Dispatch) => {
     dispatch({
       type: STORAGE_MAP_JWT,
       payload: jwt
@@ -25,13 +26,13 @@ export const mapJwtToState = (jwt) => {
 }
 
 export const logout = () => {
-  return (dispatch) => {
+  return (dispatch: Dispatch) => {
     dispatch({type: USER_LOGOUT })
   }
 }
 
-export const login = (data) => {
-  return (dispatch) => {
+export const login = (data: any) => {
+  return (dispatch: Dispatch) => {
     dispatch({ type: USER_LOGIN_REQ })
 
     axios({
@@ -60,8 +61,8 @@ export const login = (data) => {
   }
 }
 
-export const registerUser = (data, callback) => {
-  return (dispatch) => {
+export const registerUser = (data: any, callback?: Function) => {
+  return (dispatch: Dispatch) => {
     dispatch({ type: USER_REGISTER_REQ })
 
     axios({

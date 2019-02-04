@@ -1,23 +1,21 @@
-import {
-  FETCH_POST_REQ,
-  FETCH_POST_SUC
-} from './types'
+import { PostActionTypes, PostState } from './types'
+import { Reducer } from 'redux';
 
-const initialState = {
+const initialState: PostState = {
   loading: false,
   posts: undefined
 }
 
 
-const postReducer = (state = initialState, action) => {
+const postReducer: Reducer<PostState> = (state = initialState, action) => {
   switch(action.type){
-    case FETCH_POST_REQ: {
+    case PostActionTypes.FETCH_POST_REQ: {
       return {
         ...state,
         loading: true
       }
     }
-    case FETCH_POST_SUC: {
+    case PostActionTypes.FETCH_POST_SUC: {
       return {
         ...state,
         loading: false,
