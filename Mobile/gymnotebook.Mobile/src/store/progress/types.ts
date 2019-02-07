@@ -1,3 +1,5 @@
+import { Action } from "redux";
+
 export enum ProgresActionTypes {
   FETCH_PROGRESS_REQ = 'progress/FETCH_PROGRESS_REQ',
   FETCH_PROGRESS_SUC = 'progress/FETCH_PROGRESS_SUC',
@@ -18,6 +20,18 @@ export enum ProgresActionTypes {
   PICK_DATE = 'progress/PICK_DATE',
   SET_LAST_PROGRESS = 'progress/SET_LAST_PROGRESS'
 }
+
+export interface IFetchProgressAction extends Action<ProgresActionTypes.FETCH_PROGRESS_SUC>{
+  progress: Progress[]
+}
+
+export interface IUpdateProgressAction extends Action<ProgresActionTypes.UPDATE_PROGRESS_SUC>{
+  type: ProgresActionTypes.UPDATE_PROGRESS_SUC
+}
+
+export type ProgressActions =
+  | IFetchProgressAction
+  | IUpdateProgressAction
 
 export interface Progress {
   id: string

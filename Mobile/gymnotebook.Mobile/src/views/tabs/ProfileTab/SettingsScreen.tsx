@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import {removeTokensFromStorage} from '../../../utils/misc'
-import {logout} from '../../../store/auth/actions'
-import {connect} from 'react-redux'
+import { removeTokensFromStorage } from '../../../utils/misc'
+import { logout } from '../../../store/auth/actions'
+import { connect } from 'react-redux'
+import { ConnectedReduxProps } from '../../../store';
+import { Dispatch } from 'redux';
 
-class SettingsScreen extends Component {
+interface ComponentProps {
+  navigation: any
+}
+
+type Props = ComponentProps & ConnectedReduxProps
+
+class SettingsScreen extends Component<Props>{
 
   static navigationOptions = ({ navigation }) => {
     return {
@@ -80,7 +88,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   logout: () => logout()(dispatch)
 })
 

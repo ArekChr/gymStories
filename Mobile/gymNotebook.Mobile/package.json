@@ -36,6 +36,7 @@
     "rn-fetch-blob": "^0.10.15"
   },
   "devDependencies": {
+    "@types/node": "^10.12.21",
     "@types/react": "^16.8.1",
     "@types/react-native": "^0.57.32",
     "@types/react-native-calendars": "^1.20.5",

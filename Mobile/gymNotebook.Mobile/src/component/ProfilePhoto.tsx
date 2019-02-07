@@ -4,8 +4,8 @@ import { API_URL } from '../utils/misc'
 
 interface Props {
   source: string
-  onPress: void
-  style: StyleProp<ImageStyle>
+  onPress: () => void
+  style?: StyleProp<ImageStyle>
 }
 
 export default class ProfilePhoto extends Component<Props, {}>{

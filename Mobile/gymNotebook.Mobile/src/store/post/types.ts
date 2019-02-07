@@ -9,7 +9,7 @@ export enum PostActionTypes {
   DELETE_POST_SUC = 'post/DELETE_SUC'
 }
 
-export interface PostState {
+export interface PostsState {
   loading: boolean
   posts?: any[]
 }

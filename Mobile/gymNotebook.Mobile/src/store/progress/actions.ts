@@ -1,9 +1,11 @@
 import axios from 'axios'
-import { ProgresActionTypes } from './types'
+import { ProgresActionTypes, IFetchProgressAction } from './types'
 import { API_URL } from '../../utils/misc'
 import { Dispatch } from 'redux';
 
 const URL = `${API_URL}/progress`
+
+
 
 export const selectDate = (date: any) => {
   return (dispatch: Dispatch) => {
@@ -68,12 +70,6 @@ export const fetchProgress = () => {
         dispatch({
           type: ProgresActionTypes.FETCH_PROGRESS_SUC,
           payload: response.data
-        })
-      })
-      .catch(response => {
-        dispatch({
-          type: ProgresActionTypes.FETCH_PROGRESS_ERR,
-          payload: response.response.data
         })
       })
   }

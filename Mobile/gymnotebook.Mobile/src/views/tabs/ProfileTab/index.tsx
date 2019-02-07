@@ -4,8 +4,20 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import { fetchProfile } from '../../../store/profile/actions'
 import { connect } from 'react-redux';
 import { ProfilePhoto } from '../../../component'
+import { Dispatch } from 'redux';
+import { ApplicationState } from '../../../store';
 
-class ProfileTab extends Component {
+export interface ComponentProps {
+  navigation: any
+}
+
+interface PropsFromDispatch {
+  fetchProfile: Function
+}
+
+type Props = ComponentProps & PropsFromDispatch
+
+class ProfileTab extends Component<Props> {
 
   // TODO: get previous state from asyncStorage 
 
@@ -43,10 +55,6 @@ class ProfileTab extends Component {
       posts: {
         label: '',
         value: 0
-      },
-      description: {
-        label: '',
-        value: ''
       }
     }
   }
@@ -113,7 +121,7 @@ class ProfileTab extends Component {
                         style={{ alignItems: 'center', borderWidth: 1, flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
                         <Text>Edytuj profil</Text>
                       </TouchableOpacity>
-                      <TouchableOpacity onPress={this.onSettingsPress} bordered={true} dark={true}
+                      <TouchableOpacity onPress={this.onSettingsPress}
                           style={{ alignItems: 'center', borderWidth: 1, flex: 1, marginLeft: 5, marginRight: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
                         <AntDesign size={20} name='setting' color='black' />
                       </TouchableOpacity>
@@ -131,12 +139,12 @@ class ProfileTab extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  profileLoading: state.Profile.loading,
-  profile: state.Profile.profile
+const mapStateToProps = ({Profile}: ApplicationState) => ({
+  profileLoading: Profile.loading,
+  profile: Profile.profile
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchProfile: (callback) => fetchProfile(callback)(dispatch)
 });
 

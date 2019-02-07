@@ -276,7 +276,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems:'center',
     justifyContent:'center',
-    textAlign: 'center',
     fontWeight:'600',
     color: 'white',
     backgroundColor: PRIMARY_COLOR,
