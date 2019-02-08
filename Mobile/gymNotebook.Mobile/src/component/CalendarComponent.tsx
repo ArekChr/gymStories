@@ -6,6 +6,8 @@ import { Dispatch } from 'redux';
 
 interface Props {
   selectedDate: string
+  pickDate: (day: any) => Function
+  pickedDate: any
 }
 
 class CalendarComponent extends Component<Props, any> {

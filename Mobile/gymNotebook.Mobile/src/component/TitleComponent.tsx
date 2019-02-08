@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import { Text, View, StyleSheet, StyleProp, TextStyle } from 'react-native';
 import { FONT_COLOR } from '../styles/common';
 import { Fonts } from '../styles'
 
 interface Props {
-  style: StyleProp<TextStyle>
+  style?: StyleProp<TextStyle>
+  children: ReactNode
 }
 
-class TitleComponent extends Component<Props, {}>{
+class TitleComponent extends Component<Props>{
 
   render() {
     return (

@@ -4,11 +4,23 @@ import { ButtonNext, TitleComponent, ErrorMessage } from '../../component'
 import styles from '../../styles'
 import {setGender} from '../../store/profile/actions'
 import {connect} from 'react-redux'
+import { Gender } from '../../store/profile/types';
 
-class GenderTypeScreen extends Component {
+interface Props {
+  gender: Gender,
+  setGender: (gender: Gender) => Function
+  navigation: any
+}
+
+interface State {
+  gender: Gender
+  error: string
+}
+
+class GenderTypeScreen extends Component<Props, State> {
 
   state = { 
-    gender: this.props.gender || '',
+    gender: this.props.gender,
     error: '',
   }
 
