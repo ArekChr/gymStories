@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import Video from 'react-native-video';
-import { AppRegistry, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, StatusBar, Image, TextInput } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, StatusBar, Image, TextInput } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { NavigationScreenProp } from 'react-navigation';
 
-class VideoRelationsScreen extends Component {
+interface Props {
+  navigation: NavigationScreenProp<VideoRelationsScreen>
+}
+
+class VideoRelationsScreen extends Component<Props> {
 
   state = {
     rate: 1,

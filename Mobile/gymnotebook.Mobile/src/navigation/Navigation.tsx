@@ -36,6 +36,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 
 import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON } from '../styles/common'
 import { Fonts } from '../styles'
+import CommentScreen from '../views/General/CommentScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -104,11 +105,12 @@ const AppTabNavigator = createBottomTabNavigator({
         const { routeName } = navigation.state
         switch(routeName){
           case 'HomeTab': 
-            return <Entypo name="home" size={25} color={tintColor} />
+            return <Entypo name="home" size={25} color={tintColor || undefined} />
           case 'ActiveTab':
-            return <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor} />
+            return <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor || undefined} />
           case 'ProfileTab':
-            return <Entypo name="user" size={26} color={tintColor} />
+            return <Entypo name="user" size={26} color={tintColor || undefined} />
+          default: return null
         }
       }
     }),
@@ -124,10 +126,6 @@ const AppTabNavigator = createBottomTabNavigator({
       inactiveTintColor: INACTIVE_ICON,
       showIcon: true,
       showLabel: false
-    },
-    headerTitleStyle : {
-      fontWeight: undefined,
-      fontFamily: Fonts.robotoRegular
     }
   })
 
@@ -246,6 +244,12 @@ const HomeStackNavigator = createStackNavigator({
   VideoRelations: { 
     screen: VideoRelationsScreen,
     navigationOptions: { header: null }
+  },
+  CommentScreen: {
+    screen: CommentScreen,
+    navigationOptions: {
+      title: 'Komentarze'
+    }
   }
 },{
   defaultNavigationOptions: () => ({

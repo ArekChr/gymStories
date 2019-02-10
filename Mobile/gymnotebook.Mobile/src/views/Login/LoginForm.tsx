@@ -6,9 +6,16 @@ import { setTokens } from '../../utils/misc'
 import { mapJwtToState } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 import { FloatingInput } from '../../component'
+import { LoginModel, JWT } from '../../store/auth/types';
 
 interface Props {
+  onLogin(credentials: LoginModel): Function
+  mapJwtToState(jwt: JWT): Function
   onLoginSuccess(): Function
+  loginSuccess: boolean
+  loginLoading: boolean
+  error: Error
+  jwt: JWT
 }
 
 class LoginForm extends React.Component<Props> {
@@ -18,6 +25,9 @@ class LoginForm extends React.Component<Props> {
     email: '',
     password: ''
   }
+
+  private email = FloatingInput.prototype
+  private password = FloatingInput.prototype
 
   onLoginPressed = () => {
     const {email, password} = this.state
@@ -69,8 +79,7 @@ class LoginForm extends React.Component<Props> {
         <ActivityIndicator
             animating={true}
             size="large"
-            opacity={this.props.loginLoading? 1 : 0}
-            style={styles.loader}
+            style={[styles.loader, {opacity: this.props.loginLoading? 1 : 0}]}
         />
       </View>
     )

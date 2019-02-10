@@ -1,8 +1,19 @@
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage, PlatformIOS, Platform } from 'react-native'
 import { Profile } from '../store/profile/types'
 import { JWT } from '../store/auth/types'
 
 export const API_URL: string = 'http:/192.168.178.91:5001/api'
+
+export const iOS = () => {
+  switch(Platform.OS){
+    case "ios": {
+      return true;
+    }
+    case "android": {
+      return false;
+    }
+  }
+}
 
 export const setTokens = (values: JWT, callback: Function) => {
 

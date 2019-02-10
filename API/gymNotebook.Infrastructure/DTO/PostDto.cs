@@ -6,6 +6,7 @@ namespace gymNotebook.Infrastructure.DTO
 {
     public class PostDto : IResult
     {
+        public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Guid UserId { get; set; }

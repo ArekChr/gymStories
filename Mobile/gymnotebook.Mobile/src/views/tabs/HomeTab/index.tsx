@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, RefreshControl, Dimensions} from 'react-native'
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, RefreshControl, Dimensions, TextInput} from 'react-native'
 import { STATUS_BAR_COLOR } from '../../../styles/common'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -11,16 +11,22 @@ import PostImage from 'react-native-scalable-image';
 import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
-  posts: []
   fetchPosts(startDate: string, quantity: number, cb?: CallableFunction): Function
   navigation: NavigationScreenProp<HomeTab>
+  posts: []
 }
 
 class HomeTab extends Component<Props> {
 
   state = {
     refreshing: false,
-    width: null
+    width: null,
+    win: {
+      width: 0,
+      height: 0,
+      scale: 0,
+      fontScale: 0
+    }
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -45,6 +51,12 @@ class HomeTab extends Component<Props> {
     this.props.fetchPosts(null, 20);
   }
 
+  onCommentShowPressed = (id: string) => {
+    this.props.navigation.navigate('CommentScreen',{
+      postId: id
+    })
+  }
+
   onRefresh = () => {
     this.setState({refreshing: true});
     this.props.fetchPosts(null, 20, () => {
@@ -56,9 +68,9 @@ class HomeTab extends Component<Props> {
     this.props.navigation.navigate('VideoRelations')
   }
 
-  renderPosts = (posts) => {
+  renderPosts(posts: []) {
     if(posts !== undefined){
-      return posts.map((post, i) => {
+      return posts.map((post: any, i: number) => {
         return (
         <View key={i}>
           <View style={{ height: 45, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -77,8 +89,8 @@ class HomeTab extends Component<Props> {
               </View>
             </View>
 
-            <View style={styles.right}>
-              <TouchableOpacity style={styles.optionsButton}>
+            <View >
+              <TouchableOpacity>
                 <SimpleLineIcons name="options-vertical" size={15} style={{marginRight: 8}} color="gray" />
               </TouchableOpacity>
             </View>
@@ -95,14 +107,14 @@ class HomeTab extends Component<Props> {
                 <TouchableOpacity style={{...styles.icon}}>
                   <FontAwesome name="heart" size={25} color="black"/>
                 </TouchableOpacity>
-                <TouchableOpacity style={{...styles.icon}}>
+                <TouchableOpacity style={{...styles.icon}} onPress={() => this.onCommentShowPressed(post.id)}>
                   <FontAwesome name="comment" size={25} color="black" style={{marginTop: -3}}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.icon}>
                   <Ionicons name="ios-send" size={30} color="black" style={{marginTop: -3}}/>
                 </TouchableOpacity>
               </View>
-              <View style={styles.right}>
+              <View>
 
                 <TouchableOpacity style={styles.icon}>
 
@@ -118,11 +130,6 @@ class HomeTab extends Component<Props> {
               </Text>
               <Text style={{color: 'gray'}}>Zobacz wszystkie komentarze: 2043</Text>
               <Text><Text style={{fontWeight: '600'}}>Damian Hejda</Text> Fajny was pomys u was mmmm.</Text>
-              <TouchableOpacity style={{marginTop: 5, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                <Image style={{ width: 26, height: 26, borderRadius: 45, marginTop: 'auto', marginBottom: 'auto'}} 
-                source={require('../../../images/profile3.jpg')}/>
-                <Text style={{color: 'gray', marginLeft: 8}}>Dodaj komentarz...</Text>
-              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -134,7 +141,7 @@ class HomeTab extends Component<Props> {
 
   }
 
-  renderVideoRelationsBar = () => {
+  renderVideoRelationsBar() {
     return (
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{borderBottomColor: 'rgba(0,0,0,0.1)', borderBottomWidth: 0.2}}>
       <View style={{display: 'flex', margin: 10, marginBottom: 6, justifyContent: 'center', alignItems: 'center'}}>
@@ -175,7 +182,7 @@ class HomeTab extends Component<Props> {
     )
   }
 
-  renderPost = () => {
+  renderPost() {
     return (
       <>
         <View style={{ height: 45, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -195,8 +202,8 @@ class HomeTab extends Component<Props> {
             </View>
           </View>
 
-          <View style={styles.right}>
-            <TouchableOpacity style={styles.optionsButton}>
+          <View>
+            <TouchableOpacity>
               <SimpleLineIcons name="options-vertical" size={15} style={{marginRight: 8}} color="gray" />
             </TouchableOpacity>
           </View>
@@ -213,14 +220,14 @@ class HomeTab extends Component<Props> {
               <TouchableOpacity style={{...styles.icon}}>
                 <FontAwesome name="heart" size={25} color="black"/>
               </TouchableOpacity>
-              <TouchableOpacity style={{...styles.icon}}>
+              <TouchableOpacity style={{...styles.icon}} >
                 <FontAwesome name="comment" size={25} color="black" style={{marginTop: -3}}/>
               </TouchableOpacity>
               <TouchableOpacity style={styles.icon}>
                 <Ionicons name="ios-send" size={30} color="black" style={{marginTop: -3}}/>
               </TouchableOpacity>
             </View>
-            <View style={styles.right}>
+            <View>
 
               <TouchableOpacity style={styles.icon}>
 
@@ -238,11 +245,6 @@ class HomeTab extends Component<Props> {
             </Text>
             <Text style={{color: 'gray'}}>Zobacz wszystkie komentarze: 2043</Text>
             <Text><Text style={{fontWeight: '600'}}>Damian Hejda</Text> Fajny was pomys u was mmmm.</Text>
-            <TouchableOpacity style={{marginTop: 5, display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-              <Image style={{ width: 26, height: 26, borderRadius: 45, marginTop: 'auto', marginBottom: 'auto'}} 
-              source={require('../../../images/profile3.jpg')}/>
-              <Text style={{color: 'gray', marginLeft: 8}}>Dodaj komentarz...</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </>
