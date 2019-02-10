@@ -4,12 +4,19 @@ import { ButtonNext, TitleComponent, ErrorMessage, FloatingInput } from '../../c
 import styles from '../../styles'
 import {setPassword} from '../../store/profile/actions'
 import {connect} from 'react-redux'
+import { NavigationScreenProp } from 'react-navigation';
 
-class PasswordScreen extends Component {
+interface Props {
+  setPassword(password: string): Function
+  navigation: NavigationScreenProp<PasswordScreen>
+}
+
+class PasswordScreen extends Component<Props> {
   constructor(props) {
     super(props)
-    this.inputs = {}
   }
+
+  private inputs = {}
 
   state = {
     password: '',

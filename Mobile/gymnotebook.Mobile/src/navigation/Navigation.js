@@ -3,7 +3,7 @@ import {Easing, Animated} from 'react-native'
 
 import ActiveTab from '../views/tabs/ActiveTab'
 import GymTab from '../views/tabs/GymTab'
-import HomeTab from '../views/tabs/HomeTab/index.js'
+import HomeTab from '../views/tabs/HomeTab'
 import ProfileTab from '../views/tabs/ProfileTab'
 import SearchTab from '../views/tabs/SearchTab'
 import SettingsScreen from '../views/tabs/ProfileTab/SettingsScreen'

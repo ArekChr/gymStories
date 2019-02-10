@@ -1,12 +1,19 @@
 import React, { Component } from 'react'
 import { View, Picker, ScrollView, CameraRoll, PermissionsAndroid } from 'react-native'
 import { connect } from 'react-redux'
-//import ImagePicker from 'react-native-image-picker'
 import ImagePicker from 'react-native-image-crop-picker';
 import { ProfilePhoto, FloatingInput, TextButton, CheckButton } from '../../../component';
 import { updateProfileImage, updateProfileData } from '../../../store/profile/actions'
+import { Profile, Gender } from '../../../store/profile/types';
+import { NavigationScreenProp } from 'react-navigation';
 
-class EditProfileScreen extends Component {
+interface Props {
+  profile: Profile
+  navigation: NavigationScreenProp<EditProfileScreen>
+  updateProfileImage: Function
+}
+
+class EditProfileScreen extends Component<Props> {
   
   state = {
     profile: {
@@ -18,7 +25,7 @@ class EditProfileScreen extends Component {
       },
       lastName: {
         label: 'Nazwisko',
-        value: this.props.profile.lastName || '',
+        value: this.props.profile.lastName,
         isValid: true,
       },
       description: {
@@ -76,22 +83,25 @@ class EditProfileScreen extends Component {
     this.props.navigation.popToTop();
   }
 
+  onPhotoClick = () => {
+
+  }
+
   onPhotoPress = () => {
     ImagePicker.openPicker({
       width: 5000,
       height: 5000,
       cropping: true
     }).then(image => {
-      console.log(image)
       this.setState({
         pickedImage: { uri: image.path, ...image }
       });
     });
   };
 
-  onFirstNameChange = (value) => {
+  onFirstNameChange = (value: string) => {
     // TODO: fist name validation
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       ...prevState,
       profile: {
         ...prevState.profile,
@@ -103,45 +113,40 @@ class EditProfileScreen extends Component {
     }))
   }
 
-  onLastNameChange = (value) => {
+  onLastNameChange = (value: string) => {
     // TODO: last name validation
-    this.setState(prevState => ({
-      ...prevState,
+    this.setState({
       profile: {
-        ...prevState.profile,
+        ...this.state.profile,
         lastName: {
-          ...prevState.profile.lastName,
+          ...this.state.profile.lastName,
           value: value
         }
       }
-    }))
+    })
   }
 
-  onDescriptionChange = (value) => {
+  onDescriptionChange = (value: string) => {
     // TODO: description name validation
-    this.setState(prevState => ({
-      ...prevState,
+    this.setState({
       profile: {
-        ...prevState.profile,
+        ...this.state.profile,
         description: {
-          ...prevState.profile.description,
+          ...this.state.profile.description,
           value: value
         }
       }
-    }))
+    })
   }
 
-  onGenderChange = (value) => {
-    this.setState(prevState => ({
-      ...prevState,
-      profile: {
-        ...prevState.profile,
-        gender: {
-          ...prevState.profile.gender,
-          value: value
-        }
+  onGenderChange = (value: Gender) => {
+    this.setState({profile: {
+      ...this.state.profile,
+      gender: {
+        ...this.state.profile.gender,
+        value: value
       }
-    }))
+    }})
   }
 
   render() {
@@ -150,21 +155,21 @@ class EditProfileScreen extends Component {
       <ScrollView>
         <View style={{ margin: 10}}>
           <View style={{justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
-            <ProfilePhoto onPress={this.onPhotoClick} source={this.state.pickedImage ? this.state.pickedImage : require('../../../images/profile2.jpg')}/>
-            <TextButton style={{ marginTop: 5 }} onPress={this.onPhotoPress}>Zmień zdjęcie</TextButton>
+            <ProfilePhoto onPress={this.onPhotoClick()} source={this.state.pickedImage ? this.state.pickedImage : require('../../../images/profile2.jpg')}/>
+            <TextButton style={{ marginTop: 5 }} onPress={() => this.onPhotoPress}>Zmień zdjęcie</TextButton>
           </View>
           <FloatingInput label={firstName.label}
             value={firstName.value}
             isValid={firstName.isValid}
-            onChangeText={this.handleFirstNameChange}/>
+            onChangeText={this.onFirstNameChange}/>
           <FloatingInput label={lastName.label}
             value={lastName.value}
             isValid={lastName.isValid}
-            onChangeText={this.handleFirstNameChange}/>
+            onChangeText={this.onLastNameChange}/>
           <FloatingInput label={description.label}
             value={description.value}
             isValid={description.isValid}
-            onChangeText={this.handleFirstNameChange}/>
+            onChangeText={this.onDescriptionChange}/>
           <View style={{ borderBottomWidth: 1, borderBottomColor: '#aaa' }}>
             <Picker
               selectedValue={gender.value}

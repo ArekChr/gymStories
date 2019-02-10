@@ -4,8 +4,17 @@ import { selectProgress, handleProgressModal } from '../../../store/progress/act
 import { connect } from 'react-redux';
 import { capFirst } from '../../../utils/string'
 import progressConfig from '../../../config/progressConfig'
+import { ProgressKey } from '../../../store/progress/types';
+import { ApplicationState } from '../../../store';
 
-class ProgressModal extends Component {
+interface Props {
+  selectProgress: (checked: ProgressKey) => Function
+  selectedProgress: ProgressKey
+  handleProgressModal: Function
+  modal: boolean
+}
+
+class ProgressModal extends Component<Props> {
   state = {
     modal: false,
     progress: [
@@ -65,7 +74,7 @@ class ProgressModal extends Component {
               </View>
 
               <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={this.props.handleProgressModal}>
+                <TouchableOpacity style={styles.button} onPress={() => this.props.handleProgressModal}>
                   <Text style={styles.buttonText}>Anuluj</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={this.onSelect}>
@@ -109,7 +118,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({Progress}) => ({
+const mapStateToProps = ({Progress}: ApplicationState) => ({
   selectedProgress: Progress.selectedProgress,
   modal: Progress.modal
 })

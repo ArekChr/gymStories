@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 
 const URL = `${API_URL}/Post`;
 
-export const fetchPosts = (startDate: string, quantity: number, cb?: Function) => {
+export const fetchPosts = (startDate: string, quantity: number, cb?: CallableFunction) => {
   return (dispatch: Dispatch) => {
 
     dispatch({

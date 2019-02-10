@@ -5,9 +5,16 @@ import { setDateOfBirth } from '../../store/profile/actions'
 import { connect } from 'react-redux'
 import { DatePickerView, Provider } from '@ant-design/react-native';
 import enUS from '@ant-design/react-native/lib/locale-provider/en_US';
+import { NavigationScreenProp } from 'react-navigation';
 
+interface Props {
+  dateOfBirth: Date
+  setDateOfBirth(date: string): Function
+  navigation: NavigationScreenProp<BirthDateScreen>
 
-class BirthDateScreen extends Component {
+}
+
+class BirthDateScreen extends Component<Props> {
 
   state = {
     dateOfBirth: this.props.dateOfBirth? new Date(this.props.dateOfBirth) : new Date(2000,1,1)
@@ -38,7 +45,7 @@ class BirthDateScreen extends Component {
               mode="date"
               value={this.state.dateOfBirth}
               onChange={this.onChange}
-              onValueChange={this.onValueChange}
+              //onValueChange={this.onValueChange}
               minDate={datemin}
               maxDate={datemax}
               format='dd-MM-yyyy'

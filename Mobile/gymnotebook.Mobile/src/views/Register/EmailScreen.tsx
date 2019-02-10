@@ -4,8 +4,15 @@ import { ButtonNext, TitleComponent, ErrorMessage, FloatingInput } from '../../c
 import styles from '../../styles'
 import { setEmail } from '../../store/profile/actions'
 import {connect} from 'react-redux'
+import { NavigationScreenProp } from 'react-navigation';
 
-class EmailScreen extends Component {
+interface Props {
+  email: string
+  setEmail(email: string): Function
+  navigation: NavigationScreenProp<EmailScreen>
+}
+
+class EmailScreen extends Component<Props> {
 
   state = {
     email: this.props.email || '',

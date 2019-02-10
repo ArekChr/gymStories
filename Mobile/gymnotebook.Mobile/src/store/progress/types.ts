@@ -33,6 +33,8 @@ export type ProgressActions =
   | IFetchProgressAction
   | IUpdateProgressAction
 
+export type ProgressKey = keyof Progress;
+
 export interface Progress {
   id: string
   weight: number

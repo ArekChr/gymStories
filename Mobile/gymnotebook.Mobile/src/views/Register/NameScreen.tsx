@@ -3,12 +3,21 @@ import { View, ScrollView } from 'react-native'
 import { ButtonNext, FloatingInput, TitleComponent, ErrorMessage } from '../../component'
 import { setName } from '../../store/profile/actions'
 import { connect } from 'react-redux'
+import { NavigationScreenProp } from 'react-navigation';
 
-class NameScreen extends Component {
+interface Props {
+  setName(firstName: string, lastName: string): Function
+  navigation: NavigationScreenProp<NameScreen>
+  firstName: string
+  lastName: string
+}
+
+class NameScreen extends Component<Props> {
   constructor(props) {
     super(props)
-    this.inputs = {}
   }
+
+  private inputs = {}
 
   state = {
     firstName: this.props.firstName || '',
@@ -16,6 +25,8 @@ class NameScreen extends Component {
     error: '',
     firstNameValid: true,
     lastNameValid: true,
+    firstNameHaveNumbers: false,
+    lastNameHaveNumbers: false,
     errors: {
       firstLastEmpty: 'Wprowadź imię i nazwisko.',
       firstEmpty: 'Wprowadź imię.',

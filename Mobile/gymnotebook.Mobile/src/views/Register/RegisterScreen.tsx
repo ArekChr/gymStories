@@ -2,8 +2,13 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import {Logo} from '../../component'
 import RegisterForm from './RegisterForm'
+import { NavigationScreenProp } from 'react-navigation';
 
-class RegisterScreen extends Component {
+interface Props {
+  navigation: NavigationScreenProp<RegisterScreen>
+}
+
+class RegisterScreen extends Component<Props> {
 
   onSignInPressed = () => {
     this.props.navigation.popToTop()
@@ -17,7 +22,7 @@ class RegisterScreen extends Component {
     return(
       <View style={styles.container}>
         <Logo/>
-        <RegisterForm onSingUpSuccess={this.onSingUpSuccess} />
+        <RegisterForm onSingUpSuccess={() => this.onSingUpSuccess} />
         
         <View style={styles.signupTextCont}>
           <Text style={styles.signupText}>Masz już konto? </Text>
@@ -56,12 +61,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500'
   }
-})
-
-const mapStateToProps = ({progress}) => ({
-})
-
-const mapDispatchToProps = (dispatch) => ({
 })
 
 export default RegisterScreen

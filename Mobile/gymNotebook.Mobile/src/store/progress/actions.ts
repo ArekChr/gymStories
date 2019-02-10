@@ -1,11 +1,9 @@
 import axios from 'axios'
-import { ProgresActionTypes, IFetchProgressAction } from './types'
+import { ProgresActionTypes, Progress, ProgressKey } from './types'
 import { API_URL } from '../../utils/misc'
 import { Dispatch } from 'redux';
 
 const URL = `${API_URL}/progress`
-
-
 
 export const selectDate = (date: any) => {
   return (dispatch: Dispatch) => {
@@ -25,7 +23,7 @@ export const pickDate = (date: any) => {
   }
 }
 
-export const selectProgress = (progress: any) => {
+export const selectProgress = (progress: ProgressKey) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProgresActionTypes.SELECTED_PROGRESS,

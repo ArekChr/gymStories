@@ -13,8 +13,19 @@ import progressConfig from '../../../config/progressConfig'
 import * as scale from 'd3-scale'
 import * as shape from 'd3-shape'
 import dateFns from 'date-fns'
+import { NavigationScreenProp } from 'react-navigation';
+import { Progress, ProgressKey } from '../../../store/progress/types';
 
-class ActiveTab extends Component {
+interface Props {
+  setLastProgress(value: number): Function
+  handleProgressModal(): Function
+  navigation: NavigationScreenProp<ActiveTab>
+  onFetch: Function
+  progress: Progress[]
+  selectedProgress: ProgressKey
+}
+
+class ActiveTab extends Component<Props> {
 
   static navigationOptions = ({ navigation }) => {
     return {

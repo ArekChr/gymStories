@@ -7,7 +7,11 @@ import { mapJwtToState } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 import { FloatingInput } from '../../component'
 
-class LoginForm extends React.Component {
+interface Props {
+  onLoginSuccess(): Function
+}
+
+class LoginForm extends React.Component<Props> {
 
   state = {
     opacity: 0,

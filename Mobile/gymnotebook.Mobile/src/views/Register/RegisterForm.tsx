@@ -2,8 +2,20 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { registerUser } from '../../store/auth/actions'
+import { RegisterModel } from '../../store/auth/types';
+import { ApplicationState } from '../../store';
 
-class RegisterForm extends React.Component {
+interface Props {
+  onRegister: (data: RegisterModel) => Function
+  onSingUpSuccess: () => Function
+  registerLoading: boolean
+  registerSuccess: boolean
+  error: {
+    message: string
+  }
+}
+
+class RegisterForm extends React.Component<Props> {
 
   state = {
     email: '',
@@ -13,6 +25,10 @@ class RegisterForm extends React.Component {
     passwordValid: true,
     canSignUp: false
   }
+
+  private password = TextInput.prototype
+  private username = TextInput.prototype
+  private confirmPassword = TextInput.prototype
 
   signUp = () => {
     const { email, password, username } = this.state
@@ -96,8 +112,7 @@ class RegisterForm extends React.Component {
         <ActivityIndicator
             animating={true}
             size="large"
-            opacity={this.props.registerLoading? 1 : 0}
-            style={styles.loader}
+            style={[styles.loader, {opacity: this.props.registerLoading? 1 : 0}]}
         />
       </View>
     )
@@ -151,7 +166,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   registerLoading: state.Auth.loading,
   error: state.Auth.error,
   registerSuccess: state.Auth.registerSuccess

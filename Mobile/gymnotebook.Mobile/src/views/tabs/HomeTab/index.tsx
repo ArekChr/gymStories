@@ -8,8 +8,15 @@ import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../../../store/post/actions'
 import PostImage from 'react-native-scalable-image';
+import { NavigationScreenProp } from 'react-navigation';
 
-class HomeTab extends Component {
+interface Props {
+  posts: []
+  fetchPosts(startDate: string, quantity: number, cb?: CallableFunction): Function
+  navigation: NavigationScreenProp<HomeTab>
+}
+
+class HomeTab extends Component<Props> {
 
   state = {
     refreshing: false,

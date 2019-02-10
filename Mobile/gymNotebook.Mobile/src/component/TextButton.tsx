@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, TouchableOpacity, StyleProp, TextStyle } from 'react-native'
 
 interface Props {
-  onPress: void,
+  onPress: Function,
   style: StyleProp<TextStyle>
 }
 

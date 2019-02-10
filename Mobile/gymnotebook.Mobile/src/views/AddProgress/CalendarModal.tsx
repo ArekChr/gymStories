@@ -4,7 +4,16 @@ import {CalendarComponent} from '../../component'
 import { selectDate, handleCalendarModal, pickDate } from '../../store/progress/actions'
 import { connect } from 'react-redux'
 
-class CalendarModal extends Component {
+interface Props {
+  selectDate(pickedDate: string): Function
+  pickDate(date: string): Function
+  handleCalendarModal(): Function
+  calendarModal: boolean
+  selectedDate: string
+  pickedDate: string
+}
+
+class CalendarModal extends Component<Props> {
 
   handleOk = () => {
     this.props.selectDate(this.props.pickedDate)

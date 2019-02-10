@@ -33,7 +33,7 @@ export const progressNormalize2 = (progress: Progress[], selector: (x: Progress)
 // progres = progres[1].biceps = 2;
 // var asb = progressNormalize2(progres, x => ({ value: x["calf"] as number, date: new Date(x.createdAt)}));
 
-export const progressSort = (progress: Progress[]) => {
+export const progressSort = (progress: any) => {
   return progress.sort(function(a: Progress, b: Progress) {
     return a.createdAt>b.createdAt ? -1 : a.createdAt<b.createdAt ? 1 : 0;
   });

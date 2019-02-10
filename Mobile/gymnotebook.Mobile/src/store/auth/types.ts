@@ -23,6 +23,17 @@ export interface JWT {
   expiry?: number
 }
 
+export interface RegisterModel {
+  username: string
+  password: string
+  email: string
+}
+
+export interface LoginModel {
+  email: string
+  password: string
+}
+
 export interface Error {
   code?: string
   message?: string

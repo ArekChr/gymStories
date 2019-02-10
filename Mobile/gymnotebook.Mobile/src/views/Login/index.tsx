@@ -6,8 +6,15 @@ import { getTokens } from '../../utils/misc'
 import { mapJwtToState } from '../../store/auth/actions'
 import { connect } from 'react-redux'
 import { STATUS_BAR_COLOR, PRIMARY_COLOR } from '../../styles/common'
+import { NavigationScreenProp } from 'react-navigation';
+import { JWT } from '../../store/auth/types';
 
-class LoginScreen extends Component {
+interface Props {
+  navigation: NavigationScreenProp<LoginScreen>
+  mapJwtToState(jwt: JWT): Function
+}
+
+class LoginScreen extends Component<Props> {
 
   state = {
     loading: true
@@ -59,7 +66,7 @@ class LoginScreen extends Component {
         <View style={styles.container}>
           <StatusBar backgroundColor={STATUS_BAR_COLOR} />
           <Logo/>
-          <LoginForm onLoginSuccess={() => this.onLoginSuccess()}/>
+          <LoginForm onLoginSuccess={() => this.onLoginSuccess}/>
           <View style={styles.signupTextCont}>
               <Text style={styles.signupText}>Nie masz konta? </Text>
               <TouchableOpacity onPress={this.onRegisterPressed}>

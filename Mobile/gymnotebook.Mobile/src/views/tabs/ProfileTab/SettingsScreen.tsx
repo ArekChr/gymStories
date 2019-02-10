@@ -5,9 +5,11 @@ import { logout } from '../../../store/auth/actions'
 import { connect } from 'react-redux'
 import { ConnectedReduxProps } from '../../../store';
 import { Dispatch } from 'redux';
+import { NavigationScreenProp } from 'react-navigation';
 
 interface ComponentProps {
-  navigation: any
+  navigation: NavigationScreenProp<SettingsScreen>
+  logout: Function
 }
 
 type Props = ComponentProps & ConnectedReduxProps

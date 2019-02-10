@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated, StyleProp, ViewStyle } from 'react-native';
+import { View, TextInput, Animated, StyleProp, ViewStyle, TextInputProps } from 'react-native';
 import { WARNING_COLOR, PRIMARY_COLOR } from '../styles/common'
 import { Fonts } from '../styles'
 
@@ -7,11 +7,12 @@ interface Props {
   label: string
   isValid: boolean
   value: string
-  onRef: any
-  style: StyleProp<ViewStyle>
+  onRef?: any
 }
 
-export default class FloatingInput extends Component<Props, {}> {
+type AllProps = Props & TextInputProps
+
+export default class FloatingInput extends Component<AllProps> {
 
   state = {
     isFocused: false,

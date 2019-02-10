@@ -5,8 +5,22 @@ import { PRIMARY_COLOR } from '../../styles/common'
 import { connect } from 'react-redux';
 import { registerUser, login } from '../../store/auth/actions'
 import { setTokens } from '../../utils/misc'
+import { ApplicationState } from '../../store';
+import { Profile } from '../../store/profile/types';
+import { LoginModel, JWT } from '../../store/auth/types';
+import { NavigationScreenProp } from 'react-navigation';
 
-class RegisterEndScreen extends Component {
+interface Props {
+  registerUser: (profile: Profile, cb: CallableFunction) => Function
+  login: (data: LoginModel) => Function
+  navigation: NavigationScreenProp<RegisterEndScreen>
+  loginSuccess: boolean
+  profile: Profile
+  error: Error
+  jwt: JWT
+}
+
+class RegisterEndScreen extends Component<Props> {
 
   componentDidMount(){
     this.props.registerUser(this.props.profile, () => {
@@ -37,7 +51,7 @@ class RegisterEndScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   registerLoading: state.Auth.loading,
   error: state.Auth.error,
   registerSuccess: state.Auth.registerSuccess,
@@ -46,6 +60,7 @@ const mapStateToProps = (state) => ({
   profile: state.Profile.profile,
   jwt: state.Auth.jwt
 });
+
 const mapDispatchToProps = (dispatch) => ({
   registerUser: (profile, callback) => registerUser(profile, callback)(dispatch),
   login: (data) => login(data)(dispatch)

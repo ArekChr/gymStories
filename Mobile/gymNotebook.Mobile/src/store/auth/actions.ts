@@ -8,9 +8,11 @@ import {
   USER_LOGIN_SUC,
   USER_LOGIN_ERR,
   STORAGE_MAP_JWT,
-  USER_LOGOUT
+  USER_LOGOUT,
+  RegisterModel
  } from './types'
 import { API_URL } from '../../utils/misc'
+import { EmailScreen } from '../../views/Register';
 
 const URL = `${API_URL}/user/`
 const LOGIN_URL = `${API_URL}/login`
@@ -61,7 +63,7 @@ export const login = (data: any) => {
   }
 }
 
-export const registerUser = (data: any, callback?: Function) => {
+export const registerUser = (data: RegisterModel, callback?: Function) => {
   return (dispatch: Dispatch) => {
     dispatch({ type: USER_REGISTER_REQ })
 

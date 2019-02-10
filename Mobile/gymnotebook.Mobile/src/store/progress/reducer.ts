@@ -131,12 +131,6 @@ const progressReducer: Reducer<ProgressState> = (state = initialState, action) =
         progressLoading: false
       }
     }
-    // case ProgresActionTypes.CREATE_PROGRESS_ERR: {
-    //   return {
-    //     ...state,
-
-    //   }
-    // }
     case ProgresActionTypes.UPDATE_PROGRESS_REQ: {
       return {
         ...state,
@@ -149,11 +143,6 @@ const progressReducer: Reducer<ProgressState> = (state = initialState, action) =
 
       }
     }
-    // case ProgresActionTypes.UPDATE_PROGRESS_ERR: {
-    //   return {
-    //     ...state
-    //   }
-    // }
     case ProgresActionTypes.DELETE_PROGRESS_REQ: {
       return {
         ...state
@@ -164,11 +153,6 @@ const progressReducer: Reducer<ProgressState> = (state = initialState, action) =
         ...state
       }
     }
-    // case ProgresActionTypes.DELETE_PROGRESS_ERR: {
-    //   return {
-    //     ...state
-    //   }
-    // }
     default: {
       return state;
     }

@@ -5,8 +5,19 @@ import { handleCalendarModal, createProgress } from '../../store/progress/action
 import { connect } from 'react-redux';
 import { capFirst } from '../../utils/string'
 import { CheckButton } from '../../component';
+import { NavigationScreenProp } from 'react-navigation';
+import { ProgressKey } from '../../store/progress/types';
 
-class AddProgressScreen extends Component {
+interface Props {
+  createProgress(progress: any): Function
+  handleCalendarModal(): Function
+  navigation: NavigationScreenProp<AddProgressScreen>
+  lastProgress: number
+  selectedDate: string
+  selectedProgress: ProgressKey
+}
+
+class AddProgressScreen extends Component<Props> {
 
   static navigationOptions = ({ navigation }) => {
     return {
