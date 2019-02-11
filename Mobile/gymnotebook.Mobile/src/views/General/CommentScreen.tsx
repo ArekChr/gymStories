@@ -11,28 +11,46 @@ export interface Props {
 
 class CommentScreen extends React.Component<Props> {
 
+  state = {
+    comment: '',
+    canSend: false,
+    postId: undefined
+  }
+
   componentDidMount(){
     const { navigation } = this.props;
     const postId = navigation.getParam('postId');
-    console.log(postId)
+    this.setState({postId: postId})
     //this.props.fetchComments(postId, 20)
+  }
+
+  onChangeComment = (text: string) => {
+    this.setState({
+      comment: text, 
+      canSend: text.length === 0 ? false : true
+    })
+  }
+
+  onCommentSend = () => {
+    //this.props.putComment(this.state.postId: string)
   }
 
   render() {
     return (
-      <View style={{ display: 'flex', 
-      flexDirection: 'row', alignItems: 'center', 
-      justifyContent: 'space-between', 
-      position: 'absolute', bottom: 0, margin: 10, marginBottom: 15, borderTopColor: 'black'}}>
-        <Image style={{ width: 30, height: 30, borderRadius: 45, marginTop: 'auto', display: 'flex'}} 
-        source={require('../../images/profile3.jpg')}/>
-        <TextInput multiline={true} 
-          placeholder="Dodaj komentarz..." 
-          placeholderTextColor="gray" 
-          style={{display: 'flex', flex: 1, margin:0, padding: 0, color: 'black', marginLeft: 8}} />
-        <TouchableOpacity style={{marginTop: 'auto', marginBottom: 5}}>
-          <Text style={{ marginLeft: 5, color: '#1565C0' }}>Opublikuj</Text>
-        </TouchableOpacity>
+      <View style={{borderTopColor: 'black', borderTopWidth: 0.5, position: 'absolute', bottom: 0, width: '100%'}}>
+        <View style={{  display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', 
+         margin: 6, marginLeft: 12, marginRight: 12 }}>
+          <Image style={{ width: 32, height: 32, borderRadius: 45, borderWidth: 1, borderColor: 'gray', marginTop: 'auto', display: 'flex'}} 
+          source={require('../../images/profile3.jpg')}/>
+          <TextInput multiline={true} 
+            placeholder="Dodaj komentarz..." 
+            placeholderTextColor="gray" 
+            onChangeText={(text) => this.onChangeComment(text)}
+            style={{display: 'flex', flex: 1, padding: 0, paddingLeft: 8, color: 'black', marginLeft: 8}} />
+          <TouchableOpacity disabled={!this.state.canSend} style={{marginTop: 'auto', marginBottom: 5}}>
+            <Text style={{ marginLeft: 5, color: '#1565C0', opacity: this.state.canSend ? 1 : 0.5 }}>Opublikuj</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
