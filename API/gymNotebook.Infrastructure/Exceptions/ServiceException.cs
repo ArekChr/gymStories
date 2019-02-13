@@ -1,4 +1,4 @@
-﻿using gymNotebook.Core.Domain;
+﻿using gymNotebook.Core.Exceptions;
 using System;
 
 namespace gymNotebook.Infrastructure.Exceptions

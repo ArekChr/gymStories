@@ -1,4 +1,5 @@
-﻿using System;
+﻿using gymNotebook.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -9,6 +10,9 @@ namespace gymNotebook.Core.Domain
         private ISet<Training> _trainings = new HashSet<Training>();
         private ISet<Progress> _progress = new HashSet<Progress>();
         private ISet<Friend> _friends = new HashSet<Friend>();
+        private ISet<CommentUserRels> _comments = new HashSet<CommentUserRels>();
+        private ISet<Post> _posts = new HashSet<Post>();
+        private ISet<Follow> _follows = new HashSet<Follow>();
 
         private static List<string> _roles = new List<string>
         {
@@ -16,20 +20,18 @@ namespace gymNotebook.Core.Domain
         };
 
         public string Role { get; protected set; }
-
-        public string Username { get; protected set; }
-
         public string Email { get; protected set; }
-
         public string Password { get; protected set; }
-
         public string Salt { get; protected set; }
-
         public DateTime CreateAt { get; protected set; }
 
+        public Profile Profile { get; protected set; }
+        public IEnumerable<Follow> Follows => _follows;
+        public IEnumerable<Post> Posts => _posts;
         public IEnumerable<Training> Trainings => _trainings;
         public IEnumerable<Progress> Progress => _progress;
         public IEnumerable<Friend> Friends => _friends;
+        public IEnumerable<CommentUserRels> CommentUserRels => _comments;
 
         private static readonly Regex EmailRegex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         private static readonly Regex NameRegex = new Regex("^(?![_.-])(?!.*[_.-]{2})[a-zA-Z0-9._.-]+(?<![_.-])$");
@@ -38,24 +40,14 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public User(string username, string email, string password, string salt)
+        public User(string email, string hash, string salt)
         {
             Id = Guid.NewGuid();
             //SetRole(role);
-            SetUsername(username);
             SetEmail(email);
-            SetPassword(password);
+            Password = hash;
             Salt = salt;
             CreateAt = DateTime.UtcNow;
-        }
-
-        public void SetUsername(string username)
-        {
-            if (!NameRegex.IsMatch(username))
-            {
-                throw new DomainException(ErrorCodes.InvalidUsername, $"User can not have an empty username.");
-            }
-            Username = username;
         }
 
         public void SetEmail(string email)

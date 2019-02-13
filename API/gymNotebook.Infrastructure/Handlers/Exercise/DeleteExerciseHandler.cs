@@ -16,7 +16,7 @@ namespace gymNotebook.Infrastructure.Handlers.Exercise
 
         public async Task HandleAsync(DeleteExercise command)
         {
-            await _exerciseService.DeleteAsync(command.id);
+            await _exerciseService.DeleteAsync(command.Id);
         }
     }
 }

@@ -15,7 +15,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IFriendService _friendService;
 
-        public FriendController(IFriendService friendService, ICommandDispatcher commandDispatcher) : base (commandDispatcher)
+        public FriendController(IFriendService friendService,
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _friendService = friendService;
         }

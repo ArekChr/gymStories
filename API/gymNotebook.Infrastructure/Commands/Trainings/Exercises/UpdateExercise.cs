@@ -4,7 +4,7 @@ using System.Text;
 
 namespace gymNotebook.Infrastructure.Commands.Trainings.Exercises
 {
-    public class UpdateExercise : ICommand
+    public class UpdateExercise : AuthenticatedCommandBase
     {
         public Guid Id { get; set; }
 

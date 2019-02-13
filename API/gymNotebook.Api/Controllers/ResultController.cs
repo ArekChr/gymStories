@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Trainings.Results;
 using gymNotebook.Infrastructure.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gymNotebook.Api.Controllers
@@ -14,7 +13,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IResultService _resultService;
 
-        public ResultController(IResultService resultService, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public ResultController(IResultService resultService, 
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _resultService = resultService;
         }

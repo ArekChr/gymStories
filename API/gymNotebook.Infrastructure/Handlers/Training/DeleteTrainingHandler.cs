@@ -19,7 +19,7 @@ namespace gymNotebook.Infrastructure.Handlers.Training
 
         public async Task HandleAsync(DeleteTraining command)
         {
-            await _trainingService.DeleteAsync(command.trainingId);
+            await _trainingService.DeleteAsync(command.TrainingId);
         }
     }
 }

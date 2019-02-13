@@ -7,6 +7,19 @@ using gymNotebook.Core.Domain;
 
 namespace gymNotebook.Infrastructure.Services
 {
+    public interface IFullTrainingService : IService
+    {
+        Task<FullTrainingDto> GetAsync(Guid trainingId);
+
+        Task<FullTrainingDto> GetAsync(Guid routineId, string name);
+
+        Task CreateAsync(CreateFullTraining fullTraining);
+
+        Task UpdateAsync(UpdateAllTraining allTraining);
+
+        Task DeleteAsync(Guid id);
+    }
+
     public class FullTrainingService : IFullTrainingService
     {
         private readonly ITrainingRepository _trainingRepo;

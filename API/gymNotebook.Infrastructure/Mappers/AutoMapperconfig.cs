@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using gymNotebook.Core.Domain;
 using gymNotebook.Infrastructure.DTO;
+using Profile = gymNotebook.Core.Domain.Profile;
 
 namespace gymNotebook.Infrastructure.Mappers
 {
@@ -16,6 +17,14 @@ namespace gymNotebook.Infrastructure.Mappers
                 cfg.CreateMap<User, UserDto>();
                 cfg.CreateMap<Routine, RoutineDto>();
                 cfg.CreateMap<Result, ResultDto>();
+                cfg.CreateMap<Progress, ProgressDto>();
+                cfg.CreateMap<Profile, ProfileDto>();
+                cfg.CreateMap<Post, PostDto>()
+                    .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.Profile.FirstName))
+                    .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.Profile.LastName));
+                cfg.CreateMap<Image, ImageDto>();
+                cfg.CreateMap<Comment, CommentDto>();
+
             })
             .CreateMapper();
     }

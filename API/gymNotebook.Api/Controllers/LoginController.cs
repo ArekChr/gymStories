@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using gymNotebook.Infrastructure.Commands;
 using gymNotebook.Infrastructure.Commands.Users;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using gymNotebook.Infrastructure.Extensions;
@@ -15,7 +14,10 @@ namespace gymNotebook.Api.Controllers
     {
         private readonly IMemoryCache _cache;
 
-        public LoginController(IMemoryCache cache, ICommandDispatcher commandDispatcher) : base(commandDispatcher)
+        public LoginController(IMemoryCache cache,
+            ICommandDispatcher commandDispatcher,
+            IResultDispatcher resultDispatcher)
+            : base(commandDispatcher, resultDispatcher)
         {
             _cache = cache;
         }
