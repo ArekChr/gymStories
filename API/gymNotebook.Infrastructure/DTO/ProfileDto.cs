@@ -11,7 +11,9 @@ namespace gymNotebook.Infrastructure.DTO
         public string LastName { get; set; }
         public string Gender { get; set; }
         public string Description { get; set; }
+        public Guid UserId { get; set; }
         public Guid ImageId { get; set; }
+        public string ImageURL { get; set; }
         public float AverageRates { get; set; }
         public int FollowingCount { get; set; }
         public int FollowersCount { get; set; }

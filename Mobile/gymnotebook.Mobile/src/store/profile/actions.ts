@@ -5,7 +5,7 @@ import { Dispatch } from 'redux'
 
 const URL: string = `${API_URL}/Profile`;
 
-export const fetchProfile = (callback: Function | undefined) => {
+export const fetchProfile = (callback?: CallableFunction) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.FETCH_REQ

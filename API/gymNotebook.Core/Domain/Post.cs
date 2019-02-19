@@ -12,6 +12,7 @@ namespace gymNotebook.Core.Domain
         public Guid ImageId { get; protected set; }
         public int Likes { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
+        public int CommentCount { get; protected set; }
 
         public string ImageURL => $"http:/192.168.178.91:5001/api/Image/{ImageId.ToString()}";
         public User User { get; protected set; }
@@ -27,7 +28,13 @@ namespace gymNotebook.Core.Domain
             ImageId = imageId;
             UserId = userId;
             Likes = 0;
+            CommentCount = 0;
             CreatedAt = DateTime.UtcNow;
+        }
+
+        public void IncrementComent()
+        {
+            CommentCount = CommentCount++;
         }
     }
 }

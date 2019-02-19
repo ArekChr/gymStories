@@ -4,7 +4,7 @@ import { API_URL } from '../utils/misc'
 
 interface Props {
   source: string
-  onPress: void
+  onPress: () => void
   style?: StyleProp<ImageStyle>
 }
 

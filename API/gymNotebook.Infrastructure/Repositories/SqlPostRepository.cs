@@ -18,14 +18,11 @@ namespace gymNotebook.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<Post> GetAsync(Guid id, Guid userId)
-            => await _context.Posts
-            .SingleOrDefaultAsync(x => x.Id == id && x.UserId == userId);
+        public async Task<Post> GetAsync(Guid id)
+            => await _context.Posts.SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task<IList<Post>> BrowseHomeAsync(IList<Guid> followed, DateTime? startDate, int quantity)
             => await _context.Posts
-            .Include(x => x.CommentPostRels)
-                .ThenInclude(x => x.Comment)
             .Include(x => x.User)
                 .ThenInclude(x => x.Profile)
             .Where(x => followed.Contains(x.UserId))

@@ -7,6 +7,7 @@ namespace gymNotebook.Core.Domain
         public Guid UserId { get; protected set; }
         public User User { get; protected set; }
         public string Content { get; protected set; }
+        public int Likes { get; protected set; }
         public DateTime CreatedAt { get; protected set; }
 
         protected Comment()
@@ -18,6 +19,7 @@ namespace gymNotebook.Core.Domain
             UserId = userId;
             Content = content;
             CreatedAt = DateTime.UtcNow;
+            Likes = 0;
         }
     }
 }

@@ -7,10 +7,13 @@ import { capFirst } from '../../utils/string'
 import { CheckButton } from '../../component';
 import { NavigationScreenProp } from 'react-navigation';
 import { ProgressKey } from '../../store/progress/types';
+import { Dispatch } from 'redux';
+import { ApplicationState } from '../../store';
+import { Progress } from '@ant-design/react-native';
 
 interface Props {
-  createProgress(progress: any): Function
-  handleCalendarModal(): Function
+  createProgress(progress: Progress): void
+  handleCalendarModal(): void
   navigation: NavigationScreenProp<AddProgressScreen>
   lastProgress: number
   selectedDate: string
@@ -110,15 +113,15 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({Progress}) => ({
+const mapStateToProps = ({Progress}: ApplicationState) => ({
   selectedDate: Progress.selectedDate,
   selectedProgress: Progress.selectedProgress,
   lastProgress: Progress.lastProgress
 })
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   handleCalendarModal: () => handleCalendarModal()(dispatch),
-  createProgress: (progress) => createProgress(progress)(dispatch)
+  createProgress: (progress: Progress) => createProgress(progress)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProgressScreen)

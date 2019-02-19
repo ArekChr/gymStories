@@ -9,7 +9,7 @@ import { PRIMARY_COLOR } from '../../../styles/common'
 export default class SearchTab extends Component {
 
   static navigationOptions = {
-    tabBarIcon: ({ tintColor }) => (
+    tabBarIcon: ({ tintColor }: any) => (
       <FontAwesome name="search" size={24} color={tintColor} />
     )
   }

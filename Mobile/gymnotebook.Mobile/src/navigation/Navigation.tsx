@@ -34,7 +34,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
 
-import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON } from '../styles/common'
+import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON, FONT_COLOR, HEADER_WHITE } from '../styles/common'
 import { Fonts } from '../styles'
 import CommentScreen from '../views/General/CommentScreen';
 
@@ -254,9 +254,9 @@ const HomeStackNavigator = createStackNavigator({
 },{
   defaultNavigationOptions: () => ({
     headerStyle: {
-      backgroundColor: PRIMARY_COLOR,
+      backgroundColor: HEADER_WHITE,
     },
-    headerTintColor: THEME_FONT_COLOR,
+    headerTintColor: FONT_COLOR, 
     headerTitleStyle : {
       fontWeight: undefined,
       fontFamily: Fonts.robotoRegular

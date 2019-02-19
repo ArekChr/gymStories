@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, RefreshControl, Dimensions, TextInput} from 'react-native'
-import { STATUS_BAR_COLOR } from '../../../styles/common'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -8,19 +7,22 @@ import LinearGradient from 'react-native-linear-gradient';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../../../store/post/actions'
 import PostImage from 'react-native-scalable-image';
-import { NavigationScreenProp } from 'react-navigation';
+import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
 
-interface Props {
-  fetchPosts(startDate: string, quantity: number, cb?: CallableFunction): Function
+import { ApplicationState } from '../../../store';
+import { Post } from '../../../store/post/types';
+import { Dispatch } from 'redux';
+import { fetchProfile } from '../../../store/profile/actions';
+
+interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<HomeTab>
-  posts: []
 }
 
 class HomeTab extends Component<Props> {
 
   state = {
     refreshing: false,
-    width: null,
+    width: 0,
     win: {
       width: 0,
       height: 0,
@@ -29,7 +31,7 @@ class HomeTab extends Component<Props> {
     }
   }
 
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => {
     return {
       headerLeft: (
         <View style={{ flexDirection: "row" }}>
@@ -48,7 +50,8 @@ class HomeTab extends Component<Props> {
 
   componentDidMount() {
     this.setState({ win: Dimensions.get("window") });
-    this.props.fetchPosts(null, 20);
+    this.props.fetchPosts(20);
+    this.props.fetchProfile();
   }
 
   onCommentShowPressed = (id: string) => {
@@ -59,7 +62,7 @@ class HomeTab extends Component<Props> {
 
   onRefresh = () => {
     this.setState({refreshing: true});
-    this.props.fetchPosts(null, 20, () => {
+    this.props.fetchPosts(20, undefined, () => {
       this.setState({refreshing: false});
     })
   }
@@ -68,9 +71,9 @@ class HomeTab extends Component<Props> {
     this.props.navigation.navigate('VideoRelations')
   }
 
-  renderPosts(posts: []) {
+  renderPosts(posts?: Post[]) {
     if(posts !== undefined){
-      return posts.map((post: any, i: number) => {
+      return posts.map((post: Post, i: number) => {
         return (
         <View key={i}>
           <View style={{ height: 45, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
@@ -128,7 +131,9 @@ class HomeTab extends Component<Props> {
               <Text><Text style={{fontWeight: '600'}}>Arkadiusz Chrabąszczewski </Text>
               {post.description}
               </Text>
-              <Text style={{color: 'gray'}}>Zobacz wszystkie komentarze: 2043</Text>
+              {post.commentCount > 0 ? 
+              <Text style={{color: 'gray'}}>{`Zobacz wszystkie komentarze: ${post.commentCount}`}</Text>
+              : null}
               <Text><Text style={{fontWeight: '600'}}>Damian Hejda</Text> Fajny was pomys u was mmmm.</Text>
             </View>
           </View>
@@ -277,12 +282,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   posts: state.Posts.posts,
   loading: state.Posts.loading
 });
-const mapDispatchToProps = (dispatch) => ({
-  fetchPosts: (startDate, quantity, cb) => fetchPosts(startDate, quantity, cb)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchPosts: (quantity: number, startDate?: string, cb?: CallableFunction) => fetchPosts(quantity, startDate, cb)(dispatch),
+  fetchProfile: () => fetchProfile()(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeTab)

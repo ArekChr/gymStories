@@ -6,13 +6,15 @@ import { connect } from 'react-redux';
 import { ProfilePhoto } from '../../../component'
 import { Dispatch } from 'redux';
 import { ApplicationState } from '../../../store';
+import { Profile } from '../../../store/profile/types';
 
-export interface ComponentProps {
+interface ComponentProps {
   navigation: any
 }
 
 interface PropsFromDispatch {
   fetchProfile: Function
+  profile: Profile
 }
 
 type Props = ComponentProps & PropsFromDispatch
@@ -99,7 +101,7 @@ class ProfileTab extends Component<Props> {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <ProfilePhoto onPress={this.onPhotoClicked} source={profile.imageId} />
+                  <ProfilePhoto onPress={() => this.onPhotoClicked()} source={profile.imageId} />
                 </View>
                   <View style={{ flex: 3 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
@@ -145,7 +147,7 @@ const mapStateToProps = ({Profile}: ApplicationState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchProfile: (callback) => fetchProfile(callback)(dispatch)
+  fetchProfile: (callback?: CallableFunction) => fetchProfile(callback)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab)

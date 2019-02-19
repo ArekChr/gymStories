@@ -3,7 +3,9 @@ import { Reducer } from 'redux';
 
 const initialState: PostsState = {
   loading: false,
-  posts: undefined
+  loadingComments: false,
+  posts: undefined,
+  comments: undefined
 }
 
 const postReducer: Reducer<PostsState> = (state = initialState, action) => {
@@ -19,6 +21,59 @@ const postReducer: Reducer<PostsState> = (state = initialState, action) => {
         ...state,
         loading: false,
         posts: action.payload
+      }
+    }
+    case PostActionTypes.FETCH_COMMENT_REQ: {
+      return {
+        ...state,
+        loadingComments: true
+      }
+    }
+    case PostActionTypes.FETCH_COMMENT_SUC: {
+      return {
+        ...state,
+        loadingComments: false,
+        comments: action.payload
+      }
+    }
+    case PostActionTypes.CREATE_COMMENT_REQ: {
+      if(state.comments === undefined){
+        return {
+          ...state,
+          comments: [
+            {...action.payload}
+          ]
+        }
+      }
+      return {
+        ...state,
+        comments: state.comments.concat([{
+          ...action.payload
+        }])
+      }
+    }
+    case PostActionTypes.CREATE_COMMENT_SUC: {
+      if(state.comments === undefined){
+        return {
+          ...state,
+          comments: [
+            {...action.payload}
+          ]
+        }
+      }
+      console.log(action.payload)
+      return {
+        ...state,
+        comments: [
+          ...state.comments.filter(x => x.id !== undefined),
+          action.payload
+        ]
+      }
+    }
+    case PostActionTypes.CLEAR_COMMENTS: {
+      return {
+        ...state,
+        comments: undefined
       }
     }
     default: {
