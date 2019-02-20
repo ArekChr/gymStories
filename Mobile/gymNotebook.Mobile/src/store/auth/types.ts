@@ -1,12 +1,3 @@
-export const USER_REGISTER_SUC = 'auth/USER_REGISTER_SUC'
-export const USER_REGISTER_ERR = 'auth/USER_REGISTER_ERR'
-export const USER_REGISTER_REQ = 'auth/USER_REGISTER_REQ'
-export const USER_LOGIN_REQ = 'auth/USER_LOGIN_REQ'
-export const USER_LOGIN_SUC = 'auth/USER_LOGIN_SUC'
-export const USER_LOGIN_ERR = 'auth/USER_LOGIN_ERR'
-export const STORAGE_MAP_JWT = 'auth/STORAGE_MAP_JWT'
-export const USER_LOGOUT = 'auth/USER_LOGOUT'
-
 export enum AuthActionTypes {
   USER_REGISTER_SUC = 'auth/USER_REGISTER_SUC',
   USER_REGISTER_ERR = 'auth/USER_REGISTER_ERR',
@@ -24,7 +15,6 @@ export interface JWT {
 }
 
 export interface RegisterModel {
-  username: string
   password: string
   email: string
 }
@@ -42,7 +32,21 @@ export interface Error {
 export interface AuthState {
   error: Error
   loading?: boolean
-  registerSuccess: boolean | null
-  loginSuccess: boolean | null
+  registerSuccess?: boolean
+  loginSuccess?: boolean
   jwt: JWT
+}
+
+export interface AuthResponse extends Partial<AuthData> {
+  displayName: string
+  registered: boolean
+}
+
+export interface AuthData {
+  kind?: string
+  idToken?: string
+  email?: string
+  refreshToken?: string
+  expiresIn?: string
+  localId?: string
 }

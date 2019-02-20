@@ -9,15 +9,10 @@ import { ApplicationState } from '../../store';
 import { Profile } from '../../store/profile/types';
 import { LoginModel, JWT } from '../../store/auth/types';
 import { NavigationScreenProp } from 'react-navigation';
+import { Dispatch } from 'redux';
 
-interface Props {
-  registerUser: (profile: Profile, cb: CallableFunction) => Function
-  login: (data: LoginModel) => Function
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps>  {
   navigation: NavigationScreenProp<RegisterEndScreen>
-  loginSuccess: boolean
-  profile: Profile
-  error: Error
-  jwt: JWT
 }
 
 class RegisterEndScreen extends Component<Props> {
@@ -61,9 +56,9 @@ const mapStateToProps = (state: ApplicationState) => ({
   jwt: state.Auth.jwt
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  registerUser: (profile, callback) => registerUser(profile, callback)(dispatch),
-  login: (data) => login(data)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  registerUser: (profile: Profile, callback: CallableFunction) => registerUser(profile, callback)(dispatch),
+  login: (data: LoginModel) => login(data)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterEndScreen)

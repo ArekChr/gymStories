@@ -4,6 +4,13 @@ import { JWT } from '../store/auth/types'
 
 export const API_URL: string = 'http:/192.168.178.91:5001/api'
 
+export const FIREBASEURL = `gymnotebook-cd027.firebaseapp.com`
+export const APIKEY = `AIzaSyAIZeGBNAIxVqWpammuVflQVuYy2mWwUL0`;
+export const SIGNUP = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=${APIKEY}`
+export const SIGNIN = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${APIKEY}`
+export const REFRESH = `https://securetoken.googleapis.com/v1/token?key=${APIKEY}`
+
+
 export const iOS = () => {
   switch(Platform.OS){
     case "ios": {
@@ -21,7 +28,7 @@ export const setTokens = (values: JWT, callback: Function) => {
     ['@gymNotebook@token', values.token],
     ['@gymNotebook@expiryToken', values.expiry.toString()]
   ])
-  .then(response => {
+  .then(() => {
     callback()
   })
 }

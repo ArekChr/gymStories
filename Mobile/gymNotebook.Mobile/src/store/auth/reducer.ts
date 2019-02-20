@@ -7,8 +7,8 @@ const initialState: AuthState = {
     message: undefined
   },
   loading: undefined,
-  registerSuccess: null,
-  loginSuccess: null,
+  registerSuccess: undefined,
+  loginSuccess: undefined,
   jwt: {
     token: undefined,
     expiry: undefined
@@ -71,7 +71,8 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        registerSuccess: true
+        registerSuccess: true,
+        auth: action.payload
       }
     }
     case AuthActionTypes.USER_REGISTER_ERR: {

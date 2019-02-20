@@ -1,33 +1,28 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { login } from '../../store/auth/actions'
+import { login, signIn } from '../../store/auth/actions'
 import { setTokens } from '../../utils/misc'
 import { mapJwtToState } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 import { FloatingInput } from '../../component'
 import { LoginModel, JWT } from '../../store/auth/types';
+import { ApplicationState } from '../../store';
+import { Dispatch } from 'redux';
 
-interface Props {
-  onLogin(credentials: LoginModel): Function
-  mapJwtToState(jwt: JWT): Function
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   onLoginSuccess(): Function
-  loginSuccess: boolean
-  loginLoading: boolean
-  error: Error
-  jwt: JWT
 }
 
 class LoginForm extends React.Component<Props> {
+
+  private password: FloatingInput | null = FloatingInput.prototype
 
   state = {
     opacity: 0,
     email: '',
     password: ''
   }
-
-  private email = FloatingInput.prototype
-  private password = FloatingInput.prototype
 
   onLoginPressed = () => {
     const {email, password} = this.state
@@ -55,8 +50,7 @@ class LoginForm extends React.Component<Props> {
             label="Email"
             value={this.state.email}
             keyboardType="email-address"
-            ref={(input) => this.email = input}
-            onSubmitEditing={() => this.password.focus()}
+            onSubmitEditing={() => this.password? this.password.focus() : null}
             isValid={true}
             onChangeText={(text) => this.setState({ email: text })}
           />
@@ -125,16 +119,16 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   error: state.Auth.error,
   loginLoading: state.Auth.loading,
   loginSuccess: state.Auth.loginSuccess,
   jwt: state.Auth.jwt
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  mapJwtToState: (token) => mapJwtToState(token)(dispatch),
-  onLogin: (data) => login(data)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  mapJwtToState: (token: JWT) => mapJwtToState(token)(dispatch),
+  onLogin: (data: LoginModel) => signIn(data)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

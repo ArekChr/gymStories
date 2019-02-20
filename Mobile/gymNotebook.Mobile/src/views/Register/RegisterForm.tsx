@@ -1,41 +1,41 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { registerUser } from '../../store/auth/actions'
+import { signUp } from '../../store/auth/actions'
 import { RegisterModel } from '../../store/auth/types';
 import { ApplicationState } from '../../store';
+import { Dispatch } from 'redux';
 
 interface Props {
-  onRegister: (data: RegisterModel) => Function
-  onSingUpSuccess: () => Function
-  registerLoading: boolean
-  registerSuccess: boolean
+  signUp: (data: RegisterModel) => void
+  onSingUpSuccess: () => void
+  registerLoading?: boolean
+  registerSuccess?: boolean
   error: {
-    message: string
+    message?: string
+    code?: string
   }
 }
 
 class RegisterForm extends React.Component<Props> {
+  
+  private password: TextInput | null = TextInput.prototype
+  private confirmPassword: TextInput | null = TextInput.prototype
 
   state = {
     email: '',
     password: '',
     confirmPassword: '',
-    username: '',
     passwordValid: true,
     canSignUp: false
   }
 
-  private password = TextInput.prototype
-  private username = TextInput.prototype
-  private confirmPassword = TextInput.prototype
-
   signUp = () => {
-    const { email, password, username } = this.state
-    this.props.onRegister({ email, password, username })
+    const { email, password } = this.state
+    this.props.signUp({ email, password })
   }
 
-  handleConfirmPassword = (confirmPassword) => {
+  handleConfirmPassword = (confirmPassword: string) => {
     if(this.state.password.length === 0 && confirmPassword.length === 0){
       this.setState({ passwordValid: true, confirmPassword: confirmPassword, canSignUp: false })
     }
@@ -47,7 +47,7 @@ class RegisterForm extends React.Component<Props> {
     }
   }
 
-  handlePassword = (password) => {
+  handlePassword = (password: string) => {
     if(this.state.confirmPassword.length === 0){
       this.setState({ passwordValid: true, password: password, canSignUp: false  })
     }
@@ -76,21 +76,14 @@ class RegisterForm extends React.Component<Props> {
       <View style={styles.container}>
         <TextInput 
           onChangeText={(text) => this.setState({ email: text })}
-          onSubmitEditing={() => this.username.focus()}
+          onSubmitEditing={() => this.password? this.password.focus(): null}
           style={styles.inputBox} 
           underlineColorAndroid="rgba(0,0,0,0)" 
           placeholder="Email"/>
         <TextInput 
-          onChangeText={(text) => this.setState({ username: text })}
-          onSubmitEditing={() => this.password.focus()}
-          ref={(input) => this.username = input}
-          style={styles.inputBox} 
-          underlineColorAndroid="rgba(0,0,0,0)" 
-          placeholder="User Name"/>
-        <TextInput 
           onChangeText={this.handlePassword}
           ref={(input) => this.password = input}
-          onSubmitEditing={() => this.confirmPassword.focus()}
+          onSubmitEditing={() => this.confirmPassword? this.confirmPassword.focus() : null}
           style={styles.inputBox} 
           underlineColorAndroid="rgba(0,0,0,0)" 
           placeholder="Password" 
@@ -172,8 +165,8 @@ const mapStateToProps = (state: ApplicationState) => ({
   registerSuccess: state.Auth.registerSuccess
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  onRegister: (data) => registerUser(data)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  signUp: (data: RegisterModel) => signUp(data)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)

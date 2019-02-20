@@ -8,10 +8,11 @@ import { connect } from 'react-redux'
 import { STATUS_BAR_COLOR, PRIMARY_COLOR } from '../../styles/common'
 import { NavigationScreenProp } from 'react-navigation';
 import { JWT } from '../../store/auth/types';
+import { Dispatch } from 'redux';
 
 interface Props {
   navigation: NavigationScreenProp<LoginScreen>
-  mapJwtToState(jwt: JWT): Function
+  mapJwtToState(jwt: JWT): void
 }
 
 class LoginScreen extends Component<Props> {
@@ -25,20 +26,20 @@ class LoginScreen extends Component<Props> {
   }
 
   onRegisterPressed = () => {
-    this.props.navigation.navigate('NameScreen')
+    this.props.navigation.navigate('RegisterScreen')
   }
 
   componentDidMount(){
-    getTokens((value) => {
+    getTokens((value: any) => {
       if(value[0][1] === null){
         this.setState({loading:false})
       } 
       else {
         // TODO: shoud check if token is valid or login app immediately by checking expiry ?
-        const expiry = Number(value.find(x => x[0] ==='@gymNotebook@expiryToken')[1])
+        const expiry = Number(value.find((x: string[]) => x[0] ==='@gymNotebook@expiryToken')[1])
         const now = new Date().getTime()
         if(expiry >= now){
-          const token = value.find(x => x[0] ==='@gymNotebook@token')[1]
+          const token = value.find((x: string[]) => x[0] ==='@gymNotebook@token')[1]
           const jwt = { token: token, expiry: expiry }
           this.setState({loading:false})
           this.props.mapJwtToState(jwt)
@@ -107,9 +108,8 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  mapJwtToState: (token) => mapJwtToState(token)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  mapJwtToState: (jwt: JWT) => mapJwtToState(jwt)(dispatch)
 })
-
 
 export default connect(null , mapDispatchToProps)(LoginScreen)

@@ -1,18 +1,10 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 import { 
-  USER_REGISTER_SUC, 
-  USER_REGISTER_ERR, 
-  USER_REGISTER_REQ,
-  USER_LOGIN_REQ,
-  USER_LOGIN_SUC,
-  USER_LOGIN_ERR,
-  STORAGE_MAP_JWT,
-  USER_LOGOUT,
+  AuthActionTypes,
   RegisterModel
  } from './types'
-import { API_URL } from '../../utils/misc'
-import { EmailScreen } from '../../views/Register';
+import { API_URL, SIGNUP, SIGNIN } from '../../utils/misc'
 
 const URL = `${API_URL}/user/`
 const LOGIN_URL = `${API_URL}/login`
@@ -20,7 +12,7 @@ const LOGIN_URL = `${API_URL}/login`
 export const mapJwtToState = (jwt: any) => {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: STORAGE_MAP_JWT,
+      type: AuthActionTypes.STORAGE_MAP_JWT,
       payload: jwt
     })
     axios.defaults.headers.common['Authorization'] = `Bearer ${jwt.token}`;
@@ -29,13 +21,93 @@ export const mapJwtToState = (jwt: any) => {
 
 export const logout = () => {
   return (dispatch: Dispatch) => {
-    dispatch({type: USER_LOGOUT })
+    dispatch({type: AuthActionTypes.USER_LOGOUT })
   }
 }
 
+export const signIn = (data: any) => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: AuthActionTypes.USER_LOGIN_REQ })
+
+    axios.post(SIGNIN, {
+      ...data,
+      returnSecureToken: true
+    })
+    .then(response => {
+      dispatch({
+        type: AuthActionTypes.USER_LOGIN_SUC,
+        payload: response.data
+      })
+    })
+    .catch(error => {
+      dispatch({
+        type: AuthActionTypes.USER_LOGIN_ERR,
+        payload: error
+      })
+    })
+  }
+}
+
+export const signUp = (data: RegisterModel, callback?: CallableFunction)  => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: AuthActionTypes.USER_REGISTER_REQ })
+
+    axios.post(SIGNUP, 
+      { 
+        email: data.email, 
+        password: data.password, 
+        returnSecureToken:true
+      })
+    .then(res => {
+      dispatch({
+        type: AuthActionTypes.USER_REGISTER_SUC,
+        payload: res.data
+      })
+      if(callback instanceof Function){
+        callback(res)
+      }
+    })
+    .catch(e => {
+      dispatch({
+        type: AuthActionTypes.USER_REGISTER_ERR,
+        payload: e
+      })
+    })
+  }
+}
+
+/**
+ * @deprecated Migration to firebase
+ */
+export const registerUser = (data: RegisterModel, callback?: CallableFunction) => {
+  return (dispatch: Dispatch) => {
+    dispatch({ type: AuthActionTypes.USER_REGISTER_REQ })
+
+    axios.post(URL, {...data})
+    .then(response => {
+      dispatch({
+        type: AuthActionTypes.USER_REGISTER_SUC,
+        payload: response.data
+      })
+      if(callback instanceof Function){
+        callback()
+      }
+    })
+    .catch(error => {
+      dispatch({
+        type: AuthActionTypes.USER_REGISTER_ERR,
+        payload: error.response.data
+      })
+    })
+  }
+}
+
+/**
+ * @deprecated Migration to firebase
+ */
 export const login = (data: any) => {
   return (dispatch: Dispatch) => {
-    dispatch({ type: USER_LOGIN_REQ })
+    dispatch({ type: AuthActionTypes.USER_LOGIN_REQ })
 
     axios({
       method:"POST",
@@ -50,45 +122,13 @@ export const login = (data: any) => {
     })
     .then(response => {
       dispatch({
-        type: USER_LOGIN_SUC,
+        type: AuthActionTypes.USER_LOGIN_SUC,
         payload: response.data
       })
     })
     .catch(error => {
       dispatch({
-        type: USER_LOGIN_ERR,
-        payload: error.response.data
-      })
-    })
-  }
-}
-
-export const registerUser = (data: RegisterModel, callback?: Function) => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: USER_REGISTER_REQ })
-
-    axios({
-      method:"POST",
-      url: URL,
-      data: {
-        ...data
-      },
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then(response => {
-      dispatch({
-        type: USER_REGISTER_SUC,
-        payload: response.data
-      })
-      if(callback instanceof Function){
-        callback()
-      }
-    })
-    .catch(error => {
-      dispatch({
-        type: USER_REGISTER_ERR,
+        type: AuthActionTypes.USER_LOGIN_ERR,
         payload: error.response.data
       })
     })
