@@ -2,19 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { signUp } from '../../store/auth/actions'
-import { RegisterModel } from '../../store/auth/types';
+import { RegisterModel, UserAuth } from '../../store/auth/types';
 import { ApplicationState } from '../../store';
 import { Dispatch } from 'redux';
 
-interface Props {
-  signUp: (data: RegisterModel) => void
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   onSingUpSuccess: () => void
-  registerLoading?: boolean
-  registerSuccess?: boolean
-  error: {
-    message?: string
-    code?: string
-  }
 }
 
 class RegisterForm extends React.Component<Props> {
@@ -32,7 +25,9 @@ class RegisterForm extends React.Component<Props> {
 
   signUp = () => {
     const { email, password } = this.state
-    this.props.signUp({ email, password })
+    this.props.signUp({ email, password }, (data) => {
+      console.log(data)
+    })
   }
 
   handleConfirmPassword = (confirmPassword: string) => {
@@ -166,7 +161,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  signUp: (data: RegisterModel) => signUp(data)(dispatch)
+  signUp: (data: RegisterModel, callback?: (res: UserAuth) => void) => signUp(data, callback)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)

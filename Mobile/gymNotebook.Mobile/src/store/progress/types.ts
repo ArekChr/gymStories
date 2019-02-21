@@ -52,7 +52,7 @@ export interface ProgressState {
   progress: Progress[]
   progressLoading: boolean
   error: any
-  selectedProgress: string
+  selectedProgress: keyof Progress
   modal: boolean
   lastProgress: number
   calendarModal: boolean
@@ -60,4 +60,7 @@ export interface ProgressState {
   pickedDate: string
 }
 
-
+export interface SelectedProgress {
+  [x: string]: string
+  createdAt: string
+}

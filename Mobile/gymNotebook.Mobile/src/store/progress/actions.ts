@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ProgresActionTypes, Progress, ProgressKey } from './types'
+import { ProgresActionTypes, Progress, ProgressKey, SelectedProgress } from './types'
 import { API_URL } from '../../utils/misc'
 import { Dispatch } from 'redux';
 
@@ -73,7 +73,7 @@ export const fetchProgress = () => {
   }
 }
 
-export const createProgress = (progress: any) => {
+export const createProgress = (progress: SelectedProgress) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProgresActionTypes.CREATE_PROGRESS_REQ,

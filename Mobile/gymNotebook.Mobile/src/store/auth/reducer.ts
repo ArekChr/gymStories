@@ -2,16 +2,15 @@ import { AuthActionTypes, AuthState } from './types'
 import { Reducer } from 'redux'
 
 const initialState: AuthState = {
-  error: {
-    code: undefined,
-    message: undefined
-  },
-  loading: undefined,
-  registerSuccess: undefined,
-  loginSuccess: undefined,
-  jwt: {
-    token: undefined,
-    expiry: undefined
+  error: null,
+  loading: null,
+  registerSuccess: null,
+  loginSuccess: null,
+  auth: {
+    expiresIn: null,
+    idToken: null,
+    localId: null,
+    refreshToken: null
   }
 }
 
@@ -33,10 +32,7 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
         ...state,
         loginSuccess: null,
         loading: true,
-        error: {
-          code: '',
-          message: ''
-        }
+        error: null
       }
     }
     case AuthActionTypes.USER_LOGIN_SUC: {
@@ -44,7 +40,12 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
         ...state,
         loading: false,
         loginSuccess: true,
-        jwt: action.payload
+        auth: {
+          expiresIn: action.payload.expiresIn,
+          idToken: action.payload.idToken,
+          localId: action.payload.localId,
+          refreshToken: action.payload.refreshToken
+        }
       }
     }
     case AuthActionTypes.USER_LOGIN_ERR: {
@@ -55,16 +56,11 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
         loading: false
       }
     }
-
     case AuthActionTypes.USER_REGISTER_REQ: {
       return {
         ...state,
         loading: true,
         registerSuccess: null,
-        error: {
-          code: '',
-          message: ''
-        }
       }
     }
     case AuthActionTypes.USER_REGISTER_SUC: {
@@ -72,7 +68,12 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
         ...state,
         loading: false,
         registerSuccess: true,
-        auth: action.payload
+        auth: {
+          expiresIn: action.payload.expiresIn,
+          idToken: action.payload.idToken,
+          localId: action.payload.localId,
+          refreshToken: action.payload.refreshToken
+        }
       }
     }
     case AuthActionTypes.USER_REGISTER_ERR: {

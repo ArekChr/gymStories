@@ -2,7 +2,8 @@ import axios from 'axios'
 import { Dispatch } from 'redux'
 import { 
   AuthActionTypes,
-  RegisterModel
+  RegisterModel,
+  UserAuth
  } from './types'
 import { API_URL, SIGNUP, SIGNIN } from '../../utils/misc'
 
@@ -48,7 +49,7 @@ export const signIn = (data: any) => {
   }
 }
 
-export const signUp = (data: RegisterModel, callback?: CallableFunction)  => {
+export const signUp = (data: RegisterModel, callback?: (res: UserAuth) => void)  => {
   return (dispatch: Dispatch) => {
     dispatch({ type: AuthActionTypes.USER_REGISTER_REQ })
 
@@ -63,8 +64,8 @@ export const signUp = (data: RegisterModel, callback?: CallableFunction)  => {
         type: AuthActionTypes.USER_REGISTER_SUC,
         payload: res.data
       })
-      if(callback instanceof Function){
-        callback(res)
+      if(callback){
+        callback(res.data)
       }
     })
     .catch(e => {

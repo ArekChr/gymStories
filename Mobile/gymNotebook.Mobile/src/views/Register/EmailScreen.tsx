@@ -5,10 +5,10 @@ import styles from '../../styles'
 import { setEmail } from '../../store/profile/actions'
 import {connect} from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation';
+import { ApplicationState } from '../../store';
+import { Dispatch } from 'redux';
 
-interface Props {
-  email: string
-  setEmail(email: string): Function
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps>  {
   navigation: NavigationScreenProp<EmailScreen>
 }
 
@@ -35,12 +35,12 @@ class EmailScreen extends Component<Props> {
     }
   }
 
-  validateEmail = (email) => {
+  validateEmail = (email: string) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   }
 
-  handleEmailChange = (text) => {
+  handleEmailChange = (text: string) => {
     this.setState({ email: text, error: ''})
   }
 
@@ -62,12 +62,12 @@ class EmailScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   email: state.Profile.profile.email
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  setEmail: (email) => setEmail(email)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setEmail: (email: string) => setEmail(email)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EmailScreen)

@@ -6,12 +6,11 @@ import { connect } from 'react-redux'
 import { DatePickerView, Provider } from '@ant-design/react-native';
 import enUS from '@ant-design/react-native/lib/locale-provider/en_US';
 import { NavigationScreenProp } from 'react-navigation';
+import { ApplicationState } from '../../store';
+import { Dispatch } from 'redux';
 
-interface Props {
-  dateOfBirth: Date
-  setDateOfBirth(date: string): Function
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<BirthDateScreen>
-
 }
 
 class BirthDateScreen extends Component<Props> {
@@ -20,7 +19,7 @@ class BirthDateScreen extends Component<Props> {
     dateOfBirth: this.props.dateOfBirth? new Date(this.props.dateOfBirth) : new Date(2000,1,1)
   }
 
-  onChange = (value) => {
+  onChange = (value: Date) => {
     this.setState({ dateOfBirth: value});
   }
 
@@ -58,12 +57,12 @@ class BirthDateScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   dateOfBirth: state.Profile.profile.dateOfBirth
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setDateOfBirth: (dateOfBirth) => setDateOfBirth(dateOfBirth)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setDateOfBirth: (dateOfBirth: string) => setDateOfBirth(dateOfBirth)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BirthDateScreen)

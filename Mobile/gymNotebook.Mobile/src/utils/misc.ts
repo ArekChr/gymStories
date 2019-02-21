@@ -1,6 +1,6 @@
 import { AsyncStorage, PlatformIOS, Platform } from 'react-native'
 import { Profile } from '../store/profile/types'
-import { JWT } from '../store/auth/types'
+import { UserAuth } from '../store/auth/types'
 
 export const API_URL: string = 'http:/192.168.178.91:5001/api'
 
@@ -10,45 +10,55 @@ export const SIGNUP = `https://www.googleapis.com/identitytoolkit/v3/relyingpart
 export const SIGNIN = `https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=${APIKEY}`
 export const REFRESH = `https://securetoken.googleapis.com/v1/token?key=${APIKEY}`
 
-
 export const iOS = () => {
   switch(Platform.OS){
-    case "ios": {
-      return true;
-    }
-    case "android": {
-      return false;
-    }
+    case "ios": 
+      return true
+    case "android": 
+      return false
   }
 }
 
-export const setTokens = (values: JWT, callback: Function) => {
+enum StorageKeys {
+  token = '@gymNotebook@token',
+  refreshToken = '@gymNotebook@refreshToken',
+  expirationToken = '@gymNotebook@expiryToken'
+}
+
+export const setTokens = (values: UserAuth, callback:() => void) => {
+  if(!values.idToken || !values.refreshToken)
+    return
+  
+  const dateNow = new Date()
+  const expiration = dateNow.getTime() + (3600 * 1000)
 
   AsyncStorage.multiSet([
-    ['@gymNotebook@token', values.token],
-    ['@gymNotebook@expiryToken', values.expiry.toString()]
+    [StorageKeys.token, values.idToken],
+    [StorageKeys.refreshToken, values.refreshToken],
+    [StorageKeys.expirationToken, expiration.toString()]
   ])
-  .then(() => {
+  .then((response) => {
     callback()
   })
 }
 
-export const getTokens = (callback: Function) => {
+export const getTokens = (callback: (value: [string, string][]) => void) => {
   AsyncStorage.multiGet([
-    '@gymNotebook@token',
-    '@gymNotebook@expiryToken'
-  ]).then(value =>{
+    StorageKeys.token,
+    StorageKeys.expirationToken
+  ]).then((value) => {
     callback(value)
   })
 }
 
-export const removeTokensFromStorage = (callback: Function) => {
+export const removeTokensFromStorage = (callback: () => void) => {
   AsyncStorage.multiRemove([
-    '@gymNotebook@token',
-    '@gymNotebook@expiryToken'
-  ]).then(
-      callback()
-    )
+    StorageKeys.token,
+    StorageKeys.expirationToken,
+    StorageKeys.refreshToken
+  ]).then(() => {
+    callback()
+  })
 }
 
 export const setProfile = (profile: Profile, callback: Function) => {

@@ -25,7 +25,7 @@ class RegisterEndScreen extends Component<Props> {
   }
 
   onSingUpSuccess = () => {
-    setTokens(this.props.jwt, () => {
+    setTokens(this.props.auth, () => {
       this.props.navigation.navigate('HomeScreen')
     })
   }
@@ -53,7 +53,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   loginLoading: state.Auth.loading,
   loginSuccess: state.Auth.loginSuccess,
   profile: state.Profile.profile,
-  jwt: state.Auth.jwt
+  auth: state.Auth.auth
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

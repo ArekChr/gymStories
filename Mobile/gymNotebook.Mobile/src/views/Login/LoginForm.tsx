@@ -6,7 +6,7 @@ import { setTokens } from '../../utils/misc'
 import { mapJwtToState } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 import { FloatingInput } from '../../component'
-import { LoginModel, JWT } from '../../store/auth/types';
+import { LoginModel, JWT, UserAuth } from '../../store/auth/types';
 import { ApplicationState } from '../../store';
 import { Dispatch } from 'redux';
 
@@ -36,8 +36,8 @@ class LoginForm extends React.Component<Props> {
       errorMessage = <Text style={styles.error}>{this.props.error.message}</Text>
     }
     else if(this.props.loginSuccess) {
-      setTokens(this.props.jwt, () => {
-        this.props.mapJwtToState(this.props.jwt)
+      setTokens(this.props.auth, () => {
+        this.props.mapJwtToState(this.props.auth)
         this.props.onLoginSuccess()
       })
     }
@@ -123,11 +123,11 @@ const mapStateToProps = (state: ApplicationState) => ({
   error: state.Auth.error,
   loginLoading: state.Auth.loading,
   loginSuccess: state.Auth.loginSuccess,
-  jwt: state.Auth.jwt
+  auth: state.Auth.auth
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  mapJwtToState: (token: JWT) => mapJwtToState(token)(dispatch),
+  mapJwtToState: (token: UserAuth) => mapJwtToState(token)(dispatch),
   onLogin: (data: LoginModel) => signIn(data)(dispatch)
 })
 

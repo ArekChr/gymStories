@@ -24,29 +24,17 @@ export interface LoginModel {
   password: string
 }
 
-export interface Error {
-  code?: string
-  message?: string
-}
-
 export interface AuthState {
-  error: Error
-  loading?: boolean
-  registerSuccess?: boolean
-  loginSuccess?: boolean
-  jwt: JWT
+  error: any
+  loading: boolean | null
+  registerSuccess: boolean | null
+  loginSuccess: boolean | null
+  auth: UserAuth
 }
 
-export interface AuthResponse extends Partial<AuthData> {
-  displayName: string
-  registered: boolean
-}
-
-export interface AuthData {
-  kind?: string
-  idToken?: string
-  email?: string
-  refreshToken?: string
-  expiresIn?: string
-  localId?: string
+export interface UserAuth {
+  idToken: string | null
+  refreshToken: string | null
+  expiresIn: string | null
+  localId: string | null
 }

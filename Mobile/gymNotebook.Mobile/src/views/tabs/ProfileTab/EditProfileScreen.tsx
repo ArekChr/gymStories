@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import { View, Picker, ScrollView, CameraRoll, PermissionsAndroid } from 'react-native'
+import { View, Picker, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import ImagePicker from 'react-native-image-crop-picker';
 import { ProfilePhoto, FloatingInput, TextButton, CheckButton } from '../../../component';
 import { updateProfileImage, updateProfileData } from '../../../store/profile/actions'
-import { Profile, Gender } from '../../../store/profile/types';
-import { NavigationScreenProp } from 'react-navigation';
+import { Gender } from '../../../store/profile/types';
+import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
+import { ApplicationState } from '../../../store';
+import { Dispatch } from 'redux';
 
-interface Props {
-  profile: Profile
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<EditProfileScreen>
-  updateProfileImage: Function
 }
 
 class EditProfileScreen extends Component<Props> {
@@ -57,14 +57,10 @@ class EditProfileScreen extends Component<Props> {
     pickedImage: null
   }
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: 'Dodaj',
-      headerRight: (
-        <CheckButton onPress={navigation.getParam('onProfileSave')} />
-      )
-    }
-  }
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => ({
+    title: 'Dodaj',
+    headerRight: (<CheckButton onPress={navigation.getParam('onProfileSave')} />)
+  })
 
   componentDidMount() {
     this.props.navigation.setParams({ onProfileSave: this._onProfileSave})
@@ -186,13 +182,13 @@ class EditProfileScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   profile: state.Profile.profile
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  updateProfileImage: (photo) => updateProfileImage(photo)(dispatch),
-  updateProfileData: (data) => updateProfileData(data)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  updateProfileImage: (photo: any) => updateProfileImage(photo)(dispatch),
+  updateProfileData: (data: any) => updateProfileData(data)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen)

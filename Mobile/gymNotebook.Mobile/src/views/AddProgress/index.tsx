@@ -1,28 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import CalendarModal from './CalendarModal'
 import { handleCalendarModal, createProgress } from '../../store/progress/actions';
 import { connect } from 'react-redux';
 import { capFirst } from '../../utils/string'
 import { CheckButton } from '../../component';
-import { NavigationScreenProp } from 'react-navigation';
-import { ProgressKey } from '../../store/progress/types';
+import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
 import { Dispatch } from 'redux';
 import { ApplicationState } from '../../store';
-import { Progress } from '@ant-design/react-native';
+import { SelectedProgress } from '../../store/progress/types';
 
-interface Props {
-  createProgress(progress: Progress): void
-  handleCalendarModal(): void
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<AddProgressScreen>
-  lastProgress: number
-  selectedDate: string
-  selectedProgress: ProgressKey
 }
 
 class AddProgressScreen extends Component<Props> {
 
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => {
     return {
       title: 'Dodaj ',
       headerRight: (
@@ -41,7 +35,7 @@ class AddProgressScreen extends Component<Props> {
 
   _onProgressAdd = () => {
     const { selectedDate, selectedProgress } = this.props
-    const progress = { 
+    const progress: SelectedProgress = { 
       createdAt: selectedDate,
       [selectedProgress]: this.state.number.toString()
     }
@@ -49,7 +43,7 @@ class AddProgressScreen extends Component<Props> {
     this.props.navigation.popToTop();
   }
 
-  handleInput = (text) => {
+  handleInput = (text: string) => {
     let newText = '';
     let numbers = '0123456789.';
 
@@ -62,7 +56,7 @@ class AddProgressScreen extends Component<Props> {
         }
         else {
             // your call back function
-            alert("please enter numbers only");
+            Alert.alert("please enter numbers only");
         }
     }
     this.setState({ number: newText })
@@ -121,7 +115,7 @@ const mapStateToProps = ({Progress}: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   handleCalendarModal: () => handleCalendarModal()(dispatch),
-  createProgress: (progress: Progress) => createProgress(progress)(dispatch)
+  createProgress: (progress: SelectedProgress) => createProgress(progress)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddProgressScreen)

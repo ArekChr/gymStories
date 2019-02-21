@@ -1,23 +1,19 @@
 import React, { Component } from 'react'
-import { View, ScrollView } from 'react-native'
+import { View, TextInput } from 'react-native'
 import { ButtonNext, FloatingInput, TitleComponent, ErrorMessage } from '../../component'
 import { setName } from '../../store/profile/actions'
 import { connect } from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation';
+import { ApplicationState } from '../../store';
+import { Dispatch } from 'redux';
 
-interface Props {
-  setName(firstName: string, lastName: string): Function
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<NameScreen>
-  firstName: string
-  lastName: string
 }
 
 class NameScreen extends Component<Props> {
-  constructor(props) {
-    super(props)
-  }
 
-  private inputs = {}
+  private inputs: TextInput[] = []
 
   state = {
     firstName: this.props.firstName || '',
@@ -37,11 +33,11 @@ class NameScreen extends Component<Props> {
     }
   }
 
-  focusNextField = (id) => {
+  focusNextField = (id: string) => {
     this.inputs[id].focus();
   }
 
-  hasNumber = (myString) => {
+  hasNumber = (myString: string) => {
     return /\d/.test(myString);
   }
 
@@ -73,7 +69,7 @@ class NameScreen extends Component<Props> {
     }
   }
 
-  handleFirstNameChange = (newText) => {
+  handleFirstNameChange = (newText: string) => {
     const firstNameHaveNumbers = this.hasNumber(newText)
     const {lastNameHaveNumbers} = this.state;
     let error = '';
@@ -89,7 +85,7 @@ class NameScreen extends Component<Props> {
     this.setState({ firstName: newText, error: error, firstNameValid: firstNameValid, firstNameHaveNumbers: firstNameHaveNumbers })
   }
 
-  handleLastNameChange = (newText) => {
+  handleLastNameChange = (newText: string) => {
     const lastNameHaveNumbers = this.hasNumber(newText)
     const {firstNameHaveNumbers} = this.state;
     let error = '';
@@ -121,7 +117,7 @@ class NameScreen extends Component<Props> {
             value={this.state.lastName}
             isValid={this.state.lastNameValid}
             onChangeText={this.handleLastNameChange}
-            onRef={(ref) => { this.inputs['lastName'] = ref }} />
+            onRef={(ref: TextInput) => { this.inputs['lastName'] = ref }} />
         </View>
         <ButtonNext onPress={this.onNextClicked}>Dalej</ButtonNext>
       </View>
@@ -129,13 +125,13 @@ class NameScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   firstName: state.Profile.profile.firstName,
   lastName: state.Profile.profile.lastName
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setName: (firstName, lastName) => setName(firstName, lastName)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setName: (firstName: string, lastName: string) => setName(firstName, lastName)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NameScreen)

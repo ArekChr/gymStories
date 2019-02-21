@@ -10,24 +10,20 @@ import { progressNormalize, progressSort } from '../../../utils/progress'
 import { capFirst } from '../../../utils/string'
 import progressConfig from '../../../config/progressConfig'
 
-import * as scale from 'd3-scale'
+// import * as scale from 'd3-scale'
 import * as shape from 'd3-shape'
 import dateFns from 'date-fns'
-import { NavigationScreenProp } from 'react-navigation';
-import { Progress, ProgressKey } from '../../../store/progress/types';
+import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
+import { ApplicationState } from '../../../store';
+import { Dispatch } from 'redux';
 
-interface Props {
-  setLastProgress(value: number): Function
-  handleProgressModal(): Function
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<ActiveTab>
-  onFetch: Function
-  progress: Progress[]
-  selectedProgress: ProgressKey
 }
 
 class ActiveTab extends Component<Props> {
 
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => {
     return {
       title: 'Progress',
       headerRight: (
@@ -171,16 +167,16 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({Progress}) => ({
+const mapStateToProps = ({Progress}: ApplicationState) => ({
   progress: Progress.progress,
   progressLoading: Progress.progressLoading,
   selectedProgress: Progress.selectedProgress
 })
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   handleProgressModal: () => handleProgressModal()(dispatch),
   onFetch: () => fetchProgress()(dispatch),
-  setLastProgress: (value) => setLastProgress(value)(dispatch)
+  setLastProgress: (value: number) => setLastProgress(value)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActiveTab)

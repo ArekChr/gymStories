@@ -3,14 +3,10 @@ import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import {CalendarComponent} from '../../component'
 import { selectDate, handleCalendarModal, pickDate } from '../../store/progress/actions'
 import { connect } from 'react-redux'
+import { Dispatch } from 'redux';
+import { ApplicationState } from '../../store';
 
-interface Props {
-  selectDate(pickedDate: string): Function
-  pickDate(date: string): Function
-  handleCalendarModal(): Function
-  calendarModal: boolean
-  selectedDate: string
-  pickedDate: string
+interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
 }
 
 class CalendarModal extends Component<Props> {
@@ -77,15 +73,15 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({Progress}) => ({
+const mapStateToProps = ({Progress}: ApplicationState) => ({
   selectedDate: Progress.selectedDate,
   pickedDate: Progress.pickedDate,
   calendarModal: Progress.calendarModal
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  selectDate: (day) => selectDate(day)(dispatch),
-  pickDate: (day) => pickDate(day)(dispatch),
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  selectDate: (day: string) => selectDate(day)(dispatch),
+  pickDate: (day: string) => pickDate(day)(dispatch),
   handleCalendarModal: () => handleCalendarModal()(dispatch)
 })
 

@@ -3,20 +3,16 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { removeTokensFromStorage } from '../../../utils/misc'
 import { logout } from '../../../store/auth/actions'
 import { connect } from 'react-redux'
-import { ConnectedReduxProps } from '../../../store';
 import { Dispatch } from 'redux';
-import { NavigationScreenProp } from 'react-navigation';
+import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
 
-interface ComponentProps {
+interface Props extends ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<SettingsScreen>
-  logout: Function
 }
-
-type Props = ComponentProps & ConnectedReduxProps
 
 class SettingsScreen extends Component<Props>{
 
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => {
     return {
       title: 'Ustawienia'
     }
