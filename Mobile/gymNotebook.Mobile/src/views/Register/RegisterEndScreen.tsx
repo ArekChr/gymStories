@@ -7,7 +7,7 @@ import { registerUser, login } from '../../store/auth/actions'
 import { setTokens } from '../../utils/misc'
 import { ApplicationState } from '../../store';
 import { Profile } from '../../store/profile/types';
-import { LoginModel, JWT } from '../../store/auth/types';
+import { LoginModel } from '../../store/auth/types';
 import { NavigationScreenProp } from 'react-navigation';
 import { Dispatch } from 'redux';
 

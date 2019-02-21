@@ -16,10 +16,10 @@ const initialState: AuthState = {
 
 const authReducer: Reducer<AuthState> = (state = initialState, action) => {
   switch (action.type) {
-    case AuthActionTypes.STORAGE_MAP_JWT: {
+    case AuthActionTypes.STORAGE_MAP_AUTH: {
       return {
         ...state,
-        jwt: action.payload
+        auth: action.payload
       }
     }
     case AuthActionTypes.USER_LOGOUT: {
@@ -45,6 +45,29 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
           idToken: action.payload.idToken,
           localId: action.payload.localId,
           refreshToken: action.payload.refreshToken
+        }
+      }
+    }
+    case AuthActionTypes.AUTO_SIGN_IN: {
+      return {
+        ...state,
+        auth: {
+          idToken: action.payload.id_token,
+          expiresIn: action.payload.expires_in,
+          localId: action.payload.user_id,
+          refreshToken: action.payload.refresh_token
+        }
+      }
+    }
+    case AuthActionTypes.AUTO_SIGN_IN_ERR: {
+      return {
+        ...state,
+        error: action.payload,
+        auth: {
+          expiresIn: null,
+          idToken: null,
+          localId: null,
+          refreshToken: null
         }
       }
     }

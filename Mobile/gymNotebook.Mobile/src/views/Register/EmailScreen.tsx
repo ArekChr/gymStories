@@ -8,7 +8,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { ApplicationState } from '../../store';
 import { Dispatch } from 'redux';
 
-interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps>  {
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<EmailScreen>
 }
 

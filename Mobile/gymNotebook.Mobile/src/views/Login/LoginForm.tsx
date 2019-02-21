@@ -1,17 +1,17 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-import { login, signIn } from '../../store/auth/actions'
+import { signIn } from '../../store/auth/actions'
 import { setTokens } from '../../utils/misc'
-import { mapJwtToState } from '../../store/auth/actions'
+import { mapAuthToState } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 import { FloatingInput } from '../../component'
-import { LoginModel, JWT, UserAuth } from '../../store/auth/types';
+import { LoginModel, UserAuth } from '../../store/auth/types';
 import { ApplicationState } from '../../store';
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
-  onLoginSuccess(): Function
+  onLoginSuccess(): void
 }
 
 class LoginForm extends React.Component<Props> {
@@ -32,12 +32,17 @@ class LoginForm extends React.Component<Props> {
   render() {
     let errorMessage = <View />
 
-    if (this.props.loginSuccess === false) {
-      errorMessage = <Text style={styles.error}>{this.props.error.message}</Text>
+    if(this.props.error) {
+      if(this.props.error.code === 400){
+        errorMessage = <Text style={styles.error}>Invalid credentials.</Text>
+      } else {
+        errorMessage = <Text style={styles.error}>{this.props.error.message}</Text>
+      }
     }
     else if(this.props.loginSuccess) {
+      
       setTokens(this.props.auth, () => {
-        this.props.mapJwtToState(this.props.auth)
+        this.props.mapAuthToState(this.props.auth)
         this.props.onLoginSuccess()
       })
     }
@@ -127,7 +132,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  mapJwtToState: (token: UserAuth) => mapJwtToState(token)(dispatch),
+  mapAuthToState: (token: UserAuth) => mapAuthToState(token)(dispatch),
   onLogin: (data: LoginModel) => signIn(data)(dispatch)
 })
 

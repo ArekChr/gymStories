@@ -19,7 +19,7 @@ export const iOS = () => {
   }
 }
 
-enum StorageKeys {
+export enum StorageKeys {
   token = '@gymNotebook@token',
   refreshToken = '@gymNotebook@refreshToken',
   expirationToken = '@gymNotebook@expiryToken'
@@ -45,6 +45,7 @@ export const setTokens = (values: UserAuth, callback:() => void) => {
 export const getTokens = (callback: (value: [string, string][]) => void) => {
   AsyncStorage.multiGet([
     StorageKeys.token,
+    StorageKeys.refreshToken,
     StorageKeys.expirationToken
   ]).then((value) => {
     callback(value)

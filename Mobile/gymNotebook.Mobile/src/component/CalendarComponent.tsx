@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 
 interface Props {
   selectedDate: string
-  pickDate: (day: any) => Function
+  pickDate: (day: any) => void
   pickedDate: any
 }
 

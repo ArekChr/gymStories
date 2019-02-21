@@ -1,28 +1,57 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { Dispatch } from 'redux'
 import { 
   AuthActionTypes,
   RegisterModel,
-  UserAuth
+  UserAuth,
+  UserRefreshAuth
  } from './types'
-import { API_URL, SIGNUP, SIGNIN } from '../../utils/misc'
+import { API_URL, SIGNUP, SIGNIN, REFRESH, removeTokensFromStorage } from '../../utils/misc'
 
 const URL = `${API_URL}/user/`
 const LOGIN_URL = `${API_URL}/login`
 
-export const mapJwtToState = (jwt: any) => {
+export const mapAuthToState = (auth: UserAuth) => {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: AuthActionTypes.STORAGE_MAP_JWT,
-      payload: jwt
+      type: AuthActionTypes.STORAGE_MAP_AUTH,
+      payload: auth
     })
-    axios.defaults.headers.common['Authorization'] = `Bearer ${jwt.token}`;
+    //axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
   }
 }
 
 export const logout = () => {
   return (dispatch: Dispatch) => {
     dispatch({type: AuthActionTypes.USER_LOGOUT })
+    removeTokensFromStorage(() => {
+      delete axios.defaults.headers.common["Authorization"];
+    })
+  }
+}
+
+export const autoSignIn = (refToken: string, cb:() => void) => {
+  return (dispatch: Dispatch) => {
+
+    axios({
+      method: "POST",
+      url: REFRESH,
+      data:"grant_type=refresh_token&refresh_token=" + refToken,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }).then((response: AxiosResponse<UserRefreshAuth>) => {
+      dispatch({
+        type: AuthActionTypes.AUTO_SIGN_IN,
+        payload: response.data
+      })
+      cb()
+    }).catch(e => {
+      dispatch({
+        type: AuthActionTypes.AUTO_SIGN_IN_ERR,
+        payload: e.response.data.error
+      })
+    })
   }
 }
 
@@ -40,10 +69,10 @@ export const signIn = (data: any) => {
         payload: response.data
       })
     })
-    .catch(error => {
+    .catch(e => {
       dispatch({
         type: AuthActionTypes.USER_LOGIN_ERR,
-        payload: error
+        payload: e.response.data.error
       })
     })
   }
@@ -71,7 +100,7 @@ export const signUp = (data: RegisterModel, callback?: (res: UserAuth) => void) 
     .catch(e => {
       dispatch({
         type: AuthActionTypes.USER_REGISTER_ERR,
-        payload: e
+        payload: e.response.data.error
       })
     })
   }

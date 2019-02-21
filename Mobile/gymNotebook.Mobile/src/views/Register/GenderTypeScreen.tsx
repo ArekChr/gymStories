@@ -5,11 +5,12 @@ import styles from '../../styles'
 import {setGender} from '../../store/profile/actions'
 import {connect} from 'react-redux'
 import { Gender } from '../../store/profile/types';
+import { ApplicationState } from '../../store';
+import { Dispatch } from 'redux';
+import { NavigationScreenProp } from 'react-navigation';
 
-interface Props {
-  gender: Gender,
-  setGender: (gender: Gender) => Function
-  navigation: any
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
+  navigation: NavigationScreenProp<GenderTypeScreen>
 }
 
 interface State {
@@ -86,12 +87,12 @@ class GenderTypeScreen extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   gender: state.Profile.profile.gender
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  setGender: (gender) => setGender(gender)(dispatch)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setGender: (gender: Gender) => setGender(gender)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GenderTypeScreen)

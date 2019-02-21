@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Video from 'react-native-video';
+import Video, { OnLoadData } from 'react-native-video';
 import { StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View, StatusBar, Image, TextInput } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -7,6 +7,12 @@ import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
   navigation: NavigationScreenProp<VideoRelationsScreen>
+}
+
+interface ProgressData {
+  currentTime: number;
+  playableDuration: number;
+  seekableDuration: number;
 }
 
 class VideoRelationsScreen extends Component<Props> {
@@ -21,13 +27,13 @@ class VideoRelationsScreen extends Component<Props> {
     paused: false,
   };
 
-  video: Video;
+  video: Video = Video.prototype;
 
-  onLoad = (data) => {
+  onLoad = (data: OnLoadData) => {
     this.setState({ duration: data.duration, paused: false });
   };
 
-  onProgress = (data) => {
+  onProgress = (data: ProgressData) => {
     this.setState({ currentTime: data.currentTime });
   };
 
@@ -41,18 +47,18 @@ class VideoRelationsScreen extends Component<Props> {
     this.setState({ paused: true })
   };
 
-  onAudioFocusChanged = (event) => {
+  onAudioFocusChanged = (event: any) => {
     this.setState({ paused: !event.hasAudioFocus })
   };
 
   getCurrentTimePercentage() {
     if (this.state.currentTime > 0) {
-      return parseFloat(this.state.currentTime) / parseFloat(this.state.duration);
+      return parseFloat(this.state.currentTime.toFixed()) / parseFloat(this.state.duration.toFixed());
     }
     return 0;
   };
 
-  renderRateControl(rate) {
+  renderRateControl(rate: number) {
     const isSelected = (this.state.rate === rate);
 
     return (
@@ -64,7 +70,7 @@ class VideoRelationsScreen extends Component<Props> {
     );
   }
 
-  renderResizeModeControl(resizeMode) {
+  renderResizeModeControl(resizeMode: string) {
     const isSelected = (this.state.resizeMode === resizeMode);
 
     return (
@@ -76,7 +82,7 @@ class VideoRelationsScreen extends Component<Props> {
     )
   }
 
-  renderVolumeControl(volume) {
+  renderVolumeControl(volume: number) {
     const isSelected = (this.state.volume === volume);
 
     return (
@@ -102,7 +108,7 @@ class VideoRelationsScreen extends Component<Props> {
         <View style={styles.fullScreen}>
           <View style={{ margin: 2, marginTop: 5, display: 'flex', flexDirection: 'row' }}>
             
-            <View style={{ flex: 1, flexDirection: 'row', borderRadius: 3, overflow: 'hidden', borderRadius: 2, margin: 1.5}}>
+            <View style={{ flex: 1, flexDirection: 'row', overflow: 'hidden', borderRadius: 2, margin: 1.5}}>
               <View style={[{height: 2.5, backgroundColor: '#cccccc', borderBottomLeftRadius: 2, borderTopLeftRadius: 2 }, { flex: flexCompleted }]} />
               <View style={[{height: 2.5, backgroundColor: '#505050', borderTopRightRadius: 2, borderBottomRightRadius: 2 }, { flex: flexRemaining }]} />
             </View>

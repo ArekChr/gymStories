@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native'
 import {Logo} from '../../component'
 import LoginForm from './LoginForm'
-import { getTokens } from '../../utils/misc'
-import { mapJwtToState } from '../../store/auth/actions'
+import { getTokens, StorageKeys, setTokens } from '../../utils/misc'
+import { mapAuthToState, autoSignIn } from '../../store/auth/actions'
 import { connect } from 'react-redux'
 import { STATUS_BAR_COLOR, PRIMARY_COLOR } from '../../styles/common'
 import { NavigationScreenProp } from 'react-navigation';
-import { JWT } from '../../store/auth/types';
+import { UserAuth } from '../../store/auth/types';
 import { Dispatch } from 'redux';
+import { ApplicationState } from '../../store';
 
-interface Props {
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<LoginScreen>
-  mapJwtToState(jwt: JWT): void
 }
 
 class LoginScreen extends Component<Props> {
@@ -35,20 +35,11 @@ class LoginScreen extends Component<Props> {
         this.setState({loading:false})
       } 
       else {
-        // TODO: shoud check if token is valid or login app immediately by checking expiry ?
-        const expiry = Number(value.find((x: string[]) => x[0] ==='@gymNotebook@expiryToken')[1])
-        const now = new Date().getTime()
-        if(expiry >= now){
-          const token = value.find((x: string[]) => x[0] ==='@gymNotebook@token')[1]
-          const jwt = { token: token, expiry: expiry }
-          this.setState({loading:false})
-          this.props.mapJwtToState(jwt)
-          this.onLoginSuccess()
-          
-        }
-        else {
-          this.setState({loading:false})
-        }
+        this.props.autoSignIn(value[1][1], () => {
+          setTokens(this.props.auth, () => {
+            this.onLoginSuccess()
+          })
+        })
       }
     })
   }
@@ -67,7 +58,7 @@ class LoginScreen extends Component<Props> {
         <View style={styles.container}>
           <StatusBar backgroundColor={STATUS_BAR_COLOR} />
           <Logo/>
-          <LoginForm onLoginSuccess={() => this.onLoginSuccess}/>
+          <LoginForm onLoginSuccess={this.onLoginSuccess}/>
           <View style={styles.signupTextCont}>
               <Text style={styles.signupText}>Nie masz konta? </Text>
               <TouchableOpacity onPress={this.onRegisterPressed}>
@@ -108,8 +99,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  mapJwtToState: (jwt: JWT) => mapJwtToState(jwt)(dispatch)
+const mapStateToProps = (state: ApplicationState) => ({
+  auth: state.Auth.auth
 })
 
-export default connect(null , mapDispatchToProps)(LoginScreen)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  mapAuthToState: (auth: UserAuth) => mapAuthToState(auth)(dispatch),
+  autoSignIn: (value: string, cb:() => void) => autoSignIn(value, cb)(dispatch)
+})
+
+export default connect(mapStateToProps , mapDispatchToProps)(LoginScreen)
