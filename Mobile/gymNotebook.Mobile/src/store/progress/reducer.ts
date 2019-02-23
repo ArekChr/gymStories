@@ -1,7 +1,6 @@
 import { ProgresActionTypes, Progress, ProgressState } from './types'
+import { AuthActionTypes } from '../auth/types'
 import { Reducer } from 'redux'
-
-import { USER_LOGOUT } from '../auth/types'
 
 const initialState: ProgressState = {
   progress: [],
@@ -17,7 +16,7 @@ const initialState: ProgressState = {
 
 const progressReducer: Reducer<ProgressState> = (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOGOUT: {
+    case AuthActionTypes.USER_LOGOUT: {
       return {
         ...initialState
       }

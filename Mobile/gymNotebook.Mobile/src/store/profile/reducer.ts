@@ -4,7 +4,7 @@ import { ProfileState, ProfileActionTypes, Profile } from './types'
 const initialState: ProfileState = {
   profile: {
     averageRates: 0,
-    dateOfBirth: new Date(),
+    dateOfBirth: new Date().toISOString(),
     description: '',
     email: '',
     firstName: '',
@@ -13,7 +13,9 @@ const initialState: ProfileState = {
     followingCount: 0,
     gender: '',
     imageId: '',
-    password: ''
+    password: '',
+    userId: '',
+    imageURL: ''
   },
   error: undefined,
   loading: false,

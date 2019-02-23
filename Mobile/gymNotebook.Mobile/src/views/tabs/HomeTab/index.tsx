@@ -13,6 +13,7 @@ import { ApplicationState } from '../../../store';
 import { Post } from '../../../store/post/types';
 import { Dispatch } from 'redux';
 import { fetchProfile } from '../../../store/profile/actions';
+import firebase from 'react-native-firebase'
 
 interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<HomeTab>
@@ -50,8 +51,14 @@ class HomeTab extends Component<Props> {
 
   componentDidMount() {
     this.setState({ win: Dimensions.get("window") });
-    this.props.fetchPosts(20);
-    this.props.fetchProfile();
+    // this.addTodo();
+    // this.props.fetchPosts(20);
+    // this.props.fetchProfile();
+    this.addTodo();
+  }
+
+  addTodo() {
+    console.log(firebase.database().ref('/profiles').limitToFirst(3))
   }
 
   onCommentShowPressed = (id: string) => {

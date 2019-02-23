@@ -29,7 +29,7 @@ export interface Profile extends ApiResponse {
   averageRates: number
   followingCount: number
   followersCount: number
-  dateOfBirth: Date
+  dateOfBirth: string
   userId: string
   imageURL: string
 }

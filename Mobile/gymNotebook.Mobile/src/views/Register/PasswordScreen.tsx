@@ -8,7 +8,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { Dispatch } from 'redux';
 
 interface Props {
-  setPassword(password: string): Function
+  setPassword(password: string): void
   navigation: NavigationScreenProp<PasswordScreen>
 }
 

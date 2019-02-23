@@ -55,7 +55,7 @@ class ActiveTab extends Component<Props> {
     const sortedProgress = progressSort(progress);
     this.props.setLastProgress(sortedProgress[0]? sortedProgress[0].value : 0)
 
-    const reactProgress = sortedProgress.map((progress, i) => 
+    const reactProgress = sortedProgress.map((progress, i: number) => 
       <View key={i} style={{ borderTopWidth: 0.5, borderTopColor: 'rgba(0,0,0,0.2)', padding: 20}}>
         <Text>{progress.date.toLocaleDateString()}</Text>
         <Text style={{ color: 'gray'}} >{progress.value} cm</Text>
