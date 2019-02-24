@@ -3,11 +3,9 @@ import { View, ActivityIndicator } from 'react-native';
 import { TitleComponent, ErrorMessage } from '../../component'
 import { PRIMARY_COLOR } from '../../styles/common'
 import { connect } from 'react-redux';
-import { registerUser, login } from '../../store/auth/actions'
-import { setTokens } from '../../utils/misc'
+import { signUp } from '../../store/auth/actions';
 import { ApplicationState } from '../../store';
 import { Profile } from '../../store/profile/types';
-import { LoginModel } from '../../store/auth/types';
 import { NavigationScreenProp } from 'react-navigation';
 import { Dispatch } from 'redux';
 
@@ -18,16 +16,11 @@ interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof
 class RegisterEndScreen extends Component<Props> {
 
   componentDidMount(){
-    this.props.registerUser(this.props.profile, () => {
-      const {email, password} = this.props.profile
-      this.props.login({email, password})
-    })
+    this.props.signUp(this.props.profile)
   }
 
   onSingUpSuccess = () => {
-    setTokens(this.props.auth, () => {
-      this.props.navigation.navigate('HomeScreen')
-    })
+    this.props.navigation.navigate('HomeScreen')
   }
 
   render() {
@@ -38,7 +31,6 @@ class RegisterEndScreen extends Component<Props> {
 
     return (
       <View style={{ justifyContent: "center", flex: 1}}>
-        <ErrorMessage>{this.props.error.message}</ErrorMessage>
         <TitleComponent style={{marginTop: 0, marginBottom: 20}}>Rejestrowanie...</TitleComponent>
         <ActivityIndicator color={PRIMARY_COLOR} size='large'/>
       </View>
@@ -57,8 +49,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  registerUser: (profile: Profile, callback: CallableFunction) => registerUser(profile, callback)(dispatch),
-  login: (data: LoginModel) => login(data)(dispatch)
+  signUp: (profile: Profile) => signUp(profile)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterEndScreen)

@@ -5,6 +5,7 @@ import { logout } from '../../../store/auth/actions'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
+import firebase from 'react-native-firebase';
 
 interface Props extends ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<SettingsScreen>
@@ -21,6 +22,7 @@ class SettingsScreen extends Component<Props>{
   onLogOutPress = () => {
     removeTokensFromStorage(() => {
       this.props.logout();
+      firebase.auth().signOut()
       this.props.navigation.navigate('LoginScreen');
     })
   }

@@ -19,6 +19,8 @@ interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof ma
   navigation: NavigationScreenProp<HomeTab>
 }
 
+const profileRef = firebase.database().ref('profiles')
+
 class HomeTab extends Component<Props> {
 
   state = {
@@ -51,14 +53,33 @@ class HomeTab extends Component<Props> {
 
   componentDidMount() {
     this.setState({ win: Dimensions.get("window") });
-    // this.addTodo();
+
     // this.props.fetchPosts(20);
     // this.props.fetchProfile();
-    this.addTodo();
+
+    console.log('on...')
+    profileRef.on('value', function(snapshot){
+      let data = snapshot.val();
+      let items = Object.values(data)
+      console.log(data)
+      console.log(items)
+   })
   }
 
-  addTodo() {
-    console.log(firebase.database().ref('/profiles').limitToFirst(3))
+  read = () => {
+    console.log('once...')
+    profileRef.once('value').then(snapshot => {
+      var profile = snapshot.val()
+      console.log(profile)
+    })
+  }
+
+  add = () => {
+    console.log('add..')
+    profileRef.push({
+      firstName: 'Arek',
+      lastName: 'Chrabaszczewski'
+    })
   }
 
   onCommentShowPressed = (id: string) => {
@@ -229,10 +250,10 @@ class HomeTab extends Component<Props> {
         <View style={{padding: 10}}>
           <View style={{flexDirection: 'row', display: 'flex'}}>
             <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-              <TouchableOpacity style={{...styles.icon}}>
+              <TouchableOpacity onPress={this.add} style={{...styles.icon}}>
                 <FontAwesome name="heart" size={25} color="black"/>
               </TouchableOpacity>
-              <TouchableOpacity style={{...styles.icon}} >
+              <TouchableOpacity onPress={this.read} style={{...styles.icon}} >
                 <FontAwesome name="comment" size={25} color="black" style={{marginTop: -3}}/>
               </TouchableOpacity>
               <TouchableOpacity style={styles.icon}>

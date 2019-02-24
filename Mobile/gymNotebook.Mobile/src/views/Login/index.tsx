@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native'
 import {Logo} from '../../component'
 import LoginForm from './LoginForm'
-import { getTokens, StorageKeys, setTokens } from '../../utils/misc'
-import { mapAuthToState, autoSignIn } from '../../store/auth/actions'
+import { mapAuthToState, autoSignIn, setAuth } from '../../store/auth/actions'
 import { connect } from 'react-redux'
 import { STATUS_BAR_COLOR, PRIMARY_COLOR } from '../../styles/common'
 import { NavigationScreenProp } from 'react-navigation';
 import { UserAuth } from '../../store/auth/types';
 import { Dispatch } from 'redux';
 import { ApplicationState } from '../../store';
+import firebase from 'react-native-firebase';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<LoginScreen>
@@ -26,20 +26,16 @@ class LoginScreen extends Component<Props> {
   }
 
   onRegisterPressed = () => {
-    this.props.navigation.navigate('RegisterScreen')
+    this.props.navigation.navigate('NameScreen')
   }
 
   componentDidMount(){
-    getTokens((value: any) => {
-      if(value[0][1] === null){
-        this.setState({loading:false})
-      } 
-      else {
-        this.props.autoSignIn(value[1][1], () => {
-          setTokens(this.props.auth, () => {
-            this.onLoginSuccess()
-          })
-        })
+    firebase.auth().onAuthStateChanged(user => {
+      if(user){
+        this.props.setAuth(user)
+        this.props.navigation.navigate('HomeScreen')
+      } else {
+        this.setState({loading: false})
       }
     })
   }
@@ -105,7 +101,8 @@ const mapStateToProps = (state: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   mapAuthToState: (auth: UserAuth) => mapAuthToState(auth)(dispatch),
-  autoSignIn: (value: string, cb:() => void) => autoSignIn(value, cb)(dispatch)
+  autoSignIn: (value: string, cb:() => void) => autoSignIn(value, cb)(dispatch),
+  setAuth: (user: any) => setAuth(user)(dispatch)
 })
 
 export default connect(mapStateToProps , mapDispatchToProps)(LoginScreen)

@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { signIn } from '../../store/auth/actions'
-import { setTokens } from '../../utils/misc'
 import { mapAuthToState } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 import { FloatingInput } from '../../component'
@@ -26,7 +25,7 @@ class LoginForm extends React.Component<Props> {
 
   onLoginPressed = () => {
     const {email, password} = this.state
-    this.props.onLogin({email, password})
+    this.props.signIn({email, password})
   }
 
   render() {
@@ -40,11 +39,7 @@ class LoginForm extends React.Component<Props> {
       }
     }
     else if(this.props.loginSuccess) {
-      
-      setTokens(this.props.auth, () => {
-        this.props.mapAuthToState(this.props.auth)
-        this.props.onLoginSuccess()
-      })
+      this.props.onLoginSuccess()
     }
 
     return(
@@ -133,7 +128,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   mapAuthToState: (token: UserAuth) => mapAuthToState(token)(dispatch),
-  onLogin: (data: LoginModel) => signIn(data)(dispatch)
+  signIn: (data: LoginModel) => signIn(data)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

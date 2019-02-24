@@ -30,7 +30,7 @@ export interface Profile extends ApiResponse {
   followingCount: number
   followersCount: number
   dateOfBirth: string
-  userId: string
+  userUid: string
   imageURL: string
 }
 
@@ -45,7 +45,7 @@ export interface ProfileDto extends ApiResponse {
   followingCount: number
   followersCount: number
   dateOfBirth: Date
-  userId: string
+  userUid: string
   imageURL: string
 }
 

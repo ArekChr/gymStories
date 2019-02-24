@@ -1,106 +1,73 @@
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import { Dispatch } from 'redux'
 import { 
   AuthActionTypes,
   RegisterModel,
   UserAuth,
-  UserRefreshAuth
+  LoginModel
  } from './types'
-import { API_URL, SIGNUP, SIGNIN, REFRESH, removeTokensFromStorage } from '../../utils/misc'
+import { API_URL } from '../../utils/misc'
+import firebase from 'react-native-firebase';
+import { Profile } from '../profile/types';
 
 const URL = `${API_URL}/user/`
 const LOGIN_URL = `${API_URL}/login`
 
-export const mapAuthToState = (auth: UserAuth) => {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: AuthActionTypes.STORAGE_MAP_AUTH,
-      payload: auth
-    })
-    //axios.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
-  }
-}
-
 export const logout = () => {
   return (dispatch: Dispatch) => {
     dispatch({type: AuthActionTypes.USER_LOGOUT })
-    removeTokensFromStorage(() => {
-      delete axios.defaults.headers.common["Authorization"];
+  }
+}
+
+export const setAuth = (user: any) => {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: AuthActionTypes.SET_FIREBASE_AUTH,
+      payload: user
     })
   }
 }
 
-export const autoSignIn = (refToken: string, cb:() => void) => {
+export const signIn = (data: LoginModel) => {
   return (dispatch: Dispatch) => {
+    dispatch({ type: AuthActionTypes.FIREBASE_LOGIN_REQ })
 
-    axios({
-      method: "POST",
-      url: REFRESH,
-      data:"grant_type=refresh_token&refresh_token=" + refToken,
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    }).then((response: AxiosResponse<UserRefreshAuth>) => {
+    firebase.auth().signInWithEmailAndPassword(data.email, data.password).then(response => {
       dispatch({
-        type: AuthActionTypes.AUTO_SIGN_IN,
-        payload: response.data
+        type: AuthActionTypes.FIREBASE_LOGIN_SUC,
+        payload: response.user
       })
-      cb()
     }).catch(e => {
       dispatch({
-        type: AuthActionTypes.AUTO_SIGN_IN_ERR,
-        payload: e.response.data.error
+        type: AuthActionTypes.FIREBASE_LOGIN_ERR,
+        payload: e
       })
     })
   }
 }
 
-export const signIn = (data: any) => {
+export const signUp = (data: Profile)  => {
   return (dispatch: Dispatch) => {
-    dispatch({ type: AuthActionTypes.USER_LOGIN_REQ })
 
-    axios.post(SIGNIN, {
-      ...data,
-      returnSecureToken: true
-    })
+    dispatch({ type: AuthActionTypes.FIREBASE_REGISTER_REQ })
+
+    firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
     .then(response => {
       dispatch({
-        type: AuthActionTypes.USER_LOGIN_SUC,
-        payload: response.data
+        type: AuthActionTypes.FIREBASE_REGISTER_SUC,
+        //payload: response
       })
-    })
-    .catch(e => {
-      dispatch({
-        type: AuthActionTypes.USER_LOGIN_ERR,
-        payload: e.response.data.error
-      })
-    })
-  }
-}
-
-export const signUp = (data: RegisterModel, callback?: (res: UserAuth) => void)  => {
-  return (dispatch: Dispatch) => {
-    dispatch({ type: AuthActionTypes.USER_REGISTER_REQ })
-
-    axios.post(SIGNUP, 
-      { 
-        email: data.email, 
-        password: data.password, 
-        returnSecureToken:true
-      })
-    .then(res => {
-      dispatch({
-        type: AuthActionTypes.USER_REGISTER_SUC,
-        payload: res.data
-      })
-      if(callback){
-        callback(res.data)
-      }
-    })
-    .catch(e => {
-      dispatch({
-        type: AuthActionTypes.USER_REGISTER_ERR,
-        payload: e.response.data.error
+      firebase.database().ref('profiles').push({
+        userUid: response.user.uid,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        gender: data.gender,
+        dateOfBirth: data.dateOfBirth,
+        description: null,
+        averageRates: 0,
+        followingCount: 0,
+        followersCount: 0,
+        imageURL: null
       })
     })
   }

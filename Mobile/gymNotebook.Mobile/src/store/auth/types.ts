@@ -8,7 +8,13 @@ export enum AuthActionTypes {
   STORAGE_MAP_AUTH = 'auth/STORAGE_MAP_AUTH',
   USER_LOGOUT = 'auth/USER_LOGOUT',
   AUTO_SIGN_IN = 'auth/AUTO_SIGN_IN',
-  AUTO_SIGN_IN_ERR = "auth/AUTO_SIGN_IN_ERR"
+  AUTO_SIGN_IN_ERR = "auth/AUTO_SIGN_IN_ERR",
+  FIREBASE_LOGIN_ERR = "@@auth/FIREBASE_LOGIN_ERR",
+  FIREBASE_LOGIN_SUC = "@@auth/FIREBASE_LOGIN_SUC",
+  FIREBASE_LOGIN_REQ = "@@auth/FIREBASE_LOGIN_REQ",
+  SET_FIREBASE_AUTH = "@@auth/SET_FIREBASE_AUTH",
+  FIREBASE_REGISTER_REQ = "@@authFIREBASE_REGISTER_REQ",
+  FIREBASE_REGISTER_SUC = "@@authFIREBASE_REGISTER_SUC"
 }
 
 export interface RegisterModel {
@@ -26,14 +32,12 @@ export interface AuthState {
   loading: boolean | null
   registerSuccess: boolean | null
   loginSuccess: boolean | null
-  auth: UserAuth
+  auth: UserAuth | null
 }
 
 export interface UserAuth {
-  idToken: string | null
-  refreshToken: string | null
-  expiresIn: string | null
-  localId: string | null
+  email: string | null
+  uid: string | null
 }
 
 export interface UserRefreshAuth {

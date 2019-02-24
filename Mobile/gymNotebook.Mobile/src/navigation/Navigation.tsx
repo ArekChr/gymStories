@@ -17,8 +17,7 @@ import {
   EmailScreen, 
   GenderTypeScreen, 
   NameScreen, 
-  PasswordScreen, 
-  ProfileTypeScreen, 
+  PasswordScreen,
   RegisterScreen,
   RegisterEndScreen
 } from '../views/Register'
@@ -158,12 +157,6 @@ const SignInStackNavigator = createStackNavigator({
     screen: GenderTypeScreen,
     navigationOptions: {
       title: 'Rodzaj płci'
-    }
-  },
-  ProfileTypeScreen : { 
-    screen: ProfileTypeScreen,
-    navigationOptions: {
-      title: 'Rodzaj profilu'
     }
   },
   EmailScreen : { 
