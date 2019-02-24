@@ -1,14 +1,16 @@
 import React from 'react';
 import {Easing, Animated} from 'react-native'
 
-import ActiveTab from '../views/tabs/ActiveTab'
+import LoginScreen from '../views/Login'
 import GymTab from '../views/tabs/GymTab'
 import HomeTab from '../views/tabs/HomeTab'
-import ProfileTab from '../views/tabs/ProfileTab'
 import SearchTab from '../views/tabs/SearchTab'
-import SettingsScreen from '../views/tabs/ProfileTab/SettingsScreen'
-import LoginScreen from '../views/Login'
+import ActiveTab from '../views/tabs/ActiveTab'
+import ProfileTab from '../views/tabs/ProfileTab'
 import AddProgressScreen from '../views/AddProgress'
+import CommentScreen from '../views/General/CommentScreen';
+import CreatePostScreen from '../views/General/CreatePostScreen';
+import SettingsScreen from '../views/tabs/ProfileTab/SettingsScreen'
 import EditProfileScreen from '../views/tabs/ProfileTab/EditProfileScreen'
 import VideoRelationsScreen from '../views/tabs/HomeTab/VideoRelations/VideoRelationsScreen'
 
@@ -35,7 +37,6 @@ import Entypo from 'react-native-vector-icons/Entypo'
 
 import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON, FONT_COLOR, HEADER_WHITE } from '../styles/common'
 import { Fonts } from '../styles'
-import CommentScreen from '../views/General/CommentScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -100,7 +101,7 @@ const AppTabNavigator = createBottomTabNavigator({
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({tintColor}) => {
+      tabBarIcon: ({tintColor}: any) => {
         const { routeName } = navigation.state
         switch(routeName){
           case 'HomeTab': 
@@ -243,6 +244,12 @@ const HomeStackNavigator = createStackNavigator({
     navigationOptions: {
       title: 'Komentarze'
     }
+  },
+  CreatePostScreen: {
+    screen: CreatePostScreen,
+    navigationOptions: {
+      title: 'Nowy post'
+    }
   }
 },{
   defaultNavigationOptions: () => ({
@@ -252,7 +259,8 @@ const HomeStackNavigator = createStackNavigator({
     headerTintColor: FONT_COLOR, 
     headerTitleStyle : {
       fontWeight: undefined,
-      fontFamily: Fonts.robotoRegular
+      fontFamily: Fonts.robotoRegular,
+      marginLeft: -10
     }
   })
 })

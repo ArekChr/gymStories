@@ -9,7 +9,7 @@ interface Props {
 export default class TextButton extends Component<Props, {}> {
   render() {
     return (
-      <TouchableOpacity onPress={() => this.props.onPress}>
+      <TouchableOpacity onPress={() => this.props.onPress()}>
         <Text style={[{}, this.props.style]}>{this.props.children}</Text>
       </TouchableOpacity>
     )

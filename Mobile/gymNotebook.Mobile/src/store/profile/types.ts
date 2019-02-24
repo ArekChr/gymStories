@@ -32,6 +32,7 @@ export interface Profile extends ApiResponse {
   dateOfBirth: string
   userUid: string
   imageURL: string
+  path: string
 }
 
 export interface ProfileDto extends ApiResponse {

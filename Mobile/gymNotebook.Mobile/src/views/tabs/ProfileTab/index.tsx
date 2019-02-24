@@ -6,18 +6,10 @@ import { connect } from 'react-redux';
 import { ProfilePhoto } from '../../../component'
 import { Dispatch } from 'redux';
 import { ApplicationState } from '../../../store';
-import { Profile } from '../../../store/profile/types';
 
-interface ComponentProps {
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: any
 }
-
-interface PropsFromDispatch {
-  fetchProfile: Function
-  profile: Profile
-}
-
-type Props = ComponentProps & PropsFromDispatch
 
 class ProfileTab extends Component<Props> {
 
@@ -70,12 +62,11 @@ class ProfileTab extends Component<Props> {
   }
 
   componentDidMount() {
-    this.props.fetchProfile();
   }
 
   onRefresh = () => {
     this.setState({refreshing: true});
-    this.props.fetchProfile(() => {
+    this.props.fetchProfile(this.props.auth.uid, () => {
       this.setState({refreshing: false});
     })
   }
@@ -101,7 +92,7 @@ class ProfileTab extends Component<Props> {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <ProfilePhoto onPress={() => this.onPhotoClicked()} source={profile.imageId} />
+                  <ProfilePhoto onPress={this.onPhotoClicked()} source={profile.imageURL} />
                 </View>
                   <View style={{ flex: 3 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
@@ -141,13 +132,14 @@ class ProfileTab extends Component<Props> {
   }
 }
 
-const mapStateToProps = ({Profile}: ApplicationState) => ({
+const mapStateToProps = ({Profile, Auth}: ApplicationState) => ({
   profileLoading: Profile.loading,
-  profile: Profile.profile
+  profile: Profile.profile,
+  auth: Auth.auth
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchProfile: (callback?: CallableFunction) => fetchProfile(callback)(dispatch)
+  fetchProfile: (uid: string, cb?: () => void) => fetchProfile(uid, cb)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab)

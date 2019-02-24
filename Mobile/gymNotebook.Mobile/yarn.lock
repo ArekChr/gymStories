@@ -875,17 +875,17 @@
     "@types/react" "*"
 
 "@types/react-native@^0.57.32":
-  version "0.57.34"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.34.tgz#f15873386c4eab3accb536c49cef594634c0eafb"
-  integrity sha512-jWcxUHZjDmBjXuEVx0MmangkFiWmaQsOVJEmEpTNp55ML+OalEwGNSB8p88kq+SPLVhwOABrbIOcawo5N3qJPw==
+  version "0.57.38"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.38.tgz#2ff6ed1a7cc207afbfd87bf496513d96931d1446"
+  integrity sha512-bmY2ad/vQgP0HMT7Q7EQzirDBt5ibp+kBHclTnY7/i5MrdqE1oY+3b9NkDg3ohXlumr7p5stAG6I55nhfeUV6Q==
   dependencies:
     "@types/prop-types" "*"
     "@types/react" "*"
 
 "@types/react-navigation@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-3.0.1.tgz#374db42a441f4fc50cc0c86a399e41ce4680bfd3"
-  integrity sha512-+43aJYMY9gTMpBjH6jtLzLU2imUVXons8h5Q1Tz0IrNq/cx1wYiqDyzXAQZurC8W7eW811CKIuCtC5vK0XkMZw==
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/react-navigation/-/react-navigation-3.0.3.tgz#6b38741df130e992c91466c123540e53f189eaad"
+  integrity sha512-jIr3sMvAV0zJ+cuhm0rHrnsmMw8Eurx8LJrLtfkAmeYowM3woLJqSvEyWtQHLa+CiiHajJ6scS+W5mK7fVxeIw==
   dependencies:
     "@types/react" "*"
     "@types/react-native" "*"
@@ -907,9 +907,9 @@
     csstype "^2.2.0"
 
 "@types/react@^16.8.1":
-  version "16.8.1"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.1.tgz#b431b104ecc6febda170b718caa9f50be66a6750"
-  integrity sha512-tD1ETKJcuhANOejRc/p7OgQ16DKnbGi0M3LccelKlPnUCDp2a5koVxZFoRN9HN+A+m84HB5VGN7I+r3nNhS3PA==
+  version "16.8.4"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.4.tgz#134307f5266e866d5e7c25e47f31f9abd5b2ea34"
+  integrity sha512-Mpz1NNMJvrjf0GcDqiK8+YeOydXfD8Mgag3UtqQ5lXYTsMnOiHcKmO48LiSWMb1rSHB9MV/jlgyNzeAVxWMZRQ==
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -5401,10 +5401,19 @@ react-native-firebase@^5.2.2:
     opencollective-postinstall "^2.0.0"
     prop-types "^15.6.2"
 
-react-native-gesture-handler@^1.0.0, react-native-gesture-handler@^1.0.10:
+react-native-gesture-handler@^1.0.0:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.10.tgz#160e55e4886471931b7f7d52e22d94007540ab83"
   integrity sha512-GNVZ+rbwfi147qOxIvWyfHcTswr+CRT/bSy/Gr5Dz17/tWmomf9D6tGr1yJhyW8IhEZ307KLBWRCXLBM9Q2YQg==
+  dependencies:
+    hoist-non-react-statics "^2.3.1"
+    invariant "^2.2.2"
+    prop-types "^15.5.10"
+
+react-native-gesture-handler@^1.0.10:
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.16.tgz#bee54981575e581857c2298e133ce2ffac240a3e"
+  integrity sha512-KhUjDaiGKESfVa/lywuYfdZ2pomPC4q/dRQo18qlSZuRxEiOCxzSo9Q1TV7JK3PpyyMEXpsU04kYSSVypWiSxg==
   dependencies:
     hoist-non-react-statics "^2.3.1"
     invariant "^2.2.2"

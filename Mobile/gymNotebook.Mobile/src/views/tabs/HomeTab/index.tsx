@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, RefreshControl, Dimensions, TextInput} from 'react-native'
+import firebase from 'react-native-firebase'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import LinearGradient from 'react-native-linear-gradient';
-import { connect } from 'react-redux';
-import { fetchPosts } from '../../../store/post/actions'
-import PostImage from 'react-native-scalable-image';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
+import { connect } from 'react-redux';
+import PostImage from 'react-native-scalable-image';
+import ImagePicker from 'react-native-image-crop-picker';
+import { Dispatch } from 'redux';
 
+import { fetchPosts } from '../../../store/post/actions'
 import { ApplicationState } from '../../../store';
 import { Post } from '../../../store/post/types';
-import { Dispatch } from 'redux';
 import { fetchProfile } from '../../../store/profile/actions';
-import firebase from 'react-native-firebase'
 
 interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<HomeTab>
@@ -25,7 +27,6 @@ class HomeTab extends Component<Props> {
 
   state = {
     refreshing: false,
-    width: 0,
     win: {
       width: 0,
       height: 0,
@@ -44,42 +45,49 @@ class HomeTab extends Component<Props> {
         </View>
       ),
       headerRight: (
-        <TouchableOpacity style={styles.icon}>
-          <Ionicons name="ios-send" size={28} color="black" style={{}}/>
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity style={styles.icon} onPress={navigation.getParam('onPostAdd')}>
+            <MaterialIcons name="add-a-photo" size={28} color="black" />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.icon}>
+            <Ionicons name="ios-send" size={28} color="black" />
+          </TouchableOpacity>
+        </>
       )
     }
   }
 
+  
   componentDidMount() {
     this.setState({ win: Dimensions.get("window") });
+    this.props.navigation.setParams({ onPostAdd: this._onPostAdd})
 
     // this.props.fetchPosts(20);
     // this.props.fetchProfile();
 
-    console.log('on...')
-    profileRef.on('value', function(snapshot){
-      let data = snapshot.val();
-      let items = Object.values(data)
-      console.log(data)
-      console.log(items)
-   })
+  //   console.log('on...')
+  //   profileRef.on('value', function(snapshot){
+  //     let data = snapshot.val();
+  //     let items = Object.values(data)
+  //     console.log(data)
+  //     console.log(items)
+  //  })
   }
 
-  read = () => {
-    console.log('once...')
-    profileRef.once('value').then(snapshot => {
-      var profile = snapshot.val()
-      console.log(profile)
-    })
+  componentWillUnmount() {
+    profileRef.off('value')
   }
 
-  add = () => {
-    console.log('add..')
-    profileRef.push({
-      firstName: 'Arek',
-      lastName: 'Chrabaszczewski'
-    })
+  _onPostAdd = () => {
+    ImagePicker.openPicker({
+      width: 5000,
+      height: 5000,
+      cropping: true
+    }).then((image) => {
+      this.props.navigation.push('CreatePostScreen', {
+        pickedImage: { ...image}
+      })
+    });
   }
 
   onCommentShowPressed = (id: string) => {
@@ -169,7 +177,7 @@ class HomeTab extends Component<Props> {
         )
       })
     } else {
-      return (<Text>dupa</Text>);
+      return null
     }
 
   }
@@ -244,16 +252,16 @@ class HomeTab extends Component<Props> {
         </View>
 
         <TouchableWithoutFeedback style={{}}>
-            <Image style={{width: this.state.width, height: 300 }} source={require("../../../images/post1.jpg")}/>
+            <Image style={{width: this.state.win.width, height: 300 }} source={require("../../../images/post1.jpg")}/>
         </TouchableWithoutFeedback>
 
         <View style={{padding: 10}}>
           <View style={{flexDirection: 'row', display: 'flex'}}>
             <View style={{flexDirection: 'row', display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-              <TouchableOpacity onPress={this.add} style={{...styles.icon}}>
+              <TouchableOpacity style={{...styles.icon}}>
                 <FontAwesome name="heart" size={25} color="black"/>
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.read} style={{...styles.icon}} >
+              <TouchableOpacity style={{...styles.icon}} >
                 <FontAwesome name="comment" size={25} color="black" style={{marginTop: -3}}/>
               </TouchableOpacity>
               <TouchableOpacity style={styles.icon}>
@@ -312,11 +320,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state: ApplicationState) => ({
   posts: state.Posts.posts,
-  loading: state.Posts.loading
+  loading: state.Posts.loading,
+  auth: state.Auth.auth
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchPosts: (quantity: number, startDate?: string, cb?: CallableFunction) => fetchPosts(quantity, startDate, cb)(dispatch),
-  fetchProfile: () => fetchProfile()(dispatch)
+  fetchProfile: (uid: string) => fetchProfile(uid)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeTab)

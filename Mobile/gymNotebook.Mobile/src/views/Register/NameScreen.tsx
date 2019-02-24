@@ -33,7 +33,7 @@ class NameScreen extends Component<Props> {
     }
   }
 
-  focusNextField = (id: string) => {
+  focusNextField = (id: any) => {
     this.inputs[id].focus();
   }
 

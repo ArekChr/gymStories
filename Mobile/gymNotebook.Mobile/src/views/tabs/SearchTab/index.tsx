@@ -2,16 +2,42 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import AntDesignIcon from 'react-native-vector-icons/AntDesign'
 import { PRIMARY_COLOR } from '../../../styles/common'
+import { connect } from 'react-redux';
+import { ApplicationState } from '../../../store';
+import { Dispatch } from 'redux';
+import { fetchUsers } from '../../../store/user/actions';
 
+interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
+  navigation: any
+}
 
-export default class SearchTab extends Component {
+class SearchTab extends Component<Props> {
+
+  state = { 
+    quantity: 20
+  }
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }: any) => (
       <FontAwesome name="search" size={24} color={tintColor} />
     )
+  }
+
+  onSearch = (text: string) => {
+    this.props.fetchUsers(text, 20)
+  }
+
+  renderUsers() {
+      return this.props.users.map((user, i) => {
+        const source = user.imageURL ? {uri: user.imageURL} : require('../../../images/default-user.png')
+        return (
+          <View key={i} style={styles.profileTab}>
+            <Image style={styles.photo} source={source}/>
+            <Text style={styles.usernameText}>{user.firstName} {user.lastName}</Text>
+          </View>
+        )
+      })
   }
 
   render() {
@@ -37,6 +63,7 @@ export default class SearchTab extends Component {
               <EvilIcons name='search' size={20} color='black' />
             </View>
             <TextInput 
+              onChangeText={(text)=> this.props.fetchUsers(text, 20)}
               placeholder='Znajdź trenera'
               style={{ 
                 fontSize: 15,
@@ -74,147 +101,7 @@ export default class SearchTab extends Component {
           </View>
         </View>
         <ScrollView>
-          <View style={styles.profileContainer}>
-            <View style={styles.profileTab}>
-              <View style={styles.leftTab}>
-                <Image style={styles.photo} source={require('../../../images/profile.jpg')}/>
-                <View style={styles.ratingContainer}>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity style={styles.ratingButton}>
-                  <Text style={styles.ratingText}>
-                    5 248 opinii
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.profileNavButton}>
-                  <Text style={styles.profileNavText}>
-                    Przejdz{"\n"}do profilu
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.rightTab}>
-                <Text style={styles.usernameText}>Patrycja Kubińska</Text>
-                <Text style={styles.premiumText}>Uzytkownik Premium</Text>
-                <Text>Trening Funkcjonalny</Text>
-                <View>
-                  <TouchableOpacity style={{ flexDirection:'row'}}>
-                    <EvilIcons name="location" style={styles.locationIcon} size={20} color='black' />
-                    <Text>Gdynia</Text>
-                  </TouchableOpacity>
-                </View>
-                <Text style={{paddingBottom: 5, paddingTop: 3}}>
-                  Studentka Dietetyki &#128170;&#128170; {'\n'}
-                  Pasjonatka gotowania {'\n'}
-                  Zakochana w treningu {'\n'}
-                  funkcjonalnym &#9829; &#9829; &#9829;
-                </Text>
-                <TouchableOpacity style={{ flexDirection:'row'}}>
-                  <FontAwesome style={{paddingRight: 5}} name='calendar' size={18} />
-                  <Text>Umów na trening</Text>
-                </TouchableOpacity>
-                
-              </View>
-            </View>
-            <View style={styles.profileTab}>
-              <View style={styles.leftTab}>
-                <Image style={styles.photo} source={require('../../../images/profile2.jpg')}/>
-                <View style={styles.ratingContainer}>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity style={styles.ratingButton}>
-                  <Text style={styles.ratingText}>
-                    25 041 opinii
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.profileNavButton}>
-                  <Text style={styles.profileNavText}>
-                    Przejdz{"\n"}do profilu
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.rightTab}>
-                <Text style={styles.usernameText}>Arkadiusz Chrabąszczewski</Text>
-                <Text style={styles.premiumText}>Uzytkownik Platinium</Text>
-                <Text>Trening Siłowy</Text>
-                <View>
-                  <TouchableOpacity style={{ flexDirection:'row'}}>
-                    <EvilIcons name="location" style={styles.locationIcon} size={20} color='black' />
-                    <Text>Gdynia</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-            <View style={styles.profileTab}>
-              <View style={styles.leftTab}>
-                <Image style={styles.photo} source={require('../../../images/profile3.jpg')}/>
-                <View style={styles.ratingContainer}>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="star" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                  <TouchableOpacity>
-                    <AntDesignIcon name="staro" size={20} color={PRIMARY_COLOR} />
-                  </TouchableOpacity>
-                </View>
-                <TouchableOpacity style={styles.ratingButton}>
-                  <Text style={styles.ratingText}>
-                    1 opinia
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.profileNavButton}>
-                  <Text style={styles.profileNavText}>
-                    Przejdz{"\n"}do profilu
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.rightTab}>
-                <Text style={styles.usernameText}>Damian Hejda</Text>
-                <Text>Sezonowiec</Text>
-                <View>
-                  <TouchableOpacity style={{ flexDirection:'row'}}>
-                    <EvilIcons name="location" style={styles.locationIcon} size={20} color='black' />
-                    <Text>Gdynia</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View>
+        {this.renderUsers()}
         </ScrollView>
       </View>
     )
@@ -222,69 +109,23 @@ export default class SearchTab extends Component {
 }
 
 const styles = StyleSheet.create({
-  profileContainer: {
-  },
   profileTab: {
+    display: 'flex',
     flexDirection: 'row',
     paddingBottom: 10,
     borderBottomWidth: 0.5,
     borderColor: 'gray',
   },
-  leftTab: {
-    width: '30%'
-  },
-  rightTab: {
-    padding: 10,
-    width: '70%'
-  },
   photo: { 
-    marginLeft: 'auto',
-    marginRight:'auto',
-    marginTop: 10,
-    width: 90,
-    height: 90,
+    margin: 10,
+    width: 50,
+    height: 50,
     borderRadius: 45
   },
-  ratingContainer: { 
-    flexDirection:'row',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: 5
-  },
-  ratingButton: { 
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: 6
-  },
-  ratingText: {
-    color: PRIMARY_COLOR, 
-    fontWeight:'600',
-    backgroundColor: 'rgba(0,121,107,0.2)', 
-    paddingRight: 4,
-    paddingLeft: 4,
-    borderRadius: 4
-  },
-  profileNavButton: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: 6
-  },
-  profileNavText: { 
-    width: 80,
-    height: 35,
-    textAlignVertical: "center",
-    textAlign: "center",
-    alignItems:'center',
-    justifyContent:'center',
-    fontWeight:'600',
-    color: 'white',
-    backgroundColor: PRIMARY_COLOR,
-    paddingRight: 4,
-    paddingLeft: 4,
-    borderRadius: 4
-  },
   usernameText: { 
-    fontWeight: '600'
+    fontWeight: '600',
+    marginTop: 'auto',
+    marginBottom: 'auto'
   },
   premiumText: { 
     color:'#D4AF37',
@@ -299,3 +140,13 @@ const styles = StyleSheet.create({
     marginLeft: -4
   }
 })
+
+
+const mapStateToProps = (state: ApplicationState) => ({
+  users: state.Users.users
+});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchUsers:(text: string, quantity: number) => fetchUsers(text, quantity)(dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchTab)

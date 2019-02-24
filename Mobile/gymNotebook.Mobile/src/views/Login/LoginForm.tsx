@@ -2,10 +2,9 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import { signIn } from '../../store/auth/actions'
-import { mapAuthToState } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 import { FloatingInput } from '../../component'
-import { LoginModel, UserAuth } from '../../store/auth/types';
+import { LoginModel } from '../../store/auth/types';
 import { ApplicationState } from '../../store';
 import { Dispatch } from 'redux';
 
@@ -115,7 +114,11 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    paddingTop: 10
+    paddingTop: 10,
+    textAlign: 'center',
+    width: 250,
+    display: 'flex',
+    alignSelf: 'center',
   }
 })
 
@@ -127,7 +130,6 @@ const mapStateToProps = (state: ApplicationState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  mapAuthToState: (token: UserAuth) => mapAuthToState(token)(dispatch),
   signIn: (data: LoginModel) => signIn(data)(dispatch)
 })
 

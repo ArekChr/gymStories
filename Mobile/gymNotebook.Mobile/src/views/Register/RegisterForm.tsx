@@ -26,7 +26,6 @@ class RegisterForm extends React.Component<Props> {
   signUp = () => {
     const { email, password } = this.state
     this.props.signUp({ email, password }, (data) => {
-      console.log(data)
     })
   }
 

@@ -32,12 +32,12 @@ export interface AuthState {
   loading: boolean | null
   registerSuccess: boolean | null
   loginSuccess: boolean | null
-  auth: UserAuth | null
+  auth: UserAuth
 }
 
 export interface UserAuth {
-  email: string | null
-  uid: string | null
+  email: string
+  uid: string
 }
 
 export interface UserRefreshAuth {

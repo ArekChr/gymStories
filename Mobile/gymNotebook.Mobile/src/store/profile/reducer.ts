@@ -14,8 +14,9 @@ const initialState: ProfileState = {
     gender: '',
     imageId: '',
     password: '',
-    userId: '',
-    imageURL: ''
+    userUid: '',
+    imageURL: '',
+    path: ''
   },
   error: undefined,
   loading: false,
@@ -50,7 +51,7 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
         ...state,
         profile: {
           ...state.profile,
-          imageId: action.payload.id
+          imageURL: action.payload
         }
       }
     }

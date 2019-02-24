@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native'
 import {Logo} from '../../component'
 import LoginForm from './LoginForm'
-import { mapAuthToState, autoSignIn, setAuth } from '../../store/auth/actions'
+import { setAuth } from '../../store/auth/actions'
 import { connect } from 'react-redux'
-import { STATUS_BAR_COLOR, PRIMARY_COLOR } from '../../styles/common'
+import { STATUS_BAR_COLOR } from '../../styles/common'
 import { NavigationScreenProp } from 'react-navigation';
-import { UserAuth } from '../../store/auth/types';
 import { Dispatch } from 'redux';
 import { ApplicationState } from '../../store';
 import firebase from 'react-native-firebase';
+import { fetchProfile } from '../../store/profile/actions';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<LoginScreen>
@@ -17,27 +17,38 @@ interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof
 
 class LoginScreen extends Component<Props> {
 
+  _isMounted = false;
+
   state = {
     loading: true
   }
+  
+  componentDidMount(){
+    this._isMounted = true;
 
+    firebase.auth().onAuthStateChanged(user => {
+      if(this._isMounted){
+        if(user){
+          this.props.setAuth(user)
+          this.props.fetchProfile(user.uid)
+          this.props.navigation.navigate('HomeScreen')
+        } else {
+          this.setState({loading: false})
+        }
+      }
+    })
+  }
+  
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+  
   onLoginSuccess = () => {
     this.props.navigation.navigate('HomeScreen')
   }
 
   onRegisterPressed = () => {
     this.props.navigation.navigate('NameScreen')
-  }
-
-  componentDidMount(){
-    firebase.auth().onAuthStateChanged(user => {
-      if(user){
-        this.props.setAuth(user)
-        this.props.navigation.navigate('HomeScreen')
-      } else {
-        this.setState({loading: false})
-      }
-    })
   }
 
   render() {
@@ -73,6 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   signupTextCont: {
+    height: 100,
     alignItems: 'flex-end',
     justifyContent: 'center',
     paddingVertical: 16,
@@ -100,9 +112,8 @@ const mapStateToProps = (state: ApplicationState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  mapAuthToState: (auth: UserAuth) => mapAuthToState(auth)(dispatch),
-  autoSignIn: (value: string, cb:() => void) => autoSignIn(value, cb)(dispatch),
-  setAuth: (user: any) => setAuth(user)(dispatch)
+  setAuth: (user: any) => setAuth(user)(dispatch),
+  fetchProfile: (uid: string) => fetchProfile(uid)(dispatch)
 })
 
 export default connect(mapStateToProps , mapDispatchToProps)(LoginScreen)

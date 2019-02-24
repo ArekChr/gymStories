@@ -6,6 +6,8 @@ import { capFirst } from '../../../utils/string'
 import progressConfig from '../../../config/progressConfig'
 import { ProgressKey } from '../../../store/progress/types';
 import { ApplicationState } from '../../../store';
+import { Progress } from '../../../store/progress/types' 
+import { Dispatch } from 'redux';
 
 interface Props {
   selectProgress: (checked: ProgressKey) => Function
@@ -34,7 +36,7 @@ class ProgressModal extends Component<Props> {
     this.setState({ checked: this.props.selectedProgress })
   }
 
-  onCheck = (item) => {
+  onCheck = (item: keyof Progress) => {
     this.setState({ checked: item })
   }
 
@@ -123,7 +125,7 @@ const mapStateToProps = ({Progress}: ApplicationState) => ({
   modal: Progress.modal
 })
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   handleProgressModal: () => handleProgressModal()(dispatch),
   selectProgress: (progress) => selectProgress(progress)(dispatch)
 })

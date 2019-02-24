@@ -17,9 +17,28 @@ export enum PostActionTypes {
 export interface PostsState {
   loading: boolean
   loadingComments: boolean
-  posts?: Post[]
+  posts: Post[]
+  myPosts: MyPost[]
   comments?: Comment[]
 }
+
+export interface CreatePostModel {
+  firstName: string
+  lastName: string
+  description: string
+  filePath: string
+  profilePath: string
+  timeStamp: number
+  likesCount: number
+  likes: string[]
+  profileImageURL: string
+}
+
+export interface CreatePostComment {
+  postId: string
+  content: string
+}
+
 
 export interface Comment {
   id?: string
@@ -31,16 +50,27 @@ export interface Comment {
   likes: number
 }
 
+export interface MyPost {
+  id: string
+  description: string
+  likesCount: number
+  createdAt: number
+  imageURL: string
+  commentCount: number
+  comments: Comment[]
+}
+
 export interface Post {
   id: string
   firstName: string
   lastName: string
-  userId: string
+  profileId: string | null
   description: string
-  imageId: string
-  likes: number
-  createdAt: Date
+  likesCount: number
+  createdAt: number
   imageURL: string
   commentCount: number
   comments: Comment[]
+  likes: string[]
+  profileImageURL: string
 }

@@ -2,66 +2,52 @@ import axios from 'axios'
 import { ProfileActionTypes, ProfileDto } from './types'
 import { API_URL } from '../../utils/misc'
 import { Dispatch } from 'redux'
+import firebase from 'react-native-firebase';
 
 const URL: string = `${API_URL}/Profile`;
 
-export const fetchProfile = (callback?: CallableFunction) => {
+export const fetchProfile = (uid: string, cb?: () => void) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.FETCH_REQ
     })
+    firebase.database().ref('profiles').orderByChild('userUid').equalTo(uid).once('value').then(snapshot => {
+      let data = snapshot.val()
+      let profile = Object.keys(data).map(key => data[key])[0]
 
-    axios.get(`${URL}`)
-    .then((response) => {
+      profile = {
+        ...profile,
+        path: Object.keys(data)[0]
+      }
+
       dispatch({
         type: ProfileActionTypes.FETCH_SUC,
-        payload: response.data
+        payload: profile
       })
-
-      if(callback instanceof Function){
-        callback()
+      if(cb){
+        cb()
       }
-    })
-    .catch(response => {
-      dispatch({
-        type: ProfileActionTypes.FETCH_ERR,
-        payload: response.response.data
-      })
     })
   }
 }
 
-export const updateProfileImage = (photo: any) => {
+export const updateProfileImage = (uid: string, filePath: string, profilePath: string, cb?: () => void) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.UPDATE_PHOTO_REQ
     })
 
-    const file = new FormData();
-    file.append('name', 'profilePhoto')
-    file.append('file', {
-      uri: photo.uri,
-      type: photo.mime,
-      name: 'profilePhoto'
-    });
-
-    axios.put<string>(`${URL}/Image`, file,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-    )
-    .then((response) => {
+    firebase.storage().ref(`images/profiles/${uid}`).putFile(filePath).then(response => {
+      firebase.database().ref(`profiles/${profilePath}/`).update({
+        imageURL: response.downloadURL
+      })
       dispatch({
         type: ProfileActionTypes.UPDATE_PHOTO_SUC,
-        payload: response.data
+        payload: response.downloadURL
       })
-    })
-    .catch(response => {
-      dispatch({
-        type: ProfileActionTypes.UPDATE_PHOTO_ERR,
-        payload: response.response.data
-      })
+      if(cb){
+        cb()
+      }
     })
   }
 }

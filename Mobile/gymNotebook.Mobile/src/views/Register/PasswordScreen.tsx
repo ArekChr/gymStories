@@ -1,5 +1,5 @@
 import React, { Component, RefObject } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TextInput } from 'react-native';
 import { ButtonNext, TitleComponent, ErrorMessage, FloatingInput } from '../../component'
 import styles from '../../styles'
 import {setPassword} from '../../store/profile/actions'
@@ -17,7 +17,7 @@ class PasswordScreen extends Component<Props> {
     super(props)
   }
 
-  private inputs = {}
+  private inputs: Array<TextInput> = TextInput.prototype
 
   state = {
     password: '',
@@ -85,7 +85,7 @@ class PasswordScreen extends Component<Props> {
             value={this.state.confirmPassword}
             isValid={this.state.passwordMatch}
             onChangeText={this.handleConfirmPasswordChange}
-            onRef={(ref: RefObject<FloatingInput>) => { this.inputs['confirmPassword'] = ref }}
+            onRef={(ref: RefObject<TextInput>) => { this.inputs['confirmPassword'] = ref }}
             style={{ marginTop: 20 }}
             autoCapitalize={'none'}
             secureTextEntry={true}

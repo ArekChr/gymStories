@@ -6,7 +6,10 @@ const initialState: AuthState = {
   loading: null,
   registerSuccess: null,
   loginSuccess: null,
-  auth: null
+  auth: {
+    email: '',
+    uid: ''
+  }
 }
 
 const authReducer: Reducer<AuthState> = (state = initialState, action) => {
@@ -36,6 +39,7 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
     case AuthActionTypes.FIREBASE_REGISTER_SUC: {
       return {
         ...state,
+        loginSuccess: true
       }
     }
     case AuthActionTypes.FIREBASE_LOGIN_SUC: {
@@ -52,8 +56,15 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
     case AuthActionTypes.FIREBASE_LOGIN_ERR: {
       return {
         ...state,
-        error: action.payload,
-        auth: null
+        error: {
+          code: action.payload.code,
+          message: action.payload.message
+        },
+        auth: {
+          email: '',
+          uid: ''
+        },
+        loading: false
       }
     }
     case AuthActionTypes.USER_LOGOUT: {

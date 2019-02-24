@@ -17,7 +17,6 @@ class EditProfileScreen extends Component<Props> {
   
   state = {
     profile: {
-      photo: null,
       firstName: {
         label: 'Imię',
         value: this.props.profile.firstName || '',
@@ -57,10 +56,14 @@ class EditProfileScreen extends Component<Props> {
     pickedImage: null
   }
 
-  static navigationOptions = ({ navigation }: NavigationScreenProps) => ({
-    title: 'Dodaj',
-    headerRight: (<CheckButton onPress={navigation.getParam('onProfileSave')} />)
-  })
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => {
+    return {
+      title: 'Dodaj',
+      headerRight: (
+        <CheckButton onPress={navigation.getParam('onProfileSave')} />
+      )
+    }
+  }
 
   componentDidMount() {
     this.props.navigation.setParams({ onProfileSave: this._onProfileSave})
@@ -68,19 +71,13 @@ class EditProfileScreen extends Component<Props> {
 
   _onProfileSave = () => {
     const { pickedImage, profile: { firstName, lastName, gender, description } } = this.state;
+    const { auth, profile } = this.props
+
     if(pickedImage){
-      this.props.updateProfileImage(this.state.pickedImage, { 
-        firstName: firstName.value, 
-        lastName: lastName.value, 
-        gender: gender.value, 
-        description: description.value 
-      });
+      this.props.updateProfileImage(auth.uid, pickedImage.path, profile.path, () => {
+        this.props.navigation.popToTop();
+      })
     }
-    this.props.navigation.popToTop();
-  }
-
-  onPhotoClick = () => {
-
   }
 
   onPhotoPress = () => {
@@ -88,9 +85,10 @@ class EditProfileScreen extends Component<Props> {
       width: 5000,
       height: 5000,
       cropping: true
-    }).then(image => {
+    }).then((image) => {
+      console
       this.setState({
-        pickedImage: { uri: image.path, ...image }
+        pickedImage: { ...image }
       });
     });
   };
@@ -146,13 +144,15 @@ class EditProfileScreen extends Component<Props> {
   }
 
   render() {
-    const { photo, gender, firstName, lastName, description } = this.state.profile
+    const { gender, firstName, lastName, description } = this.state.profile
+    const { imageURL } = this.props.profile;
+    const { pickedImage } = this.state
     return (
       <ScrollView>
         <View style={{ margin: 10}}>
           <View style={{justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
-            <ProfilePhoto onPress={this.onPhotoClick()} source={this.state.pickedImage ? this.state.pickedImage : require('../../../images/profile2.jpg')}/>
-            <TextButton style={{ marginTop: 5 }} onPress={() => this.onPhotoPress}>Zmień zdjęcie</TextButton>
+            <ProfilePhoto onPress={this.onPhotoPress} source={pickedImage ? pickedImage.path : imageURL ? imageURL : null}/>
+            <TextButton style={{ marginTop: 5 }} onPress={this.onPhotoPress}>Zmień zdjęcie</TextButton>
           </View>
           <FloatingInput label={firstName.label}
             value={firstName.value}
@@ -183,11 +183,12 @@ class EditProfileScreen extends Component<Props> {
 }
 
 const mapStateToProps = (state: ApplicationState) => ({
-  profile: state.Profile.profile
+  profile: state.Profile.profile,
+  auth: state.Auth.auth
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  updateProfileImage: (photo: any) => updateProfileImage(photo)(dispatch),
+  updateProfileImage: (uid: string, filePath: string, profilePath: string, cb?: () => void) => updateProfileImage(uid, filePath, profilePath, cb)(dispatch),
   updateProfileData: (data: any) => updateProfileData(data)(dispatch)
 })
 

@@ -4,12 +4,29 @@ import { Reducer } from 'redux';
 const initialState: PostsState = {
   loading: false,
   loadingComments: false,
-  posts: undefined,
+  posts: [],
+  myPosts: [],
   comments: undefined
 }
 
 const postReducer: Reducer<PostsState> = (state = initialState, action) => {
   switch(action.type){
+    case PostActionTypes.CREATE_POST_REQ: {
+      return {
+        ...state,
+        loading: true
+      }
+    }
+    case PostActionTypes.CREATE_POST_SUC: {
+      return {
+        ...state,
+        myPosts: [
+          ...state.myPosts,
+          action.payload
+        ],
+        loading: false
+      }
+    }
     case PostActionTypes.FETCH_POST_REQ: {
       return {
         ...state,
@@ -61,7 +78,6 @@ const postReducer: Reducer<PostsState> = (state = initialState, action) => {
           ]
         }
       }
-      console.log(action.payload)
       return {
         ...state,
         comments: [
