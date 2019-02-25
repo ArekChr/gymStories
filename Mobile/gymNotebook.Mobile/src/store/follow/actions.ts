@@ -3,13 +3,13 @@ import firebase from "react-native-firebase";
 import { FollowActionTypes } from "./types";
 
 
-export const fetchFollowers = (profileUid: string) => {
+export const fetchFollowers = (profileId: string) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: FollowActionTypes.FETCH_FOLLOWERS_REQ
         })
 
-        firebase.database().ref(`following/${profileUid}`).once('value')
+        firebase.database().ref(`following/${profileId}`).once('value')
         .then((snapshot) => {
             dispatch({
                 type: FollowActionTypes.FETCH_FOLLOWERS_SUC,
@@ -19,13 +19,13 @@ export const fetchFollowers = (profileUid: string) => {
     }
 }
 
-export const fetchFollowing = (profileUid: string) => {
+export const fetchFollowing = (profileId: string) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: FollowActionTypes.FETCH_FOLLOWING_REQ
         })
 
-        firebase.database().ref(`followers/${profileUid}`).once('value')
+        firebase.database().ref(`followers/${profileId}`).once('value')
         .then((snapshot) => {
             dispatch({
                 type: FollowActionTypes.FETCH_FOLLOWING_SUC,
@@ -35,18 +35,18 @@ export const fetchFollowing = (profileUid: string) => {
     }
 }
 
-export const follow = (profileUid: string, followingUid: string) => {
+export const follow = (profileId: string, followingId: string) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: FollowActionTypes.FOLLOW_REQ
         })
 
-        firebase.database().ref(`following/${profileUid}`).push({
-            [followingUid]: true
+        firebase.database().ref(`following/${profileId}`).push({
+            [followingId]: true
         })
         .then(() => {
-            firebase.database().ref(`followers/${followingUid}`).push({
-                [profileUid]: true
+            firebase.database().ref(`followers/${followingId}`).push({
+                [profileId]: true
             })
             .then(() => {
                 dispatch({
@@ -57,15 +57,15 @@ export const follow = (profileUid: string, followingUid: string) => {
     }
 }
 
-export const unfollow = (profileUid: string, followingUid: string) => {
+export const unfollow = (profileId: string, followingId: string) => {
     return (dispatch: Dispatch) => {
         dispatch({
             type: FollowActionTypes.UNFOLLOW_REQ
         })
 
-        firebase.database().ref(`following/${profileUid}/${followingUid}`).remove()
+        firebase.database().ref(`following/${profileId}/${followingId}`).remove()
         .then(() => {
-            firebase.database().ref(`followers/${followingUid}/${profileUid}`).remove()
+            firebase.database().ref(`followers/${followingId}/${profileId}`).remove()
             .then(() => {
                 dispatch({
                     type: FollowActionTypes.UNFOLLOW_SUC
