@@ -1,5 +1,6 @@
 import { Reducer, Action } from 'redux'
 import { ProfileState, ProfileActionTypes, Profile } from './types'
+import { AuthActionTypes } from '../auth/types';
 
 const initialState: ProfileState = {
   profile: {
@@ -154,6 +155,11 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
           ...state.profile,
           email: action.payload
         }
+      }
+    }
+    case AuthActionTypes.USER_LOGOUT: {
+      return {
+        ...initialState
       }
     }
     default: {

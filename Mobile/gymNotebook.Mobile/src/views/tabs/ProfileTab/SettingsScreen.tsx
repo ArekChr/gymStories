@@ -21,8 +21,8 @@ class SettingsScreen extends Component<Props>{
 
   onLogOutPress = () => {
     removeTokensFromStorage(() => {
-      this.props.logout();
       firebase.auth().signOut().then(() => {
+        this.props.logout();
         this.props.navigation.navigate('LoginScreen');
       })
     })
