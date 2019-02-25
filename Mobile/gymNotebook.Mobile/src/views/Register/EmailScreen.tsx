@@ -5,7 +5,7 @@ import styles from '../../styles'
 import { setEmail } from '../../store/profile/actions'
 import {connect} from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -62,8 +62,8 @@ class EmailScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  email: state.Profile.profile.email
+const mapStateToProps = (state: AppState) => ({
+  email: state.Profile.myProfile.email
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

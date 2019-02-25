@@ -34,9 +34,11 @@ import {
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Entypo from 'react-native-vector-icons/Entypo'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON, FONT_COLOR, HEADER_WHITE } from '../styles/common'
 import { Fonts } from '../styles'
+import ProfileScreen from '../views/General/ProfileScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -73,6 +75,11 @@ const HomeTabStackNavigator = createStackNavigator({
   })
 })
 
+const SearchTabStackNavigator = createStackNavigator({
+  SearchTab: SearchTab,
+  ProfileScreen: ProfileScreen
+})
+
 const ProfileStackNavigator = createStackNavigator({
   Profile: {
     screen: ProfileTab,
@@ -94,7 +101,7 @@ const ProfileStackNavigator = createStackNavigator({
 
 const AppTabNavigator = createBottomTabNavigator({
     HomeTab: HomeTabStackNavigator,
-    SearchTab: SearchTab,
+    SearchTab: SearchTabStackNavigator,
     ActiveTab: ProgressTabStackNavigator,
     GymTab: GymTab,
     ProfileTab: ProfileStackNavigator
@@ -104,6 +111,8 @@ const AppTabNavigator = createBottomTabNavigator({
       tabBarIcon: ({tintColor}: any) => {
         const { routeName } = navigation.state
         switch(routeName){
+          case 'SearchTab':
+            return <FontAwesome name="search" size={24} color={tintColor} />
           case 'HomeTab': 
             return <Entypo name="home" size={25} color={tintColor || undefined} />
           case 'ActiveTab':

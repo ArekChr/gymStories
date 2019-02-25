@@ -5,7 +5,7 @@ import { signIn } from '../../store/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
 import { FloatingInput } from '../../component'
 import { LoginModel } from '../../store/auth/types';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state: ApplicationState) => ({
+const mapStateToProps = (state: AppState) => ({
   error: state.Auth.error,
   loginLoading: state.Auth.loading,
   loginSuccess: state.Auth.loginSuccess,

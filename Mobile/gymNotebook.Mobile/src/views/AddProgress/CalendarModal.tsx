@@ -4,7 +4,7 @@ import {CalendarComponent} from '../../component'
 import { selectDate, handleCalendarModal, pickDate } from '../../store/progress/actions'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 
 interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
 }
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({Progress}: ApplicationState) => ({
+const mapStateToProps = ({Progress}: AppState) => ({
   selectedDate: Progress.selectedDate,
   pickedDate: Progress.pickedDate,
   calendarModal: Progress.calendarModal

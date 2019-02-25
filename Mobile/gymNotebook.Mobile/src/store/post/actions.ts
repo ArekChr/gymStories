@@ -6,22 +6,28 @@ import firebase from 'react-native-firebase';
 
 const URL = `${API_URL}/Post`;
 
-export const fetchPosts = (quantity: number, startDate?: string, cb?: CallableFunction) => {
+export const fetchPosts = (profileId: string, quantity: number, cb?: CallableFunction) => {
   return (dispatch: Dispatch) => {
 
     dispatch({ type: PostActionTypes.FETCH_POST_REQ })
-
-    axios.get(URL, { params: { startDate: startDate, quantity: quantity }})
-      .then(response => {
-        dispatch({
+    console.log('profileid ' + profileId)
+    firebase.database().ref(`posts/${profileId}`).limitToLast(quantity).once('value').then((snapshot) => {
+      let snapshotVal = snapshot.val()
+      console.log(snapshotVal)
+      if(snapshotVal == null){
+        dispatch({ 
           type: PostActionTypes.FETCH_POST_SUC,
-          payload: response.data
+          paylod: []
         })
-        if(cb instanceof Function){
-          cb()
-        }
+      } else {
+        let posts = Object.keys(snapshotVal).map((x) => Object.assign(snapshotVal[x], {id: x, profileId: profileId}))
+        console.log(posts)
+        dispatch({ 
+          type: PostActionTypes.FETCH_POST_SUC,
+          payload: posts
+        })
       }
-    )
+    })
   }
 }
 
@@ -50,10 +56,7 @@ export const createPost = (post: CreatePostModel, cb?: () => void) => {
       createdAt: post.timeStamp,
       likesCount: post.likesCount,
       likes: post.likes,
-      firstName: post.firstName,
-      lastName: post.lastName,
-      commentCount: 0,
-      profileImageURL: post.profileImageURL
+      commentCount: 0
     }).then(postResponse => {
       let path = postResponse.path as string
       path = path.substring(path.indexOf('/') + 1)
@@ -66,15 +69,10 @@ export const createPost = (post: CreatePostModel, cb?: () => void) => {
             imageURL: fireResponse.downloadURL ? fireResponse.downloadURL : '',
             description: post.description,
             likesCount: 0,
-            comments: [],
             commentCount: 0,
             id: postId,
             createdAt: post.timeStamp,
-            firstName: post.firstName,
-            lastName: post.lastName,
-            profileId: null,
-            likes: [],
-            profileImageURL: post.profileImageURL
+            likes: []
           }
           dispatch({
             type: PostActionTypes.CREATE_POST_SUC,

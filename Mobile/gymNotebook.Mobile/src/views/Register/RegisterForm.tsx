@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator 
 import { connect } from 'react-redux'
 import { signUp } from '../../store/auth/actions'
 import { RegisterModel, UserAuth } from '../../store/auth/types';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state: ApplicationState) => ({
+const mapStateToProps = (state: AppState) => ({
   registerLoading: state.Auth.loading,
   error: state.Auth.error,
   registerSuccess: state.Auth.registerSuccess

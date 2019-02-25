@@ -1,6 +1,6 @@
 export enum PostActionTypes {
-  FETCH_POST_REQ = 'post/FETCH_REQ',
-  FETCH_POST_SUC = 'post/FETCH_SUC',
+  FETCH_POST_REQ = 'post/FETCH_POST_REQ',
+  FETCH_POST_SUC = 'post/FETCH_POST_SUC',
   UPDATE_POST_REQ = 'post/UPDATE_REQ',
   UPDATE_POST_SUC = 'post/UPDATE_SUC',
   CREATE_POST_REQ = 'post/CREATE_REQ',
@@ -23,15 +23,12 @@ export interface PostsState {
 }
 
 export interface CreatePostModel {
-  firstName: string
-  lastName: string
   description: string
   filePath: string
   profilePath: string
   timeStamp: number
   likesCount: number
   likes: string[]
-  profileImageURL: string
 }
 
 export interface CreatePostComment {
@@ -62,15 +59,11 @@ export interface MyPost {
 
 export interface Post {
   id: string
-  firstName: string
-  lastName: string
-  profileId: string | null
   description: string
   likesCount: number
   createdAt: number
   imageURL: string
   commentCount: number
-  comments: Comment[]
   likes: string[]
-  profileImageURL: string
+  profileId?: string
 }

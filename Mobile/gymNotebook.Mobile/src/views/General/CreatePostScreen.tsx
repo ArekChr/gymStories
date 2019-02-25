@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, ScaledSize, ScrollView, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Dispatch } from 'redux';
 import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
 import { Fonts } from '../../styles';
@@ -46,17 +46,14 @@ class CreatePostScreen extends React.Component<Props> {
 
   _onSharePost = () => {
     const { description, pickedImage: { path } } = this.state;
-    const { profile } = this.props;
+    const { myProfile } = this.props;
     const post: CreatePostModel = {
       description: description,
       filePath: path,
-      profilePath: profile.path,
+      profilePath: myProfile.id,
       timeStamp: new Date().getTime(),
       likesCount: 0,
-      likes: [],
-      firstName: profile.firstName,
-      lastName: profile.lastName,
-      profileImageURL: profile.imageURL
+      likes: []
     }
 
     this.props.createPost(post, () => {
@@ -79,9 +76,9 @@ class CreatePostScreen extends React.Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => {
+const mapStateToProps = (state: AppState) => {
   return {
-    profile: state.Profile.profile,
+    myProfile: state.Profile.myProfile,
     loading: state.Posts.loading
   };
 }

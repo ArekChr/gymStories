@@ -6,7 +6,7 @@ import { ProfilePhoto, FloatingInput, TextButton, CheckButton } from '../../../c
 import { updateProfileImage, updateProfileData } from '../../../store/profile/actions'
 import { Gender } from '../../../store/profile/types';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
-import { ApplicationState } from '../../../store';
+import { AppState } from '../../../store';
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -19,27 +19,27 @@ class EditProfileScreen extends Component<Props> {
     profile: {
       firstName: {
         label: 'Imię',
-        value: this.props.profile.firstName || '',
+        value: this.props.myProfile.firstName || '',
         isValid: true,
       },
       lastName: {
         label: 'Nazwisko',
-        value: this.props.profile.lastName,
+        value: this.props.myProfile.lastName,
         isValid: true,
       },
       description: {
         label: 'Opis profilu',
-        value: this.props.profile.description || '',
+        value: this.props.myProfile.description || '',
         isValid: true,
       },
       email: {
         label: 'email',
-        value: this.props.profile.email || '',
+        value: this.props.myProfile.email || '',
         isValid: true,
       },
       gender: {
         label: 'Płeć',
-        value: this.props.profile.gender || '',
+        value: this.props.myProfile.gender || '',
         isValid: true,
         optional: {
           male: {
@@ -71,10 +71,10 @@ class EditProfileScreen extends Component<Props> {
 
   _onProfileSave = () => {
     const { pickedImage, profile: { firstName, lastName, gender, description } } = this.state;
-    const { auth, profile } = this.props
+    const { auth, myProfile: profile } = this.props
 
     if(pickedImage){
-      this.props.updateProfileImage(auth.uid, pickedImage.path, profile.path, () => {
+      this.props.updateProfileImage(auth.uid, pickedImage.path, profile.id, () => {
         this.props.navigation.popToTop();
       })
     }
@@ -86,7 +86,6 @@ class EditProfileScreen extends Component<Props> {
       height: 5000,
       cropping: true
     }).then((image) => {
-      console
       this.setState({
         pickedImage: { ...image }
       });
@@ -145,7 +144,7 @@ class EditProfileScreen extends Component<Props> {
 
   render() {
     const { gender, firstName, lastName, description } = this.state.profile
-    const { imageURL } = this.props.profile;
+    const { imageURL } = this.props.myProfile;
     const { pickedImage } = this.state
     return (
       <ScrollView>
@@ -182,8 +181,8 @@ class EditProfileScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  profile: state.Profile.profile,
+const mapStateToProps = (state: AppState) => ({
+  myProfile: state.Profile.myProfile,
   auth: state.Auth.auth
 })
 

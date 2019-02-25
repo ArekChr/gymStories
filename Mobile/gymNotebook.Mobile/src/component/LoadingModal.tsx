@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Modal, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../store';
+import { AppState } from '../store';
 import { Dispatch } from 'redux';
 import { ActivityIndicator } from '@ant-design/react-native';
 

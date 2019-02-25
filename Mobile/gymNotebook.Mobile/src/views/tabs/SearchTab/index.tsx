@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput } from 'react-native'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import { PRIMARY_COLOR } from '../../../styles/common'
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../../store';
+import { AppState } from '../../../store';
 import { Dispatch } from 'redux';
-import { fetchUsers } from '../../../store/user/actions';
+import { searchProfiles } from '../../../store/profile/actions';
+import { Profile } from '../../../store/profile/types';
+import { NavigationScreenProps } from 'react-navigation';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: any
@@ -18,24 +19,32 @@ class SearchTab extends Component<Props> {
     quantity: 20
   }
 
-  static navigationOptions = {
-    tabBarIcon: ({ tintColor }: any) => (
-      <FontAwesome name="search" size={24} color={tintColor} />
-    )
+
+  static navigationOptions = ({ navigation }: NavigationScreenProps) => {
+    return {
+      header: null
+    }
   }
 
   onSearch = (text: string) => {
-    this.props.fetchUsers(text, 20)
+    this.props.searchProfiles(text, 20)
+  }
+
+  onProfilePress = (profile: Profile) => {
+    this.props.navigation.push('ProfileScreen', {
+      profile: profile
+    })
   }
 
   renderUsers() {
-      return this.props.users.map((user, i) => {
+      return this.props.profiles.map((user, i) => {
         const source = user.imageURL ? {uri: user.imageURL} : require('../../../images/default-user.png')
         return (
-          <View key={i} style={styles.profileTab}>
+          <TouchableOpacity onPress={() => this.onProfilePress(user)} key={i} style={styles.profileTab}>
             <Image style={styles.photo} source={source}/>
             <Text style={styles.usernameText}>{user.firstName} {user.lastName}</Text>
-          </View>
+            <Text style={styles.usernameText}>{user.nickname}</Text>
+          </TouchableOpacity>
         )
       })
   }
@@ -63,7 +72,7 @@ class SearchTab extends Component<Props> {
               <EvilIcons name='search' size={20} color='black' />
             </View>
             <TextInput 
-              onChangeText={(text)=> this.props.fetchUsers(text, 20)}
+              onChangeText={(text)=> this.props.searchProfiles(text, 20)}
               placeholder='Znajdź trenera'
               style={{ 
                 fontSize: 15,
@@ -111,13 +120,11 @@ class SearchTab extends Component<Props> {
 const styles = StyleSheet.create({
   profileTab: {
     display: 'flex',
-    flexDirection: 'row',
-    paddingBottom: 10,
-    borderBottomWidth: 0.5,
-    borderColor: 'gray',
+    flexDirection: 'row'
   },
   photo: { 
     margin: 10,
+    marginBottom: 5,
     width: 50,
     height: 50,
     borderRadius: 45
@@ -125,28 +132,17 @@ const styles = StyleSheet.create({
   usernameText: { 
     fontWeight: '600',
     marginTop: 'auto',
-    marginBottom: 'auto'
-  },
-  premiumText: { 
-    color:'#D4AF37',
-    backgroundColor: 'rgba(240,230,140,0.4)',
-    paddingLeft: 3,
-    paddingRight: 3,
-    borderRadius: 4,
-    alignSelf: 'flex-start'
-  },
-  locationIcon: { 
-    marginTop: 2,
-    marginLeft: -4
+    marginBottom: 'auto',
+    color: 'black'
   }
 })
 
 
-const mapStateToProps = (state: ApplicationState) => ({
-  users: state.Users.users
+const mapStateToProps = (state: AppState) => ({
+  profiles: state.Profile.profiles
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchUsers:(text: string, quantity: number) => fetchUsers(text, quantity)(dispatch)
+  searchProfiles:(text: string, quantity: number) => searchProfiles(text, quantity)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchTab)

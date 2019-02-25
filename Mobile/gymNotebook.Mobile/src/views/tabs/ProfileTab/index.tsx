@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, RefreshControl, ScrollView } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import { fetchProfile } from '../../../store/profile/actions'
+import { fetchMyProfile } from '../../../store/profile/actions'
 import { connect } from 'react-redux';
 import { ProfilePhoto } from '../../../component'
 import { Dispatch } from 'redux';
-import { ApplicationState } from '../../../store';
+import { AppState } from '../../../store';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: any
@@ -66,7 +66,7 @@ class ProfileTab extends Component<Props> {
 
   onRefresh = () => {
     this.setState({refreshing: true});
-    this.props.fetchProfile(this.props.auth.uid, () => {
+    this.props.fetchMyProfile(this.props.auth.uid, () => {
       this.setState({refreshing: false});
     })
   }
@@ -77,7 +77,7 @@ class ProfileTab extends Component<Props> {
 
   render() {
 
-    const { profile } = this.props;
+    const { myProfile: myProfile } = this.props;
 
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -92,7 +92,7 @@ class ProfileTab extends Component<Props> {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <ProfilePhoto onPress={this.onPhotoClicked()} source={profile.imageURL} />
+                  <ProfilePhoto onPress={this.onPhotoClicked} source={myProfile.imageURL} />
                 </View>
                   <View style={{ flex: 3 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
@@ -101,11 +101,11 @@ class ProfileTab extends Component<Props> {
                         <Text style={{ fontSize: 11, color: 'grey' }}>Posty</Text>
                       </View>
                         <View style={{ alignItems: 'center' }}>
-                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followingCount}</Text>
+                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followingCount}</Text>
                           <Text style={{ fontSize: 11, color: 'grey' }}>Obserwujący</Text>
                         </View>
                         <View style={{ alignItems: 'center' }}>
-                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followersCount}</Text>
+                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followersCount}</Text>
                           <Text style={{ fontSize: 11, color: 'grey' }}>Obserwuje</Text>
                         </View>
                     </View>
@@ -122,8 +122,8 @@ class ProfileTab extends Component<Props> {
                   </View>
             </View>
             <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>
-              <Text style={{ fontWeight: 'bold' }}>{`${profile.firstName} ${profile.lastName}`}</Text>
-              <Text>{profile.description}</Text>
+              <Text style={{ fontWeight: 'bold' }}>{`${myProfile.firstName} ${myProfile.lastName}`}</Text>
+              <Text>{myProfile.description}</Text>
             </View>
           </View>
         </ScrollView>
@@ -132,14 +132,14 @@ class ProfileTab extends Component<Props> {
   }
 }
 
-const mapStateToProps = ({Profile, Auth}: ApplicationState) => ({
+const mapStateToProps = ({Profile, Auth}: AppState) => ({
   profileLoading: Profile.loading,
-  profile: Profile.profile,
+  myProfile: Profile.myProfile,
   auth: Auth.auth
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchProfile: (uid: string, cb?: () => void) => fetchProfile(uid, cb)(dispatch)
+  fetchMyProfile: (uid: string, cb?: () => void) => fetchMyProfile(uid, cb)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab)

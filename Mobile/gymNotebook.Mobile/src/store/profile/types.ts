@@ -1,3 +1,5 @@
+import { Post } from "../post/types";
+
 export enum ProfileActionTypes {
   SET_NAME = '@@profile/SET_NAME',
   SET_BIRTH_DATE = '@@profile/SET_BIRTH_DATE',
@@ -5,8 +7,10 @@ export enum ProfileActionTypes {
   SET_PASSWORD = '@@profile/SET_PASSWORD',
   REMOVE_PASSWORD = '@@profile/REMOVE_PASSWORD',
   SET_EMAIL = '@@profile/SET_EMAIL',
-  FETCH_REQ = '@@profile/FETCH_REQ',
-  FETCH_SUC = '@@profile/FETCH_SUC',
+  FETCH_MY_PROFILE_REQ = '@@profile/FETCH_MY_PROFILE_REQ',
+  FETCH_MY_PROFILE_SUC = '@@profile/FETCH_MY_PROFILE_SUC',
+  FETCH_PROFILE_REQ = '@@profile/FETCH_PROFILE_REQ',
+  FETCH_PROFILE_SUC = '@@profile/FETCH_PROFILE_SUC',
   FETCH_ERR = '@@profile/FETCH_ERR',
   UPDATE_REQ = '@@profile/UPDATE_REQ',
   UPDATE_SUC = '@@profile/UPDATE_SUC',
@@ -15,7 +19,9 @@ export enum ProfileActionTypes {
   UPDATE_PHOTO_SUC = '@@profile/UPDATE_PHOTO_SUC',
   UPDATE_PHOTO_ERR = '@@profile/UPDATE_PHOTO_ERR',
   FETCH_IMAGE_REQ = '@@profile/FETCH_IMAGE_REQ',
-  FETCH_IMAGE_SUC = '@@profile/FETCH_IMAGE_SUC'
+  FETCH_IMAGE_SUC = '@@profile/FETCH_IMAGE_SUC',
+  SEARCH_PROFILES_REQ = "@users/SEARCH_PROFILES_REQ",
+  SEARCH_PROFILES_SUC = "@users/SEARCH_PROFILES_SUC"
 }
 
 export interface Profile extends ApiResponse {
@@ -25,14 +31,15 @@ export interface Profile extends ApiResponse {
   lastName: string
   gender: Gender
   description: string
-  imageId: string
   averageRates: number
   followingCount: number
   followersCount: number
   dateOfBirth: string
   userUid: string
   imageURL: string
-  path: string
+  id: string
+  nickname?: string
+  posts?: Post[]
 }
 
 export interface ProfileDto extends ApiResponse {
@@ -59,7 +66,8 @@ export type ApiResponse = Record<string, any>
 
 export interface ProfileState {
   readonly loading: boolean
-  readonly profile: Profile
+  readonly myProfile: Profile
   readonly error: any,
   readonly imagePath?: string
+  readonly profiles: Profile[]
 }

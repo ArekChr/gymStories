@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import { TitleComponent, ErrorMessage } from '../../component'
+import { TitleComponent } from '../../component'
 import { PRIMARY_COLOR } from '../../styles/common'
 import { connect } from 'react-redux';
 import { signUp } from '../../store/auth/actions';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Profile } from '../../store/profile/types';
 import { NavigationScreenProp } from 'react-navigation';
 import { Dispatch } from 'redux';
@@ -16,7 +16,7 @@ interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof
 class RegisterEndScreen extends Component<Props> {
 
   componentDidMount(){
-    this.props.signUp(this.props.profile)
+    this.props.signUp(this.props.myProfile)
   }
 
   onSingUpSuccess = () => {
@@ -38,18 +38,18 @@ class RegisterEndScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
+const mapStateToProps = (state: AppState) => ({
   registerLoading: state.Auth.loading,
   error: state.Auth.error,
   registerSuccess: state.Auth.registerSuccess,
   loginLoading: state.Auth.loading,
   loginSuccess: state.Auth.loginSuccess,
-  profile: state.Profile.profile,
+  myProfile: state.Profile.myProfile,
   auth: state.Auth.auth
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  signUp: (profile: Profile) => signUp(profile)(dispatch)
+  signUp: (myProfile: Profile) => signUp(myProfile)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterEndScreen)

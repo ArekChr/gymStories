@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { DatePickerView, Provider } from '@ant-design/react-native';
 import enUS from '@ant-design/react-native/lib/locale-provider/en_US';
 import { NavigationScreenProp } from 'react-navigation';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -57,8 +57,8 @@ class BirthDateScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  dateOfBirth: state.Profile.profile.dateOfBirth
+const mapStateToProps = (state: AppState) => ({
+  dateOfBirth: state.Profile.myProfile.dateOfBirth
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

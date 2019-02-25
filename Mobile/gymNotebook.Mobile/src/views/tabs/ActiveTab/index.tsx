@@ -14,7 +14,7 @@ import progressConfig from '../../../config/progressConfig'
 import * as shape from 'd3-shape'
 import dateFns from 'date-fns'
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
-import { ApplicationState } from '../../../store';
+import { AppState } from '../../../store';
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({Progress}: ApplicationState) => ({
+const mapStateToProps = ({Progress}: AppState) => ({
   progress: Progress.progress,
   progressLoading: Progress.progressLoading,
   selectedProgress: Progress.selectedProgress

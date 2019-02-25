@@ -7,9 +7,9 @@ import { connect } from 'react-redux'
 import { STATUS_BAR_COLOR } from '../../styles/common'
 import { NavigationScreenProp } from 'react-navigation';
 import { Dispatch } from 'redux';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import firebase from 'react-native-firebase';
-import { fetchProfile } from '../../store/profile/actions';
+import { fetchMyProfile } from '../../store/profile/actions';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<LoginScreen>
@@ -30,7 +30,7 @@ class LoginScreen extends Component<Props> {
       if(this._isMounted){
         if(user){
           this.props.setAuth(user)
-          this.props.fetchProfile(user.uid)
+          this.props.fetchMyProfile(user.uid)
           this.props.navigation.navigate('HomeScreen')
         } else {
           this.setState({loading: false})
@@ -107,13 +107,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state: ApplicationState) => ({
+const mapStateToProps = (state: AppState) => ({
   auth: state.Auth.auth
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setAuth: (user: any) => setAuth(user)(dispatch),
-  fetchProfile: (uid: string) => fetchProfile(uid)(dispatch)
+  fetchMyProfile: (uid: string) => fetchMyProfile(uid)(dispatch)
 })
 
 export default connect(mapStateToProps , mapDispatchToProps)(LoginScreen)

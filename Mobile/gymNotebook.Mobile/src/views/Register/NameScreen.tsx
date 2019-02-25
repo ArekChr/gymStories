@@ -4,7 +4,7 @@ import { ButtonNext, FloatingInput, TitleComponent, ErrorMessage } from '../../c
 import { setName } from '../../store/profile/actions'
 import { connect } from 'react-redux'
 import { NavigationScreenProp } from 'react-navigation';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -125,9 +125,9 @@ class NameScreen extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  firstName: state.Profile.profile.firstName,
-  lastName: state.Profile.profile.lastName
+const mapStateToProps = (state: AppState) => ({
+  firstName: state.Profile.myProfile.firstName,
+  lastName: state.Profile.myProfile.lastName
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Dispatch } from 'redux';
 import { NavigationScreenProp } from 'react-navigation';
 import { API_URL } from '../../utils/misc';
@@ -11,7 +11,6 @@ import { ActivityIndicator } from '@ant-design/react-native';
 
 export interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<CommentScreen>
-  imageId: string
 }
 
 class CommentScreen extends React.PureComponent<Props> {
@@ -45,10 +44,10 @@ class CommentScreen extends React.PureComponent<Props> {
       content: this.state.comment,
       createdAt: new Date(),
       id: undefined,
-      imageURL: this.props.profile.imageURL,
+      imageURL: this.props.myProfile.imageURL,
       likes: 0,
-      userId: this.props.profile.userId,
-      userName: this.props.profile.firstName + " " + this.props.profile.lastName
+      userId: this.props.myProfile.userId,
+      userName: this.props.myProfile.firstName + " " + this.props.myProfile.lastName
     }
     this.props.createComment(this.state.postId, comment)
   }
@@ -125,7 +124,7 @@ class CommentScreen extends React.PureComponent<Props> {
         <View style={{  display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', 
          margin: 6, marginLeft: 12, marginRight: 12 }}>
           <Image style={{ width: 32, height: 32, borderRadius: 45, borderWidth: 0.5, borderColor: 'gray', marginTop: 'auto', display: 'flex'}} 
-          source={this.props.imageId ? {uri: `${API_URL}/Image/${this.props.imageId}`} : require('../../images/default-user.png')}/>
+          source={this.props.myProfile.imageId ? {uri: `${API_URL}/Image/${this.props.myProfile.imageId}`} : require('../../images/default-user.png')}/>
           <TextInput multiline={true} 
             placeholder="Dodaj komentarz..." 
             placeholderTextColor="gray" 
@@ -141,11 +140,10 @@ class CommentScreen extends React.PureComponent<Props> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => {
+const mapStateToProps = (state: AppState) => {
   return {
-    imageId: state.Profile.profile.imageId,
     comments: state.Posts.comments,
-    profile: state.Profile.profile
+    myProfile: state.Profile.myProfile
   };
 }
 

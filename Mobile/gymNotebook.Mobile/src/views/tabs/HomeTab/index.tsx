@@ -13,9 +13,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { Dispatch } from 'redux';
 
 import { fetchPosts } from '../../../store/post/actions'
-import { ApplicationState } from '../../../store';
+import { AppState } from '../../../store';
 import { Post } from '../../../store/post/types';
-import { fetchProfile } from '../../../store/profile/actions';
+import { fetchMyProfile } from '../../../store/profile/actions';
 
 interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<HomeTab>
@@ -318,14 +318,14 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = (state: ApplicationState) => ({
+const mapStateToProps = (state: AppState) => ({
   posts: state.Posts.posts,
   loading: state.Posts.loading,
   auth: state.Auth.auth
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchPosts: (quantity: number, startDate?: string, cb?: CallableFunction) => fetchPosts(quantity, startDate, cb)(dispatch),
-  fetchProfile: (uid: string) => fetchProfile(uid)(dispatch)
+  fetchMyProfile: (profileId: string) => fetchMyProfile(profileId)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeTab)

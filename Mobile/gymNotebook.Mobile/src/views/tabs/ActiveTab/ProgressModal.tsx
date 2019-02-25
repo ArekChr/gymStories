@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { capFirst } from '../../../utils/string'
 import progressConfig from '../../../config/progressConfig'
 import { ProgressKey } from '../../../store/progress/types';
-import { ApplicationState } from '../../../store';
+import { AppState } from '../../../store';
 import { Progress } from '../../../store/progress/types' 
 import { Dispatch } from 'redux';
 
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({Progress}: ApplicationState) => ({
+const mapStateToProps = ({Progress}: AppState) => ({
   selectedProgress: Progress.selectedProgress,
   modal: Progress.modal
 })

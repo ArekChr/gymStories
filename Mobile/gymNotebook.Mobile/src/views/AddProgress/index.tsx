@@ -7,7 +7,7 @@ import { capFirst } from '../../utils/string'
 import { CheckButton } from '../../component';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
 import { Dispatch } from 'redux';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { SelectedProgress } from '../../store/progress/types';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({Progress}: ApplicationState) => ({
+const mapStateToProps = ({Progress}: AppState) => ({
   selectedDate: Progress.selectedDate,
   selectedProgress: Progress.selectedProgress,
   lastProgress: Progress.lastProgress

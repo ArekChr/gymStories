@@ -5,7 +5,7 @@ import styles from '../../styles'
 import {setGender} from '../../store/profile/actions'
 import {connect} from 'react-redux'
 import { Gender } from '../../store/profile/types';
-import { ApplicationState } from '../../store';
+import { AppState } from '../../store';
 import { Dispatch } from 'redux';
 import { NavigationScreenProp } from 'react-navigation';
 
@@ -87,8 +87,8 @@ class GenderTypeScreen extends Component<Props, State> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  gender: state.Profile.profile.gender
+const mapStateToProps = (state: AppState) => ({
+  gender: state.Profile.myProfile.gender
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

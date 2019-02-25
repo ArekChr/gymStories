@@ -1,32 +1,98 @@
 import axios from 'axios'
-import { ProfileActionTypes, ProfileDto } from './types'
+import { ProfileActionTypes, ProfileDto, Profile } from './types'
 import { API_URL } from '../../utils/misc'
 import { Dispatch } from 'redux'
 import firebase from 'react-native-firebase';
 
 const URL: string = `${API_URL}/Profile`;
 
-export const fetchProfile = (uid: string, cb?: () => void) => {
+export const fetchMyProfile = (uid: string,  cb?: () => void) => {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ProfileActionTypes.FETCH_REQ
+      type: ProfileActionTypes.FETCH_MY_PROFILE_REQ
     })
-    firebase.database().ref('profiles').orderByChild('userUid').equalTo(uid).once('value').then(snapshot => {
+    firebase.database()
+    .ref('profiles')
+    .orderByChild('userUid')
+    .equalTo(uid)
+    .once('value')
+    .then(snapshot => {
       let data = snapshot.val()
-      let profile = Object.keys(data).map(key => data[key])[0]
+      let profile: Profile = Object.keys(data).map(key => data[key])[0]
 
       profile = {
         ...profile,
-        path: Object.keys(data)[0]
+        id: Object.keys(data)[0]
       }
 
       dispatch({
-        type: ProfileActionTypes.FETCH_SUC,
+        type: ProfileActionTypes.FETCH_MY_PROFILE_SUC,
         payload: profile
       })
       if(cb){
         cb()
       }
+    })
+  }
+}
+
+export const fetchProfile = (profileId: string, cb?: () => void) => {
+  return (dispatch: Dispatch) => {
+    dispatch({
+      type: ProfileActionTypes.FETCH_PROFILE_REQ
+    })
+    firebase.database()
+    .ref(`profiles/${profileId}`)
+    .once('value')
+    .then(snapshot => {
+      let data = snapshot.val()
+      let profile: Profile  = Object.keys(data).map(key => data[key])[0]
+
+      profile = {
+        ...profile,
+        id: Object.keys(data)[0]
+      }
+
+      dispatch({
+        type: ProfileActionTypes.FETCH_PROFILE_SUC,
+        payload: profile
+      })
+      if(cb){
+        cb()
+      }
+    })
+  }
+}
+
+export const searchProfiles = (text: string, quantity: number) => {
+  return async(dispatch: Dispatch) => {
+    dispatch({
+      type: ProfileActionTypes.SEARCH_PROFILES_REQ
+    })
+
+    const profileRef = firebase.database().ref('profiles')
+
+    var result1 = {}
+    var result2 = {}
+    result1 = await profileRef
+    .orderByChild('firstName')
+    .startAt(text).endAt(text + '\uf8ff')
+    .once('value').then(snapshot => {
+      return snapshot.val()
+    })
+
+    result2 = await profileRef
+    .orderByChild('lastName')
+    .startAt(text).endAt(text + '\uf8ff')
+    .once('value').then(snapshot => {
+      return snapshot.val()
+    })
+
+    var result = {...result1, ...result2}
+    var list = Object.keys(result).map((x) => Object.assign(result[x], {id: x}))
+    dispatch({
+      type: ProfileActionTypes.SEARCH_PROFILES_SUC,
+      payload: list
     })
   }
 }
@@ -126,12 +192,3 @@ export const setEmail = (email: string) => {
     })
   }
 }
-
-// export const setProfileType = (profileType) => {
-//   return (dispatch: Dispatch) => {
-//     dispatch({
-//       type: ProfileActionTypes.SET_TYPE, 
-//       payload: profileType
-//     })
-//   }
-// }
