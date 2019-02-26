@@ -10,6 +10,7 @@ import { Dispatch } from 'redux';
 import { AppState } from '../../store';
 import firebase from 'react-native-firebase';
 import { fetchMyProfile } from '../../store/profile/actions';
+import { UserAuth } from '../../store/auth/types';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<LoginScreen>
@@ -29,7 +30,7 @@ class LoginScreen extends Component<Props> {
     firebase.auth().onAuthStateChanged(user => {
       if(this._isMounted){
         if(user){
-          this.props.setAuth(user)
+          this.props.setAuth(user as UserAuth)
           this.props.fetchMyProfile(user.uid)
           this.props.navigation.navigate('HomeScreen')
         } else {
@@ -112,7 +113,7 @@ const mapStateToProps = (state: AppState) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setAuth: (user: any) => setAuth(user)(dispatch),
+  setAuth: (user: UserAuth) => setAuth(user)(dispatch),
   fetchMyProfile: (uid: string) => fetchMyProfile(uid)(dispatch)
 })
 

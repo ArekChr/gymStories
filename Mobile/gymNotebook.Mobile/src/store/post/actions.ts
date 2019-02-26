@@ -10,7 +10,6 @@ export const fetchPosts = (profileId: string, quantity: number, cb?: CallableFun
   return (dispatch: Dispatch) => {
 
     dispatch({ type: PostActionTypes.FETCH_POST_REQ })
-    console.log('profileid ' + profileId)
     firebase.database().ref(`posts/${profileId}`).limitToLast(quantity).once('value').then((snapshot) => {
       let snapshotVal = snapshot.val()
       console.log(snapshotVal)

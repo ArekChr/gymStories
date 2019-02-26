@@ -1,4 +1,4 @@
-import { AuthActionTypes, AuthState } from './types'
+import { AuthActionTypes, AuthState, UserAuth } from './types'
 import { Reducer } from 'redux'
 
 const initialState: AuthState = {
@@ -6,10 +6,7 @@ const initialState: AuthState = {
   loading: null,
   registerSuccess: null,
   loginSuccess: null,
-  auth: {
-    email: '',
-    uid: ''
-  }
+  auth: {} as UserAuth
 }
 
 const authReducer: Reducer<AuthState> = (state = initialState, action) => {
@@ -17,10 +14,7 @@ const authReducer: Reducer<AuthState> = (state = initialState, action) => {
     case AuthActionTypes.SET_FIREBASE_AUTH: {
       return {
         ...state,
-        auth: {
-          email: action.payload.email,
-          uid: action.payload.uid
-        }
+        auth: action.payload
       }
     }
     case AuthActionTypes.FIREBASE_LOGIN_REQ: {

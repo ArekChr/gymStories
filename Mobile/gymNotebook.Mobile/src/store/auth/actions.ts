@@ -3,8 +3,8 @@ import { Dispatch } from 'redux'
 import { 
   AuthActionTypes,
   RegisterModel,
-  UserAuth,
-  LoginModel
+  LoginModel,
+  UserAuth
  } from './types'
 import { API_URL } from '../../utils/misc'
 import firebase from 'react-native-firebase';
@@ -19,7 +19,7 @@ export const logout = () => {
   }
 }
 
-export const setAuth = (user: any) => {
+export const setAuth = (user: UserAuth) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: AuthActionTypes.SET_FIREBASE_AUTH,
@@ -53,21 +53,24 @@ export const signUp = (data: Profile)  => {
 
     firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
     .then(response => {
-      dispatch({
-        type: AuthActionTypes.FIREBASE_REGISTER_SUC,
-        //payload: response
-      })
-      firebase.database().ref('profiles').push({
-        userUid: response.user.uid,
+      firebase.firestore().collection('profiles').add({
+        userId: response.user.uid,
         firstName: data.firstName,
         lastName: data.lastName,
         gender: data.gender,
         dateOfBirth: data.dateOfBirth,
         description: null,
+        nickname: null,
         averageRates: 0,
         followingCount: 0,
         followersCount: 0,
         imageURL: null
+      }).then((r) => {
+        r.id
+        dispatch({
+          type: AuthActionTypes.FIREBASE_REGISTER_SUC,
+          //payload: response
+        })
       })
     })
   }

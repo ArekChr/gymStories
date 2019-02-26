@@ -6,28 +6,18 @@ import firebase from 'react-native-firebase';
 
 const URL: string = `${API_URL}/Profile`;
 
-export const fetchMyProfile = (uid: string,  cb?: () => void) => {
+export const fetchMyProfile = (userId: string,  cb?: () => void) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.FETCH_MY_PROFILE_REQ
     })
-    firebase.database()
-    .ref('profiles')
-    .orderByChild('userUid')
-    .equalTo(uid)
-    .once('value')
-    .then(snapshot => {
-      let data = snapshot.val()
-      let profile: Profile = Object.keys(data).map(key => data[key])[0]
 
-      profile = {
-        ...profile,
-        id: Object.keys(data)[0]
-      }
-
+    firebase.firestore().collection('profiles').where('userId', '==', userId).get().then(snapshot => {
+      let doc = snapshot.docs.firstOrDefault()
+      let profile = doc.data()
       dispatch({
         type: ProfileActionTypes.FETCH_MY_PROFILE_SUC,
-        payload: profile
+        payload: { id: doc.id, ...profile } as Profile
       })
       if(cb){
         cb()
@@ -41,26 +31,32 @@ export const fetchProfile = (profileId: string, cb?: () => void) => {
     dispatch({
       type: ProfileActionTypes.FETCH_PROFILE_REQ
     })
-    firebase.database()
-    .ref(`profiles/${profileId}`)
-    .once('value')
-    .then(snapshot => {
-      let data = snapshot.val()
-      let profile: Profile  = Object.keys(data).map(key => data[key])[0]
 
-      profile = {
-        ...profile,
-        id: Object.keys(data)[0]
-      }
-
+    firebase.firestore().collection('profiles').doc(profileId).get().then(snapshot => {
       dispatch({
         type: ProfileActionTypes.FETCH_PROFILE_SUC,
-        payload: profile
+        payload: {
+          id: snapshot.id,
+          ...snapshot.data()
+        } as Profile  
       })
       if(cb){
         cb()
       }
     })
+
+    // firebase.database()
+    // .ref(`profiles/${profileId}`)
+    // .once('value')
+    // .then(snapshot => {
+    //   let data = snapshot.val()
+    //   let profile: Profile  = Object.keys(data).map(key => data[key])[0]
+
+    //   profile = {
+    //     ...profile,
+    //     id: Object.keys(data)[0]
+    //   }
+    // })
   }
 }
 
@@ -69,6 +65,10 @@ export const searchProfiles = (text: string, quantity: number) => {
     dispatch({
       type: ProfileActionTypes.SEARCH_PROFILES_REQ
     })
+
+    // firebase.firestore().collection('profiles').startAt('a', 'a', 'a').get().then(snapshot => {
+    //   snapshot.docs.
+    // })
 
     const profileRef = firebase.database().ref('profiles')
 

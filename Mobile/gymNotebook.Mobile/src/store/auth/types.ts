@@ -1,3 +1,5 @@
+import { RNFirebase } from "react-native-firebase";
+
 export enum AuthActionTypes {
   USER_REGISTER_SUC = 'auth/USER_REGISTER_SUC',
   USER_REGISTER_ERR = 'auth/USER_REGISTER_ERR',
@@ -9,12 +11,12 @@ export enum AuthActionTypes {
   USER_LOGOUT = 'auth/USER_LOGOUT',
   AUTO_SIGN_IN = 'auth/AUTO_SIGN_IN',
   AUTO_SIGN_IN_ERR = "auth/AUTO_SIGN_IN_ERR",
-  FIREBASE_LOGIN_ERR = "@@auth/FIREBASE_LOGIN_ERR",
-  FIREBASE_LOGIN_SUC = "@@auth/FIREBASE_LOGIN_SUC",
-  FIREBASE_LOGIN_REQ = "@@auth/FIREBASE_LOGIN_REQ",
-  SET_FIREBASE_AUTH = "@@auth/SET_FIREBASE_AUTH",
-  FIREBASE_REGISTER_REQ = "@@authFIREBASE_REGISTER_REQ",
-  FIREBASE_REGISTER_SUC = "@@authFIREBASE_REGISTER_SUC"
+  FIREBASE_LOGIN_ERR = "@auth/FIREBASE_LOGIN_ERR",
+  FIREBASE_LOGIN_SUC = "@auth/FIREBASE_LOGIN_SUC",
+  FIREBASE_LOGIN_REQ = "@auth/FIREBASE_LOGIN_REQ",
+  SET_FIREBASE_AUTH = "@auth/SET_FIREBASE_AUTH",
+  FIREBASE_REGISTER_REQ = "@auth/FIREBASE_REGISTER_REQ",
+  FIREBASE_REGISTER_SUC = "@auth/FIREBASE_REGISTER_SUC"
 }
 
 export interface RegisterModel {
@@ -35,8 +37,17 @@ export interface AuthState {
   auth: UserAuth
 }
 
-export interface UserAuth {
+export interface UserAuth extends Partial<RNFirebase.User> {
+  displayName: string | null
   email: string
+  emailVerified: boolean
+  isAnonymous: boolean
+  metadata: {
+    creationTime: string
+    lastSignInTime: string
+  }
+  phoneNumber: string | null
+  photoURL: string | null
   uid: string
 }
 
