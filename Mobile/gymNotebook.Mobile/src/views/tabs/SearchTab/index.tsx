@@ -26,10 +26,6 @@ class SearchTab extends Component<Props> {
     }
   }
 
-  onSearch = (text: string) => {
-    this.props.searchProfiles(text, 20)
-  }
-
   onProfilePress = (profile: Profile) => {
     this.props.navigation.push('ProfileScreen', {
       profile: profile
@@ -52,14 +48,9 @@ class SearchTab extends Component<Props> {
   render() {
     return (
       <View style={{flex: 1}}>
-        <View style={{ backgroundColor: PRIMARY_COLOR, flexDirection: 'row', justifyContent: 'space-between'}}>
-          <TouchableOpacity><Text style={{ color: 'white', padding: 10 }}>Filtrowanie</Text></TouchableOpacity>
-          <TouchableOpacity><Text style={{ color: 'white', padding: 10 }}>Mapy</Text></TouchableOpacity>
-          <TouchableOpacity><Text style={{ color: 'white', padding: 10 }}>Najpopularniejsze</Text></TouchableOpacity>
-        </View>
 
         <View style={{ backgroundColor: PRIMARY_COLOR}}>
-          <View style={{flexDirection: 'row', marginBottom: 5, justifyContent: 'center', paddingLeft: 20, paddingRight: 20 }}>
+          <View style={{flexDirection: 'row', marginBottom: 15, marginTop: 15, justifyContent: 'center', paddingLeft: 20, paddingRight: 20 }}>
             <View style={{
               backgroundColor: 'white',
               height: 30,
@@ -72,32 +63,8 @@ class SearchTab extends Component<Props> {
               <EvilIcons name='search' size={20} color='black' />
             </View>
             <TextInput 
-              onChangeText={(text)=> this.props.searchProfiles(text, 20)}
+              onChangeText={(text)=> this.props.searchProfiles(text, 20, this.props.myProfileId)}
               placeholder='Znajdź trenera'
-              style={{ 
-                fontSize: 15,
-                backgroundColor: 'white', 
-                width: '94%', 
-                height: 30, 
-                padding: 0, 
-                paddingLeft: 10,
-                borderBottomRightRadius:3, borderTopRightRadius:3}} 
-            />
-          </View>
-          <View style={{flexDirection: 'row', marginBottom: 10, justifyContent: 'center', paddingLeft: 20, paddingRight: 20 }}>
-            <View style={{
-              backgroundColor: 'white',
-              height: 30,
-              width: 22,
-              borderTopLeftRadius: 3,
-              borderBottomLeftRadius: 3,
-              justifyContent: 'center',
-              paddingLeft: 5
-            }}>
-              <EvilIcons name='location' size={20} color='black' />
-            </View>
-            <TextInput 
-              placeholder='Wybierz miasto lub dzielnice'
               style={{ 
                 fontSize: 15,
                 backgroundColor: 'white', 
@@ -139,10 +106,11 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state: AppState) => ({
-  profiles: state.Profile.profiles
+  profiles: state.Profile.profiles,
+  myProfileId: state.Profile.myProfile.id
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  searchProfiles:(text: string, quantity: number) => searchProfiles(text, quantity)(dispatch)
+  searchProfiles:(text: string, quantity: number, myId: string) => searchProfiles(text, quantity, myId)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchTab)

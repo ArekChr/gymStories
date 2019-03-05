@@ -50,7 +50,7 @@ class CreatePostScreen extends React.Component<Props> {
     const post: CreatePostModel = {
       description: description,
       filePath: path,
-      profilePath: myProfile.id,
+      profileId: myProfile.id,
       timeStamp: new Date().getTime(),
       likesCount: 0,
       likes: []

@@ -25,7 +25,6 @@ export const fetchImage = (id: string, callback?: Function) => {
         type: FETCH_IMAGE_SUC,
         payload: res.path()
       }); 
-      console.log('The file saved to ', res.path())
       if(callback instanceof Function){
         callback(res)
       }

@@ -33,6 +33,19 @@ const postReducer: Reducer<PostsState> = (state = initialState, action) => {
         loading: true
       }
     }
+    case PostActionTypes.FETCH_MY_POST_REQ: {
+      return {
+        ...state,
+        loading: true
+      }
+    }
+    case PostActionTypes.FETCH_MY_POST_SUC: {
+      return {
+        ...state,
+        loading: false,
+        myPosts: action.payload
+      }
+    }
     case PostActionTypes.FETCH_COMMENT_REQ: {
       return {
         ...state,

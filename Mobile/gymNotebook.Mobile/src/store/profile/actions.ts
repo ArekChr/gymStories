@@ -3,24 +3,32 @@ import { ProfileActionTypes, ProfileDto, Profile } from './types'
 import { API_URL } from '../../utils/misc'
 import { Dispatch } from 'redux'
 import firebase from 'react-native-firebase';
+import { QuerySnapshot } from 'react-native-firebase/firestore';
+import R from 'ramda';
+import { Post } from '../post/types';
 
 const URL: string = `${API_URL}/Profile`;
 
-export const fetchMyProfile = (userId: string,  cb?: () => void) => {
+function comparator(x: Profile ,y: Profile) {
+  return x.id === y.id
+}
+
+export const fetchMyProfile = (userId: string,  cb?: (myProfileId: string) => void) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.FETCH_MY_PROFILE_REQ
     })
-
+    let profileId
     firebase.firestore().collection('profiles').where('userId', '==', userId).get().then(snapshot => {
-      let doc = snapshot.docs.firstOrDefault()
+      let doc = snapshot.docs.first()
       let profile = doc.data()
+      profileId = doc.id
       dispatch({
         type: ProfileActionTypes.FETCH_MY_PROFILE_SUC,
-        payload: { id: doc.id, ...profile } as Profile
+        payload: { id: profileId, ...profile } as Profile
       })
-      if(cb){
-        cb()
+      if(cb && profileId){
+        cb(profileId)
       }
     })
   }
@@ -60,39 +68,51 @@ export const fetchProfile = (profileId: string, cb?: () => void) => {
   }
 }
 
-export const searchProfiles = (text: string, quantity: number) => {
+function mapSnapshotToProfiles(snapshot: QuerySnapshot) {
+  let docs = snapshot.docs
+  if(docs.length > 0) {
+    let profiles: Profile[] = []
+    snapshot.docs.forEach(x => profiles.push({
+      id: x.id, 
+      ...x.data()
+    } as Profile))
+    
+    return profiles
+  }
+  return null
+}
+
+export const searchProfiles = (text: string, quantity: number, myId: string) => {
   return async(dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.SEARCH_PROFILES_REQ
     })
+    text = text.toLowerCase()
 
-    // firebase.firestore().collection('profiles').startAt('a', 'a', 'a').get().then(snapshot => {
-    //   snapshot.docs.
-    // })
+    const profilesCollection = firebase.firestore().collection('profiles')
 
-    const profileRef = firebase.database().ref('profiles')
+    var profiles1 = await profilesCollection.orderBy('firstName')
+      .startAt(text).endAt(text+'\uf8ff').limit(quantity)
+      .get().then(snapshot => mapSnapshotToProfiles(snapshot))
+      
+    var profiles2 = await profilesCollection.orderBy('lastName')
+      .startAt(text).endAt(text+'\uf8ff').limit(quantity)
+      .get().then(snapshot => mapSnapshotToProfiles(snapshot))
 
-    var result1 = {}
-    var result2 = {}
-    result1 = await profileRef
-    .orderByChild('firstName')
-    .startAt(text).endAt(text + '\uf8ff')
-    .once('value').then(snapshot => {
-      return snapshot.val()
-    })
+    let profiles: Profile[] = []
+    if(profiles1) {
+      if(profiles2) {
+        profiles = R.unionWith(comparator, profiles1, profiles2)
+      }
+      profiles = profiles1
+    }
+    else if(profiles2) {
+      profiles = profiles2
+    }
 
-    result2 = await profileRef
-    .orderByChild('lastName')
-    .startAt(text).endAt(text + '\uf8ff')
-    .once('value').then(snapshot => {
-      return snapshot.val()
-    })
-
-    var result = {...result1, ...result2}
-    var list = Object.keys(result).map((x) => Object.assign(result[x], {id: x}))
     dispatch({
       type: ProfileActionTypes.SEARCH_PROFILES_SUC,
-      payload: list
+      payload: profiles.filter(x => x.id !== myId)
     })
   }
 }

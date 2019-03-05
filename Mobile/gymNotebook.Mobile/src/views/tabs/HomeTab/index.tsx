@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, StatusBar, TouchableOpacity, TouchableWithoutFeedback, Image, ScrollView, RefreshControl, Dimensions, TextInput} from 'react-native'
-import firebase from 'react-native-firebase'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -20,8 +19,6 @@ import { fetchMyProfile } from '../../../store/profile/actions';
 interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<HomeTab>
 }
-
-const profileRef = firebase.database().ref('profiles')
 
 class HomeTab extends Component<Props> {
 
@@ -61,27 +58,16 @@ class HomeTab extends Component<Props> {
   componentDidMount() {
     this.setState({ win: Dimensions.get("window") });
     this.props.navigation.setParams({ onPostAdd: this._onPostAdd})
-
-    // this.props.fetchPosts(20);
-    // this.props.fetchProfile();
-
-  //   console.log('on...')
-  //   profileRef.on('value', function(snapshot){
-  //     let data = snapshot.val();
-  //     let items = Object.values(data)
-  //     console.log(data)
-  //     console.log(items)
-  //  })
   }
 
   componentWillUnmount() {
-    profileRef.off('value')
+
   }
 
   _onPostAdd = () => {
     ImagePicker.openPicker({
-      width: 5000,
-      height: 5000,
+      width: 1000,
+      height: 1000,
       cropping: true
     }).then((image) => {
       this.props.navigation.push('CreatePostScreen', {

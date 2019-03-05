@@ -1,7 +1,8 @@
 import { Reducer, Action } from 'redux'
 import { ProfileState, ProfileActionTypes, Profile } from './types'
-import { AuthActionTypes } from '../auth/types';
-import { PostActionTypes } from '../post/types';
+import { AuthActionTypes } from '../auth/types'
+import { PostActionTypes } from '../post/types'
+import { FollowActionTypes } from '../follow/types'
 
 const initialState: ProfileState = {
   myProfile: {
@@ -64,6 +65,78 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
         ...state,
         loading: false,
         profiles: action.payload
+      }
+    }
+    case FollowActionTypes.UNFOLLOW_REQ: {
+      let profile = state.profiles.find(x => x.id === action.payload.profileId)
+      if (profile) {
+        profile = {
+          ...profile,
+          followingCount: profile.followingCount - 1
+        }
+      }
+      return {
+        ...state,
+        myProfile: {
+          ...state.myProfile,
+          followersCount: state.myProfile.followersCount - 1
+        },
+        profiles: [
+          ...state.profiles.filter(x => x.id !== action.payload.profileId),
+          profile
+        ]
+      }
+    }
+    case FollowActionTypes.UNFOLLOW_SUC: {
+      return {
+        ...state,
+        myProfile: {
+          ...state.myProfile,
+          followersCount: action.payload.myfollowersCount
+        },
+        profiles: [
+          ...state.profiles.filter(x => x.id !== action.payload.profileId),
+          {
+            ...state.profiles.find(x => x.id === action.payload.profileId),
+            followingCount: action.payload.userFollowingCount
+          }
+        ]
+      }
+    }
+    case FollowActionTypes.FOLLOW_REQ: {
+      let profile = state.profiles.find(x => x.id === action.payload.profileId)
+      if (profile) {
+        profile = {
+          ...profile,
+          followingCount: profile.followingCount + 1
+        }
+      }
+      return {
+        ...state,
+        myProfile: {
+          ...state.myProfile,
+          followersCount: state.myProfile.followersCount + 1
+        },
+        profiles: [
+          ...state.profiles.filter(x => x.id !== action.payload.profileId),
+          profile
+        ]
+      }
+    }
+    case FollowActionTypes.FOLLOW_SUC: {
+      return {
+        ...state,
+        myProfile: {
+          ...state.myProfile,
+          followersCount: action.payload.myfollowersCount
+        },
+        profiles: [
+          ...state.profiles.filter(x => x.id !== action.payload.profileId),
+          {
+            ...state.profiles.find(x => x.id === action.payload.profileId),
+            followingCount: action.payload.userFollowingCount
+          }
+        ]
       }
     }
     case PostActionTypes.FETCH_POST_SUC: {

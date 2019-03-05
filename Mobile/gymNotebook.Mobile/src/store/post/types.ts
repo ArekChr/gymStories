@@ -11,7 +11,9 @@ export enum PostActionTypes {
   FETCH_COMMENT_SUC = "post/FETCH_COMMENT_SUC",
   CREATE_COMMENT_REQ = "post/CREATE_COMMENT_REQ",
   CREATE_COMMENT_SUC = "post/CREATE_COMMENT_SUC",
-  CLEAR_COMMENTS = "post/CLEAR_COMMENTS"
+  CLEAR_COMMENTS = "post/CLEAR_COMMENTS",
+  FETCH_MY_POST_REQ = "post/FETCH_MY_POST_REQ",
+  FETCH_MY_POST_SUC = "post/FETCH_MY_POST_SUC"
 }
 
 export interface PostsState {
@@ -25,7 +27,7 @@ export interface PostsState {
 export interface CreatePostModel {
   description: string
   filePath: string
-  profilePath: string
+  profileId: string
   timeStamp: number
   likesCount: number
   likes: string[]
@@ -55,6 +57,7 @@ export interface MyPost {
   imageURL: string
   commentCount: number
   comments: Comment[]
+  likes: string[]
 }
 
 export interface Post {

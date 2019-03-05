@@ -55,8 +55,8 @@ export const signUp = (data: Profile)  => {
     .then(response => {
       firebase.firestore().collection('profiles').add({
         userId: response.user.uid,
-        firstName: data.firstName,
-        lastName: data.lastName,
+        firstName: data.firstName.toLowerCase(),
+        lastName: data.lastName.toLowerCase(),
         gender: data.gender,
         dateOfBirth: data.dateOfBirth,
         description: null,

@@ -6,6 +6,8 @@ import { connect } from 'react-redux';
 import { ProfilePhoto } from '../../../component'
 import { Dispatch } from 'redux';
 import { AppState } from '../../../store';
+import ProfilePosts from '../../General/Posts/ProfilePosts';
+import { fetchPosts, fetchMyPosts } from '../../../store/post/actions';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: any
@@ -62,12 +64,18 @@ class ProfileTab extends Component<Props> {
   }
 
   componentDidMount() {
+    this.setState({ loading: true })
+    this.props.fetchMyPosts(this.props.myProfile.id, 20, () => {
+      this.setState({ loading: false })
+    })
   }
 
   onRefresh = () => {
     this.setState({refreshing: true});
     this.props.fetchMyProfile(this.props.auth.uid, () => {
-      this.setState({refreshing: false});
+      this.props.fetchMyPosts(this.props.myProfile.id, 20, () => {
+        this.setState({refreshing: false});
+      })
     })
   }
 
@@ -126,20 +134,23 @@ class ProfileTab extends Component<Props> {
               <Text>{myProfile.description}</Text>
             </View>
           </View>
+          <ProfilePosts posts={this.props.myPosts} />
         </ScrollView>
       </View>
     )
   }
 }
 
-const mapStateToProps = ({Profile, Auth}: AppState) => ({
+const mapStateToProps = ({Profile, Auth, Posts}: AppState) => ({
   profileLoading: Profile.loading,
   myProfile: Profile.myProfile,
-  auth: Auth.auth
+  auth: Auth.auth,
+  myPosts: Posts.myPosts
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchMyProfile: (uid: string, cb?: () => void) => fetchMyProfile(uid, cb)(dispatch)
+  fetchMyProfile: (uid: string, cb?: () => void) => fetchMyProfile(uid, cb)(dispatch),
+  fetchMyPosts: (id: string, quantity: number, cb?: () => void) => fetchMyPosts(id, quantity, cb)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab)
