@@ -12,6 +12,7 @@ import firebase from 'react-native-firebase';
 import { fetchMyProfile } from '../../store/profile/actions';
 import { UserAuth } from '../../store/auth/types';
 import { fetchMyFollowers, fetchMyFollowing } from '../../store/follow/actions';
+import { fetchMyPosts } from '../../store/post/actions';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<LoginScreen>
@@ -33,7 +34,8 @@ class LoginScreen extends Component<Props> {
         if(user){
           this.props.setAuth(user as UserAuth)
           this.props.fetchMyProfile(user.uid, (id) => {
-            //this.props.fetchMyFollowers(id)
+            this.props.fetchMyPosts(id, 20)
+            this.props.fetchMyFollowers(id)
             this.props.fetchMyFollowing(id)
           })
           
@@ -120,6 +122,7 @@ const mapStateToProps = (state: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   setAuth: (user: UserAuth) => setAuth(user)(dispatch),
   fetchMyProfile: (uid: string, cb: (myId: string) => void) => fetchMyProfile(uid, cb)(dispatch),
+  fetchMyPosts: (id: string, quantity: number, cb?: () => void) => fetchMyPosts(id, quantity, cb)(dispatch),
   fetchMyFollowers: (profileId: string) => fetchMyFollowers(profileId)(dispatch),
   fetchMyFollowing: (profileId: string) => fetchMyFollowing(profileId)(dispatch)
 })

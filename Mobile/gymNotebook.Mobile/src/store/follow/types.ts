@@ -1,3 +1,4 @@
+import { Profile, ProfileBasic } from "../profile/types";
 
 export enum FollowActionTypes {
     FETCH_FOLLOWERS_REQ = '@follow/FETCH_FOLLOWERS_REQ',
@@ -11,7 +12,10 @@ export enum FollowActionTypes {
     FETCH_MYFOLLOWERS_REQ = "@follow/FETCH_MYFOLLOWERS_REQ",
     FETCH_MYFOLLOWERS_SUC = "@follow/FETCH_MYFOLLOWERS_SUC",
     FETCH_MYFOLLOWING_REQ = "@follow/FETCH_MYFOLLOWING_REQ",
-    FETCH_MYFOLLOWING_SUC = "@follow/FETCH_MYFOLLOWING_SUC"
+    FETCH_MYFOLLOWING_SUC = "@follow/FETCH_MYFOLLOWING_SUC",
+    FETCH_FOLLOWS_REQ = "@follow/FETCH_FOLLOWS_REQ",
+    FETCH_FOLLOWING_PROFILES_REQ = "@follow/FETCH_FOLLOWING_PROFILES_REQ",
+    FETCH_FOLLOWING_PROFILES_SUC = "@follow/FETCH_FOLLOWING_PROFILES_SUC"
 }
 
 export interface Follow {
@@ -19,9 +23,11 @@ export interface Follow {
 }
 
 export interface FollowState {
+    loading: boolean
     myFollowers: Follow[]
-    myFollowing: Follow[]
     userFollowers: Follow[]
     userFollowing: Follow[]
-    loading: boolean
+    myFollowingIds: Follow[]
+    myFollowingProfiles: ProfileBasic[]
+    loadingMyFollows: boolean
 }

@@ -1,12 +1,12 @@
 import { Dispatch } from "redux"
-import firebase, { RNFirebase } from "react-native-firebase"
+import firebase, { RNFirebase, firestore } from "react-native-firebase"
 import { FollowActionTypes, Follow } from "./types"
-import { Profile } from "../profile/types";
+import { Profile, ProfileBasic } from "../profile/types"
 
 export interface FollowUpdatedData {
     profileId: string
-    myfollowersCount: number
-    userFollowingCount: number
+    myFollowingCount: number
+    userFollowersCount: number
 }
 
 export function mapRawObjectToFollows(snapshot: RNFirebase.firestore.DocumentSnapshot): Follow[] {
@@ -69,7 +69,6 @@ export const fetchMyFollowing = (profileId: string) => {
     }
 }
 
-
 export const fetchFollowing = (profileId: string) => {
     return (dispatch: Dispatch) => {
         dispatch({
@@ -86,6 +85,36 @@ export const fetchFollowing = (profileId: string) => {
     }
 }
 
+export const fetchFollowingProfiles = (following: Follow[]) => {
+    return (dispatch: Dispatch) => {
+        dispatch({ type: FollowActionTypes.FETCH_FOLLOWING_PROFILES_REQ })
+
+        let promises: Promise<RNFirebase.firestore.DocumentSnapshot>[] = []
+
+        following.forEach(id => promises.push(firebase.firestore().collection('profiles').doc(Object.keys(id)[0]).get()))
+        const profiles: any[] = []
+        Promise.all(promises).then(documents => {
+            documents.forEach(x => {
+                let profile = x.data() as Profile
+                let basicProfile: ProfileBasic = {
+                    profileId: x.id,
+                    firstName: profile.firstName,
+                    lastName: profile.lastName,
+                    nickname: profile.nickname,
+                    followApproved: following.find(follow => Object.keys(follow)[0] === x.id)![x.id!]
+                }
+                profiles.push(basicProfile)
+            })
+            
+            dispatch({
+                type: FollowActionTypes.FETCH_FOLLOWING_PROFILES_SUC,
+                payload: profiles
+            })
+        })
+        
+    }
+}
+
 export const follow = (myId: string, followingId: string) => {
     return (dispatch: Dispatch) => {
         dispatch({ type: FollowActionTypes.FOLLOW_REQ, payload: { profileId: followingId } })
@@ -96,35 +125,33 @@ export const follow = (myId: string, followingId: string) => {
         const userFollowsRef = userProfileRef.collection('followers').doc(followingId)
 
         firebase.firestore().runTransaction(async transaction => {
-            const myFollowsDoc = await transaction.get(myFollowsRef)
+            const myFollowingDoc = await transaction.get(myFollowsRef)
             const userFollowsDoc = await transaction.get(userFollowsRef)
-            const myProfileDoc = await transaction.get(myProfileRef)
-            const userProfileDoc = await transaction.get(userProfileRef)
 
-            if(!myFollowsDoc.exists) {
+            let myFollowingCount = 0
+            if(!myFollowingDoc.exists) {
                 transaction.set(myFollowsRef, { [followingId]: true })
             } else {
                 transaction.update(myFollowsRef, { [followingId]: true })
+                myFollowingCount = Object.keys(myFollowingDoc.data() as object).length + 1
             }
 
-            const myProfileData = <Profile>myProfileDoc.data()
-            const myfollowersCount = myProfileData.followersCount + 1
-            transaction.update(myProfileRef, { followersCount: myfollowersCount })
+            transaction.update(myProfileRef, { followingCount: myFollowingCount })
 
+            let userFollowersCount = 0
             if(!userFollowsDoc.exists) {
                 transaction.set(userFollowsRef, { [myId]: true })
             } else {
                 transaction.update(userFollowsRef, { [myId]: true })
+                userFollowersCount = Object.keys(userFollowsDoc.data() as object).length + 1
             }
 
-            const userProfileData = <Profile>userProfileDoc.data()
-            const userFollowingCount = userProfileData.followingCount + 1
-            transaction.update(userProfileRef, { followingCount: userFollowingCount })
+            transaction.update(userProfileRef, { followersCount: userFollowersCount })
             
             const updatedData: FollowUpdatedData = {
                 profileId: followingId,
-                myfollowersCount,
-                userFollowingCount
+                myFollowingCount,
+                userFollowersCount
             }
 
             return updatedData
@@ -141,28 +168,25 @@ export const unfollow = (myId: string, followingId: string) => {
         
         const myProfileRef = firebase.firestore().collection('profiles').doc(myId)
         const userProfileRef = firebase.firestore().collection('profiles').doc(followingId)
-        const myFollowsRef = myProfileRef.collection('following').doc(myId)
-        const userFollowsRef = userProfileRef.collection('followers').doc(followingId)
+        const myFollowingRef = myProfileRef.collection('following').doc(myId)
+        const userFollowersRef = userProfileRef.collection('followers').doc(followingId)
 
         firebase.firestore().runTransaction(async transaction => {
-            const myProfileDoc = await transaction.get(myProfileRef)
-            const userProfileDoc = await transaction.get(userProfileRef)
+            const myFollowingDoc = await transaction.get(myFollowingRef)
+            const userFollowersDoc = await transaction.get(userFollowersRef)
 
-            transaction.update(myFollowsRef, { [followingId]: firebase.firestore.FieldValue.delete() })
+            transaction.update(myFollowingRef, { [followingId]: firebase.firestore.FieldValue.delete() })
+            const myFollowingCount = Object.keys(myFollowingDoc.data() as object).length - 1
+            transaction.update(myProfileRef, { followingCount: myFollowingCount })
 
-            const myProfileData = <Profile>myProfileDoc.data()
-            const myfollowersCount = myProfileData.followersCount - 1
-            transaction.update(myProfileRef, { followersCount: myfollowersCount })
-            transaction.update(userFollowsRef, { [myId]: firebase.firestore.FieldValue.delete() })
-
-            const userProfileData = <Profile>userProfileDoc.data()
-            const userFollowingCount = userProfileData.followingCount - 1
-            transaction.update(userProfileRef, { followingCount: userFollowingCount })
+            transaction.update(userFollowersRef, { [myId]: firebase.firestore.FieldValue.delete() })
+            const userFollowersCount = Object.keys(userFollowersDoc.data() as object).length - 1
+            transaction.update(userProfileRef, { followersCount: userFollowersCount })
             
             const updatedData: FollowUpdatedData = {
                 profileId: followingId,
-                myfollowersCount,
-                userFollowingCount
+                myFollowingCount,
+                userFollowersCount
             }
 
             return updatedData

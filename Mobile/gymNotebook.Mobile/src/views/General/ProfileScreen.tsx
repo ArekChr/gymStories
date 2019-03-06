@@ -9,7 +9,8 @@ import { Profile } from '../../store/profile/types';
 import { ProfilePhoto } from '../../component';
 import { fetchPosts } from '../../store/post/actions';
 import { Post } from '../../store/post/types';
-import { follow, unfollow } from '../../store/follow/actions';
+import { follow, unfollow, fetchMyFollowing, fetchMyFollowers, fetchFollowingProfiles } from '../../store/follow/actions';
+import { Follow } from '../../store/follow/types';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<ProfileScreen>
@@ -75,11 +76,11 @@ class ProfileScreen extends React.Component<Props, State> {
   }
 
   onRefresh = () => {
-    this.setState({refreshing: true});
+    this.setState({ refreshing: true });
     const { id } = this.state.profile
     this.props.fetchProfile(id, () => {
       this.props.fetchPosts(id, 20, () => {
-        this.setState({refreshing: false});
+        this.setState({ refreshing: false });
       })
     })
   }
@@ -154,11 +155,11 @@ class ProfileScreen extends React.Component<Props, State> {
                       <Text style={{ fontSize: 11, color: 'grey' }}>Posty</Text>
                     </View>
                       <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followingCount}</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followersCount}</Text>
                         <Text style={{ fontSize: 11, color: 'grey' }}>Obserwujący</Text>
                       </View>
                       <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followersCount}</Text>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{profile.followingCount}</Text>
                         <Text style={{ fontSize: 11, color: 'grey' }}>Obserwuje</Text>
                       </View>
                   </View>
@@ -188,7 +189,7 @@ class ProfileScreen extends React.Component<Props, State> {
 
 const mapStateToProps = (state: AppState) => ({
   profiles: state.Profile.profiles,
-  myFollowing: state.Follow.myFollowing,
+  myFollowing: state.Follow.myFollowingIds,
   myId: state.Profile.myProfile.id
 })
 

@@ -72,14 +72,14 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
       if (profile) {
         profile = {
           ...profile,
-          followingCount: profile.followingCount - 1
+          followersCount: profile.followersCount - 1
         }
       }
       return {
         ...state,
         myProfile: {
           ...state.myProfile,
-          followersCount: state.myProfile.followersCount - 1
+          followingCount: state.myProfile.followingCount - 1
         },
         profiles: [
           ...state.profiles.filter(x => x.id !== action.payload.profileId),
@@ -92,13 +92,13 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
         ...state,
         myProfile: {
           ...state.myProfile,
-          followersCount: action.payload.myfollowersCount
+          followingCount: action.payload.myFollowingCount
         },
         profiles: [
           ...state.profiles.filter(x => x.id !== action.payload.profileId),
           {
             ...state.profiles.find(x => x.id === action.payload.profileId),
-            followingCount: action.payload.userFollowingCount
+            followersCount: action.payload.userFollowersCount
           }
         ]
       }
@@ -108,14 +108,14 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
       if (profile) {
         profile = {
           ...profile,
-          followingCount: profile.followingCount + 1
+          followersCount: profile.followersCount + 1
         }
       }
       return {
         ...state,
         myProfile: {
           ...state.myProfile,
-          followersCount: state.myProfile.followersCount + 1
+          followingCount: state.myProfile.followingCount + 1
         },
         profiles: [
           ...state.profiles.filter(x => x.id !== action.payload.profileId),
@@ -128,13 +128,13 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
         ...state,
         myProfile: {
           ...state.myProfile,
-          followersCount: action.payload.myfollowersCount
+          followingCount: action.payload.myFollowingCount
         },
         profiles: [
           ...state.profiles.filter(x => x.id !== action.payload.profileId),
           {
             ...state.profiles.find(x => x.id === action.payload.profileId),
-            followingCount: action.payload.userFollowingCount
+            followersCount: action.payload.userFollowersCount
           }
         ]
       }

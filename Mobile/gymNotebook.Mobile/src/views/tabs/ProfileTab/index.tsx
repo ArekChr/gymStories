@@ -8,6 +8,8 @@ import { Dispatch } from 'redux';
 import { AppState } from '../../../store';
 import ProfilePosts from '../../General/Posts/ProfilePosts';
 import { fetchPosts, fetchMyPosts } from '../../../store/post/actions';
+import { fetchMyFollowers, fetchMyFollowing, fetchFollowingProfiles } from '../../../store/follow/actions';
+import { Follow } from '../../../store/follow/types';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: any
@@ -63,6 +65,11 @@ class ProfileTab extends Component<Props> {
     this.props.navigation.navigate('Settings')
   }
 
+  onFollowPress = () => {
+    this.props.fetchFollowingProfiles(this.props.myFollowing)
+    this.props.navigation.push('Follow', { profile: this.props.myProfile })
+  }
+
   componentDidMount() {
     this.setState({ loading: true })
     this.props.fetchMyPosts(this.props.myProfile.id, 20, () => {
@@ -71,11 +78,19 @@ class ProfileTab extends Component<Props> {
   }
 
   onRefresh = () => {
-    this.setState({refreshing: true});
-    this.props.fetchMyProfile(this.props.auth.uid, () => {
-      this.props.fetchMyPosts(this.props.myProfile.id, 20, () => {
-        this.setState({refreshing: false});
-      })
+    this.setState({ refreshing: true });
+    const { 
+      myProfile: { id }, 
+      auth: { uid } 
+    } = this.props
+
+    Promise.all([
+      this.props.fetchMyProfile(uid),
+      this.props.fetchMyFollowers(id),
+      this.props.fetchMyFollowing(id),
+      this.props.fetchMyPosts(id, 20)
+    ]).then(() => {
+      this.setState({ refreshing: false });
     })
   }
 
@@ -109,13 +124,13 @@ class ProfileTab extends Component<Props> {
                         <Text style={{ fontSize: 11, color: 'grey' }}>Posty</Text>
                       </View>
                         <View style={{ alignItems: 'center' }}>
-                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followingCount}</Text>
+                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followersCount}</Text>
                           <Text style={{ fontSize: 11, color: 'grey' }}>Obserwujący</Text>
                         </View>
-                        <View style={{ alignItems: 'center' }}>
-                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followersCount}</Text>
+                        <TouchableOpacity onPress={() => this.onFollowPress()} style={{ alignItems: 'center' }}>
+                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followingCount}</Text>
                           <Text style={{ fontSize: 11, color: 'grey' }}>Obserwuje</Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     <View style={{ flexDirection: 'row', paddingTop: 7 }}>
                       <TouchableOpacity onPress={this.onEditProfilePress}
@@ -141,16 +156,20 @@ class ProfileTab extends Component<Props> {
   }
 }
 
-const mapStateToProps = ({Profile, Auth, Posts}: AppState) => ({
-  profileLoading: Profile.loading,
-  myProfile: Profile.myProfile,
-  auth: Auth.auth,
-  myPosts: Posts.myPosts
+const mapStateToProps = (state: AppState) => ({
+  profileLoading: state.Profile.loading,
+  myProfile: state.Profile.myProfile,
+  auth: state.Auth.auth,
+  myPosts: state.Posts.myPosts,
+  myFollowing: state.Follow.myFollowingIds
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMyProfile: (uid: string, cb?: () => void) => fetchMyProfile(uid, cb)(dispatch),
-  fetchMyPosts: (id: string, quantity: number, cb?: () => void) => fetchMyPosts(id, quantity, cb)(dispatch)
+  fetchMyPosts: (id: string, quantity: number, cb?: () => void) => fetchMyPosts(id, quantity, cb)(dispatch),
+  fetchMyFollowers: (profileId: string) => fetchMyFollowers(profileId)(dispatch),
+  fetchMyFollowing: (profileId: string) => fetchMyFollowing(profileId)(dispatch),
+  fetchFollowingProfiles: (following: Follow[]) => fetchFollowingProfiles(following)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileTab)

@@ -29,7 +29,8 @@ import {
   createStackNavigator, 
   createAppContainer, 
   createBottomTabNavigator, 
-  createDrawerNavigator 
+  createDrawerNavigator, 
+  createMaterialTopTabNavigator
 } from 'react-navigation'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -39,6 +40,9 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON, FONT_COLOR, HEADER_WHITE } from '../styles/common'
 import { Fonts } from '../styles'
 import ProfileScreen from '../views/General/ProfileScreen';
+import FollowScreen from '../views/tabs/ProfileTab/FollowScreen';
+import FollowingScreen from '../views/tabs/ProfileTab/Follow/FollowingScreen';
+import FollowersScreen from '../views/tabs/ProfileTab/Follow/FollowersScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -80,63 +84,69 @@ const SearchTabStackNavigator = createStackNavigator({
   ProfileScreen: ProfileScreen
 })
 
+const FollowTabNavigator = createMaterialTopTabNavigator({
+  Following: FollowingScreen,
+  Followers: FollowersScreen
+})
+
 const ProfileStackNavigator = createStackNavigator({
   Profile: {
     screen: ProfileTab,
     navigationOptions: { header: null }
   },
-  Settings: SettingsScreen
+  Settings: SettingsScreen,
+  Follow: FollowTabNavigator
 },{
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
-      backgroundColor: PRIMARY_COLOR,
+      backgroundColor: HEADER_WHITE,
     },
-    headerTintColor: THEME_FONT_COLOR,
+    headerTintColor: 'black',
     headerTitleStyle : {
       fontWeight: undefined,
-      fontFamily: Fonts.robotoRegular
+      fontFamily: Fonts.robotoMedium,
+      color: 'black'
     }
   })
 })
 
 const AppTabNavigator = createBottomTabNavigator({
-    HomeTab: HomeTabStackNavigator,
-    SearchTab: SearchTabStackNavigator,
-    ActiveTab: ProgressTabStackNavigator,
-    GymTab: GymTab,
-    ProfileTab: ProfileStackNavigator
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({tintColor}: any) => {
-        const { routeName } = navigation.state
-        switch(routeName){
-          case 'SearchTab':
-            return <FontAwesome name="search" size={24} color={tintColor} />
-          case 'HomeTab': 
-            return <Entypo name="home" size={25} color={tintColor || undefined} />
-          case 'ActiveTab':
-            return <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor || undefined} />
-          case 'ProfileTab':
-            return <Entypo name="user" size={26} color={tintColor || undefined} />
-          default: return null
-        }
+  HomeTab: HomeTabStackNavigator,
+  SearchTab: SearchTabStackNavigator,
+  ActiveTab: ProgressTabStackNavigator,
+  GymTab: GymTab,
+  ProfileTab: ProfileStackNavigator
+},{
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({tintColor}: any) => {
+      const { routeName } = navigation.state
+      switch(routeName){
+        case 'SearchTab':
+          return <FontAwesome name="search" size={24} color={tintColor} />
+        case 'HomeTab': 
+          return <Entypo name="home" size={25} color={tintColor || undefined} />
+        case 'ActiveTab':
+          return <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor || undefined} />
+        case 'ProfileTab':
+          return <Entypo name="user" size={26} color={tintColor || undefined} />
+        default: return null
       }
-    }),
-    animationEnabled: true,
-    swipeEnabled: true,
-    tabBarPosition: 'bottom',
-    tabBarOptions : {
-      style: {
-        elevation: 10,
-        borderTopWidth: 0,
-      },
-      activeTintColor: ACTIVE_ICON,
-      inactiveTintColor: INACTIVE_ICON,
-      showIcon: true,
-      showLabel: false
     }
-  })
+  }),
+  animationEnabled: true,
+  swipeEnabled: true,
+  tabBarPosition: 'bottom',
+  tabBarOptions : {
+    style: {
+      elevation: 10,
+      borderTopWidth: 0,
+    },
+    activeTintColor: ACTIVE_ICON,
+    inactiveTintColor: INACTIVE_ICON,
+    showIcon: true,
+    showLabel: false
+  }
+})
 
 const SignInStackNavigator = createStackNavigator({
   LoginScreen: {

@@ -26,7 +26,12 @@ export const fetchPosts = (profileId: string, quantity: number, cb?: CallableFun
 
     dispatch({ type: PostActionTypes.FETCH_POST_REQ })
 
-    var posts = await firebase.firestore().collection('profiles').doc(profileId).collection('posts').limit(quantity).get().then(response => mapSnapshotToPosts(response))
+    var posts = await firebase.firestore().collection('profiles').doc(profileId).collection('posts').limit(quantity).get().then(response => {
+      if(cb) {
+        cb()
+      }
+      return mapSnapshotToPosts(response)
+    })
     if(posts) {
       posts = posts.map((x: Post) => { return { ...x, profileId }})
     }
