@@ -68,7 +68,9 @@ class HomeTab extends Component<Props> {
     ImagePicker.openPicker({
       width: 1000,
       height: 1000,
-      cropping: true
+      cropping: true,
+      freeStyleCropEnabled: true,
+      compressImageQuality: 0.2
     }).then((image) => {
       this.props.navigation.push('CreatePostScreen', {
         pickedImage: { ...image}
