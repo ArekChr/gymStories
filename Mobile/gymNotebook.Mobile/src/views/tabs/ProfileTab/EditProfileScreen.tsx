@@ -82,9 +82,12 @@ class EditProfileScreen extends Component<Props> {
 
   onPhotoPress = () => {
     ImagePicker.openPicker({
-      width: 5000,
-      height: 5000,
-      cropping: true
+      width: 400,
+      height: 400,
+      compressImageMaxWidth: 400,
+      compressImageMaxHeight: 400,
+      cropping: true,
+      compressImageQuality: 0
     }).then((image) => {
       this.setState({
         pickedImage: { ...image }
