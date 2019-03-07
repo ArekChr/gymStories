@@ -87,7 +87,7 @@ class EditProfileScreen extends Component<Props> {
       compressImageMaxWidth: 400,
       compressImageMaxHeight: 400,
       cropping: true,
-      compressImageQuality: 0
+      compressImageQuality: 0.3
     }).then((image) => {
       this.setState({
         pickedImage: { ...image }

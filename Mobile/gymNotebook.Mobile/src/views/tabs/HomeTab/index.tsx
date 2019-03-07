@@ -66,11 +66,11 @@ class HomeTab extends Component<Props> {
 
   _onPostAdd = () => {
     ImagePicker.openPicker({
-      width: 1000,
-      height: 1000,
       cropping: true,
       freeStyleCropEnabled: true,
-      compressImageQuality: 0.2
+      compressImageMaxWidth: 1200,
+      compressImageMaxHeight: 1200,
+      compressImageQuality: 0.3
     }).then((image) => {
       this.props.navigation.push('CreatePostScreen', {
         pickedImage: { ...image}
