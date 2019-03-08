@@ -9,6 +9,7 @@
   "dependencies": {
     "@ant-design/react-native": "^3.0.5",
     "@types/ramda": "^0.25.51",
+    "@types/react-native-svg-charts": "^5.0.1",
     "axios": "^0.18.0",
     "d3-scale": "^2.1.2",
     "d3-shape": "^1.2.2",

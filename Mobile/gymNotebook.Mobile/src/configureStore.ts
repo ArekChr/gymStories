@@ -1,5 +1,5 @@
 import { applyMiddleware, createStore} from 'redux'
-import { rootReducer } from './store'
+import { rootReducer } from './redux'
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const enhancers = [];
