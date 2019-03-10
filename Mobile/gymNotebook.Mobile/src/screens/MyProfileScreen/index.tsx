@@ -11,6 +11,7 @@ import { fetchMyPosts } from '../../redux/post/actions';
 import { fetchMyFollowers, fetchMyFollowing, fetchFollowingProfiles } from '../../redux/follow/actions';
 import { Follow } from '../../redux/follow/types';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
+import UserName from '../../components/UserName';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<MyProfileScreen>
@@ -152,7 +153,7 @@ class MyProfileScreen extends Component<Props> {
                   </View>
             </View>
             <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>
-              <Text style={{ fontWeight: 'bold' }}>{`${myProfile.firstName} ${myProfile.lastName}`}</Text>
+              <UserName firstName={myProfile.firstName} lastName={myProfile.lastName} />
               <Text>{myProfile.description}</Text>
             </View>
           </View>

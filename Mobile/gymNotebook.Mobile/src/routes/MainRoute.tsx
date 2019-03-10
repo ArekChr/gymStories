@@ -9,7 +9,7 @@ import ActiveTab from '../screens/ActiveScreen'
 import MyProfileScreen from '../screens/MyProfileScreen'
 import AddProgressScreen from '../screens/AddProgressScreen'
 import CommentScreen from '../screens/CommentsScreen';
-import CreatePostScreen from '../screens/NewPostScreen';
+import NewPostScreen from '../screens/NewPostScreen';
 import SettingsScreen from '../screens/SettingsScreen'
 import EditProfileScreen from '../screens/EditProfileScreen'
 import StoryScreen from '../screens/StoryScreen'
@@ -258,8 +258,8 @@ const HomeStackNavigator = createStackNavigator({
       title: 'Komentarze'
     }
   },
-  CreatePostScreen: {
-    screen: CreatePostScreen,
+  NewPostScreen: {
+    screen: NewPostScreen,
     navigationOptions: {
       title: 'Nowy post'
     }

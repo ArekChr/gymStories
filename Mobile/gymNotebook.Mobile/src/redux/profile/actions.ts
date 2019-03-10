@@ -48,63 +48,60 @@ export const fetchMyProfile = (userId: string,  cb?: (myProfileId: string) => vo
   }
 }
 
-export const fetchProfile = (profileId: string, cb?: () => void) => {
+export const fetchProfile = (profileId: string, cb?: (profile: Profile) => void) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.FETCH_PROFILE_REQ
     })
 
     firebase.firestore().collection('profiles').doc(profileId).get().then(snapshot => {
-      console.log(snapshot.data())
+      const payload = {
+        id: snapshot.id,
+        ...snapshot.data()
+      } as Profile  
       dispatch({
         type: ProfileActionTypes.FETCH_PROFILE_SUC,
-        payload: {
-          id: snapshot.id,
-          ...snapshot.data()
-        } as Profile  
+        payload: payload
       })
       if(cb){
-        cb()
+        cb(payload)
       }
     })
   }
 }
 
 
-export const searchProfiles = (text: string, quantity: number, myId: string) => {
-  return async(dispatch: Dispatch) => {
-    dispatch({
-      type: ProfileActionTypes.SEARCH_PROFILES_REQ
-    })
-    text = text.toLowerCase()
+export const searchProfiles = async (text: string, quantity: number, myId: string, cb?: (profiles: Profile[]) => void) => {
+  text = text.toLowerCase()
 
-    const profilesCollection = firebase.firestore().collection('profiles')
+  const profilesCollection = firebase.firestore().collection('profiles')
 
-    var profiles1 = await profilesCollection.orderBy('firstName')
-      .startAt(text).endAt(text+'\uf8ff').limit(quantity)
-      .get().then(snapshot => mapSnapshotToProfiles(snapshot))
-      
-    var profiles2 = await profilesCollection.orderBy('lastName')
-      .startAt(text).endAt(text+'\uf8ff').limit(quantity)
-      .get().then(snapshot => mapSnapshotToProfiles(snapshot))
+  var profiles1 = await profilesCollection.orderBy('firstName')
+    .startAt(text).endAt(text+'\uf8ff').limit(quantity)
+    .get().then(snapshot => mapSnapshotToProfiles(snapshot))
+    
+  var profiles2 = await profilesCollection.orderBy('lastName')
+    .startAt(text).endAt(text+'\uf8ff').limit(quantity)
+    .get().then(snapshot => mapSnapshotToProfiles(snapshot))
 
-    let profiles: Profile[] = []
-    if(profiles1) {
-      if(profiles2) {
-        profiles = R.unionWith(comparator, profiles1, profiles2)
-      }
-      profiles = profiles1
+  let profiles: Profile[] = []
+  if(profiles1) {
+    if(profiles2) {
+      profiles = R.unionWith(comparator, profiles1, profiles2)
     }
-    else if(profiles2) {
-      profiles = profiles2
-    }
+    profiles = profiles1
+  }
+  else if(profiles2) {
+    profiles = profiles2
+  }
 
-    dispatch({
-      type: ProfileActionTypes.SEARCH_PROFILES_SUC,
-      payload: profiles.filter(x => x.id !== myId)
-    })
+  profiles = profiles.filter(x => x.id !== myId)
+
+  if (cb) {
+    cb(profiles)
   }
 }
+
 
 export const updateProfileImage = (uid: string, filePath: string, profileId: string, cb?: () => void) => {
   return (dispatch: Dispatch) => {

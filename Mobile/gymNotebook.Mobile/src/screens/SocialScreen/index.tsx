@@ -53,7 +53,6 @@ class SocialScreen extends Component<Props> {
       )
     }
   }
-
   
   componentDidMount() {
     this.setState({ win: Dimensions.get("window") });
@@ -66,13 +65,16 @@ class SocialScreen extends Component<Props> {
 
   _onPostAdd = () => {
     ImagePicker.openPicker({
+      width: 2000,
+      height: 2000,
+      compressImageMaxHeight: 1500,
+      compressImageMaxWidth: 1500,
+      compressImageQuality: 0.3,
+      multiple: false,
       cropping: true,
-      freeStyleCropEnabled: true,
-      compressImageMaxWidth: 1200,
-      compressImageMaxHeight: 1200,
-      compressImageQuality: 0.3
+      freeStyleCropEnabled: true
     }).then((image) => {
-      this.props.navigation.push('CreatePostScreen', {
+      this.props.navigation.push('NewPostScreen', {
         pickedImage: { ...image}
       })
     });

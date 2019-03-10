@@ -21,19 +21,19 @@ function mapSnapshotToPosts(snapshot: QuerySnapshot) {
   return null
 }
 
-export const fetchPosts = (profileId: string, quantity: number, cb?: CallableFunction) => {
+export const fetchPosts = (profileId: string, quantity: number, cb?: (posts: Post[]) => void) => {
   return async(dispatch: Dispatch) => {
 
     dispatch({ type: PostActionTypes.FETCH_POST_REQ })
 
     var posts = await firebase.firestore().collection('profiles').doc(profileId).collection('posts').limit(quantity).get().then(response => {
-      if(cb) {
-        cb()
-      }
       return mapSnapshotToPosts(response)
     })
     if(posts) {
       posts = posts.map((x: Post) => { return { ...x, profileId }})
+      if(cb) {
+        cb(posts)
+      }
     }
 
     dispatch({ 

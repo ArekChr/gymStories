@@ -8,6 +8,7 @@ import { Fonts } from '../../styles';
 import { Spinner } from '../../components/Spinner';
 import { SquarePhoto } from '../../components';
 import { Profile } from '../../redux/profile/types';
+import FollowProfiles from './FollowProfiles';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<FollowingScreen>
@@ -42,12 +43,6 @@ class FollowingScreen extends Component<Props> {
     })
   }
 
-  _onHideUnderlay = () => {
-    this.setState({ pressStatus: false });
-  }
-  _onShowUnderlay = () => {
-    this.setState({ pressStatus: true });
-  }
 
   render() {
     if (this.props.loading) {   
@@ -55,32 +50,7 @@ class FollowingScreen extends Component<Props> {
     }
     return (
       <View>
-        {this.props.followingProfiles.map(profile => {
-          return (
-            <TouchableHighlight onPress={() => this.onProfileClick(profile)}  onHideUnderlay={() => this._onHideUnderlay()}
-            onShowUnderlay={() => this._onShowUnderlay()} activeOpacity={1} style={ this.state.pressStatus ? styles.buttonPress : styles.button} key={profile.profileId} >
-
-              <View style={[{flexDirection: 'row', padding: 10, alignItems: 'center' }, this.state.pressStatus ? styles.buttonPress : styles.button]}>
-
-                <SquarePhoto style={styles.photo} source={profile.imageURL} size='medium' />
-
-                  {profile.nickname && <Text style={styles.usernameText}>{profile.nickname}</Text>}
-
-                  <Text numberOfLines={1} ellipsizeMode="tail" style={styles.usernameText}>{profile.firstName} {profile.lastName}</Text>
-
-                  <TouchableOpacity onPress={() => this.onFollowClick(profile.profileId)} 
-                    style={[{ width: 100, alignItems: 'center', borderWidth: 1, marginLeft: 10, borderColor: '#ccc', justifyContent: 'center', height: 25, borderRadius: 5, flex: 2 }, 
-                      profile.following? null : { backgroundColor: '#039BE5', borderColor: '#039BE5' }]}>
-
-                    <Text style={[{paddingLeft: 5, paddingRight: 5, fontSize: 13, color: 'black' }, 
-                      profile.following? null : {fontWeight: 'bold', color: 'white'} ]} numberOfLines={1} ellipsizeMode="tail">{profile.following? 'Obserwujesz' : 'Obserwuj'}
-                    </Text>
-
-                  </TouchableOpacity>
-              </View>
-            </TouchableHighlight >
-          )
-        })}
+        <FollowProfiles profiles={this.props.followingProfiles} onProfileClick={this.onProfileClick} />
       </View>
       )
   }

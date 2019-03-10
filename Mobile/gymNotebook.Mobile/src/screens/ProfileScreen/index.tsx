@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, ScrollView, RefreshControl, Image, FlatList, ListRenderItem, ListRenderItemInfo, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux';
 import { Dispatch } from 'redux';
@@ -11,6 +11,8 @@ import { fetchPosts } from '../../redux/post/actions';
 import { Post } from '../../redux/post/types';
 import { follow, unfollow } from '../../redux/follow/actions';
 import { Spinner } from '../../components/Spinner';
+import Posts from '../../components/Posts';
+import UserName from '../../components/UserName';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<ProfileScreen>
@@ -18,131 +20,68 @@ interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof
 
 interface State {
   profile: Profile
+  posts: Post[] | null
   refreshing: boolean
   loading: boolean
   following: boolean
 }
 
-interface ReactPost extends Post {
-  key: string
-  empty: true
-}
-
-const formatData = (data: ReactPost[], numberColumns: number) => {
-  const numberOfFullRows = Math.floor(data.length / numberColumns)
-
-  let numberOfElementsLastRow = data.length - (numberOfFullRows * numberColumns)
-
-  while (numberOfElementsLastRow !== numberColumns && numberOfElementsLastRow !== 0) {
-    data.push({ key: `blank-${numberOfElementsLastRow}`, empty: true } as ReactPost)
-    numberOfElementsLastRow = numberOfElementsLastRow + 1
-  }
-
-  return data
-}
-
-const numberColumns = 3
-
 class ProfileScreen extends React.Component<Props, State> {
 
   state: State = {
     profile: {} as Profile,
+    posts: null,
     refreshing: false,
     loading: true,
     following: false
   }
 
   static navigationOptions = (props: NavigationScreenProps) => {
-    console.log(props)
     let profile: Profile = props.navigation.getParam('profile')
     return {
       title: profile.nickname != null ? profile.nickname : profile.firstName
     }
   }
 
-  componentDidMount() {
-    //const profile: Profile = this.props.navigation.getParam('profile')
-    // let follow: Follow | undefined
-    // if (!profile) {
+  async componentDidMount() {
     const profileId: string = this.props.navigation.getParam('profileId')
     const follow = this.props.myFollowing.find(x => x[profileId] === true)
-    Promise.all([
-      this.props.fetchProfile(profileId),
-      this.props.fetchPosts(profileId, 20)
-    ]).then(() => {
-      const profile: Profile = this.props.profiles.find(x => x.id === profileId)
-      console.log(profile)
-      this.setState({ loading: false, profile: profile, following: follow? true : false  })
-    })
-    // } else {
-    //   follow = this.props.myFollowing.find(x => x[profile.id] === true)
-    //   this.setState({ profile: profile, loading: true, following: follow? true : false })
-    //   this.props.fetchPosts(profile.id, 20, () => {
-    //     this.setState({ loading: false})
-    //   })
-    // }
-  }
 
-  componentWillReceiveProps(nextProps: Props){
-    let newProfile = nextProps.profiles.find(x => x.id === this.state.profile.id)
-    if(newProfile !== undefined) {
-      this.setState({ profile: newProfile})
-    }
+    await this.props.fetchProfile(profileId, (profile) => {
+      this.setState({profile: profile, following: follow? true : false, loading: false})
+    })
+    await this.props.fetchPosts(profileId, 20, (posts) => {
+      this.setState({posts: posts})
+    })
   }
 
   onRefresh = () => {
     this.setState({ refreshing: true });
     const { id } = this.state.profile
-    this.props.fetchProfile(id, () => {
-      this.props.fetchPosts(id, 20, () => {
-        this.setState({ refreshing: false });
+    Promise.all([
+      this.props.fetchProfile(id, (profile) => {
+        this.setState({profile: profile})
+      }),
+      this.props.fetchPosts(id, 20, (posts) => {
+        this.setState({posts: posts})
       })
-    })
+    ]).then(() => this.setState({ refreshing: false }))
   }
 
   onFollowClick = () => {
     if(this.state.following) {
       this.props.unfollow(this.props.myId, this.state.profile.id)
-      this.setState({following: false})
+      this.setState({following: false, profile: {
+        ...this.state.profile,
+        followersCount: this.state.profile.followersCount - 1
+      }})
     } else {
       this.props.follow(this.props.myId, this.state.profile.id)
-      this.setState({following: true})
+      this.setState({following: true, profile: {
+        ...this.state.profile,
+        followersCount: this.state.profile.followersCount + 1
+      }})
     }
-  }
-
-  keyExtractor = (item: Post, index: number) => item.id;
-
-  renderPost = ({item} : ListRenderItemInfo<ReactPost>) => {
-    const margin = 1
-    const length = Dimensions.get('window').width / numberColumns - margin * 2
-
-    if(!item.empty) {
-      return (
-        <View key={item.id} style={{display: 'flex', marginBottom: margin * 2}}>
-          <Image style={{width: length, height: length}} source={{uri: item.imageURL}}></Image>
-        </View>
-      )
-    }
-    return (
-      <View key={item.id} style={{display: 'flex', marginBottom: margin * 2, width: length, height: length, bacgroundColor: 'transparent'}}/>
-    )
-  }
-
-  renderPosts() {
-    const { profile: { posts } } = this.state
-    if(!posts){
-      return (
-        <Text>Brak</Text>
-      )
-    }
-    return (
-      <FlatList<ReactPost>
-        data={formatData(posts as ReactPost[], numberColumns)}
-        columnWrapperStyle={{justifyContent: 'space-between'}}
-        numColumns={numberColumns}
-        keyExtractor={this.keyExtractor}
-        renderItem={this.renderPost} />
-    )
   }
 
   render() {
@@ -194,10 +133,10 @@ class ProfileScreen extends React.Component<Props, State> {
             </View>
             
             <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>
-              <Text style={{ fontWeight: 'bold' }}>{`${profile.firstName} ${profile.lastName}`}</Text>
+              <UserName firstName={profile.firstName} lastName={profile.lastName} />
               <Text>{profile.description}</Text>
             </View>
-              {this.renderPosts()}
+            <Posts posts={this.state.posts} />
           </View>
         </ScrollView>
       </View>
@@ -206,14 +145,13 @@ class ProfileScreen extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-  profiles: state.Profile.profiles,
   myFollowing: state.Follow.myFollowingIds,
   myId: state.Profile.myProfile.id
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchProfile: (id: string, cb?: () => void) => fetchProfile(id, cb)(dispatch),
-  fetchPosts: (id: string, quantity: number, cb?: () => void) => fetchPosts(id, quantity, cb)(dispatch),
+  fetchProfile: (id: string, cb?: (profile: Profile) => void) => fetchProfile(id, cb)(dispatch),
+  fetchPosts: (id: string, quantity: number, cb?: (posts: Post[]) => void) => fetchPosts(id, quantity, cb)(dispatch),
   follow: (myId: string, profileId: string) => follow(myId, profileId)(dispatch),
   unfollow: (myId: string, profileId: string) => unfollow(myId, profileId)(dispatch)
 })

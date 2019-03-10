@@ -3,7 +3,7 @@ import { Text, FlatList, ListRenderItemInfo, Dimensions, Image, View } from 'rea
 import { Post } from '../../redux/post/types';
 
 interface AppProps {
-  posts: Post[]
+  posts: Post[] | null
 }
 
 interface ReactPost extends Post {
@@ -46,19 +46,18 @@ const renderPost = ({item} : ListRenderItemInfo<ReactPost>) => {
 
 const Posts: React.SFC<AppProps> = (props) => {
   const { posts } = props
-  if(!posts){
+  if(posts){
     return (
-      <Text>Brak</Text>
+      <FlatList<ReactPost>
+        data={formatData(posts as ReactPost[], numberColumns)}
+        columnWrapperStyle={{justifyContent: 'space-between'}}
+        numColumns={numberColumns}
+        keyExtractor={keyExtractor}
+        renderItem={renderPost} />
     )
+  } else {
+    return null
   }
-  return (
-    <FlatList<ReactPost>
-      data={formatData(posts as ReactPost[], numberColumns)}
-      columnWrapperStyle={{justifyContent: 'space-between'}}
-      numColumns={numberColumns}
-      keyExtractor={keyExtractor}
-      renderItem={renderPost} />
-  )
 };
 
 export default Posts

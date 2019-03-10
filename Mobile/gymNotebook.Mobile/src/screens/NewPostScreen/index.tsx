@@ -9,7 +9,6 @@ import { PickedImage } from '../../types/General';
 import PostImage from 'react-native-scalable-image';
 import { CreatePostModel } from '../../redux/post/types';
 import { createPost } from '../../redux/post/actions';
-import LoadingModal from '../../components/LoadingModal';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<NewPostScreen>
@@ -55,10 +54,8 @@ class NewPostScreen extends React.Component<Props> {
       likesCount: 0,
       likes: []
     }
-
-    this.props.createPost(post, () => {
-      this.props.navigation.popToTop()
-    })
+    this.props.createPost(post)
+    this.props.navigation.popToTop()
   }
 
   render() {
@@ -66,7 +63,6 @@ class NewPostScreen extends React.Component<Props> {
     const margin = 20;
     return (
       <View >
-        <LoadingModal modal={this.props.loading} />
         <ScrollView>
           <PostImage style={{margin: margin, marginBottom: 0}} width={window.width - 2 * margin} source={{uri: this.state.pickedImage.path}}/>
           <TextInput onChangeText={(text) => this.setDescription(text)} style={{marginLeft: margin, marginRight: margin}} placeholder="Dodaj podpis..."></TextInput>
@@ -78,8 +74,7 @@ class NewPostScreen extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => {
   return {
-    myProfile: state.Profile.myProfile,
-    loading: state.Posts.loading
+    myProfile: state.Profile.myProfile
   };
 }
 

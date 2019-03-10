@@ -8,6 +8,7 @@ import { Profile } from '../../redux/profile/types';
 import FollowingScreen from './FollowingScreen';
 import FollowersScreen from './FollowersScreen';
 import { Fonts } from '../../styles';
+import { Spinner } from '../../components/Spinner';
 
 const TopNavigator = createMaterialTopTabNavigator({
   Followers: FollowersScreen,
@@ -80,7 +81,7 @@ class FollowScreen extends Component<Props> {
         <FollowTabNavigator screenProps={{ profile: this.state.profile, navigation: this.props.navigation }} />
       )
     } else {
-      return <View></View>
+      return <Spinner/>
     }
   }
 }

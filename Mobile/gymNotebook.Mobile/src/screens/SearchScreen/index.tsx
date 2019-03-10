@@ -9,17 +9,23 @@ import { searchProfiles } from '../../redux/profile/actions';
 import { Profile } from '../../redux/profile/types';
 import { NavigationScreenProps } from 'react-navigation';
 import { SquarePhoto } from '../../components';
+import UserName from '../../components/UserName';
 
-interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
+interface Props extends ReturnType<typeof mapStateToProps> {
   navigation: any
 }
 
-class SearchScreen extends Component<Props> {
+interface State {
+  profiles: Profile[] | null,
+  quantity: number
+}
+
+class SearchScreen extends Component<Props, State> {
 
   state = { 
+    profiles: null,
     quantity: 20
   }
-
 
   static navigationOptions = ({ navigation }: NavigationScreenProps) => {
     return {
@@ -34,17 +40,27 @@ class SearchScreen extends Component<Props> {
     })
   }
 
+  searchUsers = (text: string) => {
+    if(text !== '') {
+      searchProfiles(text, 20, this.props.myProfileId, (profiles) => {
+        this.setState({profiles: profiles})
+      })
+    }
+  }
+
   renderUsers() {
-      return this.props.profiles.map((user, i) => {
-        const source = user.imageURL ? {uri: user.imageURL} : require('../../images/default-user.png')
+    const { profiles } = this.state
+    if(profiles != null) {
+      return profiles.map((user: Profile, i) => {
         return (
           <TouchableOpacity onPress={() => this.onProfilePress(user)} key={i} style={styles.profileTab}>
             <SquarePhoto source={user.imageURL} style={styles.photo} size='medium' />
-            <Text style={styles.usernameText}>{user.firstName} {user.lastName}</Text>
+            <UserName firstName={user.firstName} lastName={user.lastName} />
             <Text style={styles.usernameText}>{user.nickname}</Text>
           </TouchableOpacity>
         )
       })
+    }
   }
 
   render() {
@@ -65,7 +81,7 @@ class SearchScreen extends Component<Props> {
               <EvilIcons name='search' size={20} color='black' />
             </View>
             <TextInput 
-              onChangeText={(text)=> this.props.searchProfiles(text, 20, this.props.myProfileId)}
+              onChangeText={(text)=> this.searchUsers(text)}
               placeholder='Znajdź trenera'
               style={{ 
                 fontSize: 15,
@@ -105,11 +121,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state: AppState) => ({
-  profiles: state.Profile.profiles,
   myProfileId: state.Profile.myProfile.id
 });
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  searchProfiles:(text: string, quantity: number, myId: string) => searchProfiles(text, quantity, myId)(dispatch)
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchScreen)
+export default connect(mapStateToProps, null)(SearchScreen)
