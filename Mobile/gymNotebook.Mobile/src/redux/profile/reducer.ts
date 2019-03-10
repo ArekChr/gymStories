@@ -49,7 +49,7 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
         ...state,
         loading: false,
         profiles: [
-          ...state.profiles.filter(x => x.id !== action.payload.profileId),
+          ...state.profiles.filter(x => x.id !== action.payload.id),
           action.payload
         ]
       }

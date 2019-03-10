@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import CalendarModal from '../../components/CalendarModal'
+import CalendarModal from '../../components/Calendar/CalendarModal'
 import { handleCalendarModal, createProgress } from '../../redux/progress/actions';
 import { connect } from 'react-redux';
 import { capFirst } from '../../utils/string'

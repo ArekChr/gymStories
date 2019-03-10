@@ -1,10 +1,11 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { signUp } from '../../redux/auth/actions'
 import { RegisterModel, UserAuth } from '../../redux/auth/types';
 import { AppState } from '../../redux';
 import { Dispatch } from 'redux';
+import { Spinner } from '../../components/Spinner';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   onSingUpSuccess: () => void
@@ -96,11 +97,9 @@ class RegisterForm extends React.Component<Props> {
           disabled={!this.state.canSignUp}>
           <Text style={styles.buttonText}>Sign up</Text>
         </TouchableOpacity>
-        <ActivityIndicator
-            animating={true}
-            size="large"
-            style={[styles.loader, {opacity: this.props.registerLoading? 1 : 0}]}
-        />
+      
+        {this.props.registerLoading && <Spinner />}
+
       </View>
     )
   }

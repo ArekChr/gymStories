@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Calendar } from 'react-native-calendars'
 import { connect } from 'react-redux';
-import { pickDate } from '../redux/progress/actions'
+import { pickDate } from '../../redux/progress/actions'
 import { Dispatch } from 'redux';
 
 interface Props {

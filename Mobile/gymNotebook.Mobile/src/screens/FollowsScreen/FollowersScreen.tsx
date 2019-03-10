@@ -33,7 +33,7 @@ class FollowersScreen extends Component<Props> {
 }
 
 const mapStateToProps = (state: AppState) => ({
-
+  
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

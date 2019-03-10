@@ -3,11 +3,11 @@ import { View, Text, TouchableOpacity, RefreshControl, ScrollView } from 'react-
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { fetchMyProfile } from '../../redux/profile/actions'
 import { connect } from 'react-redux';
-import { ProfilePhoto } from '../../components'
+import { SquarePhoto } from '../../components'
 import { Dispatch } from 'redux';
 import { AppState } from '../../redux';
 import Posts from '../../components/Posts';
-import { fetchPosts, fetchMyPosts } from '../../redux/post/actions';
+import { fetchMyPosts } from '../../redux/post/actions';
 import { fetchMyFollowers, fetchMyFollowing, fetchFollowingProfiles } from '../../redux/follow/actions';
 import { Follow } from '../../redux/follow/types';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
@@ -122,7 +122,7 @@ class MyProfileScreen extends Component<Props> {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <ProfilePhoto onPress={this.onPhotoClicked} source={myProfile.imageURL} />
+                  <SquarePhoto onPress={this.onPhotoClicked} source={myProfile.imageURL} />
                 </View>
                   <View style={{ flex: 3 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>

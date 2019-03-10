@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Modal, StatusBar } from 'react-native';
-import { connect } from 'react-redux';
-import { AppState } from '../redux';
-import { Dispatch } from 'redux';
-import { ActivityIndicator } from '@ant-design/react-native';
+import { View, StyleSheet, Modal, StatusBar } from 'react-native';
+import { Spinner } from './Spinner';
 
 interface Props {
   modal: boolean
@@ -25,7 +22,7 @@ class LoadingModal extends Component<Props> {
         <StatusBar barStyle="dark-content" />
           <View style={{ backgroundColor: 'rgba(0,0,0,0.3)', width: '100%', height: '100%'}}>
             <View style={styles.container}>
-              <ActivityIndicator size="large" color="white"></ActivityIndicator>
+              <Spinner />
             </View>
           </View>
         </Modal>

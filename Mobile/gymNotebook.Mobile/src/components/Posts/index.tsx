@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Text, FlatList, ListRenderItemInfo, Dimensions, Image, View } from 'react-native'
-import { Post } from '../redux/post/types';
+import { Post } from '../../redux/post/types';
 
 interface AppProps {
   posts: Post[]

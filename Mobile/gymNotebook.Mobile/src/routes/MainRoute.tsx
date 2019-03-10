@@ -64,7 +64,7 @@ const HomeTabStackNavigator = createStackNavigator({
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
       backgroundColor: 'white',
-      height: 40
+      height: 50
     },
     headerTintColor: 'black',
     headerTitleStyle : {
@@ -88,9 +88,8 @@ const ProfileStackNavigator = createStackNavigator({
     navigationOptions: { header: null }
   },
   Settings: SettingsScreen,
-  Follow: {
-    screen: FollowScreen
-  }
+  Follow: FollowScreen,
+  ProfileScreen: ProfileScreen
 },{
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {

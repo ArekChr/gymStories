@@ -9,6 +9,20 @@ import { Post } from '../post/types';
 
 const URL: string = `${API_URL}/Profile`;
 
+function mapSnapshotToProfiles(snapshot: QuerySnapshot) {
+  let docs = snapshot.docs
+  if(docs.length > 0) {
+    let profiles: Profile[] = []
+    snapshot.docs.forEach(x => profiles.push({
+      id: x.id, 
+      ...x.data()
+    } as Profile))
+    
+    return profiles
+  }
+  return null
+}
+
 function comparator(x: Profile ,y: Profile) {
   return x.id === y.id
 }
@@ -41,6 +55,7 @@ export const fetchProfile = (profileId: string, cb?: () => void) => {
     })
 
     firebase.firestore().collection('profiles').doc(profileId).get().then(snapshot => {
+      console.log(snapshot.data())
       dispatch({
         type: ProfileActionTypes.FETCH_PROFILE_SUC,
         payload: {
@@ -52,35 +67,9 @@ export const fetchProfile = (profileId: string, cb?: () => void) => {
         cb()
       }
     })
-
-    // firebase.database()
-    // .ref(`profiles/${profileId}`)
-    // .once('value')
-    // .then(snapshot => {
-    //   let data = snapshot.val()
-    //   let profile: Profile  = Object.keys(data).map(key => data[key])[0]
-
-    //   profile = {
-    //     ...profile,
-    //     id: Object.keys(data)[0]
-    //   }
-    // })
   }
 }
 
-function mapSnapshotToProfiles(snapshot: QuerySnapshot) {
-  let docs = snapshot.docs
-  if(docs.length > 0) {
-    let profiles: Profile[] = []
-    snapshot.docs.forEach(x => profiles.push({
-      id: x.id, 
-      ...x.data()
-    } as Profile))
-    
-    return profiles
-  }
-  return null
-}
 
 export const searchProfiles = (text: string, quantity: number, myId: string) => {
   return async(dispatch: Dispatch) => {
@@ -117,14 +106,14 @@ export const searchProfiles = (text: string, quantity: number, myId: string) => 
   }
 }
 
-export const updateProfileImage = (uid: string, filePath: string, profilePath: string, cb?: () => void) => {
+export const updateProfileImage = (uid: string, filePath: string, profileId: string, cb?: () => void) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.UPDATE_PHOTO_REQ
     })
 
     firebase.storage().ref(`images/profiles/${uid}`).putFile(filePath).then(response => {
-      firebase.database().ref(`profiles/${profilePath}/`).update({
+      firebase.firestore().collection('profiles').doc(profileId).update({
         imageURL: response.downloadURL
       })
       dispatch({

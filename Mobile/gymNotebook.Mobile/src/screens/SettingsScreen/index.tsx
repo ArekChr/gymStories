@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { removeTokensFromStorage } from '../../utils/misc'
 import { logout } from '../../redux/auth/actions'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
@@ -20,11 +19,9 @@ class SettingsScreen extends Component<Props>{
   }
 
   onLogOutPress = () => {
-    removeTokensFromStorage(() => {
-      firebase.auth().signOut().then(() => {
-        this.props.logout();
-        this.props.navigation.navigate('LoginScreen');
-      })
+    firebase.auth().signOut().then(() => {
+      this.props.logout();
+      this.props.navigation.navigate('LoginScreen');
     })
   }
 

@@ -43,11 +43,13 @@ export interface Profile extends ApiResponse {
 }
 
 export interface ProfileBasic {
-  profileId: string | null
+  profileId: string
   firstName: string
   lastName: string
   nickname: string | null
+  imageURL: string | null
   followApproved: boolean
+  following: boolean
 }
 
 export interface ProfileDto extends ApiResponse {

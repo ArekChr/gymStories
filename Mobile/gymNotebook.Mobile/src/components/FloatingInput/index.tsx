@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, TextInput, Animated, StyleProp, ViewStyle, TextInputProps } from 'react-native';
-import { WARNING_COLOR, PRIMARY_COLOR } from '../styles/common'
-import { Fonts } from '../styles'
+import { View, TextInput, Animated, TextInputProps } from 'react-native';
+import { WARNING_COLOR, PRIMARY_COLOR } from '../../styles/common'
+import { Fonts } from '../../styles'
 
 interface Props {
   label: string

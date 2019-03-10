@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { View, ActivityIndicator } from 'react-native';
+import { View } from 'react-native';
 import { TitleComponent } from '../../components'
-import { PRIMARY_COLOR } from '../../styles/common'
 import { connect } from 'react-redux';
 import { signUp } from '../../redux/auth/actions';
 import { AppState } from '../../redux';
 import { Profile } from '../../redux/profile/types';
 import { NavigationScreenProp } from 'react-navigation';
 import { Dispatch } from 'redux';
+import { Spinner } from '../../components/Spinner';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps>  {
   navigation: NavigationScreenProp<RegisterEndScreen>
@@ -32,7 +32,7 @@ class RegisterEndScreen extends Component<Props> {
     return (
       <View style={{ justifyContent: "center", flex: 1}}>
         <TitleComponent style={{marginTop: 0, marginBottom: 20}}>Rejestrowanie...</TitleComponent>
-        <ActivityIndicator color={PRIMARY_COLOR} size='large'/>
+        <Spinner />
       </View>
     );
   }

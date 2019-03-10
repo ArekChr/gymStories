@@ -6,11 +6,11 @@ import { Dispatch } from 'redux';
 import { fetchProfile } from '../../redux/profile/actions';
 import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
 import { Profile } from '../../redux/profile/types';
-import { ProfilePhoto } from '../../components';
+import { SquarePhoto } from '../../components';
 import { fetchPosts } from '../../redux/post/actions';
 import { Post } from '../../redux/post/types';
-import { follow, unfollow, fetchMyFollowing, fetchMyFollowers, fetchFollowingProfiles } from '../../redux/follow/actions';
-import { Follow } from '../../redux/follow/types';
+import { follow, unfollow } from '../../redux/follow/actions';
+import { Spinner } from '../../components/Spinner';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<ProfileScreen>
@@ -48,24 +48,39 @@ class ProfileScreen extends React.Component<Props, State> {
   state: State = {
     profile: {} as Profile,
     refreshing: false,
-    loading: false,
+    loading: true,
     following: false
   }
 
-  static navigationOptions = ({ navigation }: NavigationScreenProps) => {
-    let profile: Profile = navigation.getParam('profile')
+  static navigationOptions = (props: NavigationScreenProps) => {
+    console.log(props)
+    let profile: Profile = props.navigation.getParam('profile')
     return {
       title: profile.nickname != null ? profile.nickname : profile.firstName
     }
   }
 
   componentDidMount() {
-    let profile: Profile = this.props.navigation.getParam('profile')
-    const follow = this.props.myFollowing.find(x => x[profile.id] === true)
-    this.setState({ profile: profile, loading: true, following: follow? true : false })
-    this.props.fetchPosts(profile.id, 20, () => {
-      this.setState({ loading: false})
+    //const profile: Profile = this.props.navigation.getParam('profile')
+    // let follow: Follow | undefined
+    // if (!profile) {
+    const profileId: string = this.props.navigation.getParam('profileId')
+    const follow = this.props.myFollowing.find(x => x[profileId] === true)
+    Promise.all([
+      this.props.fetchProfile(profileId),
+      this.props.fetchPosts(profileId, 20)
+    ]).then(() => {
+      const profile: Profile = this.props.profiles.find(x => x.id === profileId)
+      console.log(profile)
+      this.setState({ loading: false, profile: profile, following: follow? true : false  })
     })
+    // } else {
+    //   follow = this.props.myFollowing.find(x => x[profile.id] === true)
+    //   this.setState({ profile: profile, loading: true, following: follow? true : false })
+    //   this.props.fetchPosts(profile.id, 20, () => {
+    //     this.setState({ loading: false})
+    //   })
+    // }
   }
 
   componentWillReceiveProps(nextProps: Props){
@@ -131,6 +146,9 @@ class ProfileScreen extends React.Component<Props, State> {
   }
 
   render() {
+    if(this.state.loading) {
+      return <Spinner/>
+    }
     const { profile, following } = this.state;
     return (
       <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -145,7 +163,7 @@ class ProfileScreen extends React.Component<Props, State> {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <ProfilePhoto source={profile.imageURL} />
+                  <SquarePhoto source={profile.imageURL} />
                 </View>
 
                 <View style={{ flex: 3 }}>

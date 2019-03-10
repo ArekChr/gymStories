@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { WARNING_COLOR } from '../styles/common'
-import { Fonts } from '../styles'
+import { WARNING_COLOR } from '../../styles/common'
+import { Fonts } from '../../styles'
 
 export default class ErrorMessage extends Component {
   render() {

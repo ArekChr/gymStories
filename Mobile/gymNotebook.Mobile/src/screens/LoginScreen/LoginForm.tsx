@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { signIn } from '../../redux/auth/actions'
 import { PRIMARY_COLOR, THEME_FONT_COLOR } from '../../styles/common'
@@ -7,6 +7,7 @@ import { FloatingInput } from '../../components'
 import { LoginModel } from '../../redux/auth/types';
 import { AppState } from '../../redux';
 import { Dispatch } from 'redux';
+import { Spinner } from '../../components/Spinner';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   onLoginSuccess(): void
@@ -69,11 +70,8 @@ class LoginForm extends React.Component<Props> {
 
         {errorMessage}
 
-        <ActivityIndicator
-            animating={true}
-            size="large"
-            style={[styles.loader, {opacity: this.props.loginLoading? 1 : 0}]}
-        />
+        {this.props.loginLoading && <Spinner />}
+
       </View>
     )
   }

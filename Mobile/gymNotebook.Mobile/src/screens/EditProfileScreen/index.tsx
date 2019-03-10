@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Picker, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import ImagePicker from 'react-native-image-crop-picker';
-import { ProfilePhoto, FloatingInput, TextButton, CheckButton } from '../../components';
+import { SquarePhoto, FloatingInput, TextButton, CheckButton } from '../../components';
 import { updateProfileImage, updateProfileData } from '../../redux/profile/actions'
 import { Gender } from '../../redux/profile/types';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
@@ -153,7 +153,7 @@ class EditProfileScreen extends Component<Props> {
       <ScrollView>
         <View style={{ margin: 10}}>
           <View style={{justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
-            <ProfilePhoto onPress={this.onPhotoPress} source={pickedImage ? pickedImage.path : imageURL ? imageURL : null}/>
+            <SquarePhoto onPress={this.onPhotoPress} source={pickedImage ? pickedImage.path : imageURL ? imageURL : null}/>
             <TextButton style={{ marginTop: 5 }} onPress={this.onPhotoPress}>Zmień zdjęcie</TextButton>
           </View>
           <FloatingInput label={firstName.label}

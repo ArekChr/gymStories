@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
-import { CalendarComponent } from '.'
-import { selectDate, handleCalendarModal, pickDate } from '../redux/progress/actions'
+import CalendarComponent from '.'
+import { selectDate, handleCalendarModal, pickDate } from '../../redux/progress/actions'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux';
-import { AppState } from '../redux';
+import { AppState } from '../../redux';
 
 interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
 }

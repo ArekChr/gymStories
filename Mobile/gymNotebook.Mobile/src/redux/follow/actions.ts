@@ -96,11 +96,13 @@ export const fetchFollowingProfiles = (following: Follow[]) => {
         Promise.all(promises).then(documents => {
             documents.forEach(x => {
                 let profile = x.data() as Profile
-                let basicProfile: ProfileBasic = {
-                    profileId: x.id,
+                const basicProfile: ProfileBasic = {
+                    profileId: x.id as string,
                     firstName: profile.firstName,
                     lastName: profile.lastName,
                     nickname: profile.nickname,
+                    imageURL: profile.imageURL,
+                    following: true,
                     followApproved: following.find(follow => Object.keys(follow)[0] === x.id)![x.id!]
                 }
                 profiles.push(basicProfile)

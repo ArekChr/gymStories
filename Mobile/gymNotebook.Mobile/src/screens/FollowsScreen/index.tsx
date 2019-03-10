@@ -71,16 +71,13 @@ class FollowScreen extends Component<Props> {
 
   componentDidMount() {
     let profile: Profile = this.props.navigation.getParam('profile')
-    this.props.navigation.setParams({})
     this.setState({profile})
   }
 
   render() {
-    console.log("profil")
-    console.log(this.state.profile)
     if(this.state.profile) {
       return (
-        <FollowTabNavigator screenProps={{ profile: this.state.profile }} />
+        <FollowTabNavigator screenProps={{ profile: this.state.profile, navigation: this.props.navigation }} />
       )
     } else {
       return <View></View>

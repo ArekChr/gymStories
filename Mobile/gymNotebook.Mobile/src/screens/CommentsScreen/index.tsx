@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import { AppState } from '../../redux';
 import { Dispatch } from 'redux';
 import { NavigationScreenProp } from 'react-navigation';
-import { API_URL } from '../../utils/misc';
 import { createComment, fetchComments, clearComments } from '../../redux/post/actions';
 import { Comment } from '../../redux/post/types';
-import { ActivityIndicator } from '@ant-design/react-native';
+import { Spinner } from '../../components/Spinner';
 
 export interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<CommentScreen>
@@ -93,7 +92,7 @@ class CommentScreen extends React.PureComponent<Props> {
   renderComments() {
     const { comments } = this.props
     if(comments === undefined){
-      return <ActivityIndicator size='large'/>
+      return <Spinner />
     }
     return (
       comments.map((comment: Comment, i: number) => {
@@ -106,7 +105,7 @@ class CommentScreen extends React.PureComponent<Props> {
                 <Text><Text style={{fontWeight: 'bold'}}>{comment.userName} </Text>{comment.content}</Text>
                 {this.renderBetweenDate(comment.id == undefined ? comment.createdAt : new Date(comment.createdAt+'Z'), new Date)}
               </View>
-              {comment.id === undefined? <ActivityIndicator/> : null}
+              {comment.id === undefined? <Spinner /> : null}
             </View>
           </View>
         )

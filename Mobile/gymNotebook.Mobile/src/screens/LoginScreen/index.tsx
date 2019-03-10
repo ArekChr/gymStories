@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native'
 import {Logo} from '../../components'
 import LoginForm from './LoginForm'
 import { setAuth } from '../../redux/auth/actions'
@@ -13,6 +13,7 @@ import { fetchMyProfile } from '../../redux/profile/actions';
 import { UserAuth } from '../../redux/auth/types';
 import { fetchMyFollowers, fetchMyFollowing } from '../../redux/follow/actions';
 import { fetchMyPosts } from '../../redux/post/actions';
+import { Spinner } from '../../components/Spinner';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<LoginScreen>
@@ -65,7 +66,7 @@ class LoginScreen extends Component<Props> {
       return (
         <View style={styles.loading}>
           <StatusBar backgroundColor={STATUS_BAR_COLOR} />
-          <ActivityIndicator size='large'/>
+          <Spinner />
         </View>
       )
     } else {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import { PRIMARY_COLOR } from '../../styles/common'
 import { connect } from 'react-redux';
@@ -8,6 +8,7 @@ import { Dispatch } from 'redux';
 import { searchProfiles } from '../../redux/profile/actions';
 import { Profile } from '../../redux/profile/types';
 import { NavigationScreenProps } from 'react-navigation';
+import { SquarePhoto } from '../../components';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: any
@@ -28,7 +29,8 @@ class SearchScreen extends Component<Props> {
 
   onProfilePress = (profile: Profile) => {
     this.props.navigation.push('ProfileScreen', {
-      profile: profile
+      profile: profile,
+      profileId: profile.id
     })
   }
 
@@ -37,7 +39,7 @@ class SearchScreen extends Component<Props> {
         const source = user.imageURL ? {uri: user.imageURL} : require('../../images/default-user.png')
         return (
           <TouchableOpacity onPress={() => this.onProfilePress(user)} key={i} style={styles.profileTab}>
-            <Image style={styles.photo} source={source}/>
+            <SquarePhoto source={user.imageURL} style={styles.photo} size='medium' />
             <Text style={styles.usernameText}>{user.firstName} {user.lastName}</Text>
             <Text style={styles.usernameText}>{user.nickname}</Text>
           </TouchableOpacity>
@@ -92,9 +94,6 @@ const styles = StyleSheet.create({
   photo: { 
     margin: 10,
     marginBottom: 5,
-    width: 50,
-    height: 50,
-    borderRadius: 45
   },
   usernameText: { 
     fontWeight: '600',
