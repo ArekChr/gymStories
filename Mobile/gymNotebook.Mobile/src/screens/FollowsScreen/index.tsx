@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { AppState } from '../../redux';
-import { NavigationScreenProps, NavigationScreenProp, createMaterialTopTabNavigator, createAppContainer } from 'react-navigation';
+import { NavigationScreenProps, NavigationScreenProp, createMaterialTopTabNavigator, createAppContainer, NavigationActions } from 'react-navigation';
 import { Profile } from '../../redux/profile/types';
 import FollowingScreen from './FollowingScreen';
 import FollowersScreen from './FollowersScreen';
@@ -66,7 +66,6 @@ class FollowScreen extends Component<Props> {
         elevation: 0,
         height: 50
       },
-      
     }
   }
 

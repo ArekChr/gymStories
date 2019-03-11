@@ -1,13 +1,9 @@
 import axios from 'axios'
 import { ProfileActionTypes, ProfileDto, Profile } from './types'
-import { API_URL } from '../../utils/misc'
 import { Dispatch } from 'redux'
 import firebase from 'react-native-firebase';
 import { QuerySnapshot } from 'react-native-firebase/firestore';
 import R from 'ramda';
-import { Post } from '../post/types';
-
-const URL: string = `${API_URL}/Profile`;
 
 function mapSnapshotToProfiles(snapshot: QuerySnapshot) {
   let docs = snapshot.docs

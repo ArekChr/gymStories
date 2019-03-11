@@ -3,13 +3,14 @@ import { Reducer } from 'redux';
 
 const initialState: FollowState = {
   loading: false,
-  myFollowers: [],
   userFollowers: [],
   userFollowing: [],
-  
+  myFollowersIds: [],
   myFollowingIds: [],
   myFollowingProfiles: [],
-  loadingMyFollows: false
+  myFollowersProfiles: [],
+  loadingMyFollowing: false,
+  loadingMyFollowers: false
 }
 
 const followReducer: Reducer<FollowState> = (state = initialState, action) => {
@@ -34,14 +35,27 @@ const followReducer: Reducer<FollowState> = (state = initialState, action) => {
     case FollowActionTypes.FETCH_FOLLOWING_PROFILES_REQ: {
       return {
         ...state,
-        loadingMyFollows: true
+        loadingMyFollowing: true
       }
     }
     case FollowActionTypes.FETCH_FOLLOWING_PROFILES_SUC: {
       return {
         ...state,
         myFollowingProfiles: action.payload,
-        loadingMyFollows: false
+        loadingMyFollowing: false
+      }
+    }
+    case FollowActionTypes.FETCH_FOLLOWERS_PROFILES_REQ: {
+      return {
+        ...state,
+        loadingMyFollowers: true
+      }
+    }
+    case FollowActionTypes.FETCH_FOLLOWERS_PROFILES_SUC: {
+      return {
+        ...state,
+        myFollowersProfiles: action.payload,
+        loadingMyFollowers: false
       }
     }
     case FollowActionTypes.FETCH_FOLLOWERS_REQ: {
@@ -67,7 +81,7 @@ const followReducer: Reducer<FollowState> = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        myFollowers: action.payload
+        myFollowersIds: action.payload
       }
     }
     case FollowActionTypes.FETCH_MYFOLLOWING_REQ: {

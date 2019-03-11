@@ -40,6 +40,7 @@ import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON, FONT_COLOR
 import { Fonts } from '../styles'
 import ProfileScreen from '../screens/ProfileScreen';
 import FollowScreen from '../screens/FollowsScreen';
+import PostScreen from '../screens/PostScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -89,7 +90,8 @@ const ProfileStackNavigator = createStackNavigator({
   },
   Settings: SettingsScreen,
   Follow: FollowScreen,
-  ProfileScreen: ProfileScreen
+  ProfileScreen: ProfileScreen,
+  PostScreen: PostScreen
 },{
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {

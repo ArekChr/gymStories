@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { SquarePhoto } from '../../components'
 import { Dispatch } from 'redux';
 import { AppState } from '../../redux';
-import Posts from '../../components/Posts';
+import Posts, { ReactPost } from '../../components/Posts';
 import { fetchMyPosts } from '../../redux/post/actions';
-import { fetchMyFollowers, fetchMyFollowing, fetchFollowingProfiles } from '../../redux/follow/actions';
+import { fetchMyFollowers, fetchMyFollowing, fetchFollowingProfiles, fetchFollowersProfiles } from '../../redux/follow/actions';
 import { Follow } from '../../redux/follow/types';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
 import UserName from '../../components/UserName';
@@ -74,7 +74,9 @@ class MyProfileScreen extends Component<Props> {
   }
 
   onFollowPress = () => {
-    this.props.fetchFollowingProfiles(this.props.myFollowing)
+    const { myFollowing, myFollowers } = this.props
+    this.props.fetchFollowingProfiles(myFollowing)
+    this.props.fetchFollowersProfiles(myFollowers, myFollowing)
     this.props.navigation.push('Follow', { profile: this.props.myProfile })
   }
 
@@ -106,6 +108,13 @@ class MyProfileScreen extends Component<Props> {
     // TODO: modal for edit photo
   }
 
+  onPostClick = (post: ReactPost) => {
+    this.props.navigation.push('PostScreen', { 
+      post: post,
+      profile: this.props.myProfile
+    })
+  }
+
   render() {
 
     const { myProfile: myProfile } = this.props;
@@ -131,10 +140,10 @@ class MyProfileScreen extends Component<Props> {
                         <Text style={{ fontSize: 18, fontWeight: 'bold' }} >0</Text>
                         <Text style={{ fontSize: 11, color: 'grey' }}>Posty</Text>
                       </View>
-                        <View style={{ alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => this.onFollowPress()} style={{ alignItems: 'center' }}>
                           <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followersCount}</Text>
                           <Text style={{ fontSize: 11, color: 'grey' }}>Obserwujący</Text>
-                        </View>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.onFollowPress()} style={{ alignItems: 'center' }}>
                           <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followingCount}</Text>
                           <Text style={{ fontSize: 11, color: 'grey' }}>Obserwuje</Text>
@@ -157,7 +166,7 @@ class MyProfileScreen extends Component<Props> {
               <Text>{myProfile.description}</Text>
             </View>
           </View>
-          <Posts posts={this.props.myPosts} />
+          <Posts postClick={this.onPostClick} posts={this.props.myPosts} />
         </ScrollView>
       </View>
     )
@@ -169,7 +178,8 @@ const mapStateToProps = (state: AppState) => ({
   myProfile: state.Profile.myProfile,
   auth: state.Auth.auth,
   myPosts: state.Posts.myPosts,
-  myFollowing: state.Follow.myFollowingIds
+  myFollowing: state.Follow.myFollowingIds,
+  myFollowers: state.Follow.myFollowersIds
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -177,7 +187,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMyPosts: (id: string, quantity: number, cb?: () => void) => fetchMyPosts(id, quantity, cb)(dispatch),
   fetchMyFollowers: (profileId: string) => fetchMyFollowers(profileId)(dispatch),
   fetchMyFollowing: (profileId: string) => fetchMyFollowing(profileId)(dispatch),
-  fetchFollowingProfiles: (following: Follow[]) => fetchFollowingProfiles(following)(dispatch)
+  fetchFollowingProfiles: (following: Follow[]) => fetchFollowingProfiles(following)(dispatch),
+  fetchFollowersProfiles: (followers: Follow[], following: Follow[]) => fetchFollowersProfiles(followers, following)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyProfileScreen)

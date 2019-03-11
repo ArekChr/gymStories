@@ -117,6 +117,38 @@ export const fetchFollowingProfiles = (following: Follow[]) => {
     }
 }
 
+export const fetchFollowersProfiles = (followersIds: Follow[], followingIds: Follow[]) => {
+    return (dispatch: Dispatch) => {
+        dispatch({ type: FollowActionTypes.FETCH_FOLLOWERS_PROFILES_REQ })
+
+        let promises: Promise<RNFirebase.firestore.DocumentSnapshot>[] = []
+        followersIds.forEach(id => promises.push(firebase.firestore().collection('profiles').doc(Object.keys(id)[0]).get()))
+        const profiles: any[] = []
+        Promise.all(promises).then(documents => {
+            documents.forEach(x => {
+                const following = followingIds.find(id => Object.keys(id)[0] === x.id) ? true : false
+                let profile = x.data() as Profile
+                const basicProfile: ProfileBasic = {
+                    profileId: x.id as string,
+                    firstName: profile.firstName,
+                    lastName: profile.lastName,
+                    nickname: profile.nickname,
+                    imageURL: profile.imageURL,
+                    following: following,
+                    followApproved: followersIds.find(follow => Object.keys(follow)[0] === x.id)![x.id!]
+                }
+                profiles.push(basicProfile)
+            })
+            
+            dispatch({
+                type: FollowActionTypes.FETCH_FOLLOWERS_PROFILES_SUC,
+                payload: profiles
+            })
+        })
+        
+    }
+}
+
 export const follow = (myId: string, followingId: string) => {
     return (dispatch: Dispatch) => {
         dispatch({ type: FollowActionTypes.FOLLOW_REQ, payload: { profileId: followingId } })
@@ -195,6 +227,6 @@ export const unfollow = (myId: string, followingId: string) => {
 
         }).then((updatedData: FollowUpdatedData) => {
             dispatch({ type: FollowActionTypes.UNFOLLOW_SUC, payload: updatedData })
-        }).catch(() => console.warn('Transaction failed'))
+        }).catch((error) => {console.warn('Transaction failed'); console.log(error)})
     }
 }

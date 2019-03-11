@@ -67,26 +67,7 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
         profiles: action.payload
       }
     }
-    case FollowActionTypes.UNFOLLOW_REQ: {
-      let profile = state.profiles.find(x => x.id === action.payload.profileId)
-      if (profile) {
-        profile = {
-          ...profile,
-          followersCount: profile.followersCount - 1
-        }
-      }
-      return {
-        ...state,
-        myProfile: {
-          ...state.myProfile,
-          followingCount: state.myProfile.followingCount - 1
-        },
-        profiles: [
-          ...state.profiles.filter(x => x.id !== action.payload.profileId),
-          profile
-        ]
-      }
-    }
+
     case FollowActionTypes.UNFOLLOW_SUC: {
       return {
         ...state,
@@ -100,26 +81,6 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
             ...state.profiles.find(x => x.id === action.payload.profileId),
             followersCount: action.payload.userFollowersCount
           }
-        ]
-      }
-    }
-    case FollowActionTypes.FOLLOW_REQ: {
-      let profile = state.profiles.find(x => x.id === action.payload.profileId)
-      if (profile) {
-        profile = {
-          ...profile,
-          followersCount: profile.followersCount + 1
-        }
-      }
-      return {
-        ...state,
-        myProfile: {
-          ...state.myProfile,
-          followingCount: state.myProfile.followingCount + 1
-        },
-        profiles: [
-          ...state.profiles.filter(x => x.id !== action.payload.profileId),
-          profile
         ]
       }
     }
