@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { YellowBox } from 'react-native'
 
-import AppNavigator from './src/navigation/Navigation'
+import AppNavigator from './src/routes/MainRoute'
 
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import promiseMiddleware from 'redux-promise'
 
-import { rootReducer } from './src/store'
+import { rootReducer } from './src/redux'
 
 import { composeWithDevTools } from 'redux-devtools-extension';
 

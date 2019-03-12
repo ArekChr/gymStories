@@ -1,8 +1,0 @@
-export {default as BirthDateScreen} from './BirthDateScreen'
-export {default as EmailScreen} from './EmailScreen'
-export {default as GenderTypeScreen} from './GenderTypeScreen'
-export {default as NameScreen} from './NameScreen'
-export {default as PasswordScreen} from './PasswordScreen'
-export {default as ProfileTypeScreen} from './ProfileTypeScreen'
-export {default as RegisterScreen} from './RegisterScreen'
-export {default as RegisterEndScreen} from './RegisterEndScreen'

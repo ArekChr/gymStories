@@ -17,7 +17,11 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
-import com.imagepicker.ImagePickerPackage;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
+import io.invertase.firebase.database.RNFirebaseDatabasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.storage.RNFirebaseStoragePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,15 +37,20 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new ReactVideoPackage(),
-            new LinearGradientPackage(),
-            new RNFetchBlobPackage(),
-            new PickerPackage(),
-            new SvgPackage(),
-            new VectorIconsPackage(),
-            new RNScreensPackage(),
-            new RNGestureHandlerPackage(),
-            new ImagePickerPackage()
+          new ReactVideoPackage(),
+          new LinearGradientPackage(),
+          new PickerPackage(),
+          new SvgPackage(),
+          new VectorIconsPackage(),
+          new ImagePickerPackage(),
+          new RNGestureHandlerPackage(),
+          new RNScreensPackage(),
+          new RNFetchBlobPackage(),
+          new RNFirebasePackage(),
+          new RNFirebaseFirestorePackage(),
+          new RNFirebaseDatabasePackage(),
+          new RNFirebaseAuthPackage(),
+          new RNFirebaseStoragePackage()
       );
     }
 

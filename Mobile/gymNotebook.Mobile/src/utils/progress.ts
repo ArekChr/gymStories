@@ -1,4 +1,4 @@
-import { Progress } from "../store/progress/types";
+import { Progress } from "../redux/progress/types";
 
 export const progressNormalize = (progress: Progress[], name: keyof Progress) => {
   return progress
