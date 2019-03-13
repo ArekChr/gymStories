@@ -7,7 +7,7 @@ import { FloatingInput } from '../../components'
 import { LoginModel } from '../../redux/auth/types';
 import { AppState } from '../../redux';
 import { Dispatch } from 'redux';
-import { Spinner } from '../../components/Spinner';
+import Spinner from '../../components/Spinner';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   onLoginSuccess(): void

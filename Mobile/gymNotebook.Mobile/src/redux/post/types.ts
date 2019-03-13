@@ -13,7 +13,13 @@ export enum PostActionTypes {
   CREATE_COMMENT_SUC = '@post/CREATE_COMMENT_SUC',
   CLEAR_COMMENTS = '@post/CLEAR_COMMENTS',
   FETCH_MY_POST_REQ = '@post/FETCH_MY_POST_REQ',
-  FETCH_MY_POST_SUC = '@post/FETCH_MY_POST_SUC'
+  FETCH_MY_POST_SUC = '@post/FETCH_MY_POST_SUC',
+  LIKE_REQ = "@post/LIKE_REQ",
+  LIKE_SUC = "@post/LIKE_SUC",
+  LIKE_ERR = "@post/LIKE_ERR",
+  UNLIKE_REQ = "@post/UNLIKE_REQ",
+  UNLIKE_SUC = "@post/UNLIKE_SUC",
+  UNLIKE_ERR = "@post/UNLIKE_ERR"
 }
 
 export interface PostsState {
@@ -33,20 +39,20 @@ export interface CreatePostModel {
   likes: string[]
 }
 
-export interface CreatePostComment {
-  postId: string
-  content: string
+export interface CommentModel extends Comment {
+  imageURL: string
+  firstName: string
+  lastName: string
+  nickname: string | null
 }
 
-
 export interface Comment {
-  id?: string
-  userId?: string
-  content: string
-  createdAt: Date
-  userName: string
-  imageURL: string
-  likes: number
+  id: string
+  createdAt: number
+  userId: string
+  likesCount: number
+  likes: string[]
+  description: string
 }
 
 export interface MyPost {

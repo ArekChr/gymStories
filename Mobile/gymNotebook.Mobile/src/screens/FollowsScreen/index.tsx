@@ -8,7 +8,7 @@ import { Profile } from '../../redux/profile/types';
 import FollowingScreen from './FollowingScreen';
 import FollowersScreen from './FollowersScreen';
 import { Fonts } from '../../styles';
-import { Spinner } from '../../components/Spinner';
+import Spinner from '../../components/Spinner';
 
 const TopNavigator = createMaterialTopTabNavigator({
   Followers: FollowersScreen,

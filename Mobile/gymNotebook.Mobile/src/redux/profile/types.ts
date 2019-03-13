@@ -58,7 +58,6 @@ export interface ProfileDto extends ApiResponse {
   lastName: string
   gender: Gender
   description: string
-  imageId: string
   averageRates: number
   followingCount: number
   followersCount: number

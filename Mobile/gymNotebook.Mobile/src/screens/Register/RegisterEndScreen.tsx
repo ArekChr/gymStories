@@ -7,7 +7,7 @@ import { AppState } from '../../redux';
 import { Profile } from '../../redux/profile/types';
 import { NavigationScreenProp } from 'react-navigation';
 import { Dispatch } from 'redux';
-import { Spinner } from '../../components/Spinner';
+import Spinner from '../../components/Spinner';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps>  {
   navigation: NavigationScreenProp<RegisterEndScreen>

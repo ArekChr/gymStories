@@ -8,7 +8,7 @@ import SearchScreen from '../screens/SearchScreen'
 import ActiveTab from '../screens/ActiveScreen'
 import MyProfileScreen from '../screens/MyProfileScreen'
 import AddProgressScreen from '../screens/AddProgressScreen'
-import CommentScreen from '../screens/CommentsScreen';
+import CommentsScreen from '../screens/CommentsScreen';
 import NewPostScreen from '../screens/NewPostScreen';
 import SettingsScreen from '../screens/SettingsScreen'
 import EditProfileScreen from '../screens/EditProfileScreen'
@@ -79,7 +79,14 @@ const HomeTabStackNavigator = createStackNavigator({
 
 const SearchTabStackNavigator = createStackNavigator({
   SearchTab: SearchScreen,
-  ProfileScreen: ProfileScreen
+  ProfileScreen: ProfileScreen,
+  PostScreen: PostScreen,
+  CommentsScreen: {
+    screen: CommentsScreen,
+    navigationOptions: {
+      title: 'Komentarze'
+    }
+  },
 })
 
 
@@ -91,8 +98,15 @@ const ProfileStackNavigator = createStackNavigator({
   Settings: SettingsScreen,
   Follow: FollowScreen,
   ProfileScreen: ProfileScreen,
-  PostScreen: PostScreen
+  PostScreen: PostScreen,
+  CommentsScreen: {
+    screen: CommentsScreen,
+    navigationOptions: {
+      title: 'Komentarze'
+    }
+  },
 },{
+  mode: 'card',
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
       backgroundColor: HEADER_WHITE,
@@ -254,8 +268,8 @@ const HomeStackNavigator = createStackNavigator({
     screen: StoryScreen,
     navigationOptions: { header: null }
   },
-  CommentScreen: {
-    screen: CommentScreen,
+  CommentsScreen: {
+    screen: CommentsScreen,
     navigationOptions: {
       title: 'Komentarze'
     }

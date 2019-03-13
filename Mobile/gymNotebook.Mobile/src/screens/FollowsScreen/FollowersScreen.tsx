@@ -6,7 +6,7 @@ import { AppState } from '../../redux';
 import { Profile, ProfileBasic } from '../../redux/profile/types';
 import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
 import { Fonts } from '../../styles';
-import { Spinner } from '../../components/Spinner';
+import Spinner from '../../components/Spinner';
 import FollowProfiles from './FollowProfiles';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {

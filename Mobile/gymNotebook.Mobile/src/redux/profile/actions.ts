@@ -2,10 +2,10 @@ import axios from 'axios'
 import { ProfileActionTypes, ProfileDto, Profile } from './types'
 import { Dispatch } from 'redux'
 import firebase from 'react-native-firebase';
-import { QuerySnapshot } from 'react-native-firebase/firestore';
+import { QuerySnapshot, DocumentSnapshot } from 'react-native-firebase/firestore';
 import R from 'ramda';
 
-function mapSnapshotToProfiles(snapshot: QuerySnapshot) {
+export function mapSnapshotToProfiles(snapshot: QuerySnapshot) {
   let docs = snapshot.docs
   if(docs.length > 0) {
     let profiles: Profile[] = []
@@ -15,6 +15,16 @@ function mapSnapshotToProfiles(snapshot: QuerySnapshot) {
     } as Profile))
     
     return profiles
+  }
+  return null
+}
+
+export function mapSnapshotToProfile(doc: DocumentSnapshot) {
+  if(doc) {
+    return {
+      id: doc.id, 
+      ...doc.data()
+    } as Profile
   }
   return null
 }
