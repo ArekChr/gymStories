@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Modal, StatusBar } from 'react-native';
-import { Spinner } from './Spinner';
+import Spinner from './Spinner';
 
 interface Props {
   modal: boolean

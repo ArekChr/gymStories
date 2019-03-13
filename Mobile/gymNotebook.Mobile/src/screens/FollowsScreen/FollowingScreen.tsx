@@ -5,7 +5,7 @@ import { Dispatch } from 'redux'
 import { AppState } from '../../redux';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
 import { Fonts } from '../../styles';
-import { Spinner } from '../../components/Spinner';
+import Spinner from '../../components/Spinner';
 import { Profile, ProfileBasic } from '../../redux/profile/types';
 import FollowProfiles from './FollowProfiles';
 

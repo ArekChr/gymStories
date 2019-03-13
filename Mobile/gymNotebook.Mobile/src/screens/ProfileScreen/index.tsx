@@ -10,8 +10,8 @@ import { SquarePhoto } from '../../components';
 import { fetchPosts } from '../../redux/post/actions';
 import { Post } from '../../redux/post/types';
 import { follow, unfollow } from '../../redux/follow/actions';
-import { Spinner } from '../../components/Spinner';
-import Posts from '../../components/Posts';
+import Spinner from '../../components/Spinner';
+import Posts, { ReactPost } from '../../components/Posts';
 import UserName from '../../components/UserName';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
@@ -20,7 +20,7 @@ interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof
 
 interface State {
   profile: Profile
-  posts: Post[] | null
+  posts: Post[]
   refreshing: boolean
   loading: boolean
   following: boolean
@@ -30,7 +30,7 @@ class ProfileScreen extends React.Component<Props, State> {
 
   state: State = {
     profile: {} as Profile,
-    posts: null,
+    posts: [] as Post[],
     refreshing: false,
     loading: true,
     following: false
@@ -82,6 +82,27 @@ class ProfileScreen extends React.Component<Props, State> {
         followersCount: this.state.profile.followersCount + 1
       }})
     }
+  }
+
+  onPostClick = (post: ReactPost) => {
+    this.props.navigation.push('PostScreen', { 
+      post: post,
+      profile: this.state.profile,
+      updatePost: this.updatePost
+    })
+  }
+
+  updatePost = (post: ReactPost) => {
+    let { key, empty, ...reducedPost } = post
+    reducedPost = reducedPost as Post
+    const newPosts: Post[] = this.state.posts.map(oldPost => {
+      if(oldPost.id === reducedPost.id) {
+        return reducedPost
+      } else {
+        return oldPost
+      }
+    })
+    this.setState({ posts: newPosts })
   }
 
   render() {
@@ -136,7 +157,7 @@ class ProfileScreen extends React.Component<Props, State> {
               <UserName firstName={profile.firstName} lastName={profile.lastName} />
               <Text>{profile.description}</Text>
             </View>
-            <Posts posts={this.state.posts} />
+            <Posts postClick={this.onPostClick} posts={this.state.posts} />
           </View>
         </ScrollView>
       </View>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Image, TouchableOpacity, StyleProp, ImageStyle, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import { Image, StyleProp, ImageStyle, StyleSheet, TouchableWithoutFeedback } from 'react-native'
 
 interface Props {
   source: string | null
@@ -8,7 +8,7 @@ interface Props {
   size?: 'small' | 'medium' | 'large'
 }
 
-export default class SquarePhoto extends Component<Props, {}>{
+export default class SquarePhoto extends Component<Props>{
 
   render() {
     const source = this.props.source ? { uri: this.props.source } : require('../../images/default-user.png')
@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
     borderRadius: 45
   },
   small: {
-    width: 30, 
-    height: 30
+    width: 35, 
+    height: 35
   },
   medium: {
     width: 50,

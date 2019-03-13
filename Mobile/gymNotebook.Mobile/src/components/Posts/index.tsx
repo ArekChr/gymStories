@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Text, FlatList, ListRenderItemInfo, Dimensions, Image, View, TouchableWithoutFeedback } from 'react-native'
 import { Post } from '../../redux/post/types';
 
-interface AppProps {
+interface Props {
   posts: Post[] | null
   postClick: (post: ReactPost) => void
 }
@@ -27,7 +27,19 @@ const formatData = (data: ReactPost[], numberColumns: number) => {
   return data
 }
 
-export default class Posts extends React.Component<AppProps> {
+export default class Posts extends React.Component<Props> {
+
+  componentDidMount() {
+    if(this.props.posts) {
+      this.setState({ posts: this.props.posts})
+    }
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
+    if(nextProps.posts) {
+      this.setState({ posts: nextProps.posts})
+    }
+  }
 
   keyExtractor = (item: Post, index: number) => item.id;
 

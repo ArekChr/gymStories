@@ -12,6 +12,7 @@ import { fetchMyFollowers, fetchMyFollowing, fetchFollowingProfiles, fetchFollow
 import { Follow } from '../../redux/follow/types';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
 import UserName from '../../components/UserName';
+import { Post } from '../../redux/post/types';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<MyProfileScreen>
@@ -19,44 +20,9 @@ interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof
 
 class MyProfileScreen extends Component<Props> {
 
-  // TODO: get previous state from asyncStorage 
-
   state = {
     refreshing: false,
-    profile: {
-      firstName: {
-        label: '',
-        value: ''
-      },
-      lastName: {
-        label: '',
-        value: ''
-      },
-      description: {
-        label: '',
-        value: ''
-      },
-      email: {
-        label: '',
-        value: ''
-      },
-      gender: {
-        label: '',
-        value: ''
-      },
-      followingCount: {
-        label: '',
-        value: 0
-      },
-      followersCount: {
-        label: '',
-        value: 0
-      },
-      posts: {
-        label: '',
-        value: 0
-      }
-    }
+    myPosts: [] as Post[]
   }
 
   static navigationOptions = ({ navigation }: NavigationScreenProps) => {
@@ -82,9 +48,13 @@ class MyProfileScreen extends Component<Props> {
 
   componentDidMount() {
     this.setState({ loading: true })
-    this.props.fetchMyPosts(this.props.myProfile.id, 20, () => {
-      this.setState({ loading: false })
+    this.props.fetchMyPosts(this.props.myProfile.id, 20, (myPosts) => {
+      this.setState({ loading: false, myPosts: myPosts })
     })
+  }
+
+  componentWillReceiveProps(nextProps: Props) {
+    this.setState({ myPosts: nextProps.myPosts})
   }
 
   onRefresh = () => {
@@ -111,8 +81,22 @@ class MyProfileScreen extends Component<Props> {
   onPostClick = (post: ReactPost) => {
     this.props.navigation.push('PostScreen', { 
       post: post,
-      profile: this.props.myProfile
+      profile: this.props.myProfile,
+      updatePost: this.updatePost
     })
+  }
+
+  updatePost = (post: ReactPost) => {
+    let { key, empty, ...reducedPost } = post
+    reducedPost = reducedPost as Post
+    const newPosts: Post[] = this.state.myPosts.map(oldPost => {
+      if(oldPost.id === reducedPost.id) {
+        return reducedPost
+      } else {
+        return oldPost
+      }
+    })
+    this.setState({ myPosts: newPosts })
   }
 
   render() {
@@ -166,7 +150,7 @@ class MyProfileScreen extends Component<Props> {
               <Text>{myProfile.description}</Text>
             </View>
           </View>
-          <Posts postClick={this.onPostClick} posts={this.props.myPosts} />
+          <Posts postClick={this.onPostClick} posts={this.state.myPosts} />
         </ScrollView>
       </View>
     )
@@ -184,7 +168,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchMyProfile: (uid: string, cb?: () => void) => fetchMyProfile(uid, cb)(dispatch),
-  fetchMyPosts: (id: string, quantity: number, cb?: () => void) => fetchMyPosts(id, quantity, cb)(dispatch),
+  fetchMyPosts: (id: string, quantity: number, cb?: (myPosts: Post[]) => void) => fetchMyPosts(id, quantity, cb)(dispatch),
   fetchMyFollowers: (profileId: string) => fetchMyFollowers(profileId)(dispatch),
   fetchMyFollowing: (profileId: string) => fetchMyFollowing(profileId)(dispatch),
   fetchFollowingProfiles: (following: Follow[]) => fetchFollowingProfiles(following)(dispatch),

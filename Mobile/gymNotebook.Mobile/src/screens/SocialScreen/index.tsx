@@ -81,7 +81,7 @@ class SocialScreen extends Component<Props> {
   }
 
   onCommentShowPressed = (id: string) => {
-    this.props.navigation.navigate('CommentScreen',{
+    this.props.navigation.navigate('CommentsScreen',{
       postId: id
     })
   }
