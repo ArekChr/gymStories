@@ -154,6 +154,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fast-image')
     implementation project(':react-native-firebase')
     implementation project(':react-native-video')
     implementation project(':react-native-linear-gradient')

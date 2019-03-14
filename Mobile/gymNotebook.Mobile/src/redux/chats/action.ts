@@ -1,93 +1,61 @@
-import { Dispatch } from "redux";
 import firebase from "react-native-firebase";
-import { ChatActionTypes } from "./types";
 
-export const fetchMessages = (chatId: string, quantity: number) => {
-    return (dispatch: Dispatch) => {
-        dispatch({
-            type: ChatActionTypes.FETCH_MESSAGES_REQ
-        })
+export const fetchMessages = (chatId: string, quantity: number, startDate: number) => {
+    firebase.firestore().collection('chats').doc(chatId).collection('messages')
+        .orderBy('createdAt', 'DESC').where('createdAt', '<=', startDate)
+        .limit(20).get().then(snapshot => {
 
-        firebase.database().ref(`messages/${chatId}`)
-        .orderByChild('timestamp')
-        .limitToFirst(quantity)
-        .on('value', (snapshot) => {
-
-            dispatch({
-                type: ChatActionTypes.FETCH_MESSAGES_SUC
-            })
-        })
-    }
+        const documents = snapshot.docs
+        if(documents.length > 0) {
+            return documents
+        } else {
+            return []
+        }
+    })
 }
 
-export const sendMessage = (chatId: string, userId: string, message: string) => {
-    return (dispatch: Dispatch) => {
-        dispatch({
-            type: ChatActionTypes.SEND_MESSAGE_REQ
-        })
-
-        firebase.database().ref(`messages/${chatId}`).push({
-            message: message,
-            sender: userId,
-            timestamp: new Date().getTime()
-        })
-        .then(() => {
-            dispatch({
-                type: ChatActionTypes.SEND_MESSAGE_SUC
-            })
-        })
-    }
+export const sendMessage = (chatId: string, senderId: string, content: string ) => {
+    firebase.firestore().collection('chats').doc(chatId).collection('messages').add({
+        userId: senderId,
+        content: content,
+        createdAt: new Date().getTime()
+    })
 }
 
-// TODO: investigate if can fetch data with limit of nest, if not, create chat relations otherwise create created chats inside profile
+export const createChat = (senderId: string, receiverId: string) => {
+    firebase.firestore().collection('chats').add({
+        lastMessage: '',
+        createdAt: new Date().getTime(),
+        userIds: [
+            senderId,
+            receiverId,
+        ]
+    }).then(reference => {
+        const profilesRef = firebase.firestore().collection('profiles')
+        profilesRef.doc(senderId).collection('chats').add(reference)
+        profilesRef.doc(receiverId).collection('chats').add(reference)
+
+        return reference
+    })
+}
+
 export const fetchChats = (userId: string) => {
-    return (dispatch: Dispatch) => {
-        dispatch({
-            type: ChatActionTypes.FETCH_CHATS_REQ
-        })
+    firebase.firestore().collection('profiles').doc(userId).collection('chats').get().then(snapshot => {
+        const documents = snapshot.docs
+        if (documents.length > 0) {
 
-        firebase.database().ref(`chats/${userId}`).once('value').then((response) => {
+            let chats: any = []
 
-
-            dispatch({
-                type: ChatActionTypes.FETCH_CHATS_SUC
-            })
-        })
-    }
-}
-
-export const openNewChat = (senderId: string, recipientId: string) => {
-    return (dispatch: Dispatch) => {
-        dispatch({
-            type: ChatActionTypes.CREATE_NEW_CHAT_REQ
-        })
-
-        let chatId = ''
-        firebase.database().ref(`messages`).push({
-            userId: senderId,                          // init? "senderId opened new chat"
-            init: true,
-            message: ''
-        }).then((response) => {
-            // TODO: set chatId
-            response
-            chatId // = response.chatId ? 
-
-            firebase.database().ref(`chats/${senderId}`).push({
-                userId: recipientId,
-                chatId: chatId
-            })
-            .then(() => {
-                firebase.database().ref(`chats/${recipientId}`).push({
-                    userId: senderId,
-                    chatId: chatId
-                }).then(() => {
-
-
-                    dispatch({
-                        type: ChatActionTypes.CREATE_NEW_CHAT_SUC
-                    })
+            documents.forEach(x => {
+                firebase.firestore().collection('chats').doc(x.id as string).get().then(chatSnapschot => {
+                    chats.push(chatSnapschot.data())
                 })
             })
-        })
-    }
+
+            return chats
+            
+        } else {
+            return []
+        }
+    })
 }

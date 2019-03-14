@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Text, FlatList, ListRenderItemInfo, Dimensions, Image, View, TouchableWithoutFeedback } from 'react-native'
+import { FlatList, ListRenderItemInfo, Dimensions, View, TouchableWithoutFeedback } from 'react-native'
 import { Post } from '../../redux/post/types';
+import FastImage from 'react-native-fast-image'
 
 interface Props {
   posts: Post[] | null
@@ -51,7 +52,7 @@ export default class Posts extends React.Component<Props> {
       return (
         <TouchableWithoutFeedback onPress={() => this.props.postClick(item)}>
           <View key={item.id} style={{display: 'flex', marginBottom: margin * 2}}>
-            <Image style={{width: length, height: length}} source={{uri: item.imageURL}}></Image>
+            <FastImage style={{width: length, height: length}} source={{uri: item.imageURL}}></FastImage>
           </View>
         </TouchableWithoutFeedback>
       )

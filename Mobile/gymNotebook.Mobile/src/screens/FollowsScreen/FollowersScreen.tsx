@@ -31,7 +31,7 @@ class FollowersScreen extends Component<Props> {
   }
 
   onProfileClick = (profile: ProfileBasic) => {
-    this.props.screenProps.navigation.push('ProfileScreen', {
+    this.props.screenProps.navigation.navigate('ProfileScreen', {
       profileId: profile.profileId,
       profile: profile
     })

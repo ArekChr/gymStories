@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, ScaledSize, ScrollView, StatusBar } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Dimensions, ScaledSize, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux';
 import { Dispatch } from 'redux';
@@ -63,7 +63,7 @@ class NewPostScreen extends React.Component<Props> {
     const margin = 20;
     return (
       <View >
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="handled">
           <PostImage style={{margin: margin, marginBottom: 0}} width={window.width - 2 * margin} source={{uri: this.state.pickedImage.path}}/>
           <TextInput onChangeText={(text) => this.setDescription(text)} style={{marginLeft: margin, marginRight: margin}} placeholder="Dodaj podpis..."></TextInput>
         </ScrollView>

@@ -92,7 +92,7 @@ export default class FloatingInput extends Component<AllProps> {
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           blurOnSubmit
-          selectionColor={PRIMARY_COLOR}
+          selectionColor="red"
         />
       </View>
     );

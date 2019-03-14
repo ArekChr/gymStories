@@ -5,7 +5,7 @@ interface Props {
   source: string | null
   onPress?: () => void
   style?: StyleProp<ImageStyle>
-  size?: 'small' | 'medium' | 'large'
+  size?: 'small'| 'xmedium' | 'medium' | 'large'
 }
 
 export default class SquarePhoto extends Component<Props>{
@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
   small: {
     width: 35, 
     height: 35
+  },
+  xmedium: {
+    width: 40, 
+    height: 40
   },
   medium: {
     width: 50,

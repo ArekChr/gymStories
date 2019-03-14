@@ -34,7 +34,7 @@ class SearchScreen extends Component<Props, State> {
   }
 
   onProfilePress = (profile: Profile) => {
-    this.props.navigation.push('ProfileScreen', {
+    this.props.navigation.navigate('ProfileScreen', {
       profile: profile,
       profileId: profile.id
     })
@@ -94,8 +94,8 @@ class SearchScreen extends Component<Props, State> {
             />
           </View>
         </View>
-        <ScrollView>
-        {this.renderUsers()}
+        <ScrollView keyboardShouldPersistTaps="handled" >
+          {this.renderUsers()}
         </ScrollView>
       </View>
     )

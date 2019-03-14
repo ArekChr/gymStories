@@ -52,7 +52,7 @@ class CommentsScreen extends React.PureComponent<Props> {
       nickname: comment.nickname
     } as Profile
 
-    this.props.navigation.push('ProfileScreen', {
+    this.props.navigation.navigate('ProfileScreen', {
       profileId: comment.userId,
       profile: profile
     })
@@ -120,7 +120,7 @@ class CommentsScreen extends React.PureComponent<Props> {
       return 
     }
     if(comments.length === 0) {
-      return <ScrollView></ScrollView>
+      return <ScrollView keyboardShouldPersistTaps="handled"></ScrollView>
     }
     return (
       comments.map((comment, i: number) => {
@@ -143,7 +143,7 @@ class CommentsScreen extends React.PureComponent<Props> {
   render() {
     return (
       <View style={{flex: 1}}>
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="handled">
           {this.renderPostDetails()}
           {this.renderComments()}
         </ScrollView>
