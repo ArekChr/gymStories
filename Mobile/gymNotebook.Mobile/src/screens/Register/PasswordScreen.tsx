@@ -68,7 +68,7 @@ class PasswordScreen extends Component<Props> {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.registerContainer}>
           <TitleComponent>Wprowadż swoje hasło</TitleComponent>
           <ErrorMessage>{this.state.error}</ErrorMessage>

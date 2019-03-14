@@ -41,6 +41,9 @@ import { Fonts } from '../styles'
 import ProfileScreen from '../screens/ProfileScreen';
 import FollowScreen from '../screens/FollowsScreen';
 import PostScreen from '../screens/PostScreen';
+import ChatsScreen from '../screens/ChatsScreen';
+import SearchChatsScreen from '../screens/SearchChatsScreen';
+import ConversationScreen from '../screens/ConversationScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -59,7 +62,9 @@ const ProgressTabStackNavigator = createStackNavigator({
 })
 
 const HomeTabStackNavigator = createStackNavigator({
-  HomeTab: { screen: SocialScreen }
+  HomeTab: { 
+    screen: SocialScreen 
+  }
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -241,16 +246,9 @@ const RegisterLoadingSwitchNavigator = createSwitchNavigator({
   }
 })
 
-const MainDrawerNavigator = createDrawerNavigator({
-  Home: AppTabNavigator
-}, {
-  drawerPosition:'right',
-  drawerLockMode: 'unlocked'
-})
-
 const HomeStackNavigator = createStackNavigator({
   HomeScreen: {
-    screen: MainDrawerNavigator,
+    screen: AppTabNavigator,
     navigationOptions: {
       header: null
     }
@@ -278,6 +276,24 @@ const HomeStackNavigator = createStackNavigator({
     screen: NewPostScreen,
     navigationOptions: {
       title: 'Nowy post'
+    }
+  },
+  ChatsScreen: { 
+    screen: ChatsScreen,
+    navigationOptions: {
+      title: 'Czaty'
+    }
+  },
+  SearchChatsScreen: {
+    screen: SearchChatsScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ConversationScreen: {
+    screen: ConversationScreen,
+    navigationOptions: {
+      header: null
     }
   }
 },{

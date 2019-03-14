@@ -43,7 +43,7 @@ class MyProfileScreen extends Component<Props> {
     const { myFollowing, myFollowers } = this.props
     this.props.fetchFollowingProfiles(myFollowing)
     this.props.fetchFollowersProfiles(myFollowers, myFollowing)
-    this.props.navigation.push('Follow', { profile: this.props.myProfile })
+    this.props.navigation.navigate('Follow', { profile: this.props.myProfile })
   }
 
   componentDidMount() {
@@ -79,7 +79,7 @@ class MyProfileScreen extends Component<Props> {
   }
 
   onPostClick = (post: ReactPost) => {
-    this.props.navigation.push('PostScreen', { 
+    this.props.navigation.navigate('PostScreen', { 
       post: post,
       profile: this.props.myProfile,
       updatePost: this.updatePost

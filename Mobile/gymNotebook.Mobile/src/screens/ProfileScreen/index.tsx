@@ -85,7 +85,7 @@ class ProfileScreen extends React.Component<Props, State> {
   }
 
   onPostClick = (post: ReactPost) => {
-    this.props.navigation.push('PostScreen', { 
+    this.props.navigation.navigate('PostScreen', { 
       post: post,
       profile: this.state.profile,
       updatePost: this.updatePost

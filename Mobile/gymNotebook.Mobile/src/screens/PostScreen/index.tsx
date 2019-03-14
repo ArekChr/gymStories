@@ -174,7 +174,7 @@ class PostScreen extends Component<Props, State> {
     }
     return (
       <View >
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="handled">
           <View style={{ height: 50, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
             <View style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
               <SquarePhoto size="small" source={profile.imageURL} style={{margin: 10}} /> 

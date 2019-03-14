@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { LineChart, Grid, XAxis, YAxis } from 'react-native-svg-charts'
@@ -75,7 +75,7 @@ class ActiveTab extends Component<Props> {
         </View>
         <ProgressModal />
 
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="handled">
           <View style={{ height: 200, padding: 10, flexDirection: 'row' }}>
           {/* FIXME: remove gray x axis beginning start value and y axis last balue  */}
             <YAxis

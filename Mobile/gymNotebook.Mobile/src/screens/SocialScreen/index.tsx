@@ -46,8 +46,8 @@ class SocialScreen extends Component<Props> {
           <TouchableOpacity style={styles.icon} onPress={navigation.getParam('onPostAdd')}>
             <MaterialIcons name="add-a-photo" size={28} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.icon}>
-            <Ionicons name="ios-send" size={28} color="black" />
+          <TouchableOpacity style={styles.icon} onPress={navigation.getParam('onMessagesClick')}>
+          <FontAwesome name="send-o" size={25} color="black" />
           </TouchableOpacity>
         </>
       )
@@ -56,11 +56,11 @@ class SocialScreen extends Component<Props> {
   
   componentDidMount() {
     this.setState({ win: Dimensions.get("window") });
-    this.props.navigation.setParams({ onPostAdd: this._onPostAdd})
+    this.props.navigation.setParams({ onPostAdd: this._onPostAdd, onMessagesClick: this._onMessagesClick })
   }
 
-  componentWillUnmount() {
-
+  _onMessagesClick = () => {
+    this.props.navigation.navigate('ChatsScreen')
   }
 
   _onPostAdd = () => {
@@ -74,7 +74,7 @@ class SocialScreen extends Component<Props> {
       cropping: true,
       freeStyleCropEnabled: true
     }).then((image) => {
-      this.props.navigation.push('NewPostScreen', {
+      this.props.navigation.navigate('NewPostScreen', {
         pickedImage: { ...image}
       })
     });
@@ -288,7 +288,7 @@ class SocialScreen extends Component<Props> {
 
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor={"#eee"} barStyle="dark-content" />
+        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
         <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}/>}>
           {this.renderVideoRelationsBar()}
           {this.renderPosts(posts)}

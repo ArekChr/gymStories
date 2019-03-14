@@ -65,14 +65,14 @@ class LoginScreen extends Component<Props> {
     if(this.state.loading){
       return (
         <View style={styles.loading}>
-          <StatusBar backgroundColor={STATUS_BAR_COLOR} />
+          <StatusBar barStyle="dark-content" />
           <Spinner />
         </View>
       )
     } else {
       return(
         <View style={styles.container}>
-          <StatusBar backgroundColor={STATUS_BAR_COLOR} />
+          <StatusBar barStyle="dark-content" />
           <Logo/>
           <LoginForm onLoginSuccess={this.onLoginSuccess}/>
           <View style={styles.signupTextCont}>

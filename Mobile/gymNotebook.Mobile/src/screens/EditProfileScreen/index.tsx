@@ -151,7 +151,7 @@ class EditProfileScreen extends Component<Props> {
     const { imageURL } = this.props.myProfile;
     const { pickedImage } = this.state
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <View style={{ margin: 10}}>
           <View style={{justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
             <SquarePhoto onPress={this.onPhotoPress} source={pickedImage ? pickedImage.path : imageURL ? imageURL : null}/>
