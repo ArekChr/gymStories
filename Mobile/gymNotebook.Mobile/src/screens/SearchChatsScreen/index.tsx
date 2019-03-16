@@ -93,7 +93,8 @@ class SearchChatsScreen extends Component<Props, State> {
 const styles = StyleSheet.create({
   profileTab: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   photo: { 
     margin: 10,

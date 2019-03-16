@@ -116,7 +116,7 @@ class MyProfileScreen extends Component<Props> {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <SquarePhoto onPress={this.onPhotoClicked} source={myProfile.imageURL} />
+                  <SquarePhoto size='xlarge' onPress={this.onPhotoClicked} source={myProfile.imageURL} />
                 </View>
                   <View style={{ flex: 3 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>

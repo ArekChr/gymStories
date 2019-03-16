@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Keyboard, EmitterSubscription } from 'react-native'
+import { View, Text, ScrollView, StyleSheet, TextInput, TouchableOpacity, Animated, Easing, TouchableWithoutFeedback, Keyboard, EmitterSubscription, Vibration } from 'react-native'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
@@ -14,6 +14,9 @@ import { SquarePhoto } from '../../components'
 import Feather from 'react-native-vector-icons/Feather'
 import LinearGradient from 'react-native-linear-gradient';
 import { Fonts } from '../../styles';
+import { createChat, sendMessage } from '../../redux/chats/action'
+import { Message, Chat, ChatDto } from '../../redux/chats/types'
+import firebase from 'react-native-firebase'
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<ConversationScreen>
@@ -22,16 +25,20 @@ interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof
 class ConversationScreen extends Component<Props> {
 
   state = {
-    isNewChat: true,
+    messages: [] as Message[],
     profile: {} as Profile,
-    loading: true,
+    chat: {} as Chat,
+    widthAnim: new Animated.Value(0),
     message: '',
-    focused: false,
-    widthAnim: new Animated.Value(0)
+    isNewChat: true,
+    loading: true,
+    focused: false
   }
 
   keyboardDidHideListener: EmitterSubscription = {} as EmitterSubscription
   keyboardDidShowListener: EmitterSubscription = {} as EmitterSubscription
+  scrollView: ScrollView = {} as ScrollView
+  unsubscribe: () => void | null = () => null 
 
   componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener(
@@ -46,23 +53,33 @@ class ConversationScreen extends Component<Props> {
     const { navigation } = this.props;
     const isNewChat: boolean = navigation.getParam('isNewChat')
     const profile: Profile = navigation.getParam('profile')
-    this.setState({ isNewChat, profile, loading: false })
+    const chat: ChatDto = navigation.getParam('chat')
+
+    this.setState({ isNewChat, profile, loading: false, chat })
+
+    this.unsubscribe = firebase.firestore().collection('chats').doc(chat.id).collection('messages').orderBy('createdAt', 'ASC').onSnapshot(docSnapshot => {
+      let newMessages: any[] = []
+      docSnapshot.docChanges.forEach(change => {
+        if (change.type === 'added') {
+          newMessages.push(change.doc.data())
+        }
+      })
+      // Vibration.vibrate(100, false)
+      this.setState({ messages: [
+        ...this.state.messages,
+        ...newMessages
+      ]})
+    })
   }
 
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
+    this.unsubscribe()
   }
 
-  _keyboardDidHide = () => {
-    // if(this.onBlur instanceof Function ) {
-      this.onBlur()
-    // }
-  }
-
-  _keyboardDidShow = () => {
-    this.onFocus()
-  }
+  _keyboardDidHide = () => this.onBlur()
+  _keyboardDidShow = () => this.onFocus()
 
   onFocus = () => {
     this.setState({ focused: true})
@@ -87,12 +104,93 @@ class ConversationScreen extends Component<Props> {
   }
 
   onChangeText = (text: string) => {
-    if(this.state.focused) {
-      this.setState({ message: text })
-    } else {
-      this.onFocus()
-      this.setState({ message: text })
+    this.setState({ message: text })
+  }
+
+  sendMessage = (chatId: string, senderId: string, message: string) => {
+    const messageObj: Message = {
+      content: message,
+      createdAt: new Date().getTime(),
+      userId: senderId
     }
+    sendMessage(chatId as string, messageObj).then(() => {
+
+    })
+  }
+
+  sendEmoji = () => {
+    const { myId } = this.props
+    const { chat } = this.state
+    this.sendMessage(chat.id as string, myId, '👍')
+    this.onBlur()
+  }
+
+  onSendMessageClick = () => {
+    const { myId } = this.props
+    const { profile, message, chat } = this.state
+
+    if(this.state.isNewChat) {
+      createChat(myId, profile.id, message).then((reference) => {
+        this.setState({ isNewChat: false, chat: {
+          id: reference.id
+        }})
+        this.sendMessage(reference.id as string, myId, message)
+      })
+    } else {
+      this.sendMessage(chat.id as string, myId, message)
+    }
+    this.setState({ message: '' })
+    this.onBlur()
+  }
+
+  isEmoji(str: string) {
+    var ranges = [
+        '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
+        '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
+        '\ud83d[\ude80-\udeff]', // U+1F680 to U+1F6FF
+        '\u0000[\u0e80-\uffff]'
+    ];
+    if (str.match(ranges.join('|'))) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+
+  renderMessages() {
+    const { messages } = this.state
+    let nextId = ""
+    return messages.map((message, i) => {
+      const me = this.props.myId === message.userId
+      const isPrev = nextId === message.userId
+      const isNext = i + 1 >= messages.length ? false : messages[i + 1].userId === message.userId
+      nextId = message.userId
+      const isEmoji = this.isEmoji(message.content)
+      return (
+        <View key={message.createdAt} style={{ display: 'flex', alignItems: me? 'flex-end' : 'flex-start'}}>
+          <Text style={[{ borderRadius: 19, 
+            minHeight: 30, 
+            minWidth: isEmoji? 10: 35, 
+            maxWidth: '70%', display: 'flex', 
+            justifyContent:"center", 
+            fontSize: isEmoji? 30 : 16, 
+            backgroundColor: isEmoji ? 'transparent' : me? '#0084ff' : '#EFEFEF',
+            paddingTop: isEmoji? 0 : 8, 
+            paddingBottom: isEmoji? 0 : 8, 
+            paddingLeft: isEmoji? 0 : 12, 
+            paddingRight: isEmoji? 0 : 12,
+            marginRight: 15, 
+            marginLeft: 15, 
+            marginBottom: 3, 
+            borderTopRightRadius: me? isPrev ? 3 : 19 : 19, 
+            borderTopLeftRadius: me? 19: isPrev ? 3 : 19,
+            borderBottomRightRadius: me? isNext ? 3 : 19 : 19,
+            borderBottomLeftRadius: me? 19 : isNext ? 3 : 19,
+            alignItems:'center', }, me? styles.myMessage : styles.friendMessage]}>{message.content}</Text>
+        </View>
+        )
+      }
+    )
   }
 
   render() {
@@ -117,8 +215,12 @@ class ConversationScreen extends Component<Props> {
           </View>
         </View>
         <LinearGradient colors={['#DDD', '#FFF']} style={{ display: 'flex', width: '100%', height: 3 }}/>
-        <ScrollView keyboardShouldPersistTaps="handled">
-
+        <ScrollView keyboardShouldPersistTaps="handled" 
+          ref={(ref: ScrollView) => this.scrollView = ref}
+          onContentSizeChange={(width, height) => {
+            this.scrollView.scrollToEnd({animated: true})
+          }}>
+          {this.renderMessages()}
         </ScrollView>
         <View style={{ height: 45, display: 'flex', bottom: 0, flexDirection: 'row', alignItems: 'center' }}>
           {
@@ -153,15 +255,15 @@ class ConversationScreen extends Component<Props> {
                 onBlur={() => this.onBlur()}
                 style={{ backgroundColor: '#EEE', fontSize: 16, 
                   minHeight: 20, maxHeight: 122, padding: 0, borderRadius: 20,
-                  paddingRight: 32, paddingLeft: 10, paddingTop: 4, paddingBottom: 4, marginBottom: 6
+                  paddingRight: 32, paddingLeft: 12, paddingTop: 4, paddingBottom: 4, marginBottom: 6
                 }} />
             </View>
             {this.state.message === '' ?
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => this.sendEmoji()}>
                 <FontAwesome name="thumbs-up" size={25} style={[styles.icon, { marginRight: 9, marginBottom: 12 }]} />
               </TouchableOpacity>
               :
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => this.onSendMessageClick()}>
                 <FontAwesome name="send" size={25} style={[styles.icon, { marginRight: 9, marginBottom: 12 }]} />
               </TouchableOpacity>
             }
@@ -179,10 +281,16 @@ const styles = StyleSheet.create({
     width: 28,
     color: '#0084ff'
   },
+  myMessage: {
+    color: 'white'
+  },
+  friendMessage: {
+    color: 'black'
+  }
 })
 
 const mapStateToProps = (state: AppState) => ({
-
+  myId: state.Profile.myProfile.id
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
