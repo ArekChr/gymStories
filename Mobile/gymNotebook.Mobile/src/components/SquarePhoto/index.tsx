@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { Image, StyleProp, ImageStyle, StyleSheet, TouchableWithoutFeedback } from 'react-native'
+import FastImage from 'react-native-fast-image';
 
 interface Props {
   source: string | null
   onPress?: () => void
   style?: StyleProp<ImageStyle>
-  size?: 'small'| 'xmedium' | 'medium' | 'large'
+  size?: 'small'| 'xmedium' | 'medium' | 'large' | 'xlarge'
 }
 
 export default class SquarePhoto extends Component<Props>{
@@ -16,7 +17,7 @@ export default class SquarePhoto extends Component<Props>{
 
     return (
       <TouchableWithoutFeedback onPress={() => this.props.onPress ? this.props.onPress() : null}>
-        <Image style={[styles.imageStyle, styles[size], this.props.style]} source={source} />
+        <FastImage style={[{borderRadius: 45}, styles[size], this.props.style]} source={source} />
       </TouchableWithoutFeedback>
     )
   }
@@ -39,6 +40,10 @@ const styles = StyleSheet.create({
     height: 50
   },
   large: {
+    width: 55, 
+    height: 55
+  },
+  xlarge: {
     width: 90, 
     height: 90
   }

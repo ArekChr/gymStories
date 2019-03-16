@@ -123,7 +123,7 @@ class ProfileScreen extends React.Component<Props, State> {
           <View style={{ paddingTop: 15 }}>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
-                  <SquarePhoto source={profile.imageURL} />
+                  <SquarePhoto size='xlarge' source={profile.imageURL} />
                 </View>
 
                 <View style={{ flex: 3 }}>

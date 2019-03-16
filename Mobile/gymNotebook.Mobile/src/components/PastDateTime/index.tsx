@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Text } from 'react-native'
+import { Text, StyleProp, TextStyle } from 'react-native'
 
 interface AppProps {
-  timestamp: number
+  timestamp: number,
+  style?: StyleProp<TextStyle>
 }
 
 const PastDateTime: React.SFC<AppProps> = (props) => {
@@ -32,7 +33,7 @@ const PastDateTime: React.SFC<AppProps> = (props) => {
       break
   }
   return (
-    <Text style={{ fontSize: 10, color: 'gray', marginTop: 2 }}>{`${time === 0 ? '' : time + ' '}${prefix}`}</Text>
+    <Text style={[{ fontSize: 10, color: 'gray', marginTop: 2 }, props.style? props.style : null ]}>{`${time === 0 ? '' : time + ' '}${prefix}`}</Text>
   )
 };
 

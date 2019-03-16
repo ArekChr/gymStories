@@ -154,7 +154,7 @@ class EditProfileScreen extends Component<Props> {
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={{ margin: 10}}>
           <View style={{justifyContent: 'center', alignSelf: 'center', marginTop: 30 }}>
-            <SquarePhoto onPress={this.onPhotoPress} source={pickedImage ? pickedImage.path : imageURL ? imageURL : null}/>
+            <SquarePhoto size='xlarge' onPress={this.onPhotoPress} source={pickedImage ? pickedImage.path : imageURL ? imageURL : null}/>
             <TextButton style={{ marginTop: 5 }} onPress={this.onPhotoPress}>Zmień zdjęcie</TextButton>
           </View>
           <FloatingInput label={firstName.label}

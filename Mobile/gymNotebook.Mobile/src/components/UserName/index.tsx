@@ -17,8 +17,6 @@ const UserName: React.SFC<Props> = (props) => {
 const styles = StyleSheet.create({
   usernameText: { 
     fontWeight: '600',
-    marginTop: 'auto',
-    marginBottom: 'auto',
     color: 'black'
   }
 })
