@@ -1,26 +1,38 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { TitleComponent } from '../../components'
+import { View, ActivityIndicator } from 'react-native';
+import { TitleComponent, ErrorMessage } from '../../component'
+import { PRIMARY_COLOR } from '../../styles/common'
 import { connect } from 'react-redux';
-import { signUp } from '../../redux/auth/actions';
-import { AppState } from '../../redux';
-import { Profile } from '../../redux/profile/types';
+import { registerUser, login } from '../../store/auth/actions'
+import { setTokens } from '../../utils/misc'
+import { ApplicationState } from '../../store';
+import { Profile } from '../../store/profile/types';
+import { LoginModel, JWT } from '../../store/auth/types';
 import { NavigationScreenProp } from 'react-navigation';
-import { Dispatch } from 'redux';
-import Spinner from '../../components/Spinner';
 
-interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps>  {
+interface Props {
+  registerUser: (profile: Profile, cb: CallableFunction) => Function
+  login: (data: LoginModel) => Function
   navigation: NavigationScreenProp<RegisterEndScreen>
+  loginSuccess: boolean
+  profile: Profile
+  error: Error
+  jwt: JWT
 }
 
 class RegisterEndScreen extends Component<Props> {
 
   componentDidMount(){
-    this.props.signUp(this.props.myProfile)
+    this.props.registerUser(this.props.profile, () => {
+      const {email, password} = this.props.profile
+      this.props.login({email, password})
+    })
   }
 
   onSingUpSuccess = () => {
-    this.props.navigation.navigate('HomeScreen')
+    setTokens(this.props.jwt, () => {
+      this.props.navigation.navigate('HomeScreen')
+    })
   }
 
   render() {
@@ -31,25 +43,27 @@ class RegisterEndScreen extends Component<Props> {
 
     return (
       <View style={{ justifyContent: "center", flex: 1}}>
+        <ErrorMessage>{this.props.error.message}</ErrorMessage>
         <TitleComponent style={{marginTop: 0, marginBottom: 20}}>Rejestrowanie...</TitleComponent>
-        <Spinner />
+        <ActivityIndicator color={PRIMARY_COLOR} size='large'/>
       </View>
     );
   }
 }
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: ApplicationState) => ({
   registerLoading: state.Auth.loading,
   error: state.Auth.error,
   registerSuccess: state.Auth.registerSuccess,
   loginLoading: state.Auth.loading,
   loginSuccess: state.Auth.loginSuccess,
-  myProfile: state.Profile.myProfile,
-  auth: state.Auth.auth
+  profile: state.Profile.profile,
+  jwt: state.Auth.jwt
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  signUp: (myProfile: Profile) => signUp(myProfile)(dispatch)
+const mapDispatchToProps = (dispatch) => ({
+  registerUser: (profile, callback) => registerUser(profile, callback)(dispatch),
+  login: (data) => login(data)(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterEndScreen)

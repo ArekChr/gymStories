@@ -1,131 +1,67 @@
 import axios from 'axios'
-import { ProfileActionTypes, ProfileDto, Profile } from './types'
+import { ProfileActionTypes, ProfileDto } from './types'
+import { API_URL } from '../../utils/misc'
 import { Dispatch } from 'redux'
-import firebase from 'react-native-firebase';
-import { QuerySnapshot, DocumentSnapshot } from 'react-native-firebase/firestore';
-import R from 'ramda';
 
-export function mapSnapshotToProfiles(snapshot: QuerySnapshot) {
-  let docs = snapshot.docs
-  if(docs.length > 0) {
-    let profiles: Profile[] = []
-    snapshot.docs.forEach(x => profiles.push({
-      id: x.id, 
-      ...x.data()
-    } as Profile))
-    
-    return profiles
-  }
-  return null
-}
+const URL: string = `${API_URL}/Profile`;
 
-export function mapSnapshotToProfile(doc: DocumentSnapshot) {
-  if(doc) {
-    return {
-      id: doc.id, 
-      ...doc.data()
-    } as Profile
-  }
-  return null
-}
-
-function comparator(x: Profile ,y: Profile) {
-  return x.id === y.id
-}
-
-export const fetchMyProfile = (userId: string,  cb?: (myProfileId: string) => void) => {
+export const fetchProfile = (callback: Function | undefined) => {
   return (dispatch: Dispatch) => {
     dispatch({
-      type: ProfileActionTypes.FETCH_MY_PROFILE_REQ
+      type: ProfileActionTypes.FETCH_REQ
     })
-    let profileId
-    firebase.firestore().collection('profiles').where('userId', '==', userId).get().then(snapshot => {
-      let doc = snapshot.docs.first()
-      let profile = doc.data()
-      profileId = doc.id
+
+    axios.get(`${URL}`)
+    .then((response) => {
       dispatch({
-        type: ProfileActionTypes.FETCH_MY_PROFILE_SUC,
-        payload: { id: profileId, ...profile } as Profile
+        type: ProfileActionTypes.FETCH_SUC,
+        payload: response.data
       })
-      if(cb && profileId){
-        cb(profileId)
+
+      if(callback instanceof Function){
+        callback()
       }
     })
-  }
-}
-
-export const fetchProfile = (profileId: string, cb?: (profile: Profile) => void) => {
-  return (dispatch: Dispatch) => {
-    dispatch({
-      type: ProfileActionTypes.FETCH_PROFILE_REQ
-    })
-
-    firebase.firestore().collection('profiles').doc(profileId).get().then(snapshot => {
-      const payload = {
-        id: snapshot.id,
-        ...snapshot.data()
-      } as Profile  
+    .catch(response => {
       dispatch({
-        type: ProfileActionTypes.FETCH_PROFILE_SUC,
-        payload: payload
+        type: ProfileActionTypes.FETCH_ERR,
+        payload: response.response.data
       })
-      if(cb){
-        cb(payload)
-      }
     })
   }
 }
 
-
-export const searchProfiles = async (text: string, quantity: number, myId: string, cb?: (profiles: Profile[]) => void) => {
-  text = text.toLowerCase()
-
-  const profilesCollection = firebase.firestore().collection('profiles')
-
-  var profiles1 = await profilesCollection.orderBy('firstName')
-    .startAt(text).endAt(text+'\uf8ff').limit(quantity)
-    .get().then(snapshot => mapSnapshotToProfiles(snapshot))
-    
-  var profiles2 = await profilesCollection.orderBy('lastName')
-    .startAt(text).endAt(text+'\uf8ff').limit(quantity)
-    .get().then(snapshot => mapSnapshotToProfiles(snapshot))
-
-  let profiles: Profile[] = []
-  if(profiles1) {
-    if(profiles2) {
-      profiles = R.unionWith(comparator, profiles1, profiles2)
-    }
-    profiles = profiles1
-  }
-  else if(profiles2) {
-    profiles = profiles2
-  }
-
-  profiles = profiles.filter(x => x.id !== myId)
-
-  if (cb) {
-    cb(profiles)
-  }
-}
-
-
-export const updateProfileImage = (uid: string, filePath: string, profileId: string, cb?: () => void) => {
+export const updateProfileImage = (photo: any) => {
   return (dispatch: Dispatch) => {
     dispatch({
       type: ProfileActionTypes.UPDATE_PHOTO_REQ
     })
 
-    firebase.storage().ref(`images/profiles/${uid}`).putFile(filePath).then(response => {
-      firebase.firestore().collection('profiles').doc(profileId).update({
-        imageURL: response.downloadURL
-      })
+    const file = new FormData();
+    file.append('name', 'profilePhoto')
+    file.append('file', {
+      uri: photo.uri,
+      type: photo.mime,
+      name: 'profilePhoto'
+    });
+
+    axios.put<string>(`${URL}/Image`, file,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+    )
+    .then((response) => {
       dispatch({
         type: ProfileActionTypes.UPDATE_PHOTO_SUC,
-        payload: response.downloadURL
+        payload: response.data
       })
-      if(cb){
-        cb()
-      }
+    })
+    .catch(response => {
+      dispatch({
+        type: ProfileActionTypes.UPDATE_PHOTO_ERR,
+        payload: response.response.data
+      })
     })
   }
 }
@@ -204,3 +140,12 @@ export const setEmail = (email: string) => {
     })
   }
 }
+
+// export const setProfileType = (profileType) => {
+//   return (dispatch: Dispatch) => {
+//     dispatch({
+//       type: ProfileActionTypes.SET_TYPE, 
+//       payload: profileType
+//     })
+//   }
+// }
