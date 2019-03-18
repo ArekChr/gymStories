@@ -13,10 +13,11 @@ namespace gymNotebook.Core.Domain
         {
         }
 
-        public CommentPostRels(Guid postId, Guid commentId)
+        public CommentPostRels(Guid postId, Guid userId, string content)
         {
             PostId = postId;
-            CommentId = commentId;
+            Comment = new Comment(userId, content);
+            CommentId = Comment.Id;
         }
     }
 }

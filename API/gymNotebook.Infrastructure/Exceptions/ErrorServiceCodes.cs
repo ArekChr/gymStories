@@ -7,5 +7,6 @@
         public static string InvalidRoutine => "invalid_routine";
         public static string InvalidProfile => "invalid_profile";
         public static string InvalidUserId => "invalid_user_id";
+        public static string InvalidPost => "invalid_post_id";
     }
 }

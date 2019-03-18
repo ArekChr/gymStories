@@ -18,12 +18,15 @@ namespace gymNotebook.Infrastructure.Mappers
                 cfg.CreateMap<Routine, RoutineDto>();
                 cfg.CreateMap<Result, ResultDto>();
                 cfg.CreateMap<Progress, ProgressDto>();
-                cfg.CreateMap<Profile, ProfileDto>();
+                cfg.CreateMap<Profile, ProfileDto>()
+                    .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => $"http:/192.168.178.91:5001/api/Image/{src.ImageId}")); ;
                 cfg.CreateMap<Post, PostDto>()
                     .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.User.Profile.FirstName))
                     .ForMember(dest => dest.LastName, opt => opt.MapFrom(src => src.User.Profile.LastName));
                 cfg.CreateMap<Image, ImageDto>();
-                cfg.CreateMap<Comment, CommentDto>();
+                cfg.CreateMap<Comment, CommentDto>()
+                    .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.Profile.FirstName + " " + src.User.Profile.LastName))
+                    .ForMember(dest => dest.ImageURL, opt => opt.MapFrom(src => $"http:/192.168.178.91:5001/api/Image/{src.User.Profile.ImageId}"));
 
             })
             .CreateMapper();

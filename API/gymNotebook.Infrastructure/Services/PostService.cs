@@ -82,14 +82,20 @@ namespace gymNotebook.Infrastructure.Services
                 throw new ServiceException(ErrorServiceCodes.InvalidUserId, $"User with id: {userId} does not exist.");
             }
 
-            var post = await postRepository.GetAsync(id, userId);
+            var post = await postRepository.GetAsync(id);
             var image = await imageRepository.GetAsync(post.ImageId);
             //TODO: delete image, comments, post
         }
 
         public async Task<PostDto> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var post = await this.postRepository.GetAsync(id);
+            if(post == null)
+            {
+                throw new ServiceException(ErrorServiceCodes.InvalidPost, $"Post with id: {id} does not exists.");
+            }
+
+            return mapper.Map<Post, PostDto>(post);
         }
 
         public async Task UpdateAsync(Guid id, Guid userId, string description)

@@ -7,7 +7,7 @@ namespace gymNotebook.Core.Repositories
 {
     public interface IPostRepository : IRepository
     {
-        Task<Post> GetAsync(Guid id, Guid userId);
+        Task<Post> GetAsync(Guid id);
 
         Task<IList<Post>> BrowseHomeAsync(IList<Guid> followed, DateTime? startDate, int quantity);
 
