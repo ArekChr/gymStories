@@ -1,10 +1,13 @@
 import { Reducer, Action } from 'redux'
 import { ProfileState, ProfileActionTypes, Profile } from './types'
+import { AuthActionTypes } from '../auth/types'
+import { PostActionTypes } from '../post/types'
+import { FollowActionTypes } from '../follow/types'
 
 const initialState: ProfileState = {
-  profile: {
+  myProfile: {
     averageRates: 0,
-    dateOfBirth: new Date(),
+    dateOfBirth: new Date().toISOString(),
     description: '',
     email: '',
     firstName: '',
@@ -12,9 +15,14 @@ const initialState: ProfileState = {
     followersCount: 0,
     followingCount: 0,
     gender: '',
-    imageId: '',
-    password: ''
+    password: '',
+    userUid: '',
+    imageURL: '',
+    id: '',
+    nickname: null,
+    posts: undefined
   },
+  profiles: [],
   error: undefined,
   loading: false,
   imagePath: undefined
@@ -30,6 +38,91 @@ export interface ProfileType extends Profile {
 
 const profileReducer: Reducer<ProfileState> = (state = initialState, action) => {
   switch (action.type) {
+    case ProfileActionTypes.FETCH_PROFILE_REQ: {
+      return {
+        ...state,
+        loading: true
+      }
+    }
+    case ProfileActionTypes.FETCH_PROFILE_SUC: {
+      return {
+        ...state,
+        loading: false,
+        profiles: [
+          ...state.profiles.filter(x => x.id !== action.payload.id),
+          action.payload
+        ]
+      }
+    }
+    case ProfileActionTypes.SEARCH_PROFILES_REQ: {
+      return {
+        ...state,
+        loading: true
+      }
+    }
+    case ProfileActionTypes.SEARCH_PROFILES_SUC: {
+      return {
+        ...state,
+        loading: false,
+        profiles: action.payload
+      }
+    }
+
+    case FollowActionTypes.UNFOLLOW_SUC: {
+      return {
+        ...state,
+        myProfile: {
+          ...state.myProfile,
+          followingCount: action.payload.myFollowingCount
+        },
+        profiles: [
+          ...state.profiles.filter(x => x.id !== action.payload.profileId),
+          {
+            ...state.profiles.find(x => x.id === action.payload.profileId),
+            followersCount: action.payload.userFollowersCount
+          }
+        ]
+      }
+    }
+    case FollowActionTypes.FOLLOW_SUC: {
+      return {
+        ...state,
+        myProfile: {
+          ...state.myProfile,
+          followingCount: action.payload.myFollowingCount
+        },
+        profiles: [
+          ...state.profiles.filter(x => x.id !== action.payload.profileId),
+          {
+            ...state.profiles.find(x => x.id === action.payload.profileId),
+            followersCount: action.payload.userFollowersCount
+          }
+        ]
+      }
+    }
+    case PostActionTypes.FETCH_POST_SUC: {
+      let profiles = state.profiles
+      if(action.payload){
+        const profileId = action.payload[0].profileId
+        let profile = profiles.find(x => x.id === profileId)
+        if(profile !== undefined){
+          profile = {
+            ...profile,
+            posts: action.payload
+          }
+          profiles = [
+            ...profiles.filter(x => x.id !== profileId),
+            profile
+          ]
+        }
+      }
+
+      return {
+        ...state,
+        loading: false,
+        profiles: profiles
+      }
+    }
     case ProfileActionTypes.FETCH_IMAGE_REQ: {
       return {
         ...state,
@@ -46,9 +139,9 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
     case ProfileActionTypes.UPDATE_PHOTO_SUC: {
       return {
         ...state,
-        profile: {
-          ...state.profile,
-          imageId: action.payload.id
+        myProfile: {
+          ...state.myProfile,
+          imageURL: action.payload
         }
       }
     }
@@ -62,8 +155,8 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
       return {
         ...state,
         loading: false,
-        profile: {
-          ...state.profile,
+        myProfile: {
+          ...state.myProfile,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           description: action.payload.description,
@@ -78,17 +171,17 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
         error: action.payload
       }
     }
-    case ProfileActionTypes.FETCH_REQ: {
+    case ProfileActionTypes.FETCH_MY_PROFILE_REQ: {
       return {
         ...state,
         loading: true,
       }
     }
-    case ProfileActionTypes.FETCH_SUC: {
+    case ProfileActionTypes.FETCH_MY_PROFILE_SUC: {
       return {
         ...state,
         loading: false,
-        profile: action.payload
+        myProfile: action.payload
       }
     }
     case ProfileActionTypes.FETCH_ERR: {
@@ -101,8 +194,8 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
     case ProfileActionTypes.SET_NAME: {
       return {
         ...state,
-        profile: {
-          ...state.profile,
+        myProfile: {
+          ...state.myProfile,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName
         }
@@ -111,8 +204,8 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
     case ProfileActionTypes.SET_BIRTH_DATE: {
       return {
         ...state,
-        profile: {
-          ...state.profile,
+        myProfile: {
+          ...state.myProfile,
           dateOfBirth: action.payload
         }
       }
@@ -120,8 +213,8 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
     case ProfileActionTypes.SET_GENDER_TYPE: {
       return {
         ...state,
-        profile: {
-          ...state.profile,
+        myProfile: {
+          ...state.myProfile,
           gender: action.payload
         }
       }
@@ -129,8 +222,8 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
     case ProfileActionTypes.SET_PASSWORD: {
       return {
         ...state,
-        profile: {
-          ...state.profile,
+        myProfile: {
+          ...state.myProfile,
           password: action.payload
         }
       }
@@ -138,8 +231,8 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
     case ProfileActionTypes.REMOVE_PASSWORD: {
       return {
         ...state,
-        profile: {
-          ...state.profile,
+        myProfile: {
+          ...state.myProfile,
           password: undefined
         }
       }
@@ -147,10 +240,15 @@ const profileReducer: Reducer<ProfileState> = (state = initialState, action) => 
     case ProfileActionTypes.SET_EMAIL: {
       return {
         ...state,
-        profile: {
-          ...state.profile,
+        myProfile: {
+          ...state.myProfile,
           email: action.payload
         }
+      }
+    }
+    case AuthActionTypes.USER_LOGOUT: {
+      return {
+        ...initialState
       }
     }
     default: {
