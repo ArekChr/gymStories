@@ -17,7 +17,7 @@ export default class SquarePhoto extends Component<Props>{
 
     return (
       <TouchableWithoutFeedback onPress={() => this.props.onPress ? this.props.onPress() : null}>
-        <FastImage style={[{borderRadius: 45}, styles[size], this.props.style]} source={source} />
+        <FastImage style={[{borderRadius: 45, borderColor: 'white'}, styles[size], this.props.style]} source={source} />
       </TouchableWithoutFeedback>
     )
   }
@@ -29,22 +29,27 @@ const styles = StyleSheet.create({
   },
   small: {
     width: 35, 
-    height: 35
+    height: 35,
+    borderWidth: 0.6
   },
   xmedium: {
     width: 40, 
-    height: 40
+    height: 40,
+    borderWidth: 1
   },
   medium: {
     width: 50,
-    height: 50
+    height: 50,
+    borderWidth: 1
   },
   large: {
     width: 55, 
-    height: 55
+    height: 55,
+    borderWidth: 1
   },
   xlarge: {
     width: 90, 
-    height: 90
+    height: 90,
+    borderWidth: 1.5
   }
 });

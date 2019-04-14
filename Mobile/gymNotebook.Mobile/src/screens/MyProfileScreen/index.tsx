@@ -13,6 +13,8 @@ import { Follow } from '../../redux/follow/types';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
 import UserName from '../../components/UserName';
 import { Post } from '../../redux/post/types';
+import { Colors } from '../../styles/colors';
+import { Fonts } from '../../styles';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<MyProfileScreen>
@@ -104,10 +106,12 @@ class MyProfileScreen extends Component<Props> {
     const { myProfile: myProfile } = this.props;
 
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={{ flex: 1, backgroundColor: Colors.primaryDark }}>
         <ScrollView 
           refreshControl={
             <RefreshControl
+            progressBackgroundColor={Colors.primaryLight}
+            colors={[Colors.secondary]}
               refreshing={this.state.refreshing}
               onRefresh={this.onRefresh}
             />
@@ -118,38 +122,43 @@ class MyProfileScreen extends Component<Props> {
                 <View style={{ flex: 1, alignItems: 'center', paddingLeft: 15 }}>
                   <SquarePhoto size='xlarge' onPress={this.onPhotoClicked} source={myProfile.imageURL} />
                 </View>
+                
                   <View style={{ flex: 3 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-                      <View style={{ alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }} >0</Text>
-                        <Text style={{ fontSize: 11, color: 'grey' }}>Posty</Text>
-                      </View>
-                        <TouchableOpacity onPress={() => this.onFollowPress()} style={{ alignItems: 'center' }}>
-                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followersCount}</Text>
-                          <Text style={{ fontSize: 11, color: 'grey' }}>Obserwujący</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.onFollowPress()} style={{ alignItems: 'center' }}>
-                          <Text style={{ fontSize: 18, fontWeight: 'bold' }} >{myProfile.followingCount}</Text>
-                          <Text style={{ fontSize: 11, color: 'grey' }}>Obserwuje</Text>
-                        </TouchableOpacity>
+                    <View style={{ marginLeft: 10 }}>
+                      <UserName firstName={myProfile.firstName} lastName={myProfile.lastName} style={{ color: Colors.fontLight, fontSize: 16}} />
+                      <Text style={{ color: Colors.fontSecondary }}>{myProfile.description}</Text>
                     </View>
+
                     <View style={{ flexDirection: 'row', paddingTop: 7 }}>
                       <TouchableOpacity onPress={this.onEditProfilePress}
-                        style={{ alignItems: 'center', borderWidth: 1, flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
-                        <Text>Edytuj profil</Text>
+                        style={{ alignItems: 'center', borderWidth: 1, borderColor: Colors.fontLight, flex: 3, marginLeft: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
+                        <Text style={{ color: Colors.fontLight }}>Edytuj profil</Text>
                       </TouchableOpacity>
                       <TouchableOpacity onPress={this.onSettingsPress}
-                          style={{ alignItems: 'center', borderWidth: 1, flex: 1, marginLeft: 5, marginRight: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
-                        <AntDesign size={20} name='setting' color='black' />
+                          style={{ alignItems: 'center', borderWidth: 1, borderColor: Colors.fontLight, flex: 1, marginLeft: 5, marginRight: 10, justifyContent: 'center', height: 30, borderRadius: 5 }}>
+                        <AntDesign size={20} name='setting' color={Colors.fontLight} />
                       </TouchableOpacity>
                     </View>
                   </View>
             </View>
             <View style={{ paddingHorizontal: 15, paddingTop: 10 }}>
-              <UserName firstName={myProfile.firstName} lastName={myProfile.lastName} />
-              <Text>{myProfile.description}</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginBottom: 15 }}>
+                <View style={{ alignItems: 'center' }}>
+                  <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors.fontDark }} >0</Text>
+                  <Text style={{ fontSize: 11, color: Colors.fontSecondary }}>Posty</Text>
+                </View>
+                  <TouchableOpacity onPress={() => this.onFollowPress()} style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors.fontDark }} >{myProfile.followersCount}</Text>
+                    <Text style={{ fontSize: 11, color: Colors.fontSecondary }}>Obserwujący</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.onFollowPress()} style={{ alignItems: 'center' }}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors.fontDark }} >{myProfile.followingCount}</Text>
+                    <Text style={{ fontSize: 11, color: Colors.fontSecondary }}>Obserwuje</Text>
+                  </TouchableOpacity>
+              </View>
             </View>
           </View>
+          <Text style={{ color: Colors.fontDark, fontSize: 15, padding: 12, paddingTop: 0, fontFamily: Fonts.robotoRegular}}>Posty</Text>
           <Posts postClick={this.onPostClick} posts={this.state.myPosts} />
         </ScrollView>
       </View>

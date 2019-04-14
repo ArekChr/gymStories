@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Modal, StatusBar } from 'react-native';
 import Spinner from './Spinner';
+import { Colors } from '../styles/colors';
 
 interface Props {
   modal: boolean
@@ -19,7 +20,7 @@ class LoadingModal extends Component<Props> {
           visible={this.props.modal}
           animationType={'fade'}
         >
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle='light-content' backgroundColor={Colors.primaryDark} />
           <View style={{ backgroundColor: 'rgba(0,0,0,0.3)', width: '100%', height: '100%'}}>
             <View style={styles.container}>
               <Spinner />
