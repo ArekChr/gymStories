@@ -44,6 +44,7 @@ import ChatsScreen from '../screens/ChatsScreen'
 import SearchChatsScreen from '../screens/SearchChatsScreen'
 import ConversationScreen from '../screens/ConversationScreen'
 import { Colors } from '../styles/colors';
+import AddProgress from '../screens/GymScreen/AddProgress';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -255,6 +256,9 @@ const HomeStackNavigator = createStackNavigator({
   AddProgressScreen: { 
     screen: AddProgressScreen 
   },
+  AddProgress: {
+    screen: AddProgress
+  },
   EditProfileScreen: {
     screen: EditProfileScreen,
     navigationOptions: {
@@ -298,9 +302,9 @@ const HomeStackNavigator = createStackNavigator({
 },{
   defaultNavigationOptions: () => ({
     headerStyle: {
-      backgroundColor: HEADER_WHITE,
+      backgroundColor: Colors.primaryDark,
     },
-    headerTintColor: FONT_COLOR, 
+    headerTintColor: Colors.secondary, 
     headerTitleStyle : {
       fontWeight: undefined,
       fontFamily: Fonts.robotoRegular,

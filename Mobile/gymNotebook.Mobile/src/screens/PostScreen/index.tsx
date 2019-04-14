@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { AppState } from '../../redux';
 import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
-import PostImage from 'react-native-scalable-image';
 import { ReactPost } from '../../components/Posts';
 import { Profile } from '../../redux/profile/types';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
@@ -14,7 +13,7 @@ import Spinner from '../../components/Spinner';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import DoubleTap from '../../components/DoubleTap';
-import { likePost, unlikePost, fetchCommentsWithProfilesPromise } from '../../redux/post/actions';
+import { likePost, unlikePost } from '../../redux/post/actions';
 import PastDateTime from '../../components/PastDateTime';
 import FastImage, { OnLoadEvent } from 'react-native-fast-image';
 
