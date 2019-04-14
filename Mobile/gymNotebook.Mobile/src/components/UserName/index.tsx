@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, StyleSheet, StyleProp, TextStyle, TextProps } from 'react-native';
+import { Colors } from '../../styles/colors';
 
 interface Props extends TextProps {
   firstName: string
@@ -17,7 +18,7 @@ const UserName: React.SFC<Props> = (props) => {
 const styles = StyleSheet.create({
   usernameText: { 
     fontWeight: '600',
-    color: 'black'
+    color: Colors.fontDark
   }
 })
 

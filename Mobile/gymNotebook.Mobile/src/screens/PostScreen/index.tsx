@@ -16,6 +16,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import DoubleTap from '../../components/DoubleTap';
 import { likePost, unlikePost, fetchCommentsWithProfilesPromise } from '../../redux/post/actions';
 import PastDateTime from '../../components/PastDateTime';
+import FastImage, { OnLoadEvent } from 'react-native-fast-image';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<PostScreen>
@@ -26,7 +27,10 @@ interface State {
   post: ReactPost,
   profile: Profile,
   loading: boolean,
+  loadingImage: boolean,
   liked: boolean,
+  height: number,
+  width: number,
   updateParentPost: (post: ReactPost) => void | null
 }
 
@@ -41,10 +45,13 @@ class PostScreen extends Component<Props, State> {
   animatedValue = new Animated.Value(0);
 
   state = {
+    height: 0,
+    width: 0,
     window: {} as ScaledSize,
     post: {} as ReactPost,
     profile: {} as Profile,
     loading: true,
+    loadingImage: true,
     liked: false,
     updateParentPost: (post: ReactPost) => null
   }
@@ -167,11 +174,26 @@ class PostScreen extends Component<Props, State> {
     }
   }
 
+  onLoad = (e: OnLoadEvent) => {
+    const {
+      nativeEvent: { width, height },
+    } = e
+    this.setState({ width, height })
+  }
+
+  getHeight = () => {
+    if (!this.state.height) return 360
+    const ratio = this.state.height / this.state.width
+    const height = this.state.window.width * ratio
+    return height
+  }
+
   render() {
-    const { window, profile, post, loading } = this.state
+    const { window, profile, post, loading, loadingImage } = this.state
     if (loading) {
       return <Spinner/>
     }
+    const height = this.getHeight()
     return (
       <View >
         <ScrollView keyboardShouldPersistTaps="handled">
@@ -188,7 +210,8 @@ class PostScreen extends Component<Props, State> {
           </View>
           <DoubleTap onDoubleTap={this.toggleLike}>
             <View>
-              <PostImage  width={window.width} source={{uri: post.imageURL}}/>
+              {/* <PostImage width={window.width} source={{uri: post.imageURL}}/> */}
+              <FastImage onLoad={e => this.onLoad(e)} style={{ width: window.width, height }} onLoadEnd={() => this.setState({ loadingImage: false })} source={{uri: post.imageURL}} />
               {this.renderOverlay()}
             </View>
           </DoubleTap>

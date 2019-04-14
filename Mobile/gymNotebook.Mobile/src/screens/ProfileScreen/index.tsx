@@ -13,6 +13,7 @@ import { follow, unfollow } from '../../redux/follow/actions';
 import Spinner from '../../components/Spinner';
 import Posts, { ReactPost } from '../../components/Posts';
 import UserName from '../../components/UserName';
+import { Colors } from '../../styles/colors';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<ProfileScreen>
@@ -111,7 +112,7 @@ class ProfileScreen extends React.Component<Props, State> {
     }
     const { profile, following } = this.state;
     return (
-      <View style={{ flex: 1, backgroundColor: 'white' }}>
+      <View style={{ flex: 1, backgroundColor: Colors.primaryDark }}>
         <ScrollView 
           refreshControl={
             <RefreshControl

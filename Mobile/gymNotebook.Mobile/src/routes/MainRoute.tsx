@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import {Easing, Animated} from 'react-native'
 
 import LoginScreen from '../screens/LoginScreen'
@@ -8,8 +8,8 @@ import SearchScreen from '../screens/SearchScreen'
 import ActiveTab from '../screens/ActiveScreen'
 import MyProfileScreen from '../screens/MyProfileScreen'
 import AddProgressScreen from '../screens/AddProgressScreen'
-import CommentsScreen from '../screens/CommentsScreen';
-import NewPostScreen from '../screens/NewPostScreen';
+import CommentsScreen from '../screens/CommentsScreen'
+import NewPostScreen from '../screens/NewPostScreen'
 import SettingsScreen from '../screens/SettingsScreen'
 import EditProfileScreen from '../screens/EditProfileScreen'
 import StoryScreen from '../screens/StoryScreen'
@@ -28,8 +28,7 @@ import {
   createSwitchNavigator, 
   createStackNavigator, 
   createAppContainer, 
-  createBottomTabNavigator, 
-  createDrawerNavigator
+  createBottomTabNavigator
 } from 'react-navigation'
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -38,17 +37,17 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import { PRIMARY_COLOR, THEME_FONT_COLOR, ACTIVE_ICON, INACTIVE_ICON, FONT_COLOR, HEADER_WHITE } from '../styles/common'
 import { Fonts } from '../styles'
-import ProfileScreen from '../screens/ProfileScreen';
-import FollowScreen from '../screens/FollowsScreen';
-import PostScreen from '../screens/PostScreen';
-import ChatsScreen from '../screens/ChatsScreen';
-import SearchChatsScreen from '../screens/SearchChatsScreen';
-import ConversationScreen from '../screens/ConversationScreen';
+import ProfileScreen from '../screens/ProfileScreen'
+import FollowScreen from '../screens/FollowsScreen'
+import PostScreen from '../screens/PostScreen'
+import ChatsScreen from '../screens/ChatsScreen'
+import SearchChatsScreen from '../screens/SearchChatsScreen'
+import ConversationScreen from '../screens/ConversationScreen'
+import { Colors } from '../styles/colors';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
-},
-{
+},{
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
       backgroundColor: PRIMARY_COLOR,
@@ -93,7 +92,6 @@ const SearchTabStackNavigator = createStackNavigator({
     }
   },
 })
-
 
 const ProfileStackNavigator = createStackNavigator({
   Profile: {
@@ -155,9 +153,10 @@ const AppTabNavigator = createBottomTabNavigator({
     style: {
       elevation: 10,
       borderTopWidth: 0,
+      backgroundColor: Colors.primaryLight
     },
-    activeTintColor: ACTIVE_ICON,
-    inactiveTintColor: INACTIVE_ICON,
+    activeTintColor: Colors.secondary,
+    inactiveTintColor: Colors.primaryLighter,
     showIcon: true,
     showLabel: false
   }

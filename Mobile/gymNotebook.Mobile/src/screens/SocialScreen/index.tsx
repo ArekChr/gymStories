@@ -15,6 +15,7 @@ import { fetchPosts } from '../../redux/post/actions'
 import { AppState } from '../../redux';
 import { Post } from '../../redux/post/types';
 import { fetchMyProfile } from '../../redux/profile/actions';
+import { Colors } from '../../styles/colors';
 
 interface Props extends ReturnType<typeof mapStateToProps>, ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<SocialScreen>
@@ -288,7 +289,7 @@ class SocialScreen extends Component<Props> {
 
     return (
       <View style={styles.container}>
-        <StatusBar backgroundColor={"white"} barStyle="dark-content" />
+        <StatusBar barStyle='light-content' backgroundColor={Colors.primaryDark} />
         <ScrollView showsVerticalScrollIndicator={false} refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}/>}>
           {this.renderVideoRelationsBar()}
           {this.renderPosts(posts)}
