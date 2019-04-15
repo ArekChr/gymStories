@@ -1,153 +1,153 @@
-import { Exercise } from "./types";
+import { Exercise, MuscleTypes } from "./types";
 
 const shoulders: Exercise[] = [
   {
     name: 'Wyciskanie sztangi sprzed głowy',
     label: 'Wyciskanie sztangi sprzed głowy',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Wyciskanie sztangi zza głowy',
     label: 'Wyciskanie sztangi zza głowy',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Wyciskanie sztangielek',
     label: 'Wyciskanie sztangielek',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Arnoldki',
     label: 'Arnoldki',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Unoszenie sztangielek bokiem w górę',
     label: 'Unoszenie sztangielek bokiem w górę',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Unoszenie sztangielek w opadzie tułowia',
     label: 'Unoszenie sztangielek w opadzie tułowia',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Podciąganie sztangi wzdłuż tułowia',
     label: 'Podciąganie sztangi wzdłuż tułowia',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Podciąganie sztangielek wzdłuż tułowia',
     label: 'Podciąganie sztangielek wzdłuż tułowia',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Unoszenie ramion w przód ze sztangą',
     label: 'Unoszenie ramion w przód ze sztangą',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Unoszenie ramion w przód ze sztangielkami',
     label: 'Unoszenie ramion w przód ze sztangielkami',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Unoszenie ramion ze sztangielkami w leżeniu',
     label: 'Unoszenie ramion ze sztangielkami w leżeniu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Unoszenie ramion w przód z linkami wyciągu',
     label: 'Unoszenie ramion w przód z linkami wyciągu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Unoszenie ramion bokiem w górę z linkami wyciągu',
     label: 'Unoszenie ramion bokiem w górę z linkami wyciągu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Unoszenie ramion bokiem w górę w opadzie tułowia z linkami wyciągu',
     label: 'Unoszenie ramion bokiem w górę w opadzie tułowia z linkami wyciągu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   },
   {
     name: 'Odwrotne rozpiętki (butterfly)',
     label: 'Odwrotne rozpiętki (butterfly)',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Shoulders'
+        name: MuscleTypes.Barki
       }
     ],
   }

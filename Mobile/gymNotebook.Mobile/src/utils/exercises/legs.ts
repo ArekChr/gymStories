@@ -1,153 +1,153 @@
-import { Exercise } from "./types";
+import { Exercise, MuscleTypes } from "./types";
 
 const legs: Exercise[] = [
   {
     name: 'Przysiady ze sztangą na barkach',
     label: 'Przysiady ze sztangą na barkach',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Przysiady ze sztangą trzymaną z przodu',
     label: 'Przysiady ze sztangą trzymaną z przodu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Hack-przysiady',
     label: 'Hack-przysiady',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Przysiady na suwnicy skośnej',
     label: 'Przysiady na suwnicy skośnej',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Syzyfki',
     label: 'Syzyfki',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Prostownie nóg w siadzie',
     label: 'Prostownie nóg w siadzie',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Wypychanie ciężaru na suwnicy',
     label: 'Wypychanie ciężaru na suwnicy',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Uginanie nóg w leżeniu',
     label: 'Uginanie nóg w leżeniu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Przysiady wykroczne',
     label: 'Przysiady wykroczne',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Nożyce',
     label: 'Nożyce',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Wysoki step za sztangą/sztangielkami',
     label: 'Wysoki step za sztangą/sztangielkami',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Odwodzenie nogi w tył',
     label: 'Odwodzenie nogi w tył',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Ściąganie kolan w siadzie',
     label: 'Ściąganie kolan w siadzie',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Przywodzenie nóg do wewnątrz',
     label: 'Przywodzenie nóg do wewnątrz',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ]
   },
   {
     name: 'Odwodzenie nóg na zewnątrz',
     label: 'Odwodzenie nóg na zewnątrz',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Quadriceps'
+        name: MuscleTypes.Czworoglowy_uda
       }
     ],
   }
