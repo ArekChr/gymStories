@@ -1,103 +1,103 @@
-import { Exercise } from "./types";
+import { Exercise, MuscleTypes } from "./types";
 
 const biceps: Exercise[] = [
   {
     name: 'Uginanie ramion ze sztangą stojąc podchwytem',
     label: 'Uginanie ramion ze sztangą stojąc podchwytem',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramion ze sztangielkami stojąc podchwytem z supinacją',
     label: 'Uginanie ramion ze sztangielkami stojąc podchwytem z supinacją',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramion ze sztangielkami stojąc chwyt młotkowy',
     label: 'Uginanie ramion ze sztangielkami stojąc chwyt młotkowy',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramion ze sztangą na modlitewniku',
     label: 'Uginanie ramion ze sztangą na modlitewniku',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramienia ze sztangielką na modlitewniku',
     label: 'Uginanie ramienia ze sztangielką na modlitewniku',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramion ze sztangielkami w siadzie na ławce skośnej z supinacją',
     label: 'Uginanie ramion ze sztangielkami w siadzie na ławce skośnej z supinacją',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramienia ze sztangielką w siadzie-w podporze o kolano',
     label: 'Uginanie ramienia ze sztangielką w siadzie-w podporze o kolano',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramion podchwytem stojąc-z rączką wyciągu',
     label: 'Uginanie ramion podchwytem stojąc-z rączką wyciągu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramion ze sztanga nachwytem stojąc',
     label: 'Uginanie ramion ze sztanga nachwytem stojąc',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },
   {
     name: 'Uginanie ramion ze sztanga nachwytem na modlitewniku',
     label: 'Uginanie ramion ze sztanga nachwytem na modlitewniku',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Biceps'
+        name: MuscleTypes.Biceps
       }
     ]
   },

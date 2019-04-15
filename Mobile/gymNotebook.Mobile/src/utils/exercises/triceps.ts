@@ -1,123 +1,123 @@
-import { Exercise } from "./types";
+import { Exercise, MuscleTypes } from "./types";
 
 const triceps: Exercise[] = [
   {
     name: 'Prostowanie ramion na wyciągu stojąc',
     label: 'Prostowanie ramion na wyciągu stojąc',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Wyciskanie francuskie sztangi w siadzie',
     label: 'Wyciskanie francuskie sztangi w siadzie',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Wyciskanie francuskie jednorącz sztangielki w siadzie',
     label: 'Wyciskanie francuskie jednorącz sztangielki w siadzie',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Wyciskanie francuskie sztangi w leżeniu',
     label: 'Wyciskanie francuskie sztangi w leżeniu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Wyciskanie francuskie sztangielki w leżeniu',
     label: 'Wyciskanie francuskie sztangielki w leżeniu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Prostownie ramienia ze sztangielką w opadzie tułowia',
     label: 'Prostownie ramienia ze sztangielką w opadzie tułowia',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Prostowanie ramion na wyciągu w płaszczyźne poziomej stojąc',
     label: 'Prostowanie ramion na wyciągu w płaszczyźne poziomej stojąc',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Prostowanie ramion na wyciągu w płaszczyźnie poziomej w podporze',
     label: 'Prostowanie ramion na wyciągu w płaszczyźnie poziomej w podporze',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Pompki na poręczach',
     label: 'Pompki na poręczach',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Pompki w podporze tyłem',
     label: 'Pompki w podporze tyłem',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Prostowanie ramienia podchwytem na wyciągu stojąc',
     label: 'Prostowanie ramienia podchwytem na wyciągu stojąc',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },
   {
     name: 'Wyciskanie w leżeniu na ławce poziomej wąskim uchwytem',
     label: 'Wyciskanie w leżeniu na ławce poziomej wąskim uchwytem',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Triceps'
+        name: MuscleTypes.Triceps
       }
     ],
   },

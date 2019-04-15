@@ -1,193 +1,193 @@
-import { Exercise } from "./types";
+import { Exercise, MuscleTypes } from "./types";
 
 const back: Exercise[] = [
   {
     name: 'Podciąganie na drążku szeroko nachwytem',
     label: 'Podciąganie na drążku szeroko nachwytem',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Podciąganie na drążku w uchwycie neutralnym',
     label: 'Podciąganie na drążku w uchwycie neutralnym',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Podciąganie na drążku podchwytem',
     label: 'Podciąganie na drążku podchwytem',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Wiosłowanie sztangi w opadzie',
     label: 'Wiosłowanie sztangi w opadzie',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Wiosłowanie sztangielki w opadzie',
     label: 'Wiosłowanie sztangielki w opadzie',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Podciąganie końca sztangi w opadzie',
     label: 'Podciąganie końca sztangi w opadzie',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Przyciąganie linki wyciągu dolnego w siadzie płaskim',
     label: 'Przyciąganie linki wyciągu dolnego w siadzie płaskim',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Przyciąganie linki wyciągu górnego w siadzie',
     label: 'Przyciąganie linki wyciągu górnego w siadzie',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Ściąganie drążka wyciągu górnego w siadzie szerokim nachwytem',
     label: 'Ściąganie drążka wyciągu górnego w siadzie szerokim nachwytem',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Ściąganie drążka wyciągu górnego w siadzie podchwytem',
     label: 'Ściąganie drążka wyciągu górnego w siadzie podchwytem',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Ściąganie drążka wyciągu górnego w siadzie uchwyt neutralny',
     label: 'Ściąganie drążka wyciągu górnego w siadzie uchwyt neutralny',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Prznoszenie sztangi w leżeniu na ławce poziomej',
     label: 'Prznoszenie sztangi w leżeniu na ławce poziomej',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Wiosłowanie w leżeniu na ławeczce poziomej',
     label: 'Wiosłowanie w leżeniu na ławeczce poziomej',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Skłony ze sztangą trzymaną na karku (dzień dobry)',
     label: 'Skłony ze sztangą trzymaną na karku (dzień dobry)',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Unoszenie tułowia z opadu',
     label: 'Unoszenie tułowia z opadu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Martwy ciąg klasyczny',
     label: 'Martwy ciąg klasyczny',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Martwy ciag sumo',
     label: 'Martwy ciag sumo',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Martwy ciag rumunski',
     label: 'Martwy ciag rumunski',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },
   {
     name: 'Wznosy barków (szrugsy)',
     label: 'Wznosy barków (szrugsy)',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Back'
+        name: MuscleTypes.Plecy
       }
     ],
   },

@@ -1,123 +1,123 @@
-import { Exercise } from "./types";
+import { Exercise, MuscleTypes } from "./types";
 
 const abs: Exercise[] = [
   {
     name: 'Skłony w leżeniu płasko',
     label: 'Skłony w leżeniu płasko',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Skłony w leżeniu głową w dół',
     label: 'Skłony w leżeniu głową w dół',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Unoszenie nóg w leżeniu na skośnej ławce',
     label: 'Unoszenie nóg w leżeniu na skośnej ławce',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Unoszenie nóg w zwisie na drążku',
     label: 'Unoszenie nóg w zwisie na drążku',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Unoszenie nóg w podporze',
     label: 'Unoszenie nóg w podporze',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Spinanie/unoszenie kolan w leżeniu płasko',
     label: 'Spinanie/unoszenie kolan w leżeniu płasko',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Skłony tułowia z linką wyciągu siedząc',
     label: 'Skłony tułowia z linką wyciągu siedząc',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Skręty tułowia',
     label: 'Skręty tułowia',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Skłony tułowia z linką wyciągu klęcząc ',
     label: 'Skłony tułowia z linką wyciągu klęcząc ',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Skłony boczne',
     label: 'Skłony boczne',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Skłony boczne na ławce',
     label: 'Skłony boczne na ławce',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },
   {
     name: 'Skręty tułowia w leżeniu',
     label: 'Skręty tułowia w leżeniu',
-    musclePart: [
+    muscleSupport: [
       {
         index: 1,
-        name: 'Abs'
+        name: MuscleTypes.Brzuch
       }
     ]
   },

@@ -1,63 +1,75 @@
-import { Exercise } from "./types";
+import { Exercise, MuscleTypes } from "./types";
 
 const calfs: Exercise[] = [
   {
     name: 'Wspiecia na palce w staniu',
     label: 'Wspiecia na palce w staniu',
-    musclePart: [
+    muscle: MuscleTypes.Lydki,
+    muscleSupport: [
       {
         index: 1,
-        name: 'Calf'
+        name: MuscleTypes.Lydki,
+        minPower: 100
       }
     ]
   },
   {
     name: 'Wspięcia na palce w siadzie',
     label: 'Wspięcia na palce w siadzie',
-    musclePart: [
+    muscle: MuscleTypes.Lydki,
+    muscleSupport: [
       {
         index: 1,
-        name: 'Calf'
+        name: MuscleTypes.Lydki,
+        minPower: 100
       }
     ]
   },
   {
     name: 'Ośle wspięcia',
     label: 'Ośle wspięcia',
-    musclePart: [
+    muscle: MuscleTypes.Lydki,
+    muscleSupport: [
       {
         index: 1,
-        name: 'Calf'
+        name: MuscleTypes.Lydki,
+        minPower: 100
       }
     ]
   },
   {
     name: 'Wspięcia na palce na hack-maszynie',
     label: 'Wspięcia na palce na hack-maszynie',
-    musclePart: [
+    muscle: MuscleTypes.Lydki,
+    muscleSupport: [
       {
         index: 1,
-        name: 'Calf'
+        name: MuscleTypes.Lydki,
+        minPower: 100
       }
     ]
   },
   {
     name: 'Wypychanie ciężaru na maszynie/suwnicy palcami nóg',
     label: 'Wypychanie ciężaru na maszynie/suwnicy palcami nóg',
-    musclePart: [
+    muscle: MuscleTypes.Lydki,
+    muscleSupport: [
       {
         index: 1,
-        name: 'Calf'
+        name: MuscleTypes.Lydki,
+        minPower: 100
       }
     ]
   },
   {
     name: 'Odwrotne wspięcia w staniu',
     label: 'Odwrotne wspięcia w staniu',
-    musclePart: [
+    muscle: MuscleTypes.Lydki,
+    muscleSupport: [
       {
         index: 1,
-        name: 'Calf'
+        name: MuscleTypes.Lydki,
+        minPower: 100
       }
     ]
   }

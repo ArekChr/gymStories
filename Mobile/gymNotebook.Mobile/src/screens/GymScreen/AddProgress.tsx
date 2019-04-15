@@ -26,7 +26,7 @@ class GymScreen extends Component<Props> {
 
   onSearchChange = (text: string) => {
     text = text.toLowerCase()
-    this.setState({ exercises: exe.filter(x => x.label.toLowerCase().includes(text) || x.musclePart[0].name.toLowerCase().includes(text) )})
+    this.setState({ exercises: exe.filter(x => x.label.toLowerCase().includes(text) || x.muscleSupport[0].name.toLowerCase().includes(text) )})
   }
 
   render() {
