@@ -8,6 +8,16 @@ import forearm from './forearm'
 import shoulders from './shoulders'
 import triceps from './triceps'
 
-const exercises = [...abs, ...legs, ...back, ...biceps, ...calfs, ...chest, ...forearm, ...shoulders, ...triceps]
+const exercises = [
+    ...abs,
+    ...legs,
+    ...back,
+    ...biceps,
+    ...calfs,
+    ...chest,
+    ...forearm,
+    ...shoulders,
+    ...triceps
+]
 
 export default exercises
