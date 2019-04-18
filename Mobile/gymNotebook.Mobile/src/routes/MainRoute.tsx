@@ -45,6 +45,7 @@ import SearchChatsScreen from '../screens/SearchChatsScreen'
 import ConversationScreen from '../screens/ConversationScreen'
 import { Colors } from '../styles/colors';
 import AddProgress from '../screens/GymScreen/AddProgress';
+import { MeasureScreen } from '../screens/MeasureScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -129,6 +130,7 @@ const AppTabNavigator = createBottomTabNavigator({
   SearchTab: SearchTabStackNavigator,
   ActiveTab: ProgressTabStackNavigator,
   GymTab: GymScreen,
+  MeasureTab: MeasureScreen,
   ProfileTab: ProfileStackNavigator
 },{
   defaultNavigationOptions: ({ navigation }) => ({
@@ -141,6 +143,8 @@ const AppTabNavigator = createBottomTabNavigator({
           return <Entypo name="home" size={25} color={tintColor || undefined} />
         case 'ActiveTab':
           return <MaterialCommunityIcons name="heart-pulse" size={30} color={tintColor || undefined} />
+        case 'MeasureTab':
+          return <Entypo name="ruler" size={25} color={tintColor || undefined} />
         case 'ProfileTab':
           return <Entypo name="user" size={26} color={tintColor || undefined} />
         default: return null

@@ -40,7 +40,7 @@ export const fetchMyProfile = (userId: string,  cb?: (myProfileId: string) => vo
     })
     let profileId
     firebase.firestore().collection('profiles').where('userId', '==', userId).get().then(snapshot => {
-      let doc = snapshot.docs.first()
+      let doc = snapshot.docs[0]
       let profile = doc.data()
       profileId = doc.id
       dispatch({
