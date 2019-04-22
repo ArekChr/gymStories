@@ -1,30 +1,16 @@
-export const USER_REGISTER_SUC = 'auth/USER_REGISTER_SUC'
-export const USER_REGISTER_ERR = 'auth/USER_REGISTER_ERR'
-export const USER_REGISTER_REQ = 'auth/USER_REGISTER_REQ'
-export const USER_LOGIN_REQ = 'auth/USER_LOGIN_REQ'
-export const USER_LOGIN_SUC = 'auth/USER_LOGIN_SUC'
-export const USER_LOGIN_ERR = 'auth/USER_LOGIN_ERR'
-export const STORAGE_MAP_JWT = 'auth/STORAGE_MAP_JWT'
-export const USER_LOGOUT = 'auth/USER_LOGOUT'
+import { RNFirebase } from "react-native-firebase";
 
 export enum AuthActionTypes {
-  USER_REGISTER_SUC = 'auth/USER_REGISTER_SUC',
-  USER_REGISTER_ERR = 'auth/USER_REGISTER_ERR',
-  USER_REGISTER_REQ = 'auth/USER_REGISTER_REQ',
-  USER_LOGIN_REQ = 'auth/USER_LOGIN_REQ',
-  USER_LOGIN_SUC = 'auth/USER_LOGIN_SUC',
-  USER_LOGIN_ERR = 'auth/USER_LOGIN_ERR',
-  STORAGE_MAP_JWT = 'auth/STORAGE_MAP_JWT',
-  USER_LOGOUT = 'auth/USER_LOGOUT'
-}
-
-export interface JWT {
-  token?: string
-  expiry?: number
+  USER_LOGOUT = 'auth/USER_LOGOUT',
+  FIREBASE_LOGIN_ERR = "@auth/FIREBASE_LOGIN_ERR",
+  FIREBASE_LOGIN_SUC = "@auth/FIREBASE_LOGIN_SUC",
+  FIREBASE_LOGIN_REQ = "@auth/FIREBASE_LOGIN_REQ",
+  SET_FIREBASE_AUTH = "@auth/SET_FIREBASE_AUTH",
+  FIREBASE_REGISTER_REQ = "@auth/FIREBASE_REGISTER_REQ",
+  FIREBASE_REGISTER_SUC = "@auth/FIREBASE_REGISTER_SUC"
 }
 
 export interface RegisterModel {
-  username: string
   password: string
   email: string
 }
@@ -34,15 +20,31 @@ export interface LoginModel {
   password: string
 }
 
-export interface Error {
-  code?: string
-  message?: string
-}
-
 export interface AuthState {
-  error: Error
-  loading?: boolean
+  error: any
+  loading: boolean | null
   registerSuccess: boolean | null
   loginSuccess: boolean | null
-  jwt: JWT
+  auth: UserAuth
+}
+
+export interface UserAuth extends Partial<RNFirebase.User> {
+  displayName: string | null
+  email: string
+  emailVerified: boolean
+  isAnonymous: boolean
+  metadata: {
+    creationTime: string
+    lastSignInTime: string
+  }
+  phoneNumber: string | null
+  photoURL: string | null
+  uid: string
+}
+
+export interface UserRefreshAuth {
+  access_token: string | null
+  refresh_token: string | null
+  expiresIn: string | null
+  id_token: string | null
 }

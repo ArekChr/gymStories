@@ -884,6 +884,14 @@
     "@types/react-native" "*"
     "@types/xdate" "*"
 
+"@types/react-native-draggable-flatlist@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@types/react-native-draggable-flatlist/-/react-native-draggable-flatlist-1.1.1.tgz#81fa66d1f4899348195acfad6e23e33dec935a7b"
+  integrity sha512-E/dkV2QrPvDXvcDLGpBZmR1iDql20ph9zUjHpZ2heNA56+k5iTQP6NN5oVlLC7B3sFScntI57kn3ZiDBHVTDsQ==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native-indicators@^0.13.1":
   version "0.13.1"
   resolved "https://registry.yarnpkg.com/@types/react-native-indicators/-/react-native-indicators-0.13.1.tgz#6cdd175d9fab2418c734efbaae5c0fc2e48ffffb"
@@ -5438,6 +5446,11 @@ react-native-collapsible@^1.4.0:
   dependencies:
     prop-types "^15.6.2"
 
+react-native-draggable-flatlist@^1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/react-native-draggable-flatlist/-/react-native-draggable-flatlist-1.1.7.tgz#d15cd84cfa924c8733114cb9d3324a5bdbcd7ec2"
+  integrity sha512-HBYYfbDbf7iRuEnSPUfh7iyGltwqLe3OokYI2d6aWY+OUEPEnd9bmTBu8LISQag+9W91/sqKsp8fRAZtnVIsNg==
+
 react-native-drawer-layout@~2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-drawer-layout/-/react-native-drawer-layout-2.0.0.tgz#8ce1e4027bd3f3a09045afdb46080e18346be232"
@@ -5549,6 +5562,11 @@ react-native-svg@^6.2.1:
     color "^2.0.1"
     lodash "^4.16.6"
     pegjs "^0.10.0"
+
+react-native-svg@^9.4.0:
+  version "9.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-9.4.0.tgz#e428e0eae55aebd2355f1ff4f22675dad4611960"
+  integrity sha512-IVJlVbS2dAPerPr927fEi4uXzrPXzlra5ddgyJXZZ2IKA2ZygyYWFZDM+vsQs+Vj20CfL8nOWszQQV57vdQgFg==
 
 react-native-swipeout@^2.3.6:
   version "2.3.6"

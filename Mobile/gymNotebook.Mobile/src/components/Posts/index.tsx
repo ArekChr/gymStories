@@ -52,7 +52,7 @@ export default class Posts extends React.Component<Props> {
       return (
         <TouchableWithoutFeedback onPress={() => this.props.postClick(item)}>
           <View key={item.id} style={{display: 'flex', marginBottom: margin * 2}}>
-            <FastImage style={{width: length, height: length}} source={{uri: item.imageURL}}></FastImage>
+            <FastImage style={{width: length, height: length, borderRadius: 10 }} source={{uri: item.imageURL}} />
           </View>
         </TouchableWithoutFeedback>
       )
