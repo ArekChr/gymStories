@@ -17,6 +17,12 @@ const chest: Exercise[] = [
       name: MuscleTypes.Triceps,
       minPower: 20,
       maxPower: 40
+    },
+    {
+      index: 2,
+      name: MuscleTypes.Barki,
+      minPower: 5,
+      maxPower: 25
     }
   ]
 },

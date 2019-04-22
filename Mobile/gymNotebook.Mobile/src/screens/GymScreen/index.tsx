@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Colors } from '../../styles/colors'
+import { NavigationScreenProp } from 'react-navigation';
+import H1 from '../../components/Headings/H1';
+import MuscleModelComponent from '../../components/MuscleModel';
 
-export default class GymScreen extends Component {
+interface Props {
+  navigation: NavigationScreenProp<GymScreen>
+}
+
+export default class GymScreen extends Component<Props> {
 
   static navigationOptions = {
     tabBarIcon: ({ tintColor }: any) => (
@@ -15,7 +22,8 @@ export default class GymScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: Colors.primaryDark, padding: 8 }}>
-        <TouchableOpacity onPress={() => this.props.navigation.push('AddProgress')}
+        <H1>Workouts</H1>
+        <TouchableOpacity onPress={() => this.props.navigation.push('AddTrainingScreen')}
           style={{ marginLeft: 'auto', paddingRight: 5, paddingLeft: 5, paddingTop: 4 }}>
           <MaterialIcons name="add-circle" size={45} color={Colors.secondary} />
         </TouchableOpacity>
@@ -28,6 +36,9 @@ export default class GymScreen extends Component {
           <Text style={{ color: Colors.fontDark, margin: 5, fontSize: 15 }}>Wiosłowanie hantli: 5x5x45kg</Text>
           <Text style={{ color: Colors.fontDark, margin: 5, fontSize: 15 }}>Allahy: 5x5x20j.</Text>
         </View>
+        <ScrollView style={{ backgroundColor: 'white'}}>
+          <MuscleModelComponent/>
+        </ScrollView>
       </View>
     )
   }

@@ -45,6 +45,7 @@ import SearchChatsScreen from '../screens/SearchChatsScreen'
 import ConversationScreen from '../screens/ConversationScreen'
 import { Colors } from '../styles/colors';
 import AddProgress from '../screens/GymScreen/AddProgress';
+import AddTrainingScreen from '../screens/AddTrainingScreen'
 import { MeasureScreen } from '../screens/MeasureScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
@@ -262,6 +263,9 @@ const HomeStackNavigator = createStackNavigator({
   },
   AddProgress: {
     screen: AddProgress
+  },
+  AddTrainingScreen: {
+    screen: AddTrainingScreen
   },
   EditProfileScreen: {
     screen: EditProfileScreen,

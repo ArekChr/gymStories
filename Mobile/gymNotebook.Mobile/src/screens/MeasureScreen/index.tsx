@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { AppState } from '../../redux';
-import { NavigationScreenProps } from 'react-navigation';
+import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Dispatch } from 'redux';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
+  navigation: NavigationScreenProp<MeasureScreen>
 }
 
 export class MeasureScreen extends Component<Props> {
@@ -26,7 +27,7 @@ export class MeasureScreen extends Component<Props> {
 
   componentDidMount() {
     const { userId } = this.props
-    this.props.fetchMeasurement(userId)
+    // this.props.fetchMeasurement(userId)
   }
 
   render() {
