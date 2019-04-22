@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import { connect } from 'react-redux'
 import { AppState } from '../../redux';
 import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import { Dispatch } from 'redux';
+import MuscleModelComponent from '../../components/MuscleModel';
+import { Colors } from '../../styles/colors';
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<MeasureScreen>
@@ -32,8 +34,10 @@ export class MeasureScreen extends Component<Props> {
 
   render() {
     return (
-      <View>
-        <Text> prop </Text>
+      <View style={{ backgroundColor: Colors.primaryDark, flex: 1}}>
+        <ScrollView>
+          <MuscleModelComponent navigation={this.props.navigation} />
+        </ScrollView>
       </View>
     )
   }

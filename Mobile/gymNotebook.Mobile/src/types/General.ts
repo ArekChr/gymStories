@@ -12,3 +12,7 @@ export interface PickedImage {
   size: number
   width: number
 }
+
+export interface CreatedAt {
+  createdAt: number
+}

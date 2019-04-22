@@ -36,9 +36,6 @@ export default class GymScreen extends Component<Props> {
           <Text style={{ color: Colors.fontDark, margin: 5, fontSize: 15 }}>Wiosłowanie hantli: 5x5x45kg</Text>
           <Text style={{ color: Colors.fontDark, margin: 5, fontSize: 15 }}>Allahy: 5x5x20j.</Text>
         </View>
-        <ScrollView style={{ backgroundColor: 'white'}}>
-          <MuscleModelComponent/>
-        </ScrollView>
       </View>
     )
   }

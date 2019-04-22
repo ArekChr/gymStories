@@ -47,6 +47,7 @@ import { Colors } from '../styles/colors';
 import AddProgress from '../screens/GymScreen/AddProgress';
 import AddTrainingScreen from '../screens/AddTrainingScreen'
 import { MeasureScreen } from '../screens/MeasureScreen';
+import MeasureDetailsScreen from '../screens/MeasureScreen/MeasureDetailsScreen';
 
 const ProgressTabStackNavigator = createStackNavigator({
   ProgressTab: { screen: ActiveTab }
@@ -266,6 +267,9 @@ const HomeStackNavigator = createStackNavigator({
   },
   AddTrainingScreen: {
     screen: AddTrainingScreen
+  },
+  MeasureDetailsScreen: {
+    screen: MeasureDetailsScreen
   },
   EditProfileScreen: {
     screen: EditProfileScreen,
