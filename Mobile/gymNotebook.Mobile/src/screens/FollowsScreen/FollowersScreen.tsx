@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { AppState } from '../../redux';
-import { Profile, ProfileBasic } from '../../redux/profile/types';
-import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation';
-import { Fonts } from '../../styles';
-import Spinner from '../../components/Spinner';
-import FollowProfiles from './FollowProfiles';
+import { AppState } from '../../redux'
+import { Profile, ProfileBasic } from '../../redux/profile/types'
+import { NavigationScreenProps, NavigationScreenProp } from 'react-navigation'
+import { Fonts } from '../../styles'
+import Spinner from '../../components/Spinner'
+import FollowProfiles from './FollowProfiles'
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<FollowersScreen>
@@ -18,14 +18,17 @@ interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof
 }
 
 class FollowersScreen extends Component<Props> {
-
   state = {
-    profile: {} as Profile
+    profile: {} as Profile,
   }
 
   static navigationOptions = ({ navigation, screenProps }: NavigationScreenProps) => {
     return {
-      tabBarIcon: <Text style={{fontSize: 20, fontFamily: Fonts.robotoBold, fontWeight: undefined}}>{screenProps!.profile.followersCount}</Text>,
+      tabBarIcon: (
+        <Text style={{ fontSize: 20, fontFamily: Fonts.robotoBold, fontWeight: undefined }}>
+          {screenProps!.profile.followersCount}
+        </Text>
+      ),
       tabBarLabel: 'obserwujący',
     }
   }
@@ -33,17 +36,21 @@ class FollowersScreen extends Component<Props> {
   onProfileClick = (profile: ProfileBasic) => {
     this.props.screenProps.navigation.navigate('ProfileScreen', {
       profileId: profile.profileId,
-      profile: profile
+      profile: profile,
     })
   }
-  
+
   render() {
-    if (this.props.loading) {   
+    if (this.props.loading) {
       return <Spinner />
     }
     return (
       <View>
-        <FollowProfiles profiles={this.props.followersProfiles} followingIds={this.props.followersIds} onProfileClick={this.onProfileClick} />
+        <FollowProfiles
+          profiles={this.props.followersProfiles}
+          followingIds={this.props.followersIds}
+          onProfileClick={this.onProfileClick}
+        />
       </View>
     )
   }
@@ -52,12 +59,12 @@ class FollowersScreen extends Component<Props> {
 const mapStateToProps = (state: AppState) => ({
   followersProfiles: state.Follow.myFollowersProfiles,
   followersIds: state.Follow.myFollowingIds,
-  loading: state.Follow.loadingMyFollowers
+  loading: state.Follow.loadingMyFollowers,
 })
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({})
 
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(FollowersScreen)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FollowersScreen)

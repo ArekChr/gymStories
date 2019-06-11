@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { Component } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { logout } from '../../redux/auth/actions'
 import { connect } from 'react-redux'
-import { Dispatch } from 'redux';
-import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation';
-import firebase from 'react-native-firebase';
+import { Dispatch } from 'redux'
+import { NavigationScreenProp, NavigationScreenProps } from 'react-navigation'
+import firebase from 'react-native-firebase'
 
 interface Props extends ReturnType<typeof mapDispatchToProps> {
   navigation: NavigationScreenProp<SettingsScreen>
 }
 
-class SettingsScreen extends Component<Props>{
-
+class SettingsScreen extends Component<Props> {
   static navigationOptions = ({ navigation }: NavigationScreenProps) => {
     return {
-      title: 'Ustawienia'
+      title: 'Ustawienia',
     }
   }
 
   onLogOutPress = () => {
-    firebase.auth().signOut().then(() => {
-      this.props.logout();
-      this.props.navigation.navigate('LoginScreen');
-    })
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.props.logout()
+        this.props.navigation.navigate('LoginScreen')
+      })
   }
 
   render() {
@@ -48,10 +50,10 @@ class SettingsScreen extends Component<Props>{
         </TouchableOpacity>
         <Text style={styles.title}>Logowanie</Text>
         <TouchableOpacity onPress={this.onLogOutPress}>
-          <Text style={{...styles.button, color: '#B00020',}}>Wyloguj się</Text>
+          <Text style={{ ...styles.button, color: '#B00020' }}>Wyloguj się</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
     height: 40,
     fontSize: 15,
     paddingLeft: 15,
-    color: 'black'
+    color: 'black',
   },
   titleFirst: {
     textAlignVertical: 'center',
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     color: 'black',
     fontWeight: 'bold',
-    paddingTop: 10
+    paddingTop: 10,
   },
   title: {
     textAlignVertical: 'center',
@@ -82,12 +84,15 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.5,
     borderTopColor: 'rgba(220,220,220,1)',
     marginTop: 10,
-    paddingTop: 10
-  }
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: () => logout()(dispatch)
+    paddingTop: 10,
+  },
 })
 
-export default connect(null, mapDispatchToProps)(SettingsScreen)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  logout: () => logout()(dispatch),
+})
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(SettingsScreen)

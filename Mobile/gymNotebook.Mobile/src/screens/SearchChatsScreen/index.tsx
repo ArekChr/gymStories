@@ -6,11 +6,11 @@ import { AppState } from '../../redux'
 import { NavigationScreenProp } from 'react-navigation'
 import Feather from 'react-native-vector-icons/Feather'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
-import LinearGradient from 'react-native-linear-gradient';
-import UserName from '../../components/UserName';
-import { SquarePhoto } from '../../components';
-import { Profile } from '../../redux/profile/types';
-import { searchProfiles } from '../../redux/profile/actions';
+import LinearGradient from 'react-native-linear-gradient'
+import UserName from '../../components/UserName'
+import { SquarePhoto } from '../../components'
+import { Profile } from '../../redux/profile/types'
+import { searchProfiles } from '../../redux/profile/actions'
 
 interface Props extends ReturnType<typeof mapDispatchToProps>, ReturnType<typeof mapStateToProps> {
   navigation: NavigationScreenProp<SearchChatsScreen>
@@ -23,11 +23,10 @@ interface State {
 }
 
 class SearchChatsScreen extends Component<Props, State> {
-
   state = {
     searchText: '',
     profiles: null,
-    quantity: 20
+    quantity: 20,
   }
 
   onProfilePress = (profile: Profile) => {
@@ -38,17 +37,17 @@ class SearchChatsScreen extends Component<Props, State> {
   }
 
   searchUsers = (searchText: string) => {
-    this.setState({searchText: searchText})
-    if(searchText !== '') {
-      searchProfiles(searchText, 20, this.props.myProfileId, (profiles) => {
-        this.setState({profiles: profiles})
+    this.setState({ searchText: searchText })
+    if (searchText !== '') {
+      searchProfiles(searchText, 20, this.props.myProfileId, profiles => {
+        this.setState({ profiles: profiles })
       })
     }
   }
 
   renderUsers() {
     const { profiles } = this.state
-    if(profiles != null) {
+    if (profiles != null) {
       return profiles.map((user: Profile, i: number) => {
         return (
           <TouchableOpacity onPress={() => this.onProfilePress(user)} key={i} style={styles.profileTab}>
@@ -65,26 +64,24 @@ class SearchChatsScreen extends Component<Props, State> {
     return (
       <View>
         <View style={{ display: 'flex', flexDirection: 'row' }}>
-          <TouchableOpacity style={{margin: 10}} onPress={() => this.props.navigation.pop()}>
-            <Feather name="arrow-left" size={32} color="black" />
+          <TouchableOpacity style={{ margin: 10 }} onPress={() => this.props.navigation.pop()}>
+            <Feather name='arrow-left' size={32} color='black' />
           </TouchableOpacity>
-          <TextInput placeholder="Szukaj" 
-            autoFocus={true} 
-            value={this.state.searchText} 
-            onChangeText={(text) => this.searchUsers(text)}
-            style={{ fontSize: 15, paddingLeft: 5, flex: 1, fontWeight: 'bold', marginRight: 10, borderColor: 'red'}} 
+          <TextInput
+            placeholder='Szukaj'
+            autoFocus={true}
+            value={this.state.searchText}
+            onChangeText={text => this.searchUsers(text)}
+            style={{ fontSize: 15, paddingLeft: 5, flex: 1, fontWeight: 'bold', marginRight: 10, borderColor: 'red' }}
           />
-          {
-            this.state.searchText !== '' &&
+          {this.state.searchText !== '' && (
             <TouchableOpacity onPress={() => this.setState({ searchText: '' })}>
-              <MaterialIcons name='clear' size={30} color='black' style={{ margin: 10, marginTop: 12}} />
+              <MaterialIcons name='clear' size={30} color='black' style={{ margin: 10, marginTop: 12 }} />
             </TouchableOpacity>
-          }
+          )}
         </View>
-        <LinearGradient colors={['#DDD', '#FFF']} style={{ display: 'flex', width: '100%', height: 4 }}/>
-        <ScrollView keyboardShouldPersistTaps="handled">
-          {this.renderUsers()}
-        </ScrollView>
+        <LinearGradient colors={['#DDD', '#FFF']} style={{ display: 'flex', width: '100%', height: 4 }} />
+        <ScrollView keyboardShouldPersistTaps='handled'>{this.renderUsers()}</ScrollView>
       </View>
     )
   }
@@ -94,26 +91,27 @@ const styles = StyleSheet.create({
   profileTab: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
-  photo: { 
+  photo: {
     margin: 10,
     marginBottom: 5,
   },
-  usernameText: { 
+  usernameText: {
     fontWeight: '600',
     marginTop: 'auto',
     marginBottom: 'auto',
-    color: 'black'
-  }
+    color: 'black',
+  },
 })
 
 const mapStateToProps = (state: AppState) => ({
-  myProfileId: state.Profile.myProfile.id
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-
+  myProfileId: state.Profile.myProfile.id,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchChatsScreen)
+const mapDispatchToProps = (dispatch: Dispatch) => ({})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchChatsScreen)
